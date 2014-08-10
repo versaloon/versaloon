@@ -1,0 +1,1608 @@
+# EESchema Netlist Version 1.1 created  16/09/2012 01:03:28
+(
+ ( /50520889 $noname  U2 74LS138 {Lib=74LS138}
+  (    1 /EBI_A24 )
+  (    2 /EBI_A25 )
+  (    3 /EBI_NCS0_I )
+  (    4 GND )
+  (    5 GND )
+  (    6 VCC )
+  (    7 ? )
+  (    8 GND )
+  (    9 ? )
+  (   10 ? )
+  (   11 ? )
+  (   12 ? )
+  (   13 /EBI_NCS5 )
+  (   14 /EBI_NCS4 )
+  (   15 /EBI_NCS0 )
+  (   16 VCC )
+ )
+ ( /5050189E $noname  P10 CONN_2X2 {Lib=CONN_2X2}
+  (    1 VCC )
+  (    2 N-000160 )
+  (    3 VCC )
+  (    4 N-000159 )
+ )
+ ( /50501677 $noname  R10 10K {Lib=R}
+  (    1 N-000160 )
+  (    2 /I2C0_SCL )
+ )
+ ( /50501697 $noname  R11 10K {Lib=R}
+  (    1 N-000159 )
+  (    2 /I2C0_SDA )
+ )
+ ( /50500606 $noname  P30 CONN_32X2 {Lib=CONN_32X2}
+  (    1 /EBI_A0 )
+  (    2 /EBI_A1 )
+  (    3 /EBI_A2 )
+  (    4 /EBI_A3 )
+  (    5 /EBI_A4 )
+  (    6 /EBI_A5 )
+  (    7 /EBI_A6 )
+  (    8 /EBI_A7 )
+  (    9 /EBI_A8 )
+  (   10 /EBI_A9 )
+  (   11 /EBI_A10 )
+  (   12 /EBI_A11 )
+  (   13 /EBI_A12 )
+  (   14 /EBI_A13 )
+  (   15 /EBI_A14 )
+  (   16 /EBI_A15 )
+  (   17 /EBI_A16 )
+  (   18 /EBI_A17 )
+  (   19 /EBI_A18 )
+  (   20 /EBI_A19 )
+  (   21 /EBI_A20 )
+  (   22 /EBI_A21 )
+  (   23 /EBI_A22 )
+  (   24 /EBI_A23 )
+  (   25 /EBI_A24 )
+  (   26 /EBI_A25 )
+  (   27 /EBI_D0 )
+  (   28 /EBI_D1 )
+  (   29 /EBI_D2 )
+  (   30 /EBI_D3 )
+  (   31 /EBI_D4 )
+  (   32 /EBI_D5 )
+  (   33 /EBI_D6 )
+  (   34 /EBI_D7 )
+  (   35 /EBI_D8 )
+  (   36 /EBI_D9 )
+  (   37 /EBI_D10 )
+  (   38 /EBI_D11 )
+  (   39 /EBI_D12 )
+  (   40 /EBI_D13 )
+  (   41 /EBI_D14 )
+  (   42 /EBI_D15 )
+  (   43 /EBI_CLK )
+  (   44 /EBI_NWE )
+  (   45 /EBI_NOE )
+  (   46 /EBI_NADV )
+  (   47 /EBI_NWAIT )
+  (   48 /EBI_NLB )
+  (   49 /EBI_NUB )
+  (   50 ? )
+  (   51 /EBI_NCS0 )
+  (   52 /EBI_NCS1 )
+  (   53 /EBI_NCS2 )
+  (   54 /EBI_NCS3 )
+  (   55 /EBI_NCS4 )
+  (   56 /EBI_NCS5 )
+  (   57 /EBI_NWAIT0 )
+  (   58 /EBI_NWAIT1 )
+  (   59 ? )
+  (   60 ? )
+  (   61 ? )
+  (   62 ? )
+  (   63 VCC )
+  (   64 GND )
+ )
+ ( /505005F3 $noname  P20 CONN_32X2 {Lib=CONN_32X2}
+  (    1 /SPI0_SCK )
+  (    2 /SPI0_MOSI )
+  (    3 /SPI0_MISO )
+  (    4 /SPI0_NSS )
+  (    5 /I2S_CK )
+  (    6 /I2S_SD_O )
+  (    7 /SPI1_MISO )
+  (    8 /I2S_WS )
+  (    9 /I2C0_SCL )
+  (   10 /I2C0_SDA )
+  (   11 /USART0_TXD )
+  (   12 /USART0_RXD )
+  (   13 /USART0_CK )
+  (   14 /USART0_CTS )
+  (   15 /USART0_RTS )
+  (   16 ? )
+  (   17 ? )
+  (   18 ? )
+  (   19 ? )
+  (   20 ? )
+  (   21 /SDIO_CLK )
+  (   22 /SDIO_CMD )
+  (   23 /SDIO_D0 )
+  (   24 /SDIO_D1 )
+  (   25 /SDIO_D2 )
+  (   26 /SDIO_D3 )
+  (   27 /I2S_CK )
+  (   28 /GPIO_P7 )
+  (   29 /I2S_WS )
+  (   30 /I2S_SD_O )
+  (   31 ? )
+  (   32 ? )
+  (   33 /CAN0_TX )
+  (   34 /CAN0_RX )
+  (   35 /GPIO_P0 )
+  (   36 /GPIO_P1 )
+  (   37 /GPIO_P2 )
+  (   38 /GPIO_P3 )
+  (   39 /GPIO_P4 )
+  (   40 /GPIO_P5 )
+  (   41 /GPIO_P6 )
+  (   42 /GPIO_P7 )
+  (   43 /5V_OUT )
+  (   44 VCC )
+  (   45 /PWM0_CH1 )
+  (   46 /PWM0_CH1N )
+  (   47 /PWM0_CH2 )
+  (   48 /PWM0_CH2N )
+  (   49 /PWM0_CH3 )
+  (   50 /PWM0_CH3N )
+  (   51 /PWM0_CH4 )
+  (   52 /PWM0_TRG )
+  (   53 /PWM_OUT0 )
+  (   54 /PWM_IN0 )
+  (   55 GND )
+  (   56 GND )
+  (   57 /DA0 )
+  (   58 ? )
+  (   59 /AD0 )
+  (   60 /AD1 )
+  (   61 /AD2 )
+  (   62 /AD3 )
+  (   63 ? )
+  (   64 ? )
+ )
+ ( /502320C4 $noname  K1 CONN_3 {Lib=CONN_3}
+  (    1 /USB_DP )
+  (    2 /FUNSEL1 )
+  (    3 /PWM0_TRG )
+ )
+ ( /5021C9C6 $noname  K0 CONN_3 {Lib=CONN_3}
+  (    1 /USB_DM )
+  (    2 /FUNSEL0 )
+  (    3 /PWM0_CH4 )
+ )
+ ( /501B80A4 $noname  G0 LOGO {Lib=LOGO}
+ )
+ ( /5018B4D6 $noname  U12 STM32-48PIN {Lib=STM32-48PIN}
+  (    1 VCC )
+  (    2 /USB_PU )
+  (    3 /OSC32_IN )
+  (    4 /OSC32_OUT )
+  (    5 /OSC_IN )
+  (    6 /OSC_OUT )
+  (    7 /NRST )
+  (    8 /AGND )
+  (    9 /AVCC )
+  (   10 /USART0_CTS )
+  (   11 /USART0_RTS )
+  (   12 /USART0_TXD )
+  (   13 /USART0_RXD )
+  (   14 /USART0_CK )
+  (   15 /DA0 )
+  (   16 /PWM_OUT0 )
+  (   17 /PWM0_CH1N )
+  (   18 /PWM0_CH2N )
+  (   19 /PWM0_CH3N )
+  (   20 GND )
+  (   21 /I2C0_SCL )
+  (   22 /I2C0_SDA )
+  (   23 GND )
+  (   24 VCC )
+  (   25 /SPI0_NSS )
+  (   26 /SPI0_SCK )
+  (   27 /SPI0_MISO )
+  (   28 /SPI0_MOSI )
+  (   29 /PWM0_CH1 )
+  (   30 /PWM0_CH2 )
+  (   31 /PWM0_CH3 )
+  (   32 /FUNSEL0 )
+  (   33 /FUNSEL1 )
+  (   34 /SWD_IO )
+  (   35 GND )
+  (   36 VCC )
+  (   37 /SWD_CLK )
+  (   38 /I2S_WS )
+  (   39 /I2S_CK )
+  (   40 /SPI1_MISO )
+  (   41 /I2S_SD_O )
+  (   42 /PWM_IN0 )
+  (   43 /EBI_NADV )
+  (   44 /BOOT0 )
+  (   45 /CAN0_RX )
+  (   46 /CAN0_TX )
+  (   47 GND )
+  (   48 VCC )
+ )
+ ( /5018B49F $noname  U11 STM32-64PIN {Lib=STM32-64PIN}
+  (    1 VCC )
+  (    2 /USB_PU )
+  (    3 /OSC32_IN )
+  (    4 /OSC32_OUT )
+  (    5 /OSC_IN )
+  (    6 /OSC_OUT )
+  (    7 /NRST )
+  (    8 /GPIO_P0 )
+  (    9 /GPIO_P1 )
+  (   10 /GPIO_P2 )
+  (   11 /GPIO_P3 )
+  (   12 /AGND )
+  (   13 /AVCC )
+  (   14 /USART0_CTS )
+  (   15 /USART0_RTS )
+  (   16 /USART0_TXD )
+  (   17 /USART0_RXD )
+  (   18 GND )
+  (   19 VCC )
+  (   20 /USART0_CK )
+  (   21 /DA0 )
+  (   22 /PWM_OUT0 )
+  (   23 /PWM0_CH1N )
+  (   24 /GPIO_P4 )
+  (   25 /GPIO_P5 )
+  (   26 /PWM0_CH2N )
+  (   27 /PWM0_CH3N )
+  (   28 GND )
+  (   29 /I2C0_SCL )
+  (   30 /I2C0_SDA )
+  (   31 GND )
+  (   32 VCC )
+  (   33 /SPI0_NSS )
+  (   34 /SPI0_SCK )
+  (   35 /SPI0_MISO )
+  (   36 /SPI0_MOSI )
+  (   37 /GPIO_P6 )
+  (   38 /GPIO_P7 )
+  (   39 /SDIO_D0 )
+  (   40 /SDIO_D1 )
+  (   41 /PWM0_CH1 )
+  (   42 /PWM0_CH2 )
+  (   43 /PWM0_CH3 )
+  (   44 /FUNSEL0 )
+  (   45 /FUNSEL1 )
+  (   46 /SWD_IO )
+  (   47 GND )
+  (   48 VCC )
+  (   49 /SWD_CLK )
+  (   50 /I2S_WS )
+  (   51 /SDIO_D2 )
+  (   52 /SDIO_D3 )
+  (   53 /SDIO_CLK )
+  (   54 /SDIO_CMD )
+  (   55 /I2S_CK )
+  (   56 /SPI1_MISO )
+  (   57 /I2S_SD_O )
+  (   58 /PWM_IN0 )
+  (   59 /EBI_NADV )
+  (   60 /BOOT0 )
+  (   61 /CAN0_RX )
+  (   62 /CAN0_TX )
+  (   63 GND )
+  (   64 VCC )
+ )
+ ( /5018B48D $noname  U10 STM32-100PIN {Lib=STM32-100PIN}
+  (    1 /EBI_A23 )
+  (    2 /EBI_A19 )
+  (    3 /EBI_A20 )
+  (    4 /EBI_A21 )
+  (    5 /EBI_A22 )
+  (    6 VCC )
+  (    7 /USB_PU )
+  (    8 /OSC32_IN )
+  (    9 /OSC32_OUT )
+  (   10 GND )
+  (   11 VCC )
+  (   12 /OSC_IN )
+  (   13 /OSC_OUT )
+  (   14 /NRST )
+  (   15 /GPIO_P0 )
+  (   16 /GPIO_P1 )
+  (   17 /GPIO_P2 )
+  (   18 /GPIO_P3 )
+  (   19 /AGND )
+  (   20 /AGND )
+  (   21 /AVCC )
+  (   22 /AVCC )
+  (   23 /USART0_CTS )
+  (   24 /USART0_RTS )
+  (   25 /USART0_TXD )
+  (   26 /USART0_RXD )
+  (   27 GND )
+  (   28 VCC )
+  (   29 /USART0_CK )
+  (   30 /DA0 )
+  (   31 /PWM_OUT0 )
+  (   32 /PWM0_CH1N )
+  (   33 /GPIO_P4 )
+  (   34 /GPIO_P5 )
+  (   35 /PWM0_CH2N )
+  (   36 /PWM0_CH3N )
+  (   37 GND )
+  (   38 /EBI_D4 )
+  (   39 /EBI_D5 )
+  (   40 /EBI_D6 )
+  (   41 /EBI_D7 )
+  (   42 /EBI_D8 )
+  (   43 /EBI_D9 )
+  (   44 /EBI_D10 )
+  (   45 /EBI_D11 )
+  (   46 /EBI_D12 )
+  (   47 /I2C0_SCL )
+  (   48 /I2C0_SDA )
+  (   49 GND )
+  (   50 VCC )
+  (   51 /SPI0_NSS )
+  (   52 /SPI0_SCK )
+  (   53 /SPI0_MISO )
+  (   54 /SPI0_MOSI )
+  (   55 /EBI_D13 )
+  (   56 /EBI_D14 )
+  (   57 /EBI_D15 )
+  (   58 /EBI_A16 )
+  (   59 /EBI_A17 )
+  (   60 /EBI_A18 )
+  (   61 /EBI_D0 )
+  (   62 /EBI_D1 )
+  (   63 /GPIO_P6 )
+  (   64 /GPIO_P7 )
+  (   65 /SDIO_D0 )
+  (   66 /SDIO_D1 )
+  (   67 /PWM0_CH1 )
+  (   68 /PWM0_CH2 )
+  (   69 /PWM0_CH3 )
+  (   70 /FUNSEL0 )
+  (   71 /FUNSEL1 )
+  (   72 /SWD_IO )
+  (   73 ? )
+  (   74 GND )
+  (   75 VCC )
+  (   76 /SWD_CLK )
+  (   77 /I2S_WS )
+  (   78 /SDIO_D2 )
+  (   79 /SDIO_D3 )
+  (   80 /SDIO_CLK )
+  (   81 /EBI_D2 )
+  (   82 /EBI_D3 )
+  (   83 /SDIO_CMD )
+  (   84 /EBI_CLK )
+  (   85 /EBI_NOE )
+  (   86 /EBI_NWE )
+  (   87 /EBI_NWAIT )
+  (   88 ? )
+  (   89 /I2S_CK )
+  (   90 /SPI1_MISO )
+  (   91 /I2S_SD_O )
+  (   92 /PWM_IN0 )
+  (   93 /EBI_NADV )
+  (   94 /BOOT0 )
+  (   95 /CAN0_RX )
+  (   96 /CAN0_TX )
+  (   97 ? )
+  (   98 ? )
+  (   99 GND )
+  (  100 VCC )
+ )
+ ( /4F65A34C $noname  C3 10uF {Lib=CAPAPOL}
+  (    1 /AVCC )
+  (    2 /AGND )
+ )
+ ( /4F65E887 $noname  R1 0 {Lib=R}
+  (    1 /AGND )
+  (    2 GND )
+ )
+ ( /4F6599A6 $noname  U0 STM32-144PIN {Lib=STM32-144PIN}
+  (    1 /EBI_A23 )
+  (    2 /EBI_A19 )
+  (    3 /EBI_A20 )
+  (    4 /EBI_A21 )
+  (    5 /EBI_A22 )
+  (    6 VCC )
+  (    7 /USB_PU )
+  (    8 /OSC32_IN )
+  (    9 /OSC32_OUT )
+  (   10 /EBI_A0 )
+  (   11 /EBI_A1 )
+  (   12 /EBI_A2 )
+  (   13 /EBI_A3 )
+  (   14 /EBI_A4 )
+  (   15 /EBI_A5 )
+  (   16 GND )
+  (   17 VCC )
+  (   18 /AD0 )
+  (   19 /AD1 )
+  (   20 /AD2 )
+  (   21 /AD3 )
+  (   22 ? )
+  (   23 /OSC_IN )
+  (   24 /OSC_OUT )
+  (   25 /NRST )
+  (   26 /GPIO_P0 )
+  (   27 /GPIO_P1 )
+  (   28 /GPIO_P2 )
+  (   29 /GPIO_P3 )
+  (   30 /AGND )
+  (   31 /AGND )
+  (   32 /AVCC )
+  (   33 /AVCC )
+  (   34 /USART0_CTS )
+  (   35 /USART0_RTS )
+  (   36 /USART0_TXD )
+  (   37 /USART0_RXD )
+  (   38 GND )
+  (   39 VCC )
+  (   40 /USART0_CK )
+  (   41 /DA0 )
+  (   42 /PWM_OUT0 )
+  (   43 /PWM0_CH1N )
+  (   44 /GPIO_P4 )
+  (   45 /GPIO_P5 )
+  (   46 /PWM0_CH2N )
+  (   47 /PWM0_CH3N )
+  (   48 GND )
+  (   49 ? )
+  (   50 /EBI_A6 )
+  (   51 GND )
+  (   52 VCC )
+  (   53 /EBI_A7 )
+  (   54 /EBI_A8 )
+  (   55 /EBI_A9 )
+  (   56 /EBI_A10 )
+  (   57 /EBI_A11 )
+  (   58 /EBI_D4 )
+  (   59 /EBI_D5 )
+  (   60 /EBI_D6 )
+  (   61 GND )
+  (   62 VCC )
+  (   63 /EBI_D7 )
+  (   64 /EBI_D8 )
+  (   65 /EBI_D9 )
+  (   66 /EBI_D10 )
+  (   67 /EBI_D11 )
+  (   68 /EBI_D12 )
+  (   69 /I2C0_SCL )
+  (   70 /I2C0_SDA )
+  (   71 GND )
+  (   72 VCC )
+  (   73 /SPI0_NSS )
+  (   74 /SPI0_SCK )
+  (   75 /SPI0_MISO )
+  (   76 /SPI0_MOSI )
+  (   77 /EBI_D13 )
+  (   78 /EBI_D14 )
+  (   79 /EBI_D15 )
+  (   80 /EBI_A16 )
+  (   81 /EBI_A17 )
+  (   82 /EBI_A18 )
+  (   83 GND )
+  (   84 VCC )
+  (   85 /EBI_D0 )
+  (   86 /EBI_D1 )
+  (   87 /EBI_A12 )
+  (   88 /EBI_A13 )
+  (   89 /EBI_A14 )
+  (   90 /EBI_A15 )
+  (   91 /EBI_NWAIT0 )
+  (   92 /EBI_NWAIT1 )
+  (   93 ? )
+  (   94 GND )
+  (   95 VCC )
+  (   96 /GPIO_P6 )
+  (   97 /GPIO_P7 )
+  (   98 /SDIO_D0 )
+  (   99 /SDIO_D1 )
+  (  100 /PWM0_CH1 )
+  (  101 /PWM0_CH2 )
+  (  102 /PWM0_CH3 )
+  (  103 /FUNSEL0 )
+  (  104 /FUNSEL1 )
+  (  105 /SWD_IO )
+  (  106 ? )
+  (  107 GND )
+  (  108 VCC )
+  (  109 /SWD_CLK )
+  (  110 /I2S_WS )
+  (  111 /SDIO_D2 )
+  (  112 /SDIO_D3 )
+  (  113 /SDIO_CLK )
+  (  114 /EBI_D2 )
+  (  115 /EBI_D3 )
+  (  116 /SDIO_CMD )
+  (  117 /EBI_CLK )
+  (  118 /EBI_NOE )
+  (  119 /EBI_NWE )
+  (  120 GND )
+  (  121 VCC )
+  (  122 /EBI_NWAIT )
+  (  123 /EBI_NCS0_I )
+  (  124 /EBI_NCS1 )
+  (  125 /EBI_NCS2 )
+  (  126 ? )
+  (  127 /EBI_NCS3 )
+  (  128 /EBI_A24 )
+  (  129 /EBI_A25 )
+  (  130 GND )
+  (  131 VCC )
+  (  132 ? )
+  (  133 /I2S_CK )
+  (  134 /SPI1_MISO )
+  (  135 /I2S_SD_O )
+  (  136 /PWM_IN0 )
+  (  137 /EBI_NADV )
+  (  138 /BOOT0 )
+  (  139 /CAN0_RX )
+  (  140 /CAN0_TX )
+  (  141 /EBI_NLB )
+  (  142 /EBI_NUB )
+  (  143 GND )
+  (  144 VCC )
+ )
+ ( /4F8570B9 $noname  R8 22 {Lib=R}
+  (    1 GND )
+  (    2 N-000126 )
+ )
+ ( /4F85709C $noname  D0 RED {Lib=LED}
+  (    1 /5V_OUT )
+  (    2 N-000126 )
+ )
+ ( /4F65EEF8 $noname  X0 8MHz {Lib=CRYSTAL}
+  (    1 /OSC_IN )
+  (    2 /OSC_OUT )
+ )
+ ( /4F65EEC8 $noname  X1 32.768kHz {Lib=CRYSTAL}
+  (    1 /OSC32_IN )
+  (    2 /OSC32_OUT )
+ )
+ ( /4F65EAC1 $noname  C22 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E6B9 $noname  C21 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E6B6 $noname  C20 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E6B3 $noname  C19 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E6B1 $noname  C18 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E6AC $noname  C17 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E607 $noname  C10 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E605 $noname  C11 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E602 $noname  C12 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E5FD $noname  C13 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E5F9 $noname  C14 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E5F3 $noname  C15 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E5D3 $noname  C16 100nF {Lib=C}
+  (    1 GND )
+  (    2 VCC )
+ )
+ ( /4F65E579 $noname  C0 100uF {Lib=CAPAPOL}
+  (    1 /5V_OUT )
+  (    2 GND )
+ )
+ ( /4F65E54B $noname  C1 100uF {Lib=CAPAPOL}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /4F65E4A4 $noname  U1 LM1117-3.3 {Lib=LM1117}
+  (    1 GND )
+  (    2 VCC )
+  (    3 /5V_OUT )
+  (    4 VCC )
+ )
+ ( /4F65E2AC $noname  R4 1.5K {Lib=R}
+  (    1 N-000140 )
+  (    2 /USB_PU )
+ )
+ ( /4F65E253 $noname  F0 500mA {Lib=FUSE}
+  (    1 N-000136 )
+  (    2 /5V_OUT )
+ )
+ ( /4F65E220 $noname  R3 22 {Lib=R}
+  (    1 N-000140 )
+  (    2 /USB_DP )
+ )
+ ( /4F65E219 $noname  R2 22 {Lib=R}
+  (    1 N-000138 )
+  (    2 /USB_DM )
+ )
+ ( /4F65E20C $noname  P0 USBMINI-B {Lib=USBMINI-B}
+  (    1 N-000136 )
+  (    2 N-000138 )
+  (    3 N-000140 )
+  (    4 ? )
+  (    5 GND )
+ )
+ ( /4F65AC35 $noname  SW2 SW_PUSH {Lib=SW_PUSH}
+  (    1 VCC )
+  (    2 /BOOT0 )
+ )
+ ( /4F65AC31 $noname  R7 10K {Lib=R}
+  (    1 GND )
+  (    2 /BOOT0 )
+ )
+ ( /4F65A915 $noname  R5 10K {Lib=R}
+  (    1 VCC )
+  (    2 /NRST )
+ )
+ ( /4F65A82C $noname  C6 20pF {Lib=C}
+  (    1 /OSC_OUT )
+  (    2 GND )
+ )
+ ( /4F65A826 $noname  C5 20pF {Lib=C}
+  (    1 GND )
+  (    2 /OSC_IN )
+ )
+ ( /4F65A81B $noname  C8 6pF {Lib=C}
+  (    1 /OSC32_OUT )
+  (    2 GND )
+ )
+ ( /4F65A810 $noname  C7 6pF {Lib=C}
+  (    1 GND )
+  (    2 /OSC32_IN )
+ )
+ ( /4F65A3EC $noname  P1 CONN_10X2 {Lib=CONN_10X2}
+  (    1 VCC )
+  (    2 ? )
+  (    3 ? )
+  (    4 GND )
+  (    5 ? )
+  (    6 GND )
+  (    7 /SWD_IO )
+  (    8 GND )
+  (    9 /SWD_CLK )
+  (   10 GND )
+  (   11 ? )
+  (   12 GND )
+  (   13 ? )
+  (   14 GND )
+  (   15 /NRST )
+  (   16 GND )
+  (   17 ? )
+  (   18 GND )
+  (   19 ? )
+  (   20 GND )
+ )
+ ( /4F65A33B $noname  C2 10nF {Lib=C}
+  (    1 /AVCC )
+  (    2 /AGND )
+ )
+ ( /4F65A32D $noname  L1 10mH {Lib=INDUCTOR}
+  (    1 VCC )
+  (    2 /AVCC )
+ )
+ ( /4F659F47 $noname  SW0 SW_PUSH {Lib=SW_PUSH}
+  (    1 GND )
+  (    2 /NRST )
+ )
+)
+*
+{ Allowed footprints by component:
+$component R10
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R11
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C3
+ CP*
+ SM*
+$endlist
+$component R1
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R8
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D0
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component C22
+ SM*
+ C?
+ C1-1
+$endlist
+$component C21
+ SM*
+ C?
+ C1-1
+$endlist
+$component C20
+ SM*
+ C?
+ C1-1
+$endlist
+$component C19
+ SM*
+ C?
+ C1-1
+$endlist
+$component C18
+ SM*
+ C?
+ C1-1
+$endlist
+$component C17
+ SM*
+ C?
+ C1-1
+$endlist
+$component C10
+ SM*
+ C?
+ C1-1
+$endlist
+$component C11
+ SM*
+ C?
+ C1-1
+$endlist
+$component C12
+ SM*
+ C?
+ C1-1
+$endlist
+$component C13
+ SM*
+ C?
+ C1-1
+$endlist
+$component C14
+ SM*
+ C?
+ C1-1
+$endlist
+$component C15
+ SM*
+ C?
+ C1-1
+$endlist
+$component C16
+ SM*
+ C?
+ C1-1
+$endlist
+$component C0
+ CP*
+ SM*
+$endlist
+$component C1
+ CP*
+ SM*
+$endlist
+$component U1
+ 4dip300
+$endlist
+$component R4
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R3
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R2
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component P0
+ 4dip300
+$endlist
+$component R7
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R5
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C6
+ SM*
+ C?
+ C1-1
+$endlist
+$component C5
+ SM*
+ C?
+ C1-1
+$endlist
+$component C8
+ SM*
+ C?
+ C1-1
+$endlist
+$component C7
+ SM*
+ C?
+ C1-1
+$endlist
+$component C2
+ SM*
+ C?
+ C1-1
+$endlist
+$endfootprintlist
+}
+{ Pin List by Nets
+Net 1 "/PWM0_CH2N" "PWM0_CH2N"
+ U12 18
+ U0 46
+ U10 35
+ U11 26
+ P20 48
+Net 2 "/SWD_CLK" "SWD_CLK"
+ U10 76
+ U0 109
+ U11 49
+ U12 37
+ P1 9
+Net 3 "/SDIO_D1" "SDIO_D1"
+ U10 66
+ U0 99
+ U11 40
+ P20 24
+Net 4 "/EBI_D14" "EBI_D14"
+ U10 56
+ U0 78
+ P30 41
+Net 5 "/EBI_D12" "EBI_D12"
+ U0 68
+ P30 39
+ U10 46
+Net 6 "/PWM0_CH3N" "PWM0_CH3N"
+ U10 36
+ U0 47
+ U11 27
+ P20 50
+ U12 19
+Net 7 "/USART0_RXD" "USART0_RXD"
+ U0 37
+ P20 12
+ U11 17
+ U10 26
+ U12 13
+Net 8 "/CAN0_RX" "CAN0_RX"
+ U0 139
+ U11 61
+ U12 45
+ P20 34
+ U10 95
+Net 9 "/EBI_NOE" "EBI_NOE"
+ U0 118
+ P30 45
+ U10 85
+Net 10 "/SDIO_D0" "SDIO_D0"
+ U0 98
+ P20 23
+ U11 39
+ U10 65
+Net 11 "/EBI_D13" "EBI_D13"
+ U0 77
+ U10 55
+ P30 40
+Net 12 "/EBI_D11" "EBI_D11"
+ U0 67
+ P30 38
+ U10 45
+Net 13 "/EBI_NWE" "EBI_NWE"
+ U10 86
+ P30 44
+ U0 119
+Net 14 "/BOOT0" "BOOT0"
+ SW2 2
+ U12 44
+ R7 2
+ U10 94
+ U0 138
+ U11 60
+Net 15 "/EBI_CLK" "EBI_CLK"
+ U0 117
+ U10 84
+ P30 43
+Net 16 "/SPI0_MOSI" "SPI0_MOSI"
+ U11 36
+ U10 54
+ P20 2
+ U12 28
+ U0 76
+Net 17 "/EBI_D10" "EBI_D10"
+ U10 44
+ P30 37
+ U0 66
+Net 18 "/GPIO_P5" "GPIO_P5"
+ U10 34
+ P20 40
+ U0 45
+ U11 25
+Net 19 "/USART0_RTS" "USART0_RTS"
+ P20 15
+ U10 24
+ U0 35
+ U11 15
+ U12 11
+Net 20 "/EBI_NADV" "EBI_NADV"
+ U11 59
+ U10 93
+ U12 43
+ U0 137
+ P30 46
+Net 21 "/SDIO_CMD" "SDIO_CMD"
+ U11 54
+ U0 116
+ U10 83
+ P20 22
+Net 22 "/EBI_D4" "EBI_D4"
+ U0 58
+ U10 38
+ P30 31
+Net 23 "/SDIO_D3" "SDIO_D3"
+ U10 79
+ P20 26
+ U11 52
+ U0 112
+Net 24 "/PWM0_CH3" "PWM0_CH3"
+ U10 69
+ U11 43
+ U12 31
+ P20 49
+ U0 102
+Net 25 "/EBI_A17" "EBI_A17"
+ U0 81
+ U10 59
+ P30 18
+Net 26 "/EBI_D5" "EBI_D5"
+ U10 39
+ P30 32
+ U0 59
+Net 27 "/USART0_CK" "USART0_CK"
+ U0 40
+ U11 20
+ U12 14
+ U10 29
+ P20 13
+Net 30 "/SDIO_D2" "SDIO_D2"
+ P20 25
+ U0 111
+ U10 78
+ U11 51
+Net 31 "/PWM0_CH2" "PWM0_CH2"
+ U0 101
+ U11 42
+ U12 30
+ P20 47
+ U10 68
+Net 32 "/EBI_A16" "EBI_A16"
+ U10 58
+ U0 80
+ P30 17
+Net 33 "/I2C0_SDA" "I2C0_SDA"
+ U0 70
+ U10 48
+ U12 22
+ P20 10
+ U11 30
+ R11 2
+Net 36 "/EBI_NWAIT" "EBI_NWAIT"
+ U10 87
+ U0 122
+ P30 47
+Net 37 "/PWM0_CH1" "PWM0_CH1"
+ U10 67
+ U0 100
+ U11 41
+ U12 29
+ P20 45
+Net 38 "/EBI_D15" "EBI_D15"
+ U10 57
+ U0 79
+ P30 42
+Net 39 "/I2C0_SCL" "I2C0_SCL"
+ R10 2
+ U0 69
+ U10 47
+ P20 9
+ U12 21
+ U11 29
+Net 40 "/CAN0_TX" "CAN0_TX"
+ U0 140
+ U12 46
+ U10 96
+ P20 33
+ U11 62
+Net 41 "/EBI_A18" "EBI_A18"
+ P30 19
+ U10 60
+ U0 82
+Net 42 "/EBI_D6" "EBI_D6"
+ U0 60
+ P30 33
+ U10 40
+Net 43 "/DA0" "DA0"
+ U0 41
+ U12 15
+ U10 30
+ U11 21
+ P20 57
+Net 44 "/GPIO_P6" "GPIO_P6"
+ U10 63
+ P20 41
+ U11 37
+ U0 96
+Net 45 "/SPI0_MISO" "SPI0_MISO"
+ P20 3
+ U10 53
+ U11 35
+ U0 75
+ U12 27
+Net 46 "/EBI_D9" "EBI_D9"
+ U10 43
+ P30 36
+ U0 65
+Net 47 "/GPIO_P4" "GPIO_P4"
+ P20 39
+ U10 33
+ U0 44
+ U11 24
+Net 48 "/USART0_CTS" "USART0_CTS"
+ U10 23
+ U11 14
+ P20 14
+ U0 34
+ U12 10
+Net 49 "/PWM_IN0" "PWM_IN0"
+ U10 92
+ U11 58
+ U12 42
+ U0 136
+ P20 54
+Net 50 "/EBI_D3" "EBI_D3"
+ U10 82
+ P30 30
+ U0 115
+Net 51 "/SWD_IO" "SWD_IO"
+ U0 105
+ U11 46
+ U12 34
+ P1 7
+ U10 72
+Net 52 "/EBI_D1" "EBI_D1"
+ P30 28
+ U0 86
+ U10 62
+Net 53 "/SPI0_SCK" "SPI0_SCK"
+ U0 74
+ U11 34
+ U12 26
+ U10 52
+ P20 1
+Net 54 "/EBI_D8" "EBI_D8"
+ P30 35
+ U0 64
+ U10 42
+Net 55 "/PWM0_CH1N" "PWM0_CH1N"
+ U10 32
+ P20 46
+ U12 17
+ U0 43
+ U11 23
+Net 56 "/EBI_D2" "EBI_D2"
+ U0 114
+ U10 81
+ P30 29
+Net 57 "/EBI_D0" "EBI_D0"
+ U0 85
+ U10 61
+ P30 27
+Net 58 "/SPI0_NSS" "SPI0_NSS"
+ P20 4
+ U0 73
+ U10 51
+ U11 33
+ U12 25
+Net 59 "/EBI_D7" "EBI_D7"
+ U0 63
+ U10 41
+ P30 34
+Net 60 "/PWM_OUT0" "PWM_OUT0"
+ U11 22
+ P20 53
+ U12 16
+ U10 31
+ U0 42
+Net 61 "/SPI1_MISO" "SPI1_MISO"
+ U10 90
+ P20 7
+ U11 56
+ U0 134
+ U12 40
+Net 62 "/SDIO_CLK" "SDIO_CLK"
+ U0 113
+ U11 53
+ P20 21
+ U10 80
+Net 63 "/EBI_A9" "EBI_A9"
+ U0 55
+ P30 10
+Net 64 "/NRST" "NRST"
+ U10 14
+ P1 15
+ U12 7
+ R5 2
+ U11 7
+ U0 25
+ SW0 2
+Net 65 "/EBI_A5" "EBI_A5"
+ P30 6
+ U0 15
+Net 66 "/EBI_A10" "EBI_A10"
+ U0 56
+ P30 11
+Net 67 "/EBI_A8" "EBI_A8"
+ P30 9
+ U0 54
+Net 68 "/OSC_OUT" "OSC_OUT"
+ U12 6
+ C6 1
+ X0 2
+ U0 24
+ U11 6
+ U10 13
+Net 69 "/EBI_A4" "EBI_A4"
+ U0 14
+ P30 5
+Net 71 "/EBI_A7" "EBI_A7"
+ P30 8
+ U0 53
+Net 73 "/AD1" "AD1"
+ P20 60
+ U0 19
+Net 74 "/EBI_A13" "EBI_A13"
+ U0 88
+ P30 14
+Net 75 "/AD0" "AD0"
+ P20 59
+ U0 18
+Net 76 "/EBI_A12" "EBI_A12"
+ P30 13
+ U0 87
+Net 77 "/EBI_A11" "EBI_A11"
+ P30 12
+ U0 57
+Net 78 "/PWM0_CH4" "PWM0_CH4"
+ P20 51
+ K0 3
+Net 79 "/AD2" "AD2"
+ P20 61
+ U0 20
+Net 80 "/EBI_A0" "EBI_A0"
+ U0 10
+ P30 1
+Net 81 "/OSC32_OUT" "OSC32_OUT"
+ X1 2
+ C8 1
+ U10 9
+ U0 9
+ U12 4
+ U11 4
+Net 82 "/OSC32_IN" "OSC32_IN"
+ X1 1
+ U0 8
+ U11 3
+ C7 2
+ U12 3
+ U10 8
+Net 83 "/EBI_A22" "EBI_A22"
+ U0 5
+ U10 5
+ P30 23
+Net 84 "/EBI_A21" "EBI_A21"
+ P30 22
+ U10 4
+ U0 4
+Net 85 "/EBI_A20" "EBI_A20"
+ U0 3
+ U10 3
+ P30 21
+Net 86 "/EBI_A19" "EBI_A19"
+ U0 2
+ P30 20
+ U10 2
+Net 87 "/EBI_A23" "EBI_A23"
+ U10 1
+ P30 24
+ U0 1
+Net 89 "GND" "GND"
+ P1 4
+ U12 23
+ U12 47
+ U12 35
+ U12 20
+ U11 63
+ P30 64
+ C6 2
+ C5 1
+ C8 2
+ C7 1
+ P1 6
+ P1 8
+ P1 10
+ P1 20
+ P1 12
+ P1 14
+ U0 48
+ U11 28
+ U11 18
+ U0 94
+ U0 16
+ U0 83
+ U0 38
+ R1 2
+ U10 10
+ U10 27
+ P20 55
+ U10 37
+ U10 49
+ P20 56
+ U10 74
+ P0 5
+ U2 8
+ U2 5
+ U11 31
+ U2 4
+ U0 51
+ U0 61
+ U0 71
+ U11 47
+ U10 99
+ C10 1
+ SW0 1
+ C17 1
+ C18 1
+ U0 143
+ U0 130
+ U0 120
+ C13 1
+ R8 1
+ C15 1
+ C16 1
+ C14 1
+ P1 16
+ P1 18
+ C12 1
+ C11 1
+ U1 1
+ C21 1
+ C1 2
+ C0 2
+ U0 107
+ R7 1
+ C19 1
+ C22 1
+ C20 1
+Net 90 "/OSC_IN" "OSC_IN"
+ X0 1
+ U12 5
+ U11 5
+ U0 23
+ U10 12
+ C5 2
+Net 91 "/EBI_A3" "EBI_A3"
+ U0 13
+ P30 4
+Net 92 "/AVCC" "AVCC"
+ U10 21
+ U10 22
+ L1 2
+ U12 9
+ U0 33
+ C3 1
+ C2 1
+ U0 32
+ U11 13
+Net 94 "/EBI_A2" "EBI_A2"
+ P30 3
+ U0 12
+Net 95 "/AGND" "AGND"
+ U12 8
+ U0 31
+ U10 19
+ C2 2
+ U0 30
+ R1 1
+ C3 2
+ U10 20
+ U11 12
+Net 96 "/AD3" "AD3"
+ P20 62
+ U0 21
+Net 97 "/EBI_A1" "EBI_A1"
+ U0 11
+ P30 2
+Net 98 "/EBI_A15" "EBI_A15"
+ U0 90
+ P30 16
+Net 99 "/EBI_A6" "EBI_A6"
+ P30 7
+ U0 50
+Net 100 "/GPIO_P3" "GPIO_P3"
+ U10 18
+ U11 11
+ U0 29
+ P20 38
+Net 101 "/GPIO_P2" "GPIO_P2"
+ U0 28
+ U10 17
+ U11 10
+ P20 37
+Net 102 "/GPIO_P1" "GPIO_P1"
+ U10 16
+ P20 36
+ U11 9
+ U0 27
+Net 103 "/GPIO_P0" "GPIO_P0"
+ P20 35
+ U11 8
+ U10 15
+ U0 26
+Net 104 "/USB_PU" "USB_PU"
+ U10 7
+ R4 2
+ U11 2
+ U12 2
+ U0 7
+Net 105 "/USART0_TXD" "USART0_TXD"
+ U10 25
+ U11 16
+ U12 12
+ P20 11
+ U0 36
+Net 111 "/I2S_SD_O" "I2S_SD_O"
+ U10 91
+ U0 135
+ P20 30
+ U12 41
+ U11 57
+ P20 6
+Net 112 "/I2S_CK" "I2S_CK"
+ P20 5
+ P20 27
+ U10 89
+ U12 39
+ U11 55
+ U0 133
+Net 113 "/I2S_WS" "I2S_WS"
+ U11 50
+ U12 38
+ P20 8
+ P20 29
+ U0 110
+ U10 77
+Net 114 "/GPIO_P7" "GPIO_P7"
+ U10 64
+ U11 38
+ P20 42
+ U0 97
+ P20 28
+Net 115 "/EBI_NCS2" "EBI_NCS2"
+ U0 125
+ P30 53
+Net 116 "/EBI_NLB" "EBI_NLB"
+ P30 48
+ U0 141
+Net 117 "/EBI_NUB" "EBI_NUB"
+ U0 142
+ P30 49
+Net 118 "/EBI_NCS0" "EBI_NCS0"
+ U2 15
+ P30 51
+Net 119 "/EBI_NCS1" "EBI_NCS1"
+ P30 52
+ U0 124
+Net 120 "/EBI_NCS3" "EBI_NCS3"
+ P30 54
+ U0 127
+Net 123 "VCC" "VCC"
+ U10 11
+ U11 19
+ U11 48
+ U0 17
+ U0 95
+ U0 84
+ U0 39
+ U10 6
+ L1 1
+ U10 50
+ C20 2
+ C21 2
+ C22 2
+ C19 2
+ U10 28
+ U10 75
+ U11 1
+ U11 32
+ U11 64
+ U12 1
+ U12 48
+ U12 36
+ U12 24
+ U10 100
+ U0 72
+ U0 62
+ U0 52
+ U0 6
+ R5 1
+ P1 1
+ P30 63
+ C16 2
+ P20 44
+ U2 6
+ U0 144
+ U0 108
+ U0 121
+ U0 131
+ C18 2
+ C17 2
+ C10 2
+ C11 2
+ C12 2
+ C13 2
+ C14 2
+ C15 2
+ U2 16
+ P10 3
+ C1 1
+ U1 2
+ U1 4
+ SW2 1
+ P10 1
+Net 125 "/5V_OUT" "5V_OUT"
+ F0 2
+ P20 43
+ U1 3
+ C0 1
+ D0 1
+Net 126 "" ""
+ R8 2
+ D0 2
+Net 127 "/FUNSEL1" "FUNSEL1"
+ U0 104
+ U12 33
+ U11 45
+ U10 71
+ K1 2
+Net 128 "/EBI_NCS0_I" "EBI_NCS0_I"
+ U2 3
+ U0 123
+Net 130 "/EBI_A14" "EBI_A14"
+ U0 89
+ P30 15
+Net 133 "/EBI_A25" "EBI_A25"
+ U0 129
+ P30 26
+ U2 2
+Net 134 "/EBI_A24" "EBI_A24"
+ U2 1
+ U0 128
+ P30 25
+Net 136 "" ""
+ P0 1
+ F0 1
+Net 137 "/USB_DM" "USB_DM"
+ K0 1
+ R2 2
+Net 138 "" ""
+ P0 2
+ R2 1
+Net 139 "/USB_DP" "USB_DP"
+ K1 1
+ R3 2
+Net 140 "" ""
+ R4 1
+ P0 3
+ R3 1
+Net 145 "/EBI_NWAIT1" "EBI_NWAIT1"
+ P30 58
+ U0 92
+Net 150 "/EBI_NCS5" "EBI_NCS5"
+ U2 13
+ P30 56
+Net 151 "/EBI_NCS4" "EBI_NCS4"
+ U2 14
+ P30 55
+Net 153 "/EBI_NWAIT0" "EBI_NWAIT0"
+ P30 57
+ U0 91
+Net 154 "/PWM0_TRG" "PWM0_TRG"
+ K1 3
+ P20 52
+Net 158 "/FUNSEL0" "FUNSEL0"
+ U10 70
+ K0 2
+ U11 44
+ U12 32
+ U0 103
+Net 159 "" ""
+ R11 1
+ P10 4
+Net 160 "" ""
+ R10 1
+ P10 2
+}
+#End

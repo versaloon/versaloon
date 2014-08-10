@@ -1,0 +1,50 @@
+object FormTextEditor: TFormTextEditor
+  Left = 255
+  Height = 578
+  Top = 295
+  Width = 506
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'TextEditor'
+  ClientHeight = 578
+  ClientWidth = 506
+  KeyPreview = True
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '0.9.28.2'
+  object memoText: TMemo
+    Left = 0
+    Height = 536
+    Top = 0
+    Width = 506
+    Align = alTop
+    Color = 15400959
+    Font.Color = 12937777
+    OnKeyPress = memoTextKeyPress
+    ParentFont = False
+    ParentShowHint = False
+    ScrollBars = ssAutoBoth
+    ShowHint = True
+    TabOrder = 0
+    WordWrap = False
+  end
+  object btnSave: TButton
+    Left = 112
+    Height = 25
+    Top = 544
+    Width = 75
+    Caption = '&Save'
+    OnClick = btnSaveClick
+    TabOrder = 1
+  end
+  object btnClose: TButton
+    Left = 296
+    Height = 25
+    Top = 544
+    Width = 75
+    Caption = '&Close'
+    ModalResult = 1
+    TabOrder = 2
+  end
+end

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<series name="at91sam3">
+  <chip name="at91sam3">
+    <chip_id>0x0000</chip_id>
+    <program_mode>j:JTAG(F)|s:SWD</program_mode>
+    <app_page_size>256</app_page_size>
+    <app_page_num>1024</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_seg>0</app_seg>
+    <param0>1</param0>
+    <param1>0x400E0800</param1>
+    <param2>0x400E0A00</param2>
+  </chip>
+  <chip name="at91sam3s4a">
+    <chip_id>0x28800960</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>1024</app_page_num>
+    <app_addr>0x00400000</app_addr>
+  </chip>
+  <chip name="at91sam3s2a">
+    <chip_id>0x288A0760</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>512</app_page_num>
+    <app_addr>0x00400000</app_addr>
+  </chip>
+  <chip name="at91sam3s1a">
+    <chip_id>0x28890560</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>256</app_page_num>
+    <app_addr>0x00400000</app_addr>
+  </chip>
+  <chip name="at91sam3s4b">
+    <chip_id>0x28900960</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>1024</app_page_num>
+    <app_addr>0x00400000</app_addr>
+  </chip>
+  <chip name="at91sam3s2b">
+    <chip_id>0x289A0760</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>512</app_page_num>
+    <app_addr>0x00400000</app_addr>
+  </chip>
+  <chip name="at91sam3s1b">
+    <chip_id>0x28990560</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>256</app_page_num>
+    <app_addr>0x00400000</app_addr>
+  </chip>
+  <chip name="at91sam3s4c">
+    <chip_id>0x28A00960</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>1024</app_page_num>
+    <app_addr>0x00400000</app_addr>
+  </chip>
+  <chip name="at91sam3s2c">
+    <chip_id>0x28AA0760</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>512</app_page_num>
+    <app_addr>0x00400000</app_addr>
+  </chip>
+  <chip name="at91sam3s1c">
+    <chip_id>0x28A90560</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>256</app_page_num>
+    <app_addr>0x00400000</app_addr>
+  </chip>
+  <chip name="at91sam3u4c">
+    <chip_id>0x28000960</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>512</app_page_num>
+    <app_addr>0x00080000</app_addr>
+    <ee_addr>0x00100000</ee_addr>
+    <ee_page_size>256</ee_page_size>
+    <ee_page_num>512</ee_page_num>
+    <ee_default>0xFF</ee_default>
+    <ee_seg>0</ee_seg>
+    <param0>2</param0>
+  </chip>
+  <chip name="at91sam3u2c">
+    <chip_id>0x280A0760</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>512</app_page_num>
+    <app_addr>0x00080000</app_addr>
+  </chip>
+  <chip name="at91sam3u1c">
+    <chip_id>0x28090560</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>256</app_page_num>
+    <app_addr>0x00080000</app_addr>
+  </chip>
+  <chip name="at91sam3u4e">
+    <chip_id>0x28100960</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>512</app_page_num>
+    <app_addr>0x00080000</app_addr>
+    <ee_addr>0x00100000</ee_addr>
+    <ee_page_size>256</ee_page_size>
+    <ee_page_num>512</ee_page_num>
+    <ee_default>0xFF</ee_default>
+    <ee_seg>0</ee_seg>
+    <param0>2</param0>
+  </chip>
+  <chip name="at91sam3u2e">
+    <chip_id>0x281A0760</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>512</app_page_num>
+    <app_addr>0x00080000</app_addr>
+  </chip>
+  <chip name="at91sam3u1e">
+    <chip_id>0x28190560</chip_id>
+    <program_mode>js</program_mode>
+    <app_page_num>256</app_page_num>
+    <app_addr>0x00080000</app_addr>
+  </chip>
+</series>

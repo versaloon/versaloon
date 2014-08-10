@@ -1,0 +1,166 @@
+object FormHexEditor: TFormHexEditor
+  Left = 449
+  Height = 541
+  Top = 155
+  Width = 626
+  HorzScrollBar.Page = 589
+  VertScrollBar.Page = 409
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'FormHexEditor'
+  ClientHeight = 541
+  ClientWidth = 626
+  KeyPreview = True
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '0.9.28.2'
+  object lblMeasureSize: TLabel
+    Left = 47
+    Height = 13
+    Top = 27
+    Width = 1
+    ParentColor = False
+  end
+  object pnlButton: TPanel
+    Left = 0
+    Height = 69
+    Top = 472
+    Width = 626
+    Align = alBottom
+    ClientHeight = 69
+    ClientWidth = 626
+    TabOrder = 0
+    object btnSave: TButton
+      Left = 120
+      Height = 25
+      Top = 21
+      Width = 75
+      Caption = '&Save'
+      OnClick = btnSaveClick
+      TabOrder = 0
+    end
+    object btnExit: TButton
+      Left = 448
+      Height = 25
+      Top = 21
+      Width = 75
+      Caption = '&Exit'
+      ModalResult = 1
+      OnClick = btnExitClick
+      TabOrder = 1
+    end
+    object btnSaveAs: TButton
+      Left = 284
+      Height = 25
+      Top = 21
+      Width = 75
+      Caption = 'S&aveAs...'
+      OnClick = btnSaveAsClick
+      TabOrder = 2
+    end
+  end
+  object pnlData: TPanel
+    Left = 0
+    Height = 472
+    Top = 0
+    Width = 626
+    Align = alClient
+    BevelWidth = 10
+    ClientHeight = 472
+    ClientWidth = 626
+    TabOrder = 1
+    object sgData: TStringGrid
+      Left = 10
+      Height = 452
+      Top = 10
+      Width = 606
+      Align = alClient
+      Color = 15400959
+      ColCount = 0
+      FixedCols = 0
+      FixedRows = 0
+      Flat = True
+      Font.Color = 12937777
+      GridLineWidth = 0
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goSmoothScroll]
+      ParentFont = False
+      RowCount = 0
+      ScrollBars = ssVertical
+      TabOrder = 0
+      TitleFont.Color = clBlack
+      OnKeyPress = sgDataKeyPress
+      OnPrepareCanvas = sgDataPrepareCanvas
+      OnSelectCell = sgDataSelectCell
+      OnTopLeftChanged = sgDataTopLeftChanged
+    end
+  end
+  object tInit: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = tInitTimer
+    left = 352
+    top = 488
+  end
+  object alHotKey: TActionList
+    left = 310
+    top = 488
+    object actGoto: TAction
+      OnExecute = actGotoExecute
+      ShortCut = 16455
+    end
+    object actSearch: TAction
+      OnExecute = actSearchExecute
+      ShortCut = 16454
+    end
+    object actReplace: TAction
+      OnExecute = actReplaceExecute
+      ShortCut = 16466
+    end
+    object actNext: TAction
+      OnExecute = actNextExecute
+      ShortCut = 16462
+    end
+    object actSave: TAction
+      OnExecute = actSaveExecute
+      ShortCut = 16467
+    end
+  end
+  object tSearch: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = tSearchTimer
+    left = 80
+    top = 488
+  end
+  object tGoto: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = tGotoTimer
+    left = 32
+    top = 488
+  end
+  object tNext: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = tNextTimer
+    left = 208
+    top = 488
+  end
+  object tReplace: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = tReplaceTimer
+    left = 248
+    top = 488
+  end
+  object sdSaveAs: TSaveDialog
+    DefaultExt = '.hex'
+    Filter = 'HEX File|*.hex|BIN File|*.bin'
+    left = 400
+    top = 488
+  end
+end

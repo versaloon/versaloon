@@ -1,0 +1,2386 @@
+# EESchema Netlist Version 1.1 created  01/07/2013 10:44:24
+(
+ ( /51492DF7 $noname  R37 100K {Lib=R}
+  (    1 GND )
+  (    2 N-000066 )
+ )
+ ( /51492E41 $noname  R38 100K {Lib=R}
+  (    1 N-000208 )
+  (    2 GND )
+ )
+ ( /512A7A9A $noname  C20 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /512A2FB0 $noname  R36 1K {Lib=R}
+  (    1 N-000208 )
+  (    2 /BACKLIGHT )
+ )
+ ( /512A2FA3 $noname  Q21 NPN {Lib=NPN}
+  (    1 GND )
+  (    2 N-000208 )
+  (    3 N-000156 )
+ )
+ ( /512A1BA7 $noname  R92 10K {Lib=R}
+  (    1 /KEY )
+  (    2 VCC )
+ )
+ ( /512A1B8C $noname  R33 10K {Lib=R}
+  (    1 /SELECT )
+  (    2 VCC )
+ )
+ ( /512902F2 $noname  X0 12MHz {Lib=OSCILLATOR}
+  (    1 ? )
+  (    2 GND )
+  (    3 N-000076 )
+  (    4 VCC )
+ )
+ ( /5127F159 $noname  R32 10K {Lib=R}
+  (    1 VCC )
+  (    2 /EBI_NCS3 )
+ )
+ ( /5127D44E $noname  RP31 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_NUB )
+  (    2 /EBI_NLB )
+  (    3 /EBI_NOE )
+  (    4 /EBI_NWAIT )
+  (    5 /NWAIT )
+  (    6 /NOE )
+  (    7 /NLB )
+  (    8 /NUB )
+ )
+ ( /5127D44C $noname  RP30 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_D14 )
+  (    2 /EBI_D15 )
+  (    3 /EBI_NWE )
+  (    4 /EBI_CLK )
+  (    5 /CLK )
+  (    6 /NWE )
+  (    7 /D15 )
+  (    8 /D14 )
+ )
+ ( /5127D44A $noname  RP29 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_D10 )
+  (    2 /EBI_D11 )
+  (    3 /EBI_D12 )
+  (    4 /EBI_D13 )
+  (    5 /D13 )
+  (    6 /D12 )
+  (    7 /D11 )
+  (    8 /D10 )
+ )
+ ( /5127D448 $noname  RP28 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_D6 )
+  (    2 /EBI_D7 )
+  (    3 /EBI_D8 )
+  (    4 /EBI_D9 )
+  (    5 /D9 )
+  (    6 /D8 )
+  (    7 /D7 )
+  (    8 /D6 )
+ )
+ ( /5127D446 $noname  RP27 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_D2 )
+  (    2 /EBI_D3 )
+  (    3 /EBI_D4 )
+  (    4 /EBI_D5 )
+  (    5 /D5 )
+  (    6 /D4 )
+  (    7 /D3 )
+  (    8 /D2 )
+ )
+ ( /5127D43B $noname  RP26 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_A24 )
+  (    2 /EBI_A25 )
+  (    3 /EBI_D0 )
+  (    4 /EBI_D1 )
+  (    5 /D1 )
+  (    6 /D0 )
+  (    7 /A25 )
+  (    8 /A24 )
+ )
+ ( /5127D3FA $noname  RP25 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_A20 )
+  (    2 /EBI_A21 )
+  (    3 /EBI_A22 )
+  (    4 /EBI_A23 )
+  (    5 /A23 )
+  (    6 /A22 )
+  (    7 /A21 )
+  (    8 /A20 )
+ )
+ ( /5127D3F7 $noname  RP24 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_A16 )
+  (    2 /EBI_A17 )
+  (    3 /EBI_A18 )
+  (    4 /EBI_A19 )
+  (    5 /A19 )
+  (    6 /A18 )
+  (    7 /A17 )
+  (    8 /A16 )
+ )
+ ( /5127D3F5 $noname  RP23 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_A12 )
+  (    2 /EBI_A13 )
+  (    3 /EBI_A14 )
+  (    4 /EBI_A15 )
+  (    5 /A15 )
+  (    6 /A14 )
+  (    7 /A13 )
+  (    8 /A12 )
+ )
+ ( /5127D3D5 $noname  RP22 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_A8 )
+  (    2 /EBI_A9 )
+  (    3 /EBI_A10 )
+  (    4 /EBI_A11 )
+  (    5 /A11 )
+  (    6 /A10 )
+  (    7 /A9 )
+  (    8 /A8 )
+ )
+ ( /5127D3D1 $noname  RP21 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_A4 )
+  (    2 /EBI_A5 )
+  (    3 /EBI_A6 )
+  (    4 /EBI_A7 )
+  (    5 /A7 )
+  (    6 /A6 )
+  (    7 /A5 )
+  (    8 /A4 )
+ )
+ ( /5127D3A3 $noname  RP20 R_PACK4 {Lib=R_PACK4}
+  (    1 /EBI_A0 )
+  (    2 /EBI_A1 )
+  (    3 /EBI_A2 )
+  (    4 /EBI_A3 )
+  (    5 /A3 )
+  (    6 /A2 )
+  (    7 /A1 )
+  (    8 /A0 )
+ )
+ ( /512772ED $noname  D21 LED_White {Lib=LED}
+  (    1 N-000199 )
+  (    2 N-000156 )
+ )
+ ( /512772D5 $noname  D20 LED_White {Lib=LED}
+  (    1 N-000199 )
+  (    2 N-000156 )
+ )
+ ( /51276DB4 $noname  C23 1uF/25V {Lib=C}
+  (    1 N-000206 )
+  (    2 N-000161 )
+ )
+ ( /51276DB3 $noname  C32 1uF/25V {Lib=C}
+  (    1 GND )
+  (    2 N-000161 )
+ )
+ ( /51276B96 $noname  LCM20 COG_LCM_33P {Lib=COG_LCM_33P}
+  (    1 VCC )
+  (    2 ? )
+  (    3 VCC )
+  (    4 GND )
+  (    5 ? )
+  (    6 N-000161 )
+  (    7 N-000206 )
+  (    8 N-000160 )
+  (    9 N-000067 )
+  (   10 N-000146 )
+  (   11 N-000063 )
+  (   12 N-000210 )
+  (   13 N-000157 )
+  (   14 N-000064 )
+  (   15 N-000158 )
+  (   16 N-000159 )
+  (   17 ? )
+  (   18 N-000065 )
+  (   19 GND )
+  (   20 VCC )
+  (   21 /EBI_D7 )
+  (   22 /EBI_D6 )
+  (   23 /EBI_D5 )
+  (   24 /EBI_D4 )
+  (   25 /EBI_D3 )
+  (   26 /EBI_D2 )
+  (   27 /EBI_D1 )
+  (   28 /EBI_D0 )
+  (   29 /EBI_NOE )
+  (   30 /EBI_NWE )
+  (   31 /EBI_A10 )
+  (   32 N-000071 )
+  (   33 /EBI_NCS3 )
+ )
+ ( /512641C4 $noname  P20 CONN_26X2 {Lib=CONN_26X2}
+  (    1 /A0 )
+  (    2 /A1 )
+  (    3 /A2 )
+  (    4 /A3 )
+  (    5 /A4 )
+  (    6 /A5 )
+  (    7 /A6 )
+  (    8 /A7 )
+  (    9 /A8 )
+  (   10 /A9 )
+  (   11 /A10 )
+  (   12 /A11 )
+  (   13 /A12 )
+  (   14 /A13 )
+  (   15 /A14 )
+  (   16 /A15 )
+  (   17 /A16 )
+  (   18 /A17 )
+  (   19 /A18 )
+  (   20 /A19 )
+  (   21 /A20 )
+  (   22 /A21 )
+  (   23 /A22 )
+  (   24 /A23 )
+  (   25 /A24 )
+  (   26 /A25 )
+  (   27 /D0 )
+  (   28 /D1 )
+  (   29 /D2 )
+  (   30 /D3 )
+  (   31 /D4 )
+  (   32 /D5 )
+  (   33 /D6 )
+  (   34 /D7 )
+  (   35 /D8 )
+  (   36 /D9 )
+  (   37 /D10 )
+  (   38 /D11 )
+  (   39 /D12 )
+  (   40 /D13 )
+  (   41 /D14 )
+  (   42 /D15 )
+  (   43 /NWE )
+  (   44 /CLK )
+  (   45 /NUB )
+  (   46 /NLB )
+  (   47 /NOE )
+  (   48 /NWAIT )
+  (   49 /NCS0 )
+  (   50 /RDY0 )
+  (   51 /P_VCC )
+  (   52 GND )
+ )
+ ( /512638F0 $noname  R31 300 {Lib=R}
+  (    1 N-000199 )
+  (    2 VCC )
+ )
+ ( /512635FD $noname  R26 1K {Lib=R}
+  (    1 VCC )
+  (    2 N-000198 )
+ )
+ ( /51238C1F $noname  R73 NC {Lib=R}
+  (    1 /P_ADC )
+  (    2 /T_ADC )
+ )
+ ( /51238C07 $noname  R72 NC {Lib=R}
+  (    1 /P_IO )
+  (    2 /T_IO )
+ )
+ ( /51238C01 $noname  D72 ZD3.3 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /T_IO )
+ )
+ ( /51238925 $noname  R30 10K {Lib=R}
+  (    1 VCC )
+  (    2 /EBI_RDY0 )
+ )
+ ( /5123890A $noname  R28 10K {Lib=R}
+  (    1 /EBI_NCS0 )
+  (    2 VCC )
+ )
+ ( /51238647 $noname  D71 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /SDIO_D7 )
+ )
+ ( /51238646 $noname  R71 NC {Lib=R}
+  (    1 /P_SDIO_D7 )
+  (    2 /SDIO_D7 )
+ )
+ ( /512385F7 $noname  R70 NC {Lib=R}
+  (    1 /P_SDIO_D6 )
+  (    2 /SDIO_D6 )
+ )
+ ( /512385F6 $noname  D70 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /SDIO_D6 )
+ )
+ ( /512384A9 $noname  P10 CONN_5 {Lib=CONN_5}
+  (    1 VCC )
+  (    2 /BOOT0 )
+  (    3 GND )
+  (    4 /SWDIO )
+  (    5 /SWCLK )
+ )
+ ( /51233E39 $noname  R27 22 {Lib=R}
+  (    1 /NCS0 )
+  (    2 /EBI_NCS0 )
+ )
+ ( /51233E02 $noname  R29 22 {Lib=R}
+  (    1 /EBI_RDY0 )
+  (    2 /RDY0 )
+ )
+ ( /511D0C1A $noname  C19 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /511D0C10 $noname  C18 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /511D0BE7 $noname  C17 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /511D06BC $noname  G0 LOGO {Lib=LOGO}
+ )
+ ( /511D02FA $noname  SW20 SW_PUSH {Lib=SW_PUSH}
+  (    1 /SELECT )
+  (    2 GND )
+ )
+ ( /511CFF50 $noname  C31 104/25V {Lib=C}
+  (    1 N-000065 )
+  (    2 GND )
+ )
+ ( /511CFF48 $noname  C30 104/25V {Lib=C}
+  (    1 N-000159 )
+  (    2 N-000158 )
+ )
+ ( /511CFF18 $noname  C29 104/25V {Lib=C}
+  (    1 N-000064 )
+  (    2 N-000158 )
+ )
+ ( /511CFD6F $noname  C28 1uF/25V {Lib=C}
+  (    1 N-000157 )
+  (    2 N-000210 )
+ )
+ ( /511CFD6E $noname  C27 1uF/25V {Lib=C}
+  (    1 N-000063 )
+  (    2 GND )
+ )
+ ( /511CFD6C $noname  C24 1uF/25V {Lib=C}
+  (    1 N-000160 )
+  (    2 GND )
+ )
+ ( /511CFD60 $noname  C26 1uF/25V {Lib=C}
+  (    1 N-000146 )
+  (    2 GND )
+ )
+ ( /511CFD26 $noname  C25 1uF/25V {Lib=C}
+  (    1 N-000067 )
+  (    2 GND )
+ )
+ ( /511CF833 $noname  SP20 BEEPER {Lib=SPEAKER}
+  (    1 VCC )
+  (    2 N-000198 )
+ )
+ ( /511CF789 $noname  R25 1K {Lib=R}
+  (    1 /BEEP )
+  (    2 N-000066 )
+ )
+ ( /511CF76B $noname  Q20 NPN {Lib=NPN}
+  (    1 GND )
+  (    2 N-000066 )
+  (    3 N-000198 )
+ )
+ ( /511CF6F4 $noname  C21 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /511CF651 $noname  R22 10K {Lib=R}
+  (    1 /EBI_NWAIT )
+  (    2 VCC )
+ )
+ ( /511CF4DA $noname  R20 10K {Lib=R}
+  (    1 /EBI_NCS2 )
+  (    2 VCC )
+ )
+ ( /511CE531 $noname  U0 LM1117 {Lib=LM1117}
+  (    1 GND )
+  (    2 VCC )
+  (    3 /5V )
+  (    4 VCC )
+ )
+ ( /511CE3FB $noname  R2 1.5K {Lib=R}
+  (    1 /USB_PU )
+  (    2 N-000075 )
+ )
+ ( /511CE3D8 $noname  R1 22 {Lib=R}
+  (    1 /USB_DP )
+  (    2 N-000075 )
+ )
+ ( /511CE3C6 $noname  R0 22 {Lib=R}
+  (    1 /USB_DM )
+  (    2 N-000087 )
+ )
+ ( /511CE2B1 $noname  U11 STM32-144PIN {Lib=STM32-144PIN}
+  (    1 /EBI_A23 )
+  (    2 /EBI_A19 )
+  (    3 /EBI_A20 )
+  (    4 /EBI_A21 )
+  (    5 /EBI_A22 )
+  (    6 VCC )
+  (    7 /USB_PU )
+  (    8 ? )
+  (    9 ? )
+  (   10 /EBI_A0 )
+  (   11 /EBI_A1 )
+  (   12 /EBI_A2 )
+  (   13 /EBI_A3 )
+  (   14 /EBI_A4 )
+  (   15 /EBI_A5 )
+  (   16 GND )
+  (   17 VCC )
+  (   18 ? )
+  (   19 ? )
+  (   20 ? )
+  (   21 ? )
+  (   22 ? )
+  (   23 /OSC_IN )
+  (   24 /OSC_OUT )
+  (   25 /NRST )
+  (   26 ? )
+  (   27 ? )
+  (   28 ? )
+  (   29 ? )
+  (   30 N-000083 )
+  (   31 GND )
+  (   32 VCC )
+  (   33 VCC )
+  (   34 /LED_G )
+  (   35 /LED_R )
+  (   36 /LED_D )
+  (   37 /PWR_CTRL )
+  (   38 GND )
+  (   39 VCC )
+  (   40 /KEY )
+  (   41 /SELECT )
+  (   42 /BACKLIGHT )
+  (   43 /BEEP )
+  (   44 ? )
+  (   45 ? )
+  (   46 /T_VCC )
+  (   47 /T_ADC )
+  (   48 GND )
+  (   49 ? )
+  (   50 /EBI_A6 )
+  (   51 GND )
+  (   52 VCC )
+  (   53 /EBI_A7 )
+  (   54 /EBI_A8 )
+  (   55 /EBI_A9 )
+  (   56 /EBI_A10 )
+  (   57 /EBI_A11 )
+  (   58 /EBI_D4 )
+  (   59 /EBI_D5 )
+  (   60 /EBI_D6 )
+  (   61 GND )
+  (   62 VCC )
+  (   63 /EBI_D7 )
+  (   64 /EBI_D8 )
+  (   65 /EBI_D9 )
+  (   66 /EBI_D10 )
+  (   67 /EBI_D11 )
+  (   68 /EBI_D12 )
+  (   69 /SDIO_D1 )
+  (   70 /SDIO_D3 )
+  (   71 N-000084 )
+  (   72 VCC )
+  (   73 /SDIO_D3 )
+  (   74 /SDIO_CK )
+  (   75 /SDIO_D0 )
+  (   76 /SDIO_CMD )
+  (   77 /EBI_D13 )
+  (   78 /EBI_D14 )
+  (   79 /EBI_D15 )
+  (   80 /EBI_A16 )
+  (   81 /EBI_A17 )
+  (   82 /EBI_A18 )
+  (   83 GND )
+  (   84 VCC )
+  (   85 /EBI_D0 )
+  (   86 /EBI_D1 )
+  (   87 /EBI_A12 )
+  (   88 /EBI_A13 )
+  (   89 /EBI_A14 )
+  (   90 /EBI_A15 )
+  (   91 /EBI_RDY0 )
+  (   92 ? )
+  (   93 ? )
+  (   94 GND )
+  (   95 VCC )
+  (   96 /SDIO_D6 )
+  (   97 /SDIO_D7 )
+  (   98 /SDIO_D0 )
+  (   99 /SDIO_D1 )
+  (  100 /T_RTCK )
+  (  101 /CAN_TX )
+  (  102 /CAN_RX )
+  (  103 /USB_DM )
+  (  104 /USB_DP )
+  (  105 /SWDIO )
+  (  106 N-000085 )
+  (  107 GND )
+  (  108 VCC )
+  (  109 /SWCLK )
+  (  110 /SDIO_D3 )
+  (  111 /SDIO_D2 )
+  (  112 /SDIO_D3 )
+  (  113 /SDIO_CK )
+  (  114 /EBI_D2 )
+  (  115 /EBI_D3 )
+  (  116 /SDIO_CMD )
+  (  117 /EBI_CLK )
+  (  118 /EBI_NOE )
+  (  119 /EBI_NWE )
+  (  120 GND )
+  (  121 VCC )
+  (  122 /EBI_NWAIT )
+  (  123 /EBI_NCS0 )
+  (  124 /EBI_NCS1 )
+  (  125 /EBI_NCS2 )
+  (  126 ? )
+  (  127 /EBI_NCS3 )
+  (  128 /EBI_A24 )
+  (  129 /EBI_A25 )
+  (  130 GND )
+  (  131 VCC )
+  (  132 ? )
+  (  133 /SDIO_CK )
+  (  134 /SDIO_D2 )
+  (  135 /T_IO )
+  (  136 /SDIO_D2 )
+  (  137 /SDIO_D2 )
+  (  138 /BOOT0 )
+  (  139 /CAN_RX )
+  (  140 /CAN_TX )
+  (  141 /EBI_NLB )
+  (  142 /EBI_NUB )
+  (  143 N-000070 )
+  (  144 VCC )
+ )
+ ( /4B51FF0B $noname  R14 10K {Lib=R}
+  (    1 GND )
+  (    2 /BOOT0 )
+ )
+ ( /4B36768D $noname  R18 1K {Lib=R}
+  (    1 /P_VREF )
+  (    2 /P_TDO )
+ )
+ ( /4ACB926C $noname  R13 3.3K {Lib=R}
+  (    1 /LED_D )
+  (    2 N-000090 )
+ )
+ ( /4ACB923C $noname  D2 LED_Blue {Lib=LED}
+  (    1 VCC )
+  (    2 N-000090 )
+ )
+ ( /4ACB9152 $noname  R94 1K {Lib=R}
+  (    1 /PWR_CTRL )
+  (    2 N-000091 )
+ )
+ ( /4ACB914C $noname  R95 100K {Lib=R}
+  (    1 N-000091 )
+  (    2 VCC )
+ )
+ ( /4ACB90B4 $noname  D90 1N5817 {Lib=DIODE}
+  (    1 N-000092 )
+  (    2 /P_VCC )
+ )
+ ( /4ACB907A $noname  Q90 Si2333DS {Lib=MOSFET_P}
+  (    D N-000092 )
+  (    G N-000091 )
+  (    S VCC )
+ )
+ ( /491A0163 $noname  F90 50mA_FUSE {Lib=FUSE}
+  (    1 GND )
+  (    2 /P_GND )
+ )
+ ( /4919A7AE $noname  D87 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /SDIO_D3 )
+ )
+ ( /4919A7A4 $noname  D86 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /SDIO_D0 )
+ )
+ ( /4919A79C $noname  D85 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /SDIO_CK )
+ )
+ ( /4919A790 $noname  D84 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /SDIO_D2 )
+ )
+ ( /4919A784 $noname  D83 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /SDIO_CMD )
+ )
+ ( /4919A779 $noname  D82 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /SDIO_D1 )
+ )
+ ( /4919A76F $noname  D81 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /CAN_TX )
+ )
+ ( /4919A762 $noname  D80 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /CAN_RX )
+ )
+ ( /4919A73C $noname  D88 ZD5.1 {Lib=DIODESCH}
+  (    1 GND )
+  (    2 /T_RTCK )
+ )
+ ( /484F74C1 $noname  R88 240 {Lib=R}
+  (    1 /P_RTCK )
+  (    2 /T_RTCK )
+ )
+ ( /480A3E3F $noname  R80 240 {Lib=R}
+  (    1 /P_RXD )
+  (    2 /CAN_RX )
+ )
+ ( /483C04E2 $noname  R19 1K {Lib=R}
+  (    1 /P_TMS )
+  (    2 /P_VREF )
+ )
+ ( /48398981 $noname  SW91 SW_PUSH {Lib=SW_PUSH}
+  (    1 /KEY )
+  (    2 GND )
+ )
+ ( /4836052E $noname  R11 470 {Lib=R}
+  (    1 /LED_G )
+  (    2 N-000139 )
+ )
+ ( /4836050E $noname  D1 LED_Green {Lib=LED}
+  (    1 VCC )
+  (    2 N-000139 )
+ )
+ ( /48360178 $noname  P90 CONN_10X2 {Lib=CONN_10X2}
+  (    1 /P_VREF )
+  (    2 /P_VCC )
+  (    3 /P_TRST )
+  (    4 /P_GND )
+  (    5 /P_TDI )
+  (    6 /P_GND )
+  (    7 /P_TMS )
+  (    8 /P_GND )
+  (    9 /P_TCK )
+  (   10 /P_GND )
+  (   11 /P_RTCK )
+  (   12 /P_GND )
+  (   13 /P_TDO )
+  (   14 /P_ADC )
+  (   15 /P_SRST )
+  (   16 /P_IO )
+  (   17 /P_TXD )
+  (   18 /P_SDIO_D7 )
+  (   19 /P_RXD )
+  (   20 /P_SDIO_D6 )
+ )
+ ( /4817F1DF $noname  D0 LED_Red {Lib=LED}
+  (    1 VCC )
+  (    2 N-000141 )
+ )
+ ( /4817F1C3 $noname  R12 3.3K {Lib=R}
+  (    1 /LED_R )
+  (    2 N-000141 )
+ )
+ ( /480A2A60 $noname  U10 STM32-48PIN {Lib=STM32-48PIN}
+  (    1 VCC )
+  (    2 /USB_PU )
+  (    3 ? )
+  (    4 ? )
+  (    5 /OSC_IN )
+  (    6 /OSC_OUT )
+  (    7 /NRST )
+  (    8 GND )
+  (    9 VCC )
+  (   10 /LED_G )
+  (   11 /LED_R )
+  (   12 /LED_D )
+  (   13 /PWR_CTRL )
+  (   14 /KEY )
+  (   15 /SELECT )
+  (   16 /BACKLIGHT )
+  (   17 /BEEP )
+  (   18 /T_VCC )
+  (   19 /T_ADC )
+  (   20 GND )
+  (   21 /SDIO_D1 )
+  (   22 /SDIO_D3 )
+  (   23 GND )
+  (   24 VCC )
+  (   25 /SDIO_D3 )
+  (   26 /SDIO_CK )
+  (   27 /SDIO_D0 )
+  (   28 /SDIO_CMD )
+  (   29 /T_RTCK )
+  (   30 /CAN_TX )
+  (   31 /CAN_RX )
+  (   32 /USB_DM )
+  (   33 /USB_DP )
+  (   34 /SWDIO )
+  (   35 GND )
+  (   36 VCC )
+  (   37 /SWCLK )
+  (   38 /SDIO_D3 )
+  (   39 /SDIO_CK )
+  (   40 /SDIO_D2 )
+  (   41 /T_IO )
+  (   42 /SDIO_D2 )
+  (   43 /SDIO_D2 )
+  (   44 /BOOT0 )
+  (   45 /CAN_RX )
+  (   46 /CAN_TX )
+  (   47 GND )
+  (   48 VCC )
+ )
+ ( /480A4692 $noname  F0 200mA_FUSE {Lib=FUSE}
+  (    1 N-000135 )
+  (    2 /5V )
+ )
+ ( /480A45B7 $noname  P0 USBMINI-B {Lib=USBMINI-B}
+  (    1 N-000135 )
+  (    2 N-000087 )
+  (    3 N-000075 )
+  (    4 ? )
+  (    5 GND )
+ )
+ ( /480A3E71 $noname  R87 240 {Lib=R}
+  (    1 /P_SRST )
+  (    2 /SDIO_D3 )
+ )
+ ( /480A3E6E $noname  R86 240 {Lib=R}
+  (    1 /P_TDO )
+  (    2 /SDIO_D0 )
+ )
+ ( /480A3E6B $noname  R85 240 {Lib=R}
+  (    1 /P_TCK )
+  (    2 /SDIO_CK )
+ )
+ ( /480A3E59 $noname  R84 68 {Lib=R}
+  (    1 /P_TMS )
+  (    2 /SDIO_D2 )
+ )
+ ( /480A3E54 $noname  R83 240 {Lib=R}
+  (    1 /P_TDI )
+  (    2 /SDIO_CMD )
+ )
+ ( /480A3E4D $noname  R82 240 {Lib=R}
+  (    1 /P_TRST )
+  (    2 /SDIO_D1 )
+ )
+ ( /480A3E49 $noname  R81 240 {Lib=R}
+  (    1 /P_TXD )
+  (    2 /CAN_TX )
+ )
+ ( /480A3A66 $noname  C15 100pF {Lib=C}
+  (    1 /OSC_IN )
+  (    2 N-000076 )
+ )
+ ( /480A3A12 $noname  R10 100K {Lib=R}
+  (    1 /NRST )
+  (    2 VCC )
+ )
+ ( /480A31ED $noname  R90 1K {Lib=R}
+  (    1 GND )
+  (    2 /T_VCC )
+ )
+ ( /480A31E4 $noname  R91 1K {Lib=R}
+  (    1 /P_VREF )
+  (    2 /T_VCC )
+ )
+ ( /480A309B $noname  C1 100uF {Lib=CAPAPOL}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /480A3089 $noname  C0 100uF {Lib=CAPAPOL}
+  (    1 /5V )
+  (    2 GND )
+ )
+ ( /480A3064 $noname  C14 1uF {Lib=C}
+  (    1 /NRST )
+  (    2 GND )
+ )
+ ( /480A3037 $noname  C13 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /480A3033 $noname  C12 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /480A16CB $noname  C11 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /480A16C1 $noname  C10 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /515BC4CC $noname  R41 10K {Lib=R}
+  (    1 VCC )
+  (    2 N-000071 )
+ )
+ ( /518951E5 $noname  R74 NC {Lib=R}
+  (    1 /P_GND )
+  (    2 /P_SDIO_D6 )
+ )
+ ( /518951F3 $noname  R75 NC {Lib=R}
+  (    1 /P_GND )
+  (    2 /P_SDIO_D7 )
+ )
+ ( /51895201 $noname  R76 NC {Lib=R}
+  (    1 /P_GND )
+  (    2 /P_IO )
+ )
+ ( /5189520F $noname  R77 NC {Lib=R}
+  (    1 /P_GND )
+  (    2 /P_ADC )
+ )
+ ( /518F04D0 $noname  R60 NC {Lib=R}
+  (    1 N-000070 )
+  (    2 GND )
+ )
+ ( /518F04EB $noname  R61 NC {Lib=R}
+  (    1 N-000070 )
+  (    2 VCC )
+ )
+ ( /518F19B5 $noname  C60 100nF {Lib=C}
+  (    1 GND )
+  (    2 N-000085 )
+ )
+ ( /518F1F6E $noname  C62 100nF {Lib=C}
+  (    1 GND )
+  (    2 N-000084 )
+ )
+ ( /518F39DA $noname  R63 NC {Lib=R}
+  (    1 N-000083 )
+  (    2 GND )
+ )
+ ( /518F39E8 $noname  R64 NC {Lib=R}
+  (    1 N-000083 )
+  (    2 VCC )
+ )
+ ( /518F39F6 $noname  C63 100nF {Lib=C}
+  (    1 GND )
+  (    2 N-000083 )
+ )
+ ( /51B4F8E0 $noname  U20 PARA_NOR_PSRAM_TSOP {Lib=PARA_NOR_PSRAM_TSOP}
+  (    1 /EBI_A15 )
+  (    2 /EBI_A14 )
+  (    3 /EBI_A13 )
+  (    4 /EBI_A12 )
+  (    5 /EBI_A11 )
+  (    6 /EBI_A10 )
+  (    7 /EBI_A9 )
+  (    8 /EBI_A8 )
+  (    9 /EBI_A19 )
+  (   10 ? )
+  (   11 /EBI_NWE )
+  (   12 VCC )
+  (   13 /EBI_NCS2 )
+  (   14 /EBI_NUB )
+  (   15 /EBI_NLB )
+  (   16 /EBI_A18 )
+  (   17 /EBI_A17 )
+  (   18 /EBI_A7 )
+  (   19 /EBI_A6 )
+  (   20 /EBI_A5 )
+  (   21 /EBI_A4 )
+  (   22 /EBI_A3 )
+  (   23 /EBI_A2 )
+  (   24 /EBI_A1 )
+  (   25 /EBI_A0 )
+  (   26 /EBI_NCS1 )
+  (   27 GND )
+  (   28 /EBI_NOE )
+  (   29 /EBI_D0 )
+  (   30 /EBI_D8 )
+  (   31 /EBI_D1 )
+  (   32 /EBI_D9 )
+  (   33 /EBI_D2 )
+  (   34 /EBI_D10 )
+  (   35 /EBI_D3 )
+  (   36 /EBI_D11 )
+  (   37 VCC )
+  (   38 /EBI_D4 )
+  (   39 /EBI_D12 )
+  (   40 /EBI_D5 )
+  (   41 /EBI_D13 )
+  (   42 /EBI_D6 )
+  (   43 /EBI_D14 )
+  (   44 /EBI_D7 )
+  (   45 /EBI_D15 )
+  (   46 GND )
+  (   47 ? )
+  (   48 /EBI_A16 )
+ )
+ ( /51B50B32 $noname  R21 10K {Lib=R}
+  (    1 /EBI_NCS1 )
+  (    2 VCC )
+ )
+ ( /51C7C505 $noname  C22 100nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /51D0FC86 $noname  R78 NC {Lib=R}
+  (    1 /P_VCC )
+  (    2 /P_VREF )
+ )
+)
+*
+{ Allowed footprints by component:
+$component R37
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R38
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C20
+ SM*
+ C?
+ C1-1
+$endlist
+$component R36
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R92
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R33
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R32
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D21
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component D20
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component C23
+ SM*
+ C?
+ C1-1
+$endlist
+$component C32
+ SM*
+ C?
+ C1-1
+$endlist
+$component LCM20
+ 4dip300
+$endlist
+$component R31
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R26
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R73
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R72
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D72
+ D?
+ S*
+$endlist
+$component R30
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R28
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D71
+ D?
+ S*
+$endlist
+$component R71
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R70
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D70
+ D?
+ S*
+$endlist
+$component R27
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R29
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C19
+ SM*
+ C?
+ C1-1
+$endlist
+$component C18
+ SM*
+ C?
+ C1-1
+$endlist
+$component C17
+ SM*
+ C?
+ C1-1
+$endlist
+$component C31
+ SM*
+ C?
+ C1-1
+$endlist
+$component C30
+ SM*
+ C?
+ C1-1
+$endlist
+$component C29
+ SM*
+ C?
+ C1-1
+$endlist
+$component C28
+ SM*
+ C?
+ C1-1
+$endlist
+$component C27
+ SM*
+ C?
+ C1-1
+$endlist
+$component C24
+ SM*
+ C?
+ C1-1
+$endlist
+$component C26
+ SM*
+ C?
+ C1-1
+$endlist
+$component C25
+ SM*
+ C?
+ C1-1
+$endlist
+$component R25
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C21
+ SM*
+ C?
+ C1-1
+$endlist
+$component R22
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R20
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component U0
+ 4dip300
+$endlist
+$component R2
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R1
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R0
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R14
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R18
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R13
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D2
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component R94
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R95
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D90
+ D?
+ S*
+$endlist
+$component D87
+ D?
+ S*
+$endlist
+$component D86
+ D?
+ S*
+$endlist
+$component D85
+ D?
+ S*
+$endlist
+$component D84
+ D?
+ S*
+$endlist
+$component D83
+ D?
+ S*
+$endlist
+$component D82
+ D?
+ S*
+$endlist
+$component D81
+ D?
+ S*
+$endlist
+$component D80
+ D?
+ S*
+$endlist
+$component D88
+ D?
+ S*
+$endlist
+$component R88
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R80
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R19
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R11
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D1
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component D0
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component R12
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component P0
+ 4dip300
+$endlist
+$component R87
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R86
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R85
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R84
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R83
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R82
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R81
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C15
+ SM*
+ C?
+ C1-1
+$endlist
+$component R10
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R90
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R91
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C1
+ CP*
+ SM*
+$endlist
+$component C0
+ CP*
+ SM*
+$endlist
+$component C14
+ SM*
+ C?
+ C1-1
+$endlist
+$component C13
+ SM*
+ C?
+ C1-1
+$endlist
+$component C12
+ SM*
+ C?
+ C1-1
+$endlist
+$component C11
+ SM*
+ C?
+ C1-1
+$endlist
+$component C10
+ SM*
+ C?
+ C1-1
+$endlist
+$component R41
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R74
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R75
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R76
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R77
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R60
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R61
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C60
+ SM*
+ C?
+ C1-1
+$endlist
+$component C62
+ SM*
+ C?
+ C1-1
+$endlist
+$component R63
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R64
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C63
+ SM*
+ C?
+ C1-1
+$endlist
+$component U20
+ 4dip300
+$endlist
+$component R21
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C22
+ SM*
+ C?
+ C1-1
+$endlist
+$component R78
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$endfootprintlist
+}
+{ Pin List by Nets
+Net 5 "/LED_R" "LED_R"
+ U10 11
+ R12 1
+ U11 35
+Net 6 "/NRST" "NRST"
+ C14 1
+ U11 25
+ R10 1
+ U10 7
+Net 7 "/EBI_A5" "EBI_A5"
+ RP21 2
+ U11 15
+ U20 20
+Net 8 "/EBI_D8" "EBI_D8"
+ U20 30
+ U11 64
+ RP28 3
+Net 9 "/EBI_A8" "EBI_A8"
+ U11 54
+ U20 8
+ RP22 1
+Net 11 "/LED_G" "LED_G"
+ R11 1
+ U11 34
+ U10 10
+Net 12 "/OSC_OUT" "OSC_OUT"
+ U10 6
+ U11 24
+Net 13 "/EBI_A4" "EBI_A4"
+ U20 21
+ RP21 1
+ U11 14
+Net 14 "/EBI_D9" "EBI_D9"
+ U11 65
+ RP28 4
+ U20 32
+Net 15 "/EBI_D7" "EBI_D7"
+ U20 44
+ U11 63
+ RP28 2
+ LCM20 21
+Net 16 "/EBI_A7" "EBI_A7"
+ RP21 4
+ U11 53
+ U20 18
+Net 17 "/OSC_IN" "OSC_IN"
+ C15 1
+ U11 23
+ U10 5
+Net 18 "/EBI_A3" "EBI_A3"
+ U11 13
+ U20 22
+ RP20 4
+Net 20 "/EBI_A18" "EBI_A18"
+ RP24 3
+ U11 82
+ U20 16
+Net 22 "/EBI_D14" "EBI_D14"
+ U20 43
+ RP30 1
+ U11 78
+Net 23 "/EBI_D12" "EBI_D12"
+ U11 68
+ RP29 3
+ U20 39
+Net 24 "GND" "GND"
+ P0 5
+ R90 1
+ C0 2
+ D72 1
+ C14 2
+ C13 2
+ C12 2
+ C1 2
+ P10 3
+ D70 1
+ C27 2
+ C11 2
+ C10 2
+ C24 2
+ D71 1
+ C26 2
+ C25 2
+ U10 23
+ U11 130
+ U11 120
+ C21 2
+ C18 2
+ R14 1
+ U11 107
+ U10 20
+ C17 2
+ C60 1
+ C62 1
+ U10 8
+ LCM20 19
+ R63 2
+ C63 1
+ D82 1
+ R37 1
+ D88 1
+ R38 2
+ C20 2
+ X0 2
+ D80 1
+ C19 2
+ Q21 1
+ D81 1
+ D83 1
+ D84 1
+ D85 1
+ D86 1
+ D87 1
+ F90 1
+ SW91 2
+ U11 16
+ C22 2
+ U0 1
+ U20 46
+ U11 61
+ U11 51
+ U11 31
+ U20 27
+ R60 2
+ U10 35
+ SW20 2
+ U11 94
+ C32 1
+ U11 83
+ LCM20 4
+ U10 47
+ C31 2
+ Q20 1
+ U11 38
+ U11 48
+ P20 52
+Net 27 "/SDIO_D7" "SDIO_D7"
+ D71 2
+ R71 2
+ U11 97
+Net 28 "/EBI_A12" "EBI_A12"
+ U11 87
+ RP23 1
+ U20 4
+Net 29 "/EBI_D13" "EBI_D13"
+ U20 41
+ U11 77
+ RP29 4
+Net 30 "/EBI_D11" "EBI_D11"
+ U11 67
+ RP29 2
+ U20 36
+Net 31 "/EBI_A11" "EBI_A11"
+ U20 5
+ U11 57
+ RP22 4
+Net 32 "/PWR_CTRL" "PWR_CTRL"
+ R94 1
+ U10 13
+ U11 37
+Net 33 "/SDIO_D6" "SDIO_D6"
+ R70 2
+ U11 96
+ D70 2
+Net 34 "/EBI_D1" "EBI_D1"
+ U20 31
+ RP26 4
+ LCM20 27
+ U11 86
+Net 35 "/EBI_D10" "EBI_D10"
+ U11 66
+ U20 34
+ RP29 1
+Net 36 "/T_VCC" "T_VCC"
+ R91 2
+ U10 18
+ R90 2
+ U11 46
+Net 37 "/LED_D" "LED_D"
+ U10 12
+ U11 36
+ R13 1
+Net 39 "/EBI_D0" "EBI_D0"
+ U11 85
+ RP26 3
+ U20 29
+ LCM20 28
+Net 40 "/EBI_A23" "EBI_A23"
+ RP25 4
+ U11 1
+Net 41 "/EBI_D6" "EBI_D6"
+ U20 42
+ LCM20 22
+ U11 60
+ RP28 1
+Net 43 "/EBI_A2" "EBI_A2"
+ U20 23
+ U11 12
+ RP20 3
+Net 44 "/EBI_RDY0" "EBI_RDY0"
+ R30 2
+ R29 1
+ U11 91
+Net 45 "/EBI_A17" "EBI_A17"
+ U20 17
+ RP24 2
+ U11 81
+Net 47 "/EBI_A1" "EBI_A1"
+ RP20 2
+ U20 24
+ U11 11
+Net 48 "/EBI_A15" "EBI_A15"
+ U20 1
+ RP23 4
+ U11 90
+Net 49 "/EBI_A16" "EBI_A16"
+ U20 48
+ RP24 1
+ U11 80
+Net 50 "/EBI_A6" "EBI_A6"
+ RP21 3
+ U20 19
+ U11 50
+Net 51 "/KEY" "KEY"
+ U11 40
+ R92 1
+ U10 14
+ SW91 1
+Net 53 "/EBI_A0" "EBI_A0"
+ U20 25
+ U11 10
+ RP20 1
+Net 56 "/USB_PU" "USB_PU"
+ U10 2
+ R2 1
+ U11 7
+Net 57 "/EBI_A22" "EBI_A22"
+ RP25 3
+ U11 5
+Net 58 "/EBI_A21" "EBI_A21"
+ U11 4
+ RP25 2
+Net 59 "/EBI_A20" "EBI_A20"
+ U11 3
+ RP25 1
+Net 60 "/NCS0" "NCS0"
+ P20 49
+ R27 1
+Net 61 "/SWCLK" "SWCLK"
+ U10 37
+ U11 109
+ P10 5
+Net 62 "/SWDIO" "SWDIO"
+ U11 105
+ U10 34
+ P10 4
+Net 63 "" ""
+ LCM20 11
+ C27 1
+Net 64 "" ""
+ C29 1
+ LCM20 14
+Net 65 "" ""
+ LCM20 18
+ C31 1
+Net 66 "" ""
+ Q20 2
+ R25 2
+ R37 2
+Net 67 "" ""
+ C25 1
+ LCM20 9
+Net 68 "/CAN_TX" "CAN_TX"
+ D81 2
+ R81 2
+ U11 101
+ U10 30
+ U10 46
+ U11 140
+Net 69 "/EBI_A13" "EBI_A13"
+ U20 3
+ RP23 2
+ U11 88
+Net 70 "" ""
+ R61 1
+ R60 1
+ U11 143
+Net 71 "" ""
+ LCM20 32
+ R41 2
+Net 72 "/P_TCK" "P_TCK"
+ P90 9
+ R85 1
+Net 73 "/P_SRST" "P_SRST"
+ P90 15
+ R87 1
+Net 75 "" ""
+ R1 2
+ R2 2
+ P0 3
+Net 76 "" ""
+ X0 3
+ C15 2
+Net 77 "/P_VREF" "P_VREF"
+ R78 2
+ R91 1
+ R19 2
+ R18 1
+ P90 1
+Net 78 "/P_TXD" "P_TXD"
+ P90 17
+ R81 1
+Net 79 "/P_TRST" "P_TRST"
+ R82 1
+ P90 3
+Net 80 "/P_TDI" "P_TDI"
+ P90 5
+ R83 1
+Net 81 "/EBI_D4" "EBI_D4"
+ LCM20 24
+ RP27 3
+ U20 38
+ U11 58
+Net 82 "/P_VCC" "P_VCC"
+ P90 2
+ P20 51
+ R78 1
+ D90 2
+Net 83 "" ""
+ U11 30
+ C63 2
+ R63 1
+ R64 1
+Net 84 "" ""
+ C62 2
+ U11 71
+Net 85 "" ""
+ C60 2
+ U11 106
+Net 86 "/EBI_A19" "EBI_A19"
+ U11 2
+ U20 9
+ RP24 4
+Net 87 "" ""
+ P0 2
+ R0 2
+Net 88 "/EBI_A9" "EBI_A9"
+ RP22 2
+ U11 55
+ U20 7
+Net 89 "/EBI_A10" "EBI_A10"
+ RP22 3
+ U11 56
+ LCM20 31
+ U20 6
+Net 90 "" ""
+ D2 2
+ R13 2
+Net 91 "" ""
+ R95 1
+ R94 2
+ Q90 G
+Net 92 "" ""
+ D90 1
+ Q90 D
+Net 93 "/P_TDO" "P_TDO"
+ P90 13
+ R18 2
+ R86 1
+Net 94 "/P_RXD" "P_RXD"
+ P90 19
+ R80 1
+Net 95 "/P_RTCK" "P_RTCK"
+ R88 1
+ P90 11
+Net 96 "/P_GND" "P_GND"
+ P90 8
+ P90 10
+ R76 1
+ P90 6
+ P90 4
+ F90 2
+ R77 1
+ R74 1
+ R75 1
+ P90 12
+Net 97 "/EBI_NCS0" "EBI_NCS0"
+ R28 1
+ R27 2
+ U11 123
+Net 98 "/SDIO_CK" "SDIO_CK"
+ U11 74
+ U10 39
+ R85 2
+ U11 113
+ U11 133
+ U10 26
+ D85 2
+Net 99 "/USB_DM" "USB_DM"
+ U10 32
+ U11 103
+ R0 1
+Net 100 "/EBI_NUB" "EBI_NUB"
+ U20 14
+ U11 142
+ RP31 1
+Net 102 "/EBI_NWAIT" "EBI_NWAIT"
+ R22 1
+ RP31 4
+ U11 122
+Net 103 "/SDIO_D3" "SDIO_D3"
+ D87 2
+ R87 2
+ U10 25
+ U10 38
+ U11 70
+ U11 110
+ U10 22
+ U11 73
+ U11 112
+Net 104 "/CAN_RX" "CAN_RX"
+ U10 45
+ U11 139
+ D80 2
+ U10 31
+ R80 2
+ U11 102
+Net 105 "/EBI_NLB" "EBI_NLB"
+ RP31 2
+ U20 15
+ U11 141
+Net 106 "VCC" "VCC"
+ C18 1
+ U11 32
+ R32 1
+ X0 4
+ C21 1
+ SP20 1
+ C19 1
+ C17 1
+ U0 2
+ U11 6
+ U0 4
+ R30 1
+ R28 2
+ U11 72
+ U11 17
+ R26 1
+ U11 95
+ R31 2
+ U11 52
+ U11 62
+ U11 33
+ LCM20 3
+ LCM20 1
+ LCM20 20
+ U11 84
+ R92 2
+ C20 1
+ R20 2
+ R22 2
+ P10 1
+ R33 2
+ U20 12
+ U10 24
+ U11 131
+ D0 1
+ U11 121
+ R61 2
+ U10 48
+ U11 144
+ C10 1
+ R41 1
+ R10 2
+ R95 2
+ Q90 S
+ C11 1
+ D2 1
+ R21 2
+ U10 1
+ R64 2
+ U11 108
+ U11 39
+ C22 1
+ U10 36
+ C1 1
+ D1 1
+ U20 37
+ C13 1
+ U10 9
+ C12 1
+Net 107 "/SDIO_D2" "SDIO_D2"
+ U11 136
+ U11 111
+ U11 137
+ U10 40
+ R84 2
+ U10 42
+ U10 43
+ U11 134
+ D84 2
+Net 108 "/T_RTCK" "T_RTCK"
+ U11 100
+ U10 29
+ R88 2
+ D88 2
+Net 109 "/SDIO_D1" "SDIO_D1"
+ U11 99
+ U10 21
+ R82 2
+ U11 69
+ D82 2
+Net 110 "/EBI_A14" "EBI_A14"
+ U20 2
+ RP23 3
+ U11 89
+Net 111 "/EBI_D15" "EBI_D15"
+ U20 45
+ RP30 2
+ U11 79
+Net 112 "/EBI_D5" "EBI_D5"
+ U20 40
+ RP27 4
+ LCM20 23
+ U11 59
+Net 116 "/SDIO_D0" "SDIO_D0"
+ U11 98
+ U11 75
+ U10 27
+ D86 2
+ R86 2
+Net 117 "/EBI_A25" "EBI_A25"
+ RP26 2
+ U11 129
+Net 118 "/EBI_NWE" "EBI_NWE"
+ U11 119
+ U20 11
+ RP30 3
+ LCM20 30
+Net 119 "/BOOT0" "BOOT0"
+ U10 44
+ R14 2
+ U11 138
+ P10 2
+Net 120 "/EBI_A24" "EBI_A24"
+ RP26 1
+ U11 128
+Net 121 "/EBI_NOE" "EBI_NOE"
+ RP31 3
+ LCM20 29
+ U11 118
+ U20 28
+Net 122 "/EBI_NCS3" "EBI_NCS3"
+ R32 2
+ LCM20 33
+ U11 127
+Net 123 "/EBI_CLK" "EBI_CLK"
+ RP30 4
+ U11 117
+Net 125 "/SDIO_CMD" "SDIO_CMD"
+ D83 2
+ R83 2
+ U11 76
+ U11 116
+ U10 28
+Net 126 "/EBI_NCS2" "EBI_NCS2"
+ U11 125
+ U20 13
+ R20 1
+Net 127 "/EBI_D3" "EBI_D3"
+ LCM20 25
+ U20 35
+ U11 115
+ RP27 2
+Net 128 "/EBI_NCS1" "EBI_NCS1"
+ R21 1
+ U11 124
+ U20 26
+Net 129 "/EBI_D2" "EBI_D2"
+ LCM20 26
+ U20 33
+ RP27 1
+ U11 114
+Net 130 "/USB_DP" "USB_DP"
+ U10 33
+ U11 104
+ R1 1
+Net 131 "/T_IO" "T_IO"
+ R72 2
+ U11 135
+ D72 2
+ U10 41
+Net 134 "/5V" "5V"
+ F0 2
+ U0 3
+ C0 1
+Net 135 "" ""
+ F0 1
+ P0 1
+Net 136 "/T_ADC" "T_ADC"
+ U11 47
+ R73 2
+ U10 19
+Net 137 "/BEEP" "BEEP"
+ R25 1
+ U11 43
+ U10 17
+Net 138 "/SELECT" "SELECT"
+ U10 15
+ R33 1
+ SW20 1
+ U11 41
+Net 139 "" ""
+ R11 2
+ D1 2
+Net 140 "/P_TMS" "P_TMS"
+ R84 1
+ R19 1
+ P90 7
+Net 141 "" ""
+ R12 2
+ D0 2
+Net 142 "/P_SDIO_D7" "P_SDIO_D7"
+ R71 1
+ P90 18
+ R75 2
+Net 143 "/P_IO" "P_IO"
+ R76 2
+ R72 1
+ P90 16
+Net 144 "/P_ADC" "P_ADC"
+ P90 14
+ R73 1
+ R77 2
+Net 145 "/P_SDIO_D6" "P_SDIO_D6"
+ R74 2
+ R70 1
+ P90 20
+Net 146 "" ""
+ LCM20 10
+ C26 1
+Net 147 "/A19" "A19"
+ RP24 5
+ P20 20
+Net 148 "/A23" "A23"
+ P20 24
+ RP25 5
+Net 149 "/A21" "A21"
+ P20 22
+ RP25 7
+Net 150 "/A25" "A25"
+ RP26 7
+ P20 26
+Net 151 "/A9" "A9"
+ RP22 7
+ P20 10
+Net 152 "/A11" "A11"
+ P20 12
+ RP22 5
+Net 153 "/A15" "A15"
+ P20 16
+ RP23 5
+Net 154 "/A13" "A13"
+ RP23 7
+ P20 14
+Net 155 "/A17" "A17"
+ RP24 7
+ P20 18
+Net 156 "" ""
+ D21 2
+ Q21 3
+ D20 2
+Net 157 "" ""
+ LCM20 13
+ C28 1
+Net 158 "" ""
+ LCM20 15
+ C30 2
+ C29 2
+Net 159 "" ""
+ C30 1
+ LCM20 16
+Net 160 "" ""
+ C24 1
+ LCM20 8
+Net 161 "" ""
+ C32 2
+ C23 2
+ LCM20 6
+Net 162 "/NLB" "NLB"
+ P20 46
+ RP31 7
+Net 163 "/CLK" "CLK"
+ P20 44
+ RP30 5
+Net 164 "/NWAIT" "NWAIT"
+ RP31 5
+ P20 48
+Net 165 "/D9" "D9"
+ P20 36
+ RP28 5
+Net 166 "/D11" "D11"
+ P20 38
+ RP29 7
+Net 167 "/D15" "D15"
+ RP30 7
+ P20 42
+Net 168 "/D13" "D13"
+ P20 40
+ RP29 5
+Net 169 "/D5" "D5"
+ P20 32
+ RP27 5
+Net 170 "/D7" "D7"
+ RP28 7
+ P20 34
+Net 171 "/D3" "D3"
+ RP27 7
+ P20 30
+Net 172 "/D1" "D1"
+ P20 28
+ RP26 5
+Net 173 "/A22" "A22"
+ P20 23
+ RP25 6
+Net 174 "/A16" "A16"
+ P20 17
+ RP24 8
+Net 175 "/A18" "A18"
+ P20 19
+ RP24 6
+Net 176 "/A20" "A20"
+ P20 21
+ RP25 8
+Net 177 "/A24" "A24"
+ P20 25
+ RP26 8
+Net 178 "/A0" "A0"
+ RP20 8
+ P20 1
+Net 179 "/A1" "A1"
+ RP20 7
+ P20 2
+Net 180 "/A2" "A2"
+ P20 3
+ RP20 6
+Net 181 "/A3" "A3"
+ P20 4
+ RP20 5
+Net 182 "/A4" "A4"
+ RP21 8
+ P20 5
+Net 183 "/A5" "A5"
+ P20 6
+ RP21 7
+Net 184 "/A6" "A6"
+ RP21 6
+ P20 7
+Net 185 "/A7" "A7"
+ RP21 5
+ P20 8
+Net 186 "/A8" "A8"
+ RP22 8
+ P20 9
+Net 187 "/A10" "A10"
+ P20 11
+ RP22 6
+Net 188 "/A12" "A12"
+ P20 13
+ RP23 8
+Net 189 "/A14" "A14"
+ RP23 6
+ P20 15
+Net 190 "/NUB" "NUB"
+ P20 45
+ RP31 8
+Net 191 "/D8" "D8"
+ RP28 6
+ P20 35
+Net 192 "/NWE" "NWE"
+ RP30 6
+ P20 43
+Net 193 "/D6" "D6"
+ RP28 8
+ P20 33
+Net 194 "/D14" "D14"
+ RP30 8
+ P20 41
+Net 195 "/D4" "D4"
+ RP27 6
+ P20 31
+Net 196 "/RDY0" "RDY0"
+ P20 50
+ R29 2
+Net 197 "/D12" "D12"
+ RP29 6
+ P20 39
+Net 198 "" ""
+ SP20 2
+ Q20 3
+ R26 2
+Net 199 "" ""
+ D20 1
+ R31 1
+ D21 1
+Net 200 "/D2" "D2"
+ RP27 8
+ P20 29
+Net 201 "/NOE" "NOE"
+ RP31 6
+ P20 47
+Net 202 "/D10" "D10"
+ RP29 8
+ P20 37
+Net 203 "/D0" "D0"
+ P20 27
+ RP26 6
+Net 206 "" ""
+ LCM20 7
+ C23 1
+Net 208 "" ""
+ Q21 2
+ R38 1
+ R36 1
+Net 209 "/BACKLIGHT" "BACKLIGHT"
+ U10 16
+ U11 42
+ R36 2
+Net 210 "" ""
+ LCM20 12
+ C28 2
+}
+#End

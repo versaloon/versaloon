@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<series name="nuc400">
+  <chip name="nuc400">
+    <chip_id>0x0000</chip_id>
+    <program_mode>j:JTAG(F)|s:SWD</program_mode>
+    <app_page_size>512</app_page_size>
+    <app_page_num>256</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_seg>0</app_seg>
+    <app_addr>0x00000000</app_addr>
+  </chip>
+  <chip name="nuc400test">
+    <chip_id>0x00044201</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+</series>

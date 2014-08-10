@@ -1,0 +1,222 @@
+object FormComSetup: TFormComSetup
+  Left = 298
+  Height = 220
+  Top = 222
+  Width = 203
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'COM Setup'
+  ClientHeight = 220
+  ClientWidth = 203
+  KeyPreview = True
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '0.9.28.2'
+  object lblBaudrate: TLabel
+    Left = 16
+    Height = 13
+    Top = 40
+    Width = 55
+    Caption = 'Baudrate:'
+    ParentColor = False
+  end
+  object lblCom: TLabel
+    Left = 16
+    Height = 13
+    Top = 16
+    Width = 25
+    Caption = 'Com:'
+    ParentColor = False
+  end
+  object lblDataLength: TLabel
+    Left = 16
+    Height = 13
+    Top = 64
+    Width = 67
+    Caption = 'DataLength:'
+    ParentColor = False
+  end
+  object lblParitybit: TLabel
+    Left = 16
+    Height = 13
+    Top = 88
+    Width = 61
+    Caption = 'Paritybit:'
+    ParentColor = False
+  end
+  object lblStopbit: TLabel
+    Left = 16
+    Height = 13
+    Top = 112
+    Width = 49
+    Caption = 'Stopbit:'
+    ParentColor = False
+  end
+  object lblHandshake: TLabel
+    Left = 16
+    Height = 13
+    Top = 136
+    Width = 61
+    Caption = 'Handshake:'
+    ParentColor = False
+  end
+  object lblAuxPin: TLabel
+    Left = 16
+    Height = 13
+    Top = 160
+    Width = 43
+    Caption = 'AuxPin:'
+    ParentColor = False
+  end
+  object cbboxBaudrate: TComboBox
+    Left = 88
+    Height = 20
+    Top = 33
+    Width = 100
+    ItemHeight = 12
+    ItemIndex = 0
+    Items.Strings = (
+      '110'
+      '134'
+      '150'
+      '200'
+      '300'
+      '600'
+      '1200'
+      '2400'
+      '3600'
+      '4800'
+      '7200'
+      '9600'
+      '14400'
+      '19200'
+      '28800'
+      '38400'
+      '57600'
+      '115200'
+      '128000'
+      '230400'
+      '256000'
+      '460800'
+      '512000'
+      '921600'
+      '1024000'
+      '1843200'
+      '2048000'
+      '3686400'
+      '4096000'
+    )
+    Style = csDropDownList
+    TabOrder = 0
+    Text = '110'
+  end
+  object cbboxCom: TComboBox
+    Left = 88
+    Height = 20
+    Top = 9
+    Width = 100
+    ItemHeight = 12
+    Style = csDropDownList
+    TabOrder = 1
+  end
+  object cbboxDataLength: TComboBox
+    Left = 88
+    Height = 20
+    Top = 57
+    Width = 100
+    ItemHeight = 12
+    ItemIndex = 0
+    Items.Strings = (
+      '5'
+      '6'
+      '7'
+      '8'
+      '9'
+    )
+    Style = csDropDownList
+    TabOrder = 2
+    Text = '5'
+  end
+  object cbboxParitybit: TComboBox
+    Left = 88
+    Height = 20
+    Top = 81
+    Width = 100
+    ItemHeight = 12
+    ItemIndex = 0
+    Items.Strings = (
+      'None'
+      'Odd'
+      'Even'
+    )
+    Style = csDropDownList
+    TabOrder = 3
+    Text = 'None'
+  end
+  object cbboxStopbit: TComboBox
+    Left = 88
+    Height = 20
+    Top = 105
+    Width = 100
+    ItemHeight = 12
+    ItemIndex = 0
+    Items.Strings = (
+      '1'
+      '1.5'
+      '2'
+    )
+    Style = csDropDownList
+    TabOrder = 4
+    Text = '1'
+  end
+  object cbboxHandshake: TComboBox
+    Left = 88
+    Height = 20
+    Top = 129
+    Width = 100
+    ItemHeight = 12
+    ItemIndex = 0
+    Items.Strings = (
+      'None'
+      'Hardware'
+      'Software'
+    )
+    Style = csDropDownList
+    TabOrder = 5
+    Text = 'None'
+  end
+  object cbboxAuxPin: TComboBox
+    Left = 88
+    Height = 20
+    Top = 153
+    Width = 100
+    ItemHeight = 12
+    ItemIndex = 0
+    Items.Strings = (
+      'None'
+      'AuxPin'
+    )
+    Style = csDropDownList
+    TabOrder = 6
+    Text = 'None'
+  end
+  object btnOK: TButton
+    Left = 64
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'OK'
+    Default = True
+    OnClick = btnOKClick
+    TabOrder = 7
+  end
+  object tInit: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = tInitTimer
+    left = 16
+    top = 184
+  end
+end

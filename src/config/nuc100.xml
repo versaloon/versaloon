@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<series name="nuc100">
+  <chip name="nuc100">
+    <chip_id>0x0000</chip_id>
+    <program_mode>j:JTAG(F)|s:SWD</program_mode>
+    <app_page_size>512</app_page_size>
+    <app_page_num>256</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_seg>0</app_seg>
+    <app_addr>0x00000000</app_addr>
+  </chip>
+  <chip name="nuc100lc1bn">
+    <chip_id>0x10010008</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc100ld1bn">
+    <chip_id>0x10010005</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc100ld2bn">
+    <chip_id>0x10010004</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc100rc1bn">
+    <chip_id>0x10010017</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc100rd1bn">
+    <chip_id>0x10010014</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc100rd2bn">
+    <chip_id>0x10010013</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc100ld3an">
+    <chip_id>0x00010003</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc100le3an">
+    <chip_id>0x00010000</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc100rd3an">
+    <chip_id>0x00010012</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc100re3an">
+    <chip_id>0x00010009</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc100vd2an">
+    <chip_id>0x00010022</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc100vd3an">
+    <chip_id>0x00010021</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc100ve3an">
+    <chip_id>0x00010018</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc101lc1bn">
+    <chip_id>0x10010108</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc101ld2bn">
+    <chip_id>0x10010104</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc101yc1bn">
+    <chip_id>0x10010147</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc101yd2bn">
+    <chip_id>0x10010143</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc120lc1bn">
+    <chip_id>0x10012008</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc120ld1bn">
+    <chip_id>0x10012005</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc120ld2bn">
+    <chip_id>0x10012004</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc120rc1bn">
+    <chip_id>0x10012017</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc120rd1bn">
+    <chip_id>0x10012014</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc120rd2bn">
+    <chip_id>0x10012013</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc120ld3an">
+    <chip_id>0x00012003</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc120le3an">
+    <chip_id>0x00012000</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc120rd3an">
+    <chip_id>0x00012012</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc120re3an">
+    <chip_id>0x00012009</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc120vd2an">
+    <chip_id>0x00012022</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc120vd3an">
+    <chip_id>0x00012021</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc120ve3an">
+    <chip_id>0x00012018</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc122zd2an">
+    <chip_id>0x00012231</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc122zc1an">
+    <chip_id>0x00012235</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc122ld2an">
+    <chip_id>0x00012204</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc122lc1an">
+    <chip_id>0x00012208</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc122rd2an">
+    <chip_id>0x00012213</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc122rc1an">
+    <chip_id>0x00012217</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc130lc1cn">
+    <chip_id>0x20013008</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc130ld2cn">
+    <chip_id>0x20013004</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc130le3cn">
+    <chip_id>0x20013000</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc130rc1cn">
+    <chip_id>0x20013017</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc130rd2cn">
+    <chip_id>0x20013013</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc130re3cn">
+    <chip_id>0x20013009</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc130ve3cn">
+    <chip_id>0x20013018</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc140lc1cn">
+    <chip_id>0x20014008</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc140ld2cn">
+    <chip_id>0x20014004</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc140le3cn">
+    <chip_id>0x20014000</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc140rc1cn">
+    <chip_id>0x20014017</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="nuc140rd2cn">
+    <chip_id>0x20014013</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="nuc140re3cn">
+    <chip_id>0x20014009</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="nuc140ve3cn">
+    <chip_id>0x20014018</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+</series>

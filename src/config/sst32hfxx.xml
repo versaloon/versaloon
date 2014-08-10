@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<series name="sst32hfxx">
+  <chip name="sst32hfxx">
+    <chip_id>0x00000000</chip_id>
+    <app_default>0xFF</app_default>
+    <app_addr>0</app_addr>
+    <app_seg>0</app_seg>
+  </chip>
+  <chip name="sst32hf164">
+    <chip_id>0x00BF2782</chip_id>
+    <app_page_size>4096</app_page_size>
+    <app_page_num>512</app_page_num>
+    <param0>20</param0>
+  </chip>
+</series>

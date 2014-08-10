@@ -1,0 +1,58 @@
+object FormInputDialog: TFormInputDialog
+  Left = 426
+  Height = 106
+  Top = 234
+  Width = 400
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'FormInputDialog'
+  ClientHeight = 106
+  ClientWidth = 400
+  KeyPreview = True
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '0.9.28.2'
+  object lblPrefix: TLabel
+    Left = 16
+    Height = 13
+    Top = 30
+    Width = 37
+    Caption = 'Input:'
+    ParentColor = False
+  end
+  object edtInput: TEdit
+    Left = 80
+    Height = 20
+    Top = 24
+    Width = 296
+    OnKeyPress = edtInputKeyPress
+    TabOrder = 0
+  end
+  object btnOK: TButton
+    Left = 88
+    Height = 25
+    Top = 64
+    Width = 75
+    Caption = '&OK'
+    Default = True
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object btnCancel: TButton
+    Left = 224
+    Height = 25
+    Top = 64
+    Width = 75
+    Caption = '&Cancel'
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object tInit: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = tInitTimer
+    left = 27
+    top = 58
+  end
+end

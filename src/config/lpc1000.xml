@@ -1,0 +1,324 @@
+<?xml version="1.0"?>
+<series name="lpc1000">
+  <chip name="lpc1000">
+    <chip_id>0x0000</chip_id>
+    <program_mode>j:JTAG(F)|s:SWD|i:ISP(C)</program_mode>
+    <sram_size>2048</sram_size>
+    <app_page_size>1024</app_page_size>
+    <app_page_num>512</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_addr>0x00000000</app_addr>
+    <app_seg>0</app_seg>
+    <param0>4000</param0>
+  </chip>
+  <chip name="lpc810m021fn8">
+    <chip_id>0x00008100</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>1</sram_size>
+    <app_page_num>4</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc811m001fdh16">
+    <chip_id>0x00008110</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>2</sram_size>
+    <app_page_num>8</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc812m101fdh16">
+    <chip_id>0x00008120</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc812m101fd20">
+    <chip_id>0x00008121</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc812m101fdh20">
+    <chip_id>0x00008122</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1111fhn33/101">
+    <chip_id>0x041E502B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>2048</sram_size>
+    <app_page_num>8</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1111fhn33/201">
+    <chip_id>0x0416502B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>8</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1112fhn33/101">
+    <chip_id>0x042D502B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>2048</sram_size>
+    <app_page_num>32</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1112fhn33/201">
+    <chip_id>0x0425502B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1113fhn33/201">
+    <chip_id>0x0434502B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>24</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1113fhn33/301">
+    <chip_id>0x0434102B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>24</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1114fhn33/201">
+    <chip_id>0x0444502B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>32</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1114fhn33/301">
+    <chip_id>0x0444102B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc11c12fbd48/301">
+    <chip_id>0x1421102B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>16</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc11c14fbd48/301">
+    <chip_id>0x1440102B</chip_id>
+    <program_mode>si</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1311fhn33">
+    <chip_id>0x2C42502B</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>2048</sram_size>
+    <app_page_num>8</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1313fhn33">
+    <chip_id>0x2C40102B</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1342fhn33">
+    <chip_id>0x3D01402B</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1343fhn33">
+    <chip_id>0x3D00002B</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>12000</param0>
+    <param1>0x40048000</param1>
+    <param2>2</param2>
+  </chip>
+  <chip name="lpc1769">
+    <chip_id>0x26113F37</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>512</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1768">
+    <chip_id>0x26013F37</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>512</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1767">
+    <chip_id>0x26012837</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>512</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1766">
+    <chip_id>0x26013F33</chip_id>
+    <program_mode>jsi</program_mode>
+	<sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1765">
+    <chip_id>0x26013733</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1764">
+    <chip_id>0x26011922</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1759">
+    <chip_id>0x25113737</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>512</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1758">
+    <chip_id>0x25013F37</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>512</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1756">
+    <chip_id>0x25011723</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>256</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1754">
+    <chip_id>0x25011722</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1752">
+    <chip_id>0x25001121</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+  <chip name="lpc1751">
+    <chip_id>0x25001118</chip_id>
+    <program_mode>jsi</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <uid init="0xFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></uid>
+    <param0>4000</param0>
+    <param1>0x400FC040</param1>
+    <param2>1</param2>
+  </chip>
+</series>

@@ -1,0 +1,41 @@
+object VSProg_Programmer: TVSProg_Programmer
+  Left = 398
+  Height = 182
+  Top = 364
+  Width = 400
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'VSProg_Programmer'
+  ClientHeight = 182
+  ClientWidth = 400
+  LCLVersion = '0.9.28.2'
+  object lbProgrammer: TListBox
+    Left = 0
+    Height = 128
+    Top = 0
+    Width = 400
+    Align = alClient
+    ItemHeight = 0
+    OnDblClick = lbProgrammerDblClick
+    TabOrder = 0
+  end
+  object pnlButton: TPanel
+    Left = 0
+    Height = 54
+    Top = 128
+    Width = 400
+    Align = alBottom
+    ClientHeight = 54
+    ClientWidth = 400
+    TabOrder = 1
+    object btnOK: TButton
+      Left = 160
+      Height = 25
+      Top = 16
+      Width = 75
+      Caption = '&OK'
+      OnClick = btnOKClick
+      TabOrder = 0
+    end
+  end
+end

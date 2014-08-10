@@ -1,0 +1,122 @@
+object FormFindReplace: TFormFindReplace
+  Left = 563
+  Height = 156
+  Top = 375
+  Width = 310
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'FormFindReplace'
+  ClientHeight = 156
+  ClientWidth = 310
+  KeyPreview = True
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '0.9.28.2'
+  object lblSearch: TLabel
+    Left = 16
+    Height = 13
+    Top = 15
+    Width = 67
+    Caption = 'Search For:'
+    ParentColor = False
+  end
+  object lblReplace: TLabel
+    Left = 16
+    Height = 13
+    Top = 47
+    Width = 79
+    Caption = 'Replace With:'
+    ParentColor = False
+  end
+  object lblDataType: TLabel
+    Left = 16
+    Height = 13
+    Top = 76
+    Width = 55
+    Caption = 'DataType:'
+    ParentColor = False
+  end
+  object cbboxDataType: TComboBox
+    Left = 103
+    Height = 20
+    Top = 69
+    Width = 196
+    ItemHeight = 12
+    ItemIndex = 0
+    Items.Strings = (
+      'Text-string'
+      'Hex-values'
+    )
+    OnChange = cbboxDataTypeChange
+    Style = csDropDownList
+    TabOrder = 2
+    Text = 'Text-string'
+  end
+  object cbboxSearch: TComboBox
+    Left = 103
+    Height = 20
+    Top = 8
+    Width = 196
+    ItemHeight = 12
+    TabOrder = 0
+  end
+  object cbboxReplace: TComboBox
+    Left = 103
+    Height = 20
+    Top = 40
+    Width = 196
+    ItemHeight = 12
+    TabOrder = 1
+  end
+  object chkboxReplaceAll: TCheckBox
+    Left = 16
+    Height = 17
+    Top = 96
+    Width = 84
+    Caption = '&Replace All'
+    TabOrder = 3
+  end
+  object chkboxUp: TCheckBox
+    Left = 216
+    Height = 17
+    Top = 96
+    Width = 72
+    Caption = 'Search &Up'
+    TabOrder = 5
+  end
+  object btnOK: TButton
+    Left = 128
+    Height = 25
+    Top = 120
+    Width = 75
+    Caption = '&OK'
+    Default = True
+    OnClick = btnOKClick
+    TabOrder = 6
+  end
+  object btnCancel: TButton
+    Left = 224
+    Height = 25
+    Top = 120
+    Width = 75
+    Caption = '&Cancel'
+    ModalResult = 2
+    TabOrder = 7
+  end
+  object chkboxUnicode: TCheckBox
+    Left = 120
+    Height = 17
+    Top = 96
+    Width = 60
+    Caption = 'UniCode'
+    TabOrder = 4
+  end
+  object tInit: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = tInitTimer
+    left = 24
+    top = 120
+  end
+end

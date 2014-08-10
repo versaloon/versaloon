@@ -1,0 +1,59 @@
+[Version]
+Signature="$Windows NT$"
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%SIMON%
+LayoutFile=layout.inf
+DriverVer=10/02/06
+
+[Manufacturer]
+%SIMON%=DeviceList
+
+[DestinationDirs]
+DefaultDestDir=12
+
+[SourceDisksFiles]
+
+[SourceDisksNames]
+
+[DeviceList]
+%DESCRIPTION%=COMONVERSALOON, USB\VID_0483&PID_A038&MI_03
+
+;------------------------------------------------------------------------------
+;  Windows 2000/XP Sections
+;------------------------------------------------------------------------------
+
+[COMONVERSALOON.nt]
+include=mdmcpq.inf
+CopyFiles=DriverCopyFiles
+AddReg=COMONVERSALOON.nt.AddReg
+
+[DriverCopyFiles]
+usbser.sys,,,0x20
+
+[COMONVERSALOON.nt.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,usbser.sys
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[COMONVERSALOON.nt.Services]
+AddService=usbser, 0x00000002, DriverService
+
+
+[COMONVERSALOON.nt.HW]
+include=mdmcpq.inf
+
+[DriverService]
+DisplayName=%DESCRIPTION%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\usbser.sys
+
+;------------------------------------------------------------------------------
+;  String Definitions
+;------------------------------------------------------------------------------
+
+[Strings]
+SIMON="SimonQian"
+DESCRIPTION="ShellonVersaloon"

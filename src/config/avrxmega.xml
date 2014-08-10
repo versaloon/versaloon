@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<series name="avrxmega">
+  <chip name="avrxmega">
+    <chip_id>0x001E0000</chip_id>
+    <program_mode>j:JTAG(F)|p:PDI</program_mode>
+    <app_page_size>512</app_page_size>
+    <app_page_num>528</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_addr>0</app_addr>
+    <app_seg>0</app_seg>
+    <ee_page_size>32</ee_page_size>
+    <ee_page_num>128</ee_page_num>
+    <ee_addr>0</ee_addr>
+    <ee_seg>0</ee_seg>
+  </chip>
+  <chip name="atxmega64a3">
+    <chip_id>0x001E9642</chip_id>
+    <program_mode>jp</program_mode>
+    <app_page_size>256</app_page_size>
+    <app_page_num>272</app_page_num>
+    <ee_page_size>32</ee_page_size>
+    <ee_page_num>64</ee_page_num>
+  </chip>
+  <chip name="atxmega128A1AU">
+    <chip_id>0x001E974C</chip_id>
+    <program_mode>jp</program_mode>
+    <app_page_size>256</app_page_size>
+    <app_page_num>256</app_page_num>
+    <ee_page_size>32</ee_page_size>
+    <ee_page_num>64</ee_page_num>
+  </chip>
+</series>

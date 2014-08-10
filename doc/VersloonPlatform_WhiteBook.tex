@@ -1,0 +1,660 @@
+\documentclass[a4paper,12pt]{book}
+
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\usepackage{bookman}
+\normalfont
+
+\title{VersaloonPlatform White Book}
+\author{Simon Qian}
+\date{}
+
+\usepackage{pgf,tikz}
+
+\usepackage{minitoc}
+\usepackage{hyperref}
+\hypersetup{
+bookmarksnumbered=true,
+colorlinks=true,
+pdfpagelayout={OneColumn},
+pdfstartview={FitH}
+}
+
+\usepackage{listings}
+\lstset{
+language=C,
+breaklines=true,
+extendedchars=false,
+keywordstyle=\color{blue},
+%commentstyle=\color{}
+morekeywords={int8_t,uint8_t,int16_t,uint16_t,int32_t,uint32_t,int64_t,uint64_t,bool}
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\begin{document}
+\dominitoc
+
+\maketitle
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\newpage
+\chapter*{List of Symbols\hfill} %\addcontentsline{toc}{chapter}{List of Symbols}
+
+\begin{itemize}
+\item HAL: Hardware Abstraction Layer
+\item DAL: Driver Abstraction Layer
+\item GAL: Graphical Abstraction Layer
+\item MAL: Memory Abstraction Layer
+\item NAL: Network Abstraction Layer
+\item FSAL: Filesystem Abstraction Layer
+\item DBAL: Database Abstraction Layer
+\end{itemize}
+
+\chapter{Overview}
+\minitoc
+
+\newpage
+\section{About}
+VersaloonPlatform provide a generic environment for developping drivers and applications for embeded systems. You can develop and test a driver on Windows/Linux/MacOS, and compile the source code into embeded systems without modification.
+
+\newpage
+\section{Copyright and License}
+VersaloonPlatform is copyrighted by SimonQian SimonQian@Simonqian.com, and is published under GPLv3.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+\chapter{Framework -- VSF(Versaloon Software Framework)}
+\minitoc
+
+\newpage
+\begin{pgfpicture}{0cm}{0cm}{13cm}{15.5cm}
+
+\pgfrect[stroke]{\pgfxy(0,0)}{\pgfxy(13,9)}
+\pgfputat{\pgfxy(0.5,8.5)}{\pgfbox[left,center]{Kernel}}
+
+\pgfrect[stroke]{\pgfxy(0.5,0.5)}{\pgfxy(12,3.5)}
+\pgfputat{\pgfxy(1,3.5)}{\pgfbox[left,center]{HAL}}
+\pgfrect[stroke]{\pgfxy(2.5,2.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(3.5,3)}{\pgfbox[center,center]{GPIO}}
+\pgfrect[stroke]{\pgfxy(5,2.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(6,3)}{\pgfbox[center,center]{SPI}}
+\pgfrect[stroke]{\pgfxy(7.5,2.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(8.5,3)}{\pgfbox[center,center]{IIC}}
+\pgfrect[stroke]{\pgfxy(10,2.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(11,3)}{\pgfbox[center,center]{USART}}
+\pgfrect[stroke]{\pgfxy(2.5,1)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(3.5,1.5)}{\pgfbox[center,center]{Power}}
+\pgfrect[stroke]{\pgfxy(5,1)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(6,1.5)}{\pgfbox[center,center]{Delay}}
+\pgfrect[stroke]{\pgfxy(7.5,1)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(8.5,1.5)}{\pgfbox[center,center]{SDIO}}
+\pgfrect[stroke]{\pgfxy(10,1)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(11,1.5)}{\pgfbox[center,center]{...}}
+
+\pgfrect[stroke]{\pgfxy(0.5,4.5)}{\pgfxy(12,3.5)}
+\pgfputat{\pgfxy(1,7.5)}{\pgfbox[left,center]{DAL}}
+\pgfrect[stroke]{\pgfxy(2.5,6.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(3.5,7)}{\pgfbox[center,center]{GAL}}
+\pgfrect[stroke]{\pgfxy(5,6.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(6,7)}{\pgfbox[center,center]{MAL}}
+\pgfrect[stroke]{\pgfxy(7.5,6.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(8.5,7)}{\pgfbox[center,center]{NAL}}
+\pgfrect[stroke]{\pgfxy(10,6.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(11,7)}{\pgfbox[center,center]{...}}
+\pgfrect[stroke]{\pgfxy(2.5,5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(3.5,5.5)}{\pgfbox[center,center]{TFT}}
+\pgfrect[stroke]{\pgfxy(5,5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(6,5.5)}{\pgfbox[center,center]{SD}}
+\pgfrect[stroke]{\pgfxy(7.5,5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(8.5,5.5)}{\pgfbox[center,center]{WIFI}}
+\pgfrect[stroke]{\pgfxy(10,5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(11,5.5)}{\pgfbox[center,center]{...}}
+
+\pgfrect[stroke]{\pgfxy(2.5,9.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(3.5,10)}{\pgfbox[center,center]{UI}}
+\pgfrect[stroke]{\pgfxy(5,9.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(6,10)}{\pgfbox[center,center]{FATFS}}
+\pgfrect[stroke]{\pgfxy(7.5,9.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(8.5,10)}{\pgfbox[center,center]{MID}}
+\pgfrect[stroke]{\pgfxy(10,9.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(11,10)}{\pgfbox[center,center]{MID}}
+
+\pgfrect[stroke]{\pgfxy(2.5,11)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(3.5,11.5)}{\pgfbox[center,center]{MID}}
+\pgfrect[stroke]{\pgfxy(5,11)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(6,11.5)}{\pgfbox[center,center]{DBAL}}
+\pgfrect[stroke]{\pgfxy(7.5,11)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(8.5,11.5)}{\pgfbox[center,center]{MID}}
+\pgfrect[stroke]{\pgfxy(10,11)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(11,11.5)}{\pgfbox[center,center]{MID}}
+
+\pgfrect[stroke]{\pgfxy(2.5,12.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(3.5,13)}{\pgfbox[center,center]{...}}
+\pgfrect[stroke]{\pgfxy(5,12.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(6,13)}{\pgfbox[center,center]{...}}
+\pgfrect[stroke]{\pgfxy(7.5,12.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(8.5,13)}{\pgfbox[center,center]{...}}
+\pgfrect[stroke]{\pgfxy(10,12.5)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(11,13)}{\pgfbox[center,center]{...}}
+
+\pgfrect[stroke]{\pgfxy(2.5,14)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(3.5,14.5)}{\pgfbox[center,center]{APP}}
+\pgfrect[stroke]{\pgfxy(5,14)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(6,14.5)}{\pgfbox[center,center]{APP}}
+\pgfrect[stroke]{\pgfxy(7.5,14)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(8.5,14.5)}{\pgfbox[center,center]{APP}}
+\pgfrect[stroke]{\pgfxy(10,14)}{\pgfxy(2,1)}
+\pgfputat{\pgfxy(11,14.5)}{\pgfbox[center,center]{APP}}
+
+\end{pgfpicture}
+\begin{itemize}
+\item MID: Midware
+\item APP: Application
+\end{itemize}
+
+All code in DAL and upper layer \textbf{MUST} be independent of the target embeded system. Functions in standard C Library can be called, but except for that, there is a limitation. Code in DAL \textbf{CAN ONLY} call functions in HAL, code in MID \textbf{CAN ONLY} call functions in HAL and DAL, code in APP \textbf{CAN ONLY} call functions in HAL, DAL and MID.
+
+The framework can be compiled on both host PC and target embeded system. The ONLY difference is how HAL is implemented. If the framework is compiled on target embeded system, HAL simply call the hardware library of the target.
+
+\begin{pgfpicture}{0cm}{0cm}{13cm}{3.5cm}
+
+\pgfsetendarrow{\pgfarrowlargepointed{6pt}}
+
+\pgfrect[stroke]{\pgfxy(0.5,0.5)}{\pgfxy(12,2.5)}
+\pgfputat{\pgfxy(1,2.5)}{\pgfbox[left,center]{target}}
+
+\pgfrect[stroke]{\pgfxy(1,1)}{\pgfxy(3,1)}
+\pgfputat{\pgfxy(2.5,1.5)}{\pgfbox[center,center]{DAL}}
+\pgfline{\pgfxy(4,1.5)}{\pgfxy(5,1.5)}
+\pgfrect[stroke]{\pgfxy(5,1)}{\pgfxy(3,1)}
+\pgfputat{\pgfxy(6.5,1.5)}{\pgfbox[center,center]{HAL}}
+\pgfline{\pgfxy(8,1.5)}{\pgfxy(9,1.5)}
+\pgfrect[stroke]{\pgfxy(9,1)}{\pgfxy(3,1)}
+\pgfputat{\pgfxy(10.5,1.5)}{\pgfbox[center,center]{HW Library}}
+
+\end{pgfpicture}
+
+If the framework is compiled on host PC, HAL is implemented through a transparent USB protocol.
+
+\begin{pgfpicture}{0cm}{0cm}{13cm}{6.5cm}
+
+\pgfsetendarrow{\pgfarrowlargepointed{6pt}}
+
+\pgfrect[stroke]{\pgfxy(0.5,0.5)}{\pgfxy(4,5.5)}
+\pgfputat{\pgfxy(1,5.5)}{\pgfbox[left,center]{host}}
+
+\pgfrect[stroke]{\pgfxy(1,4)}{\pgfxy(3,1)}
+\pgfputat{\pgfxy(2.5,4.5)}{\pgfbox[center,center]{DAL}}
+\pgfline{\pgfxy(2.5,4)}{\pgfxy(2.5,3.5)}
+\pgfrect[stroke]{\pgfxy(1,2.5)}{\pgfxy(3,1)}
+\pgfputat{\pgfxy(2.5,3)}{\pgfbox[center,center]{HAL}}
+\pgfline{\pgfxy(2.5,2.5)}{\pgfxy(2.5,2)}
+\pgfrect[stroke]{\pgfxy(1,1)}{\pgfxy(3,1)}
+\pgfputat{\pgfxy(2.5,1.5)}{\pgfbox[center,center]{USB driver}}
+
+\pgfrect[stroke]{\pgfxy(8,0.5)}{\pgfxy(4,5.5)}
+\pgfputat{\pgfxy(8.5,5.5)}{\pgfbox[left,center]{target}}
+\pgfline{\pgfxy(10,3.5)}{\pgfxy(10,4)}
+\pgfrect[stroke]{\pgfxy(8.5,4)}{\pgfxy(3,1)}
+\pgfputat{\pgfxy(10,4.5)}{\pgfbox[center,center]{HW Library}}
+\pgfrect[stroke]{\pgfxy(8.5,2.5)}{\pgfxy(3,1)}
+\pgfline{\pgfxy(10,2)}{\pgfxy(10,2.5)}
+\pgfputat{\pgfxy(10,3)}{\pgfbox[center,center]{HAL}}
+\pgfrect[stroke]{\pgfxy(8.5,1)}{\pgfxy(3,1)}
+\pgfputat{\pgfxy(10,1.5)}{\pgfbox[center,center]{USB driver}}
+
+\pgfline{\pgfxy(4,1.5)}{\pgfxy(8.5,1.5)}
+
+\end{pgfpicture}
+
+Note that the HAL on host PC and on target is exactly the same. So there is no need to modify the code in DAL and upper layer.
+
+For example, from DAL, SPI module in HAL is call to send data. HAL then call USB driver to send the command to the target embeded system. The embeded system receive the USB command and call HAL in embeded system, which will call hardware library to execute the SPI send command.
+
+\chapter{HAL -- interfaces}
+Hardware Abstraction Layer
+\minitoc
+
+\newpage
+\section{Overview}
+\begin{lstlisting}
+typedef enum result_s
+{
+	ERROR_OK = 0,
+	ERROR_FAIL = 1
+} RESULT;
+struct interfaces_info_t
+{
+	struct interface_target_voltage_t target_voltage;
+	struct interface_usart_t usart;
+	struct interface_spi_t spi;
+	struct interface_gpio_t gpio;
+	struct interface_delay_t delay;
+	struct interface_issp_t issp;
+	struct interface_swd_t swd;
+	struct interface_jtag_hl_t jtag_hl;
+	struct interface_jtag_ll_t jtag_ll;
+	struct interface_jtag_raw_t jtag_raw;
+	struct interface_msp430jtag_t msp430jtag;
+	struct interface_msp430sbw_t msp430sbw;
+	struct interface_c2_t c2;
+	struct interface_i2c_t i2c;
+	struct interface_lpcicp_t lpcicp;
+	struct interface_swim_t swim;
+	struct interface_bdm_t bdm;
+	struct interface_poll_t poll;
+	RESULT (*peripheral_commit)(void);
+};
+\end{lstlisting}
+This struct contains all the interfaces supported.
+
+The first parameter of almost every functions(except for delay functions), is the \emph{index} of the interfaces. For example, a device has 2 USARTs, use \emph{index} to define which USART is to be operated. The return value of every function in this struct is RESULT. \textbf{peripheral\_commit} function is used to commit all the saved calls. You can call functions in different interfaces, but they will not be commited to versaloon until \textbf{peripheral\_commit} is called.
+
+\newpage
+\section{Delay}
+\begin{lstlisting}
+struct interface_delay_t
+{
+	RESULT (*delayms)(uint16_t ms);
+	RESULT (*delayus)(uint16_t us);
+};
+\end{lstlisting}
+For Delay functions, no \emph{index} parameter is needed. Delay functions will block until the specified time passed.
+
+\vspace{6pt}
+Functions:
+\begin{itemize}
+\item \textbf{delayms}
+Delay in microsecond.
+\item \textbf{delayus}
+Delay in millisecond.
+\end{itemize}
+
+\vspace{6pt}
+Example:
+\begin{lstlisting}
+interfaces->delay.delayms(100);
+if (ERROR_OK != interfaces->peripheral_commit())
+{
+	return ERROR_FAIL;
+}
+\end{lstlisting}
+
+\newpage
+\section{PowerControl}
+\begin{lstlisting}
+struct interface_target_voltage_t
+{
+	RESULT (*get)(uint8_t index, uint16_t *voltage);
+	RESULT (*set)(uint8_t index, uint16_t voltage);
+};
+\end{lstlisting}
+For PowerControl functions, \emph{voltage} parameter is in mV.
+
+\vspace{6pt}
+Functions:
+\begin{itemize}
+\item \textbf{get}
+Get the voltage on power line.
+\item \textbf{set}
+Set the voltage on power line.
+\end{itemize}
+
+\vspace{6pt}
+Example:
+\begin{lstlisting}
+uint16_t voltage;
+if ((ERROR_OK != interfaces->target_voltage.get(0, &voltage)) || ((voltage < 2700) && (ERROR_OK != interfaces->target_voltage.set(0, 3300))))
+{
+	return ERROR_FAIL;
+}
+\end{lstlisting}
+
+\newpage
+\section{GPIO}
+\begin{lstlisting}
+#define GPIO_SRST		(1 << 0)
+#define GPIO_TRST		(1 << 1)
+#define GPIO_USR1		(1 << 2)
+#define GPIO_USR2		(1 << 3)
+#define GPIO_TCK		(1 << 4)
+#define GPIO_TDO		(1 << 5)
+#define GPIO_TDI		(1 << 6)
+#define GPIO_RTCK		(1 << 7)
+#define GPIO_TMS		(1 << 8)
+
+struct interface_gpio_t
+{
+	RESULT (*init)(uint8_t index);
+	RESULT (*fini)(uint8_t index);
+	RESULT (*config)(uint8_t index, uint16_t pin_mask, uint16_t io, uint16_t pull_en_mask, uint16_t input_pull_mask);
+	RESULT (*out)(uint8_t index, uint16_t pin_mask, uint16_t value);
+	RESULT (*in)(uint8_t index, uint16_t pin_mask, uint16_t *value);
+};
+\end{lstlisting}
+For GPIO functions, \emph{index} indicating the port index, every port has 16 IOs. The const MACROs is the PIN index of the Port0:
+\begin{itemize}
+\item output pins: SRST, TRST, USR1, USR2, TCK, TDI, TMS
+\item input pins: SRST, TRST, USR1, USR2, TDO, RTCK, TMS
+\end{itemize}
+
+\vspace{6pt}
+Functions:
+\begin{itemize}
+\item \textbf{init}
+Initialize the GPIO port.
+\item \textbf{fini}
+Finalize the GPIO port.
+\item \textbf{config}
+Config the GPIO pin to be output or input, pull-up or pull-down.
+\newline\emph{pin\_mask} is the mask of IOs to be operated.
+\newline\emph{io} is the input and output mask, '1' for output, '0' for input.
+\newline\emph{pull\_en\_mask} is the enable of pull status in input mode, '1' for enable, '0' for disable, ignored in output mode.
+\newline\emph{input\_pull\_mask} is the pullup or pulldown status in input mode, '1' for pullup, '0' for pulldown; or the output value in output mode.
+\item \textbf{out}
+Output to the GPIO pin.
+\newline\emph{pin\_mask} is the mask of IOs to be operated.
+\newline\emph{value} is the port status to be outputed.
+\item \textbf{in}
+Input from the GPIO pin.
+\newline\emph{pin\_mask} is the mask of IOs to be operated.
+\newline\emph{*value} is the status read from the port.
+\end{itemize}
+
+\vspace{6pt}
+Example:
+\begin{lstlisting}
+RESULT ret = ERROR_OK;
+uint16_t port;
+if (ERROR_OK != interfaces->gpio.init(0))
+{
+	reutrn ERROR_FAIL;
+}
+if (ERROR_OK != interfaces->gpio.config(0, GPIO_USR1 | GPIO_USR2, GPIO_USR1, 0))
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+if (ERROR_OK != interfaces->gpio.out(0, GPIO_USR1, GPIO_USR1))
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+if (ERROR_OK != interfaces->gpio.in(0, GPIO_USR2, &port))
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+if (ERROR_OK != interfaces->peripheral_commit())
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+printf("USR1: %d\n", port & GPIO_USR1);
+exit_function:
+interfaces->gpio.fini(0);
+return ret;
+\end{lstlisting}
+
+\newpage
+\section{SPI}
+\begin{lstlisting}
+#define SPI_CPOL_HIGH		0x20
+#define SPI_CPOL_LOW		0x00
+#define SPI_CPHA_2EDGE	0x40
+#define SPI_CPHA_1EDGE	0x00
+#define SPI_MSB_FIRST		0x80
+#define SPI_LSB_FIRST		0x00
+
+struct interface_spi_t
+{
+	RESULT (*init)(uint8_t index);
+	RESULT (*fini)(uint8_t index);
+	RESULT (*config)(uint8_t index, uint16_t kHz, uint8_t cpol, uint8_t cpha, uint8_t first_bit);
+	RESULT (*io)(uint8_t index, uint8_t *out, uint8_t *in, uint16_t bytelen);
+};
+\end{lstlisting}
+
+\vspace{6pt}
+Functions:
+\begin{itemize}
+\item \textbf{init}
+Initialize the SPI port.
+\item \textbf{fini}
+Finalize the SPI port.
+\item \textbf{config}
+Config the SPI port for speed, mode and bitmode.
+\newline\emph{kHz} is the speed of the SPI in KHz.
+\newline\emph{cpol} is the signal sellector, valid value is SPI\_CPOL\_HIGH or SPI\_CPOL\_LOW.
+\newline\emph{cpha} is the edge sellector, valid value is SPI\_CPHA\_1EDGE or SPI\_CPHA\_2EDGE.
+\newline\emph{first\_bit} is to define whether the first bit is MSB or LSB, valid value is SPI\_MSB\_FIRST or SPI\_LSB\_FIRST.
+\item \textbf{io}
+SPI input and output.
+\newline\emph{*out} is the buffer of output data.
+\newline\emph{*in} is the buffer of input data.
+\newline\emph{bytelen} is the byte size of the transaction.
+\end{itemize}
+
+\vspace{6pt}
+Example:
+\begin{lstlisting}
+#define BUFFER_SIZE		128
+
+RESULT ret = ERROR_OK;
+uint8 i;
+uint8_t out_buffer[BUFFER_SIZE], in_buffer[BUFFER_SIZE];
+if (ERROR_OK != interfaces->spi.init(0))
+{
+	reutrn ERROR_FAIL;
+}
+if (ERROR_OK != interfaces->spi.config(0, 1000, SPI_CPOL_LOW, SPI_CPHA_1EDGE, SPI_MSB_FIRST))
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+for (i = 0; i < BUFFER_SIZE; i++)
+{
+	out_buffer[i] = i;
+}
+if (ERROR_OK != interfaces->spi.io(0, out_buffer, in_buffer, BUFFER_SIZE))
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+if (ERROR_OK != interfaces->peripheral_commit())
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+exit_function:
+interfaces->spi.fini(0);
+return ret;
+\end{lstlisting}
+
+\newpage
+\section{IIC}
+\begin{lstlisting}
+struct interface_i2c_t
+{
+	RESULT (*init)(uint8_t index);
+	RESULT (*fini)(uint8_t index);
+	RESULT (*config)(uint8_t index, uint16_t kHz, uint16_t byte_interval, uint16_t max_dly);
+	RESULT (*read)(uint8_t index, uint16_t chip_addr, uint8_t *data, uint16_t data_len, uint8_t stop, bool nacklast);
+	RESULT (*write)(uint8_t index, uint16_t chip_addr, uint8_t *data, uint16_t data_len, uint8_t stop);
+};
+\end{lstlisting}
+Currently, IIC driver supports only 7-bit address slave.
+
+\vspace{6pt}
+Functions:
+\begin{itemize}
+\item \textbf{init}
+Initialize the IIC port.
+\item \textbf{fini}
+Finalize the IIC port.
+\item \textbf{config}
+Config the IIC port for speed. emph{byte\_interval} is not recommended to use, set it to 0.
+\newline\emph{kHz} is the speed of the IIC in KHz.
+\newline\emph{byte\_interval} is not recommended to use.
+\newline\emph{max\_dly} is the maxium delay when doing IIC transaction.
+\item \textbf{read}
+Read from IIC slave.
+\newline\emph{chip\_addr} is the address of the slave IIC chip.
+\newline\emph{*data} is the buffer of data to be read.
+\newline\emph{data\_len} is the maxium length of the data to be read.
+\newline\emph{stop} is to define whether to send stop signal after the read operation.
+\newline\emph{nacklast} is to define whether to nack the last byte when receiving data.
+\item \textbf{write}
+Write to IIC slave.
+\newline\emph{chip\_addr} is the address of the slave IIC chip.
+\newline\emph{*data} is the buffer of data to be written.
+\newline\emph{data\_len} is the maxium length of the data to be written.
+\newline\emph{stop} is to define whether to send stop signal after the write operation.
+\end{itemize}
+
+\vspace{6pt}
+Example:
+\begin{lstlisting}
+#define SLAVE_ADDR			0x20
+RESULT ret = ERROR_OK;
+uint8_t buffer[4];
+if (ERROR_OK != interfaces->i2c.init(0))
+{
+	reutrn ERROR_FAIL;
+}
+if (ERROR_OK != interfaces->i2c.config(0, 100, 0, 10))
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+buffer[0] = 0x55;
+buffer[1] = 0xAA;
+if (ERROR_OK != interfaces->i2c.write(0, SLAVE_ADDR, buffer, 2, 1))
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+if (ERROR_OK != interfaces->i2c.read(0, SLAVE_ADDR, buffer, 2, 1))
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+if (ERROR_OK != interfaces->peripheral_commit())
+{
+	ret = ERROR_FAIL;
+	goto exit_function;
+}
+printf("data read: %08X_%08X\n", buffer[0], buffer[1]);
+exit_function:
+interfaces->i2c.fini(0);
+return ret;
+\end{lstlisting}
+
+\newpage
+\section{USART}
+\begin{lstlisting}
+struct usart_status_t
+{
+	uint32_t tx_buff_avail;
+	uint32_t tx_buff_size;
+	uint32_t rx_buff_avail;
+	uint32_t rx_buff_size;
+};
+
+struct interface_usart_t
+{
+	RESULT (*init)(uint8_t index);
+	RESULT (*fini)(uint8_t index);
+	RESULT (*config)(uint8_t index, uint32_t baudrate, uint8_t datalength, char paritybit, char stopbit, char handshake);
+	RESULT (*send)(uint8_t index, uint8_t *buf, uint16_t len);
+	RESULT (*receive)(uint8_t index, uint8_t *buf, uint16_t len);
+	RESULT (*status)(uint8_t index, struct usart_status_t *status);
+};
+\end{lstlisting}
+For USART interface, only supports 8-bit mode.
+
+\vspace{6pt}
+TBD.
+
+\newpage
+\section{SDIO}
+
+\newpage
+\section{ADC}
+
+\newpage
+\section{PWM}
+
+\chapter{DAL -- drivers}
+Driver Abstraction Layer
+\minitoc
+
+\newpage
+\section{GAL}
+Graphical Abstraction Layer
+
+Based on TFT.
+\newpage
+\subsection{TFT Driver}
+
+\newpage
+\section{MAL}
+Memory Abstraction Layer
+
+Based on SRAM, NorFlash, NandFlash, SD ...
+\newpage
+\subsection{SRAM}
+
+\newpage
+\subsection{Nor Flash}
+
+\newpage
+\subsection{Nand Flash}
+
+\newpage
+\subsection{SD}
+\subsubsection{SPI}
+\subsubsection{SDIO}
+
+\newpage
+\section{NAL}
+Network Abstraction Layer
+
+Based on Wifi, Bluetooth ...
+\newpage
+\subsection{Wifi}
+
+\newpage
+\subsection{Bluetooth}
+
+\chapter{Applications and Midwares}
+\minitoc
+
+\newpage
+\section{FSAL}
+Filesystem Abstraction Layer
+
+\newpage
+\section{DBAL}
+Database  Abstraction Layer
+
+\newpage
+\section{Script support}
+TBD
+
+\newpage
+\section{Generic Programmer/Tester}
+TBD
+
+\chapter{Appendix}
+\minitoc
+
+\newpage
+\section{GPLv3}
+
+\end{document}

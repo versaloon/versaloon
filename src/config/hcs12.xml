@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<series name="hcs12">
+  <chip name="hcs12">
+    <chip_id>0x0000</chip_id>
+    <app_page_size>1024</app_page_size>
+    <app_page_num>115</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_addr>0x1A00</app_addr>
+    <app_seg>0</app_seg>
+  </chip>
+  <chip name="mc9s12xs256">
+    <chip_id>0xC0C0</chip_id>
+    <app_page_num>256</app_page_num>
+    <app_addr>0x7C0000</app_addr>
+  </chip>
+  <chip name="mc9s12xs128">
+    <chip_id>0xC0C0</chip_id>
+    <app_page_num>128</app_page_num>
+    <app_addr>0x7E0000</app_addr>
+  </chip>
+    <chip name="mc9s12xs64">
+    <chip_id>0xC0C0</chip_id>
+    <app_page_num>64</app_page_num>
+    <app_addr>0x7E0000</app_addr>
+  </chip>
+    <chip name="scw9s12xs256">
+    <chip_id>0xC0C0</chip_id>
+    <app_page_num>256</app_page_num>
+    <app_addr>0x7C0000</app_addr>
+  </chip>
+  <chip name="scw9s12xs128">
+    <chip_id>0xC0C0</chip_id>
+    <app_page_num>128</app_page_num>
+    <app_addr>0x7E0000</app_addr>
+  </chip>
+  <chip name="scw9s12xs64">
+    <chip_id>0xC0C0</chip_id>
+    <app_page_num>64</app_page_num>
+    <app_addr>0x7F0000</app_addr>
+  </chip>
+</series>

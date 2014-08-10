@@ -1,0 +1,66 @@
+object FormParaEditor: TFormParaEditor
+  Left = 557
+  Height = 193
+  Top = 139
+  Width = 323
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'FormParaEditor'
+  ClientHeight = 193
+  ClientWidth = 323
+  KeyPreview = True
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '0.9.28.2'
+  object pnlSettings: TPanel
+    Left = 0
+    Height = 127
+    Top = 0
+    Width = 323
+    Align = alClient
+    TabOrder = 0
+    OnClick = pnlSettingsClick
+  end
+  object pnlButton: TPanel
+    Left = 0
+    Height = 66
+    Top = 127
+    Width = 323
+    Align = alBottom
+    ClientHeight = 66
+    ClientWidth = 323
+    TabOrder = 1
+    OnClick = pnlButtonClick
+    object btnOK: TButton
+      Left = 56
+      Height = 25
+      Top = 22
+      Width = 75
+      Caption = '&OK'
+      Default = True
+      ModalResult = 1
+      OnClick = btnOKClick
+      TabOrder = 0
+    end
+    object btnCancel: TButton
+      Left = 192
+      Height = 25
+      Top = 22
+      Width = 75
+      Caption = '&Cancel'
+      ModalResult = 2
+      OnClick = btnCancelClick
+      TabOrder = 1
+    end
+  end
+  object tInit: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = tInitTimer
+    left = 144
+    top = 144
+  end
+end

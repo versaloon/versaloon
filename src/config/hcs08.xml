@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<series name="hcs08">
+  <chip name="hcs08">
+    <chip_id>0x0000</chip_id>
+    <app_page_size>512</app_page_size>
+    <app_page_num>115</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_addr>0x1A00</app_addr>
+    <app_seg>0</app_seg>
+    <sram_addr>0x0080</sram_addr>
+    <sram_size>4096</sram_size>
+  </chip>
+  <chip name="mc9s08ac16">
+    <chip_id>0x012</chip_id>
+    <app_page_num>32</app_page_num>
+    <app_addr>0xC000</app_addr>
+    <sram_addr>0x0070</sram_addr>
+    <sram_size>1024</sram_size>
+  </chip>
+</series>

@@ -1,0 +1,9 @@
+1. remove library from ST, reuse only the defines for registers
+2. use same interface driver code for stm32 and vi_stm32
+3. make interfaces calls non-block(for ebi, spi etc.)
+4. make usart_stream standard dal_info_t driver
+5. make param in dal_info_t constant, and info in dal_info_t volatile
+	means parameter of a driver is constand, and info is used for variables
+6. make address parameter in EBI interface correspond to the read signals in address port
+7. in vsfusbd, remove all static variables
+		---- done

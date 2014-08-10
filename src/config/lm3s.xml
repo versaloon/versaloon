@@ -1,0 +1,1183 @@
+<?xml version="1.0"?>
+<series name="lm3s">
+  <chip name="lm3s">
+    <chip_id>0x0000</chip_id>
+    <program_mode>j:JTAG(F)|s:SWD</program_mode>
+    <sram_size>2048</sram_size>
+    <app_page_size>1024</app_page_size>
+    <app_page_num>256</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_addr>0x00000000</app_addr>
+    <app_seg>0</app_seg>
+    <param0>20</param0>
+  </chip>
+  <chip name="lm3s101">
+    <chip_id>0x0001</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>2048</sram_size>
+    <app_page_num>8</app_page_num>
+    <param0>20</param0>
+  </chip>
+  <chip name="lm3s102">
+    <chip_id>0x0002</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>2048</sram_size>
+    <app_page_num>8</app_page_num>
+    <param0>20</param0>
+  </chip>
+  <chip name="lm3s300">
+    <chip_id>0x0019</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s301">
+    <chip_id>0x0011</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>2048</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>20</param0>
+  </chip>
+  <chip name="lm3s308">
+    <chip_id>0x001A</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s310">
+    <chip_id>0x0012</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s315">
+    <chip_id>0x0013</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s316">
+    <chip_id>0x0014</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s317">
+    <chip_id>0x0017</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s328">
+    <chip_id>0x0015</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>4096</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s600">
+    <chip_id>0x002A</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s601">
+    <chip_id>0x0021</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s608">
+    <chip_id>0x002B</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s610">
+    <chip_id>0x0022</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s611">
+    <chip_id>0x0023</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s612">
+    <chip_id>0x0024</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s613">
+    <chip_id>0x0025</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s615">
+    <chip_id>0x0026</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s617">
+    <chip_id>0x0028</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s618">
+    <chip_id>0x0029</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s628">
+    <chip_id>0x0027</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s800">
+    <chip_id>0x0038</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s801">
+    <chip_id>0x0031</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s808">
+    <chip_id>0x0039</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s811">
+    <chip_id>0x0032</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s812">
+    <chip_id>0x0033</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s815">
+    <chip_id>0x0034</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s817">
+    <chip_id>0x0036</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s818">
+    <chip_id>0x0037</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s828">
+    <chip_id>0x0035</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1110">
+    <chip_id>0x10BF</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s1133">
+    <chip_id>0x10C3</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1138">
+    <chip_id>0x10C5</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1150">
+    <chip_id>0x10C1</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1162">
+    <chip_id>0x10C4</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1165">
+    <chip_id>0x10C2</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1332">
+    <chip_id>0x10C6</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1435">
+    <chip_id>0x10BC</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1439">
+    <chip_id>0x10BA</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1512">
+    <chip_id>0x10BB</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s1538">
+    <chip_id>0x10C7</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1601">
+    <chip_id>0x10DB</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1607">
+    <chip_id>0x1006</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1608">
+    <chip_id>0x10DA</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1620">
+    <chip_id>0x10C0</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s1625">
+    <chip_id>0x1003</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1626">
+    <chip_id>0x1004</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1627">
+    <chip_id>0x1005</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1635">
+    <chip_id>0x10B3</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1637">
+    <chip_id>0x10BD</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1751">
+    <chip_id>0x10B9</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1776">
+    <chip_id>0x1010</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1811">
+    <chip_id>0x1016</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1816">
+    <chip_id>0x103D</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1850">
+    <chip_id>0x10B4</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1911">
+    <chip_id>0x10DD</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1918">
+    <chip_id>0x10DC</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1937">
+    <chip_id>0x10B7</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1958">
+    <chip_id>0x10BE</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1960">
+    <chip_id>0x10B5</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1968">
+    <chip_id>0x10B8</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1j11">
+    <chip_id>0x100F</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>20480</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1j16">
+    <chip_id>0x103C</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>20480</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1n11">
+    <chip_id>0x100E</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>12288</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1n16">
+    <chip_id>0x103B</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>12288</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1w16">
+    <chip_id>0x1030</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s1z16">
+    <chip_id>0x102F</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>6144</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2110">
+    <chip_id>0x1051</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s2139">
+    <chip_id>0x1084</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s2276">
+    <chip_id>0x1039</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2410">
+    <chip_id>0x10A2</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s2412">
+    <chip_id>0x1059</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s2432">
+    <chip_id>0x1056</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2533">
+    <chip_id>0x105A</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2601">
+    <chip_id>0x10E1</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2608">
+    <chip_id>0x10E0</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2616">
+    <chip_id>0x1033</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2620">
+    <chip_id>0x1057</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s2637">
+    <chip_id>0x1085</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2651">
+    <chip_id>0x1053</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2671">
+    <chip_id>0x1080</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2678">
+    <chip_id>0x1050</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2730">
+    <chip_id>0x10A4</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2739">
+    <chip_id>0x1052</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2776">
+    <chip_id>0x103A</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2793">
+    <chip_id>0x106D</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s2911">
+    <chip_id>0x10E3</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2918">
+    <chip_id>0x10E2</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2939">
+    <chip_id>0x1054</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2948">
+    <chip_id>0x108F</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2950">
+    <chip_id>0x1058</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2965">
+    <chip_id>0x1055</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s2b93">
+    <chip_id>0x106C</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>98304</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s3651">
+    <chip_id>0x1043</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s3739">
+    <chip_id>0x1044</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s3748">
+    <chip_id>0x1049</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s3749">
+    <chip_id>0x1045</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s3826">
+    <chip_id>0x1042</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s3j26">
+    <chip_id>0x1041</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>20480</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s3n26">
+    <chip_id>0x1040</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>12288</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s3w26">
+    <chip_id>0x103F</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s3z26">
+    <chip_id>0x103E</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>6144</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5632">
+    <chip_id>0x1081</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5651">
+    <chip_id>0x100C</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5652">
+    <chip_id>0x108A</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5656">
+    <chip_id>0x104D</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5662">
+    <chip_id>0x1091</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5732">
+    <chip_id>0x1096</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5737">
+    <chip_id>0x1097</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5739">
+    <chip_id>0x10A0</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5747">
+    <chip_id>0x1099</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5749">
+    <chip_id>0x10A7</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5752">
+    <chip_id>0x109A</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5762">
+    <chip_id>0x109C</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s5791">
+    <chip_id>0x1069</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5951">
+    <chip_id>0x100B</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5956">
+    <chip_id>0x104E</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5b91">
+    <chip_id>0x1068</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>98304</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5k31">
+    <chip_id>0x1009</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>24576</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5k36">
+    <chip_id>0x104A</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>24576</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5p31">
+    <chip_id>0x100A</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>24576</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5p36">
+    <chip_id>0x1048</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>24576</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5p51">
+    <chip_id>0x100D</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>24576</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5p56">
+    <chip_id>0x104C</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>24576</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5r31">
+    <chip_id>0x1007</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>49152</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5r36">
+    <chip_id>0x104B</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>49152</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5t36">
+    <chip_id>0x1047</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>12288</sram_size>
+    <app_page_num>32</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s5y36">
+    <chip_id>0x1046</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>8192</sram_size>
+    <app_page_num>16</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s6100">
+    <chip_id>0x10A1</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s6110">
+    <chip_id>0x1074</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>16384</sram_size>
+    <app_page_num>64</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s6420">
+    <chip_id>0x10A5</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s6422">
+    <chip_id>0x1082</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s6432">
+    <chip_id>0x1075</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6537">
+    <chip_id>0x1076</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6610">
+    <chip_id>0x1071</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>25</param0>
+  </chip>
+  <chip name="lm3s6611">
+    <chip_id>0x10E7</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6618">
+    <chip_id>0x10E6</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6633">
+    <chip_id>0x1083</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6637">
+    <chip_id>0x108B</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6730">
+    <chip_id>0x10A3</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6753">
+    <chip_id>0x1077</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6911">
+    <chip_id>0x10E9</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6918">
+    <chip_id>0x10E8</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6938">
+    <chip_id>0x1089</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6950">
+    <chip_id>0x1072</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6952">
+    <chip_id>0x1078</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s6965">
+    <chip_id>0x1073</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8530">
+    <chip_id>0x1064</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8538">
+    <chip_id>0x108E</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>96</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8630">
+    <chip_id>0x1061</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>32768</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8730">
+    <chip_id>0x1063</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8733">
+    <chip_id>0x108D</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8738">
+    <chip_id>0x1086</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8930">
+    <chip_id>0x1065</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8933">
+    <chip_id>0x108C</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8938">
+    <chip_id>0x1088</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8962">
+    <chip_id>0x10A6</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8970">
+    <chip_id>0x1062</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s8971">
+    <chip_id>0x10D7</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>50</param0>
+  </chip>
+  <chip name="lm3s9790">
+    <chip_id>0x1067</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s9792">
+    <chip_id>0x106B</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s9997">
+    <chip_id>0x1020</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>65536</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s9b90">
+    <chip_id>0x1066</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>98304</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s9b92">
+    <chip_id>0x106A</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>98304</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s9b95">
+    <chip_id>0x106E</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>98304</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s9b96">
+    <chip_id>0x106F</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>98304</sram_size>
+    <app_page_num>256</app_page_num>
+    <param0>80</param0>
+  </chip>
+  <chip name="lm3s9l97">
+    <chip_id>0x1018</chip_id>
+    <program_mode>js</program_mode>
+    <sram_size>49152</sram_size>
+    <app_page_num>128</app_page_num>
+    <param0>80</param0>
+  </chip>
+</series>

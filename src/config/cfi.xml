@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<series name="cfi">
+  <chip name="cfi">
+    <chip_id>0x00000000</chip_id>
+    <app_default>0xFF</app_default>
+    <app_addr>0</app_addr>
+    <app_seg>0</app_seg>
+  </chip>
+  <chip name="m29w128gl">
+    <chip_id>0x207E2100</chip_id>
+    <app_page_size>131072</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="m29w128gh">
+    <chip_id>0x207E2101</chip_id>
+    <app_page_size>131072</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="s29gl128e">
+    <chip_id>0x017E2101</chip_id>
+    <app_page_size>131072</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+</series>

@@ -1,0 +1,23 @@
+@quiet
+param exit_on_fail 1
+log_info "Initializing..."
+dal.init
+mic2826.init 1000
+log_info "set LDO1 to output 1.8V"
+mic2826.config 0 1800 0 0
+sleep 200
+tvcc.get
+log_info "set LDO1 to output 2.5V"
+mic2826.config 0 2500 0 0
+sleep 200
+tvcc.get
+log_info "set LDO1 to output 3.3V"
+mic2826.config 0 3300 0 0
+sleep 200
+tvcc.get
+log_info "set LDO1 to output 0V"
+mic2826.config 0 0 0 0
+sleep 200
+tvcc.get
+mic2826.fini
+dal.fini

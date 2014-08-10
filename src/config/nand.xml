@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<series name="nand">
+  <chip name="nand">
+    <chip_id>0x00000000</chip_id>
+    <app_default>0xFF</app_default>
+    <app_addr>0</app_addr>
+    <app_seg>0</app_seg>
+  </chip>
+  <chip name="k9f1g08u0m">
+    <chip_id>0xECF18015</chip_id>
+    <app_page_size>131072</app_page_size>
+    <app_page_num>1024</app_page_num>
+    <param0>0</param0>
+    <param1>2048</param1>
+    <param2>2048</param2>
+    <param3>131072</param3>
+    <param4>2</param4>
+    <param5>10</param5>
+    <param6>2</param6>
+    <param7>11</param7>
+  </chip>
+  <chip name="k9f1g08u0a">
+    <chip_id>0xECF10015</chip_id>
+    <app_page_size>131072</app_page_size>
+    <app_page_num>1024</app_page_num>
+    <param0>0</param0>
+    <param1>2048</param1>
+    <param2>2048</param2>
+    <param3>131072</param3>
+    <param4>2</param4>
+    <param5>10</param5>
+    <param6>2</param6>
+    <param7>11</param7>
+  </chip>
+  <chip name="k9f1g08r0a">
+    <chip_id>0xECA10015</chip_id>
+    <app_page_size>131072</app_page_size>
+    <app_page_num>1024</app_page_num>
+    <param0>0</param0>
+    <param1>2048</param1>
+    <param2>2048</param2>
+    <param3>131072</param3>
+    <param4>2</param4>
+    <param5>10</param5>
+    <param6>2</param6>
+    <param7>11</param7>
+  </chip>
+  <chip name="k9f1g08u0b">
+    <chip_id>0xECF10095</chip_id>
+    <app_page_size>131072</app_page_size>
+    <app_page_num>1024</app_page_num>
+    <param0>0</param0>
+    <param1>2048</param1>
+    <param2>2048</param2>
+    <param3>131072</param3>
+    <param4>2</param4>
+    <param5>10</param5>
+    <param6>2</param6>
+    <param7>11</param7>
+  </chip>
+  <chip name="k9f1208u0c">
+    <chip_id>0xEC765A3F</chip_id>
+    <app_page_size>16384</app_page_size>
+    <app_page_num>4096</app_page_num>
+    <param0>1</param0>
+    <param1>512</param1>
+    <param2>512</param2>
+    <param3>16384</param3>
+    <param4>1</param4>
+    <param5>7</param5>
+    <param6>3</param6>
+    <param7>9</param7>
+  </chip>
+  <chip name="nand512w3a">
+    <chip_id>0x20762076</chip_id>
+    <app_page_size>16384</app_page_size>
+    <app_page_num>4096</app_page_num>
+    <param0>1</param0>
+    <param1>512</param1>
+    <param2>512</param2>
+    <param3>16384</param3>
+    <param4>1</param4>
+    <param5>7</param5>
+    <param6>3</param6>
+    <param7>9</param7>
+  </chip>
+</series>

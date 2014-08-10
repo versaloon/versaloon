@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<series name="avr32">
+  <chip name="avr32">
+    <chip_id>0x0000</chip_id>
+    <program_mode>j:JTAG(F)</program_mode>
+    <app_page_size>512</app_page_size>
+    <app_page_num>1024</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_addr>0x80000000</app_addr>
+    <app_seg>0</app_seg>
+  </chip>
+  <chip name="avr32uc3b0512">
+    <chip_id>0x0205003F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>1024</app_page_num>
+  </chip>
+  <chip name="avr32uc3b1512">
+    <chip_id>0x0205203F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>1024</app_page_num>
+  </chip>
+  <chip name="avr32uc3b0256">
+    <chip_id>0x01EE403F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>512</app_page_num>
+  </chip>
+  <chip name="avr32uc3b1256">
+    <chip_id>0x01EE503F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>512</app_page_num>
+  </chip>
+  <chip name="avr32uc3b0128">
+    <chip_id>0x01EE603F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="avr32uc3b1128">
+    <chip_id>0x01EE903F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="avr32uc3b064">
+    <chip_id>0x01EEA03F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="avr32uc3b164">
+    <chip_id>0x01EEB03F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="avr32uc3a0512">
+    <chip_id>0x01EDC03F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>1024</app_page_num>
+  </chip>
+  <chip name="avr32uc3a1512">
+    <chip_id>0x01EDD03F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>1024</app_page_num>
+  </chip>
+  <chip name="avr32uc3a0256">
+    <chip_id>0x01EDF03F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>512</app_page_num>
+  </chip>
+  <chip name="avr32uc3a1256">
+    <chip_id>0x01EE003F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>512</app_page_num>
+  </chip>
+  <chip name="avr32uc3a0128">
+    <chip_id>0x01EE203F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="avr32uc3a1128">
+    <chip_id>0x01EE303F</chip_id>
+    <program_mode>j</program_mode>
+    <app_page_num>256</app_page_num>
+  </chip>
+</series>

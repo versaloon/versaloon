@@ -1,0 +1,133 @@
+\documentclass[a4paper,12pt]{book}
+
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\usepackage{bookman}
+\normalfont
+
+\title{VSF USBD -- Generic USB Device Stack under VSF}
+\author{Simon Qian}
+\date{}
+
+\usepackage{pgf,tikz}
+
+\usepackage{minitoc}
+\usepackage{hyperref}
+\hypersetup{
+bookmarksnumbered=true,
+colorlinks=true,
+pdfpagelayout={OneColumn},
+pdfstartview={FitH}
+}
+
+\usepackage{listings}
+\lstset{
+language=C,
+breaklines=true,
+extendedchars=false,
+keywordstyle=\color{blue},
+%commentstyle=\color{}
+morekeywords={int8_t,uint8_t,int16_t,uint16_t,int32_t,uint32_t,int64_t,uint64_t,bool}
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\begin{document}
+\dominitoc
+
+\maketitle
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\newpage
+\chapter*{List of Symbols\hfill} %\addcontentsline{toc}{chapter}{List of Symbols}
+
+\begin{itemize}
+\item VSF: Versaloon Software Framework
+\item USB: Universial Serial Bus
+\item DAL: Driver Abstraction Layer
+\item EPn: Endpoint n
+\end{itemize}
+
+\chapter{Overview}
+\minitoc
+
+\newpage
+\section{About}
+VSF(Versaloon Software Framework) is a generic framework for VersaloonPlatform, which has some well-designed abstraction layers so that application codes can be target-independent. Refer to VersloonPlatform\_WhiteBook for more information.
+
+\textbf{VSF\_USBD} is designed to be applicapible in different targets, by implementing generic USB protocol on USB interface driver for different targets. \textbf{VSF\_USBD} can initialize USB interface automatically according to the descriptors. User software should only provide a generic struct for USB information.
+
+\newpage
+\section{Copyright and License}
+VersaloonPlatform is copyrighted by SimonQian SimonQian@Simonqian.com, and is published under GPLv3.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+\chapter{Framework}
+\minitoc
+
+\newpage
+\section{SETUP filter and handler}
+\begin{lstlisting}
+struct vsfusbd_setup_filter_t
+{
+	uint8_t type;
+	uint8_t request;
+	
+	RESULT (*prepare)(struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer);
+	RESULT (*process)(struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer);
+};
+\end{lstlisting}
+On SETUP packet, \textbf{VSF\_USBD} will search for the corresponding filter by \emph{type} and \emph{request}. If found, \emph{prepare} function is called. When the SETUP transaction ends successfully, \emph{process} function will be called.
+
+For example, when SETUP packet for SET\_ADDRESS(SETUP: 00 05 01 00 00 00 00 00) request received, \textbf{VSF\_USBD} will search in standard request filer list for (\emph{type} == 0x00) and (\emph{request} == 0x05). If found, \emph{prepare} function will be called and parameters in SETUP request will be checked. If all parameters are OK, \emph{prepare} function will return ERROR\_OK indicating that SETUP packet is OK, and \textbf{VSF\_USBD} will do the other transactions. After all related transaction is done, \emph{process} function will be called.
+
+\newpage
+\section{Desctiptors filter and handler}
+\begin{lstlisting}
+struct vsfusbd_desc_filter_t
+{
+	uint8_t type;
+	uint8_t index;
+	uint16_t lanid;
+	
+	struct vsf_buffer_t buffer;
+	RESULT (*read)(struct vsf_buffer_t *buffer);
+};
+\end{lstlisting}
+When GET\_DESCRIPTOR request is received, \textbf{VSF\_USBD} will search for the descriptor filter list for the matching \emph{type}, \emph{index} and \emph{lanid}. If found, \emph{buffer} be read as the buffer of the descriptor, and \emph{read} function will be called if valid. There are two types of descriptors, one is for device, type of GET\_DESCRIPTOR packet will indicate device as reception; the other is for class or vendor, type of GET\_DESCRIPTOR packet will indicate interface as reception. Descriptors for device is defined in device related structure and descriptors for class or vendor is defined in the corresponding class\_protocol structure in corresponding interface structure.
+
+\newpage
+\section{Initialization sequence}
+To initialize \textbf{VSF\_USBD}, \textbf{vsfusbd\_device\_init} should be called. And \textbf{vsfusbd\_device\_init} will call drv->init, drv->connect and callback.init if valid. drv->init will initialize and reset the hardware USB engine, and enable interrupts. drv->connect will enable the pullups to indicate that the device is connected. After that, USB host will reset the device, and \textbf{vsfusbd\_on\_RESET} will be called. \textbf{vsfusbd\_on\_RESET} will call user initialization procedure(both config initialization and interface initialization) first and then initialize the USB structure and hardware USB endpoints according to the descriptors automatically. For example, EP0 size is initialized according to the related information in device descriptor.
+
+\newpage
+\section{Data flow for EP0}
+For control endpoint, \textbf{vsfusbd\_on\_SETUP}, \textbf{vsfusbd\_on\_OUT0} and \textbf{vsfusbd\_on\_IN0} are called on corresponding events.
+
+\newpage
+\section{Class and Vendor related code}
+\begin{lstlisting}
+struct vsfusbd_class_protocol_t
+{
+	struct vsfusbd_desc_filter_t *desc_filter;
+	struct vsfusbd_setup_filter_t *req_filter;
+	
+	RESULT (*init)(void);
+	RESULT (*fini)(void);
+	RESULT (*poll)(void);
+};
+\end{lstlisting}
+A class protocol or vendor protocol can be added to the structure of USB interface. A SETUP filter and a descriptor filter can be added, so that user-defined SETUP packet and descriptors can be implemented. And \emph{init}, \emph{fini}, \emph{poll} function will be called automatically in the related procedure if valid.
+
+\chapter{Appendix}
+\minitoc
+
+\newpage
+\section{GPLv3}
+
+\end{document}

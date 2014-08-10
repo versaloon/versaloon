@@ -1,0 +1,255 @@
+\input texinfo	@c -*-texinfo-*-
+@c %**start of header
+@setfilename usbtoxxx.info
+@settitle USB_TO_XXX specification
+@dircategory Development
+@direntry
+@paragraphindent 0
+* USB_TO_XXX: (usbtoxxx).      Generic Protocol for USB dongle.
+@end direntry
+@c %**end of header
+
+@copying
+
+@itemize @bullet
+@item Copyright @copyright{} 2008-2010 Versaloon Project
+@item Copyright @copyright{} 2008-2010 SimonQian @email{SimonQian@@SimonQian.com}
+@end itemize
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled ``GNU
+Free Documentation License''.
+@end quotation
+@end copying
+
+@titlepage
+@title USB_TO_XXX Specification
+@subtitle Alpha Release
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@summarycontents
+@contents
+
+@node Top, About, , (dir)
+@top USB_TO_XXX
+
+This manual documents USB_TO_XXX specification for developpers using Versaloon 
+as a generic USB dongle.
+
+@insertcopying
+
+@menu
+* About::                            About USB_TO_XXX.
+* Developers::                       USB_TO_XXX Developers
+* Protocol::                         USB_TO_XXX Protocol
+* FAQ::                              Frequently Asked Questions
+* License::                          GNU Free Documentation License
+@end menu
+
+@node About
+@unnumbered About
+@cindex about
+
+USB_TO_XXX is a generic Transport Layer protocol for USB dongle, which support 
+many interfaces including UART, SPI, GPIO, ADC, IIC, JTAG, SWJ, SWIM, C2, ISSP, 
+PowerControl, Delay, Poll, and so on. You can operate multiple interfaces in one 
+USB command.
+
+@node Developers
+@chapter Developers
+@cindex developers
+
+USB_TO_XXX was designed by SimonQian for Versaloon to support multiple targets.
+The Versaloon web site is available at @uref{www.SimonQian.com/en/Versaloon}.
+Others interested in improving the state of free and open debug and testing technology
+are welcome to participate.
+
+Other developers have contributed support for additional targets and flashes as well
+as numerous bugfixes and enhancements. See the AUTHORS file for regular contributors.
+
+@node Protocol
+@chapter Protocol
+@cindex protocol
+@cindex command format
+@cindex command byte
+@cindex sub-command byte
+@cindex USB_TO_SPI sub-commands
+
+@section command format
+
+USB_TO_XXX commands and sub-commands are in the same format.
+Commands are for the interfaces, it can include several sub-commands.
+For example, a command for USB_TO_GPIO can include 2 sub-commands, first of which is 
+to set GPIO0 as output, second of which is to set GPIO0 to logic '1'.
+
+@sp 1
+
+Format:
+@example
+  COMMAND(1 byte) + LENGTH(2 bytes) + DATA
+@end example
+
+@sp 1
+
+Note: 
+
+LENGTH section is in bytes.
+For USB_TO_XXX commands, LENGTH is the in-all length including COMMAND, LEGNTH and DATA.
+For USB_TO_XXX sub-commands, LENGTH is the length for DATA ONLY.
+
+DATA section for a sub-command is the parameter of that sub-command; for a command 
+except USB_TO_ALL is several sub-commands; for USB_TO_ALL is several other commands, 
+which is used to operate more than one interfaces in one USB command.
+
+@section command byte
+
+There are 96 commands available in 3 pages, although not all of them are used currently.
+Each command is one byte in size.
+
+Page0 is commands for generic interfaces; page1 for vendor-specific interfaces; Page2 
+for special commands. Each command is for a specific interface or function.
+
+@sp 1
+
+@example
+#define VERSALOON_USB_TO_XXX_CMD_START	0x20
+#define VERSALOON_USB_TO_XXX_CMD_END	0x7F
+// Page0
+#define USB_TO_USART					(VERSALOON_USB_TO_XXX_CMD_START + 0x00)
+#define USB_TO_SPI						(VERSALOON_USB_TO_XXX_CMD_START + 0x01)
+#define USB_TO_I2C						(VERSALOON_USB_TO_XXX_CMD_START + 0x02)
+#define USB_TO_GPIO						(VERSALOON_USB_TO_XXX_CMD_START + 0x03)
+#define USB_TO_CAN						(VERSALOON_USB_TO_XXX_CMD_START + 0x04)
+#define USB_TO_PWM						(VERSALOON_USB_TO_XXX_CMD_START + 0x05)
+#define USB_TO_ADC						(VERSALOON_USB_TO_XXX_CMD_START + 0x06)
+#define USB_TO_DAC						(VERSALOON_USB_TO_XXX_CMD_START + 0x07)
+#define USB_TO_MICROWIRE				(VERSALOON_USB_TO_XXX_CMD_START + 0x08)
+#define USB_TO_SWIM						(VERSALOON_USB_TO_XXX_CMD_START + 0x09)
+// Page1
+#define USB_TO_JTAG_LL					(VERSALOON_USB_TO_XXX_CMD_START + 0x20)
+#define USB_TO_JTAG_HL					(VERSALOON_USB_TO_XXX_CMD_START + 0x21)
+#define USB_TO_ISSP						(VERSALOON_USB_TO_XXX_CMD_START + 0x22)
+#define USB_TO_C2						(VERSALOON_USB_TO_XXX_CMD_START + 0x23)
+#define USB_TO_SBW						(VERSALOON_USB_TO_XXX_CMD_START + 0x24)
+#define USB_TO_LPCICP					(VERSALOON_USB_TO_XXX_CMD_START + 0x25)
+#define USB_TO_SWJ						(VERSALOON_USB_TO_XXX_CMD_START + 0x26)
+#define USB_TO_MSP430_JTAG				(VERSALOON_USB_TO_XXX_CMD_START + 0x38)
+// Page2
+#define USB_TO_POWER					(VERSALOON_USB_TO_XXX_CMD_START + 0x40)
+#define USB_TO_DELAY					(VERSALOON_USB_TO_XXX_CMD_START + 0x41)
+#define USB_TO_POLL						(VERSALOON_USB_TO_XXX_CMD_START + 0x42)
+#define USB_TO_ALL						(VERSALOON_USB_TO_XXX_CMD_START + 0x5F)
+@end example
+
+@section sub-command byte
+
+Each sub-command is for an operation, and 1 byte in size. MSB 5-bit of sub-command 
+byte is the sub-command, while LSB 3-bit indicate the interface index to operate.
+
+@sp 1
+
+@example
+#define USB_TO_XXX_CMDMASK				0xF8
+#define USB_TO_XXX_CMDSHIFT				3
+#define USB_TO_XXX_IDXMASK				0x07
+#define USB_TO_XXX_INIT					(0x00 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_FINI					(0x01 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_CONFIG				(0x02 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_GETHWINFO			(0x03 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_STATUS				(0X04 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_IN_OUT				(0x05 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_IN					(0x06 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_OUT					(0x07 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_POLL					(0x08 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_SPECIAL				(0x09 << USB_TO_XXX_CMDSHIFT)
+#define USB_TO_XXX_RESET				(0x0A << USB_TO_XXX_CMDSHIFT)
+@end example
+
+@section sub-command reply
+
+Each sub-command reply is at least one byte in size.
+
+If sub-command succeeds, USB_TO_XXX_OK is the first byte of reply, followed by 
+the result data.
+If sub-command fails, the corresponding error reply is the first byte, and no 
+result data is returned.
+
+@sp 1
+
+@example
+#define USB_TO_XXX_OK					0x00
+#define USB_TO_XXX_FAILED				0x01
+#define USB_TO_XXX_TIME_OUT				0x02
+#define USB_TO_XXX_INVALID_INDEX		0x03
+#define USB_TO_XXX_INVALID_PARA			0x04
+#define USB_TO_XXX_INVALID_CMD			0x05
+#define USB_TO_XXX_CMD_NOT_SUPPORT		0x06
+@end example
+
+@section USB_TO_SPI sub-commands
+
+@subsection USB_TO_XXX_INIT
+
+This sub-command will initialize USB_TO_SPI and return the number of interfaces.
+
+parameter: None
+
+result data(1 byte): SPI_NUM(1 byte)
+
+@subsection USB_TO_XXX_FINI
+
+This sub-command will fini USB_TO_SPI.
+
+parameter: None
+
+result data: None
+
+@subsection USB_TO_XXX_CONFIG
+
+This sub-command will configure the SPI attribute.
+
+parameter(3 bytes):
+
+@example
+  union
+  @{
+    struct @{
+      5: cpol;       // 0 for low; 1 for high
+	  6: cpha;       // 0 for 1st edge; 1 for 2nd edge
+	  7: msb_first;  // 0 for lsb_first; 1 for msb_first
+    @}attr_bitmap;
+    uint8_t attr_value;
+  @}
+  uint16_t frequency_in_khz;
+@end example
+
+result data: None
+
+@subsection USB_TO_XXX_INOUT
+
+This sub-command will do SPI transmit.
+
+parameter: data to be sent on MOSI
+
+result data: data received on MISO
+
+@node FAQ
+@chapter FAQ
+@cindex faq
+
+TODO: add information
+
+@include fdl.texi
+
+@unnumbered Index
+
+@printindex cp
+
+@bye

@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<series name="lpc900">
+  <chip name="lpc900">
+    <chip_id>0x00150000</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>256</app_page_num>
+    <app_default>0</app_default>
+    <app_addr>0</app_addr>
+    <app_seg>0</app_seg>
+    <chip_erase>1</chip_erase>
+  </chip>
+  <chip name="p89lpc901">
+    <chip_id>0x0015DD0D</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc902">
+    <chip_id>0x0015DD0F</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc903">
+    <chip_id>0x0015DD10</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc904">
+    <chip_id>0x0015DD21</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc906">
+    <chip_id>0x0015DD11</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc907">
+    <chip_id>0x0015DD12</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc908">
+    <chip_id>0x0015DD13</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc9102">
+    <chip_id>0x0015DD22</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc9103">
+    <chip_id>0x0015DD23</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc9107">
+    <chip_id>0x0015DD27</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc912">
+    <chip_id>0x0015DD14</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc913">
+    <chip_id>0x0015DD15</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc914">
+    <chip_id>0x0015DD16</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc915">
+    <chip_id>0x0015DD17</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc916">
+    <chip_id>0x0015DD18</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc917">
+    <chip_id>0x0015DD20</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc918">
+    <chip_id>0x0015DD2D</chip_id>
+    <app_page_size>16</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc920">
+    <chip_id>0x0015DD1A</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>32</app_page_num>
+  </chip>
+  <chip name="p89lpc921">
+    <chip_id>0x0015DD0B</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc922">
+    <chip_id>0x0015DD0C</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc9221">
+    <chip_id>0xFFFFFFFF</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc924">
+    <chip_id>0x0015DD1B</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc925">
+    <chip_id>0x0015DD1C</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc930">
+    <chip_id>0x0015DD19</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc931">
+    <chip_id>0x0015DD09</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc932a1">
+    <chip_id>0x0015DD1F</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc9321">
+    <chip_id>0xFFFFFFFF</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc933">
+    <chip_id>0x0015DDA0</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>64</app_page_num>
+  </chip>
+  <chip name="p89lpc934">
+    <chip_id>0x0015DD1D</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc935">
+    <chip_id>0x0015DD1E</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc936">
+    <chip_id>0x0015DD24</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="p89lpc938">
+    <chip_id>0x0015DD25</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc9401">
+    <chip_id>0x0015DD26</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc9408">
+    <chip_id>0x0015DD29</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>128</app_page_num>
+  </chip>
+  <chip name="p89lpc952">
+    <chip_id>0x0015DD28</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>256</app_page_num>
+  </chip>
+  <chip name="p89lpc9521">
+    <chip_id>0xFFFFFFFF</chip_id>
+    <app_page_size>64</app_page_size>
+    <app_page_num>256</app_page_num>
+  </chip>
+</series>

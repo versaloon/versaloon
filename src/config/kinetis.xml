@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<series name="kinetis">
+  <chip name="kinetis">
+    <chip_id>0x0000</chip_id>
+    <program_mode>j:JTAG(F)|s:SWD</program_mode>
+    <app_default>0xFF</app_default>
+    <app_addr>0x00000000</app_addr>
+    <app_seg>0</app_seg>
+    <sram_addr>0x20000000</sram_addr>
+  </chip>
+  <chip name="kl25z128vfm4">
+    <chip_id>0x2515048F</chip_id>
+    <program_mode>js</program_mode>
+    <app_default>0xFF</app_default>
+    <app_addr>0x00000000</app_addr>
+    <app_seg>0</app_seg>
+    <app_page_size>1024</app_page_size>
+    <sram_addr>0x20000000</sram_addr>
+	<uid init="0xFF" bytesize="12" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x"></uid>
+  </chip>
+</series>

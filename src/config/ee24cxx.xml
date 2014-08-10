@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<series name="ee24cxx">
+  <chip name="ee24cxx">
+    <chip_id>0x00000000</chip_id>
+    <ee_page_size>128</ee_page_size>
+    <ee_page_num>16</ee_page_num>
+    <ee_default>0xFF</ee_default>
+    <ee_addr>0</ee_addr>
+    <ee_seg>0</ee_seg>
+  </chip>
+  <chip name="ee24c64">
+    <ee_page_size>32</ee_page_size>
+    <ee_page_num>256</ee_page_num>
+    <param0>0xA0</param0>
+  </chip>
+</series>

@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<series name="c8051f">
+  <chip name="c8051f">
+    <program_mode>c:C2|j:JTAG(F)</program_mode>
+    <chip_id>0x00000000</chip_id>
+    <app_page_size>512</app_page_size>
+    <app_page_num>128</app_page_num>
+    <app_default>0xFF</app_default>
+    <app_size>65535</app_size>
+    <app_addr>0</app_addr>
+    <app_seg>0</app_seg>
+  </chip>
+  <chip name="c8051f30x">
+    <program_mode>c</program_mode>
+    <chip_id>0x00000004</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>30</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f31x">
+    <program_mode>c</program_mode>
+    <chip_id>0x00000008</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>64</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f32xL">
+    <program_mode>c</program_mode>
+    <chip_id>0x00000009</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>64</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f32xH">
+    <program_mode>c</program_mode>
+    <chip_id>0x0000000D</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>64</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f33xL">
+    <program_mode>c</program_mode>
+    <chip_id>0x0000000A</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>30</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f33xH">
+    <program_mode>c</program_mode>
+    <chip_id>0x00000014</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>62</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f34x">
+    <program_mode>c</program_mode>
+    <chip_id>0x0000000F</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>256</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xAD</param2>
+  </chip>
+  <chip name="c8051f35x">
+    <program_mode>c</program_mode>
+    <chip_id>0x0000000B</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>32</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f36x">
+    <program_mode>c</program_mode>
+    <chip_id>0x00000012</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>124</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xBF</param2>
+  </chip>
+  <chip name="c8051f41x">
+    <program_mode>c</program_mode>
+    <chip_id>0x0000000C</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>128</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xBF</param2>
+  </chip>
+  <chip name="c8051f50x">
+    <program_mode>c</program_mode>
+    <chip_id>0x0000001C</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>256</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f52/3x">
+    <program_mode>c</program_mode>
+    <chip_id>0x00000011</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>32</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f92/3x">
+    <program_mode>c</program_mode>
+    <chip_id>0x00000016</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>124</app_page_num>
+    <param1>0x02</param1>
+    <param2>0xB4</param2>
+  </chip>
+  <chip name="c8051f00x/01x">
+    <program_mode>j</program_mode>
+    <chip_id>0x00000243</chip_id>
+    <app_page_num>63</app_page_num>
+    <param0>0x7DFF</param0>
+  </chip>
+  <chip name="c8051f2xx">
+    <program_mode>j</program_mode>
+    <chip_id>0x00001243</chip_id>
+    <app_page_num>15</app_page_num>
+    <param0>0x1DFF</param0>
+  </chip>
+  <chip name="c8051f018/9">
+    <program_mode>j</program_mode>
+    <chip_id>0x00002243</chip_id>
+    <app_page_num>31</app_page_num>
+    <param0>0x3DFF</param0>
+  </chip>
+  <chip name="c8051f02x">
+    <program_mode>j</program_mode>
+    <chip_id>0x00003243</chip_id>
+    <app_page_num>126</app_page_num>
+    <param0>0xFDFF</param0>
+  </chip>
+  <chip name="c8051f04x">
+    <program_mode>j</program_mode>
+    <chip_id>0x00005243</chip_id>
+    <app_page_num>126</app_page_num>
+    <param0>0xFDFF</param0>
+  </chip>
+  <chip name="c8051f06x">
+    <program_mode>j</program_mode>
+    <chip_id>0x00006243</chip_id>
+    <app_page_num>126</app_page_num>
+    <param0>0xFBFF</param0>
+  </chip>
+</series>
