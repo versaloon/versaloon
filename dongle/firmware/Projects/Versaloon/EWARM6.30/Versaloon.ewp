@@ -87,7 +87,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>6.40.5.54273</state>
+          <state>7.10.3.6927</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -2175,13 +2175,6 @@
     <file>
       <name>$PROJ_DIR$\..\..\..\usb_protocol_Versaloon.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\usb_protocol_VersaloonSuper.c</name>
-      <excluded>
-        <configuration>Debug</configuration>
-        <configuration>Release</configuration>
-      </excluded>
-    </file>
   </group>
   <group>
     <name>USB_TO_XXX</name>
@@ -2568,37 +2561,40 @@
     <group>
       <name>stack</name>
       <group>
-        <name>usb_device</name>
+        <name>usb</name>
         <group>
-          <name>CLASS</name>
+          <name>device</name>
           <group>
-            <name>CDC</name>
-            <file>
-              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\CDC\vsfusbd_CDC.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\CDC\vsfusbd_CDCACM.c</name>
-            </file>
+            <name>CLASS</name>
+            <group>
+              <name>CDC</name>
+              <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\CDC\vsfusbd_CDC.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\CDC\vsfusbd_CDCACM.c</name>
+              </file>
+            </group>
+            <group>
+              <name>HID</name>
+              <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\HID\vsfusbd_HID.c</name>
+              </file>
+            </group>
+            <group>
+              <name>MSC</name>
+              <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\MSC\SCSI.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\MSC\vsfusbd_MSC_BOT.c</name>
+              </file>
+            </group>
           </group>
-          <group>
-            <name>HID</name>
-            <file>
-              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\HID\vsfusbd_HID.c</name>
-            </file>
-          </group>
-          <group>
-            <name>MSC</name>
-            <file>
-              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\MSC\SCSI.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\MSC\vsfusbd_MSC_BOT.c</name>
-            </file>
-          </group>
+          <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\vsfusbd.c</name>
+          </file>
         </group>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\vsf_usbd.c</name>
-        </file>
       </group>
     </group>
     <group>

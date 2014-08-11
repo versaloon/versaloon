@@ -937,6 +937,7 @@ struct interface_usbd_callback_t
 	vsf_err_t (*on_detach)(void*);
 	vsf_err_t (*on_reset)(void*);
 	vsf_err_t (*on_setup)(void*);
+	vsf_err_t (*on_control_status)(void*);
 	vsf_err_t (*on_error)(void*, enum interface_usbd_error_t error);
 	vsf_err_t (*on_wakeup)(void*);
 	vsf_err_t (*on_suspend)(void*);
@@ -967,6 +968,7 @@ struct interface_usbd_t
 	uint32_t (*get_frame_number)(void);
 	
 	vsf_err_t (*get_setup)(uint8_t *buffer);
+	vsf_err_t (*control_status)(void);
 	vsf_err_t (*prepare_buffer)(void);
 	struct usbd_endpoint_t
 	{
@@ -1020,6 +1022,7 @@ struct interface_usbd_t
 #define CORE_USBD_LOWPOWER(m)			__CONNECT(m, _usbd_lowpower)
 #define CORE_USBD_GET_FRAME_NUM(m)		__CONNECT(m, _usbd_get_frame_number)
 #define CORE_USBD_GET_SETUP(m)			__CONNECT(m, _usbd_get_setup)
+#define CORE_USBD_CONTROL_STATUS(m)		__CONNECT(m, _usbd_control_status)
 #define CORE_USBD_PREPARE_BUFFER(m)		__CONNECT(m, _usbd_prepare_buffer)
 #define CORE_USBD_EP_NUM(m)				__CONNECT(m, _usbd_ep_num)
 #define CORE_USBD_EP_RESET(m)			__CONNECT(m, _usbd_ep_reset)
@@ -1069,6 +1072,7 @@ vsf_err_t CORE_USBD_RESUME(__TARGET_CHIP__)(void);
 vsf_err_t CORE_USBD_LOWPOWER(__TARGET_CHIP__)(uint8_t level);
 uint32_t CORE_USBD_GET_FRAME_NUM(__TARGET_CHIP__)(void);
 vsf_err_t CORE_USBD_GET_SETUP(__TARGET_CHIP__)(uint8_t *buffer);
+vsf_err_t CORE_USBD_CONTROL_STATUS(__TARGET_CHIP__)(void);
 vsf_err_t CORE_USBD_PREPARE_BUFFER(__TARGET_CHIP__)(void);
 extern const uint8_t CORE_USBD_EP_NUM(__TARGET_CHIP__);
 vsf_err_t CORE_USBD_EP_RESET(__TARGET_CHIP__)(uint8_t idx);
