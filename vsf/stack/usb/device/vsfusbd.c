@@ -23,7 +23,7 @@
 #include "tool/buffer/buffer.h"
 
 #include "vsfusbd_cfg.h"
-#include "../vsfusb_const.h"
+#include "../usb_common.h"
 #include "vsfusbd.h"
 
 vsf_err_t vsfusbd_device_get_descriptor(struct vsfusbd_device_t *device, 
@@ -324,7 +324,7 @@ static vsf_err_t vsfusbd_stdreq_get_device_status_prepare(
 		uint8_t* (*data_io)(void *param))
 {
 	struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
-	struct vsfusbd_ctrl_request_t *request = &ctrl_handler->request;
+	struct usb_ctrl_request_t *request = &ctrl_handler->request;
 	
 	if ((request->value != 0) || (request->index != 0))
 	{
@@ -343,7 +343,7 @@ static vsf_err_t vsfusbd_stdreq_get_interface_status_prepare(
 		uint8_t* (*data_io)(void *param))
 {
 	struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
-	struct vsfusbd_ctrl_request_t *request = &ctrl_handler->request;
+	struct usb_ctrl_request_t *request = &ctrl_handler->request;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	
 	if ((request->value != 0) || 
@@ -364,7 +364,7 @@ static vsf_err_t vsfusbd_stdreq_get_endpoint_status_prepare(
 		uint8_t* (*data_io)(void *param))
 {
 	struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
-	struct vsfusbd_ctrl_request_t *request = &ctrl_handler->request;
+	struct usb_ctrl_request_t *request = &ctrl_handler->request;
 	uint8_t ep_num = request->index & 0x7F;
 	uint8_t ep_dir = request->index & 0x80;
 	
@@ -393,7 +393,7 @@ static vsf_err_t vsfusbd_stdreq_clear_device_feature_prepare(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	
 	if ((request->index != 0) || 
 		(request->value != USB_DEV_FEATURE_CMD_REMOTE_WAKEUP))
@@ -416,7 +416,7 @@ static vsf_err_t vsfusbd_stdreq_clear_endpoint_feature_prepare(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	uint8_t ep_num = request->index & 0x7F;
 	uint8_t ep_dir = request->index & 0x80;
 	
@@ -444,7 +444,7 @@ static vsf_err_t vsfusbd_stdreq_set_device_feature_prepare(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	
 	if ((request->index != 0) || 
 		(request->value != USB_DEV_FEATURE_CMD_REMOTE_WAKEUP))
@@ -474,7 +474,7 @@ static vsf_err_t vsfusbd_stdreq_set_address_prepare(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	
 	if ((request->value > 127) || (request->index != 0) || 
 		(device->configuration != 0))
@@ -487,7 +487,7 @@ static vsf_err_t vsfusbd_stdreq_set_address_prepare(
 static vsf_err_t vsfusbd_stdreq_set_address_process(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer)
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	
 	device->address = (uint8_t)request->value;
 	return device->drv->set_address(device->address);
@@ -497,7 +497,7 @@ static vsf_err_t vsfusbd_stdreq_get_device_descriptor_prepare(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	uint8_t type = (request->value >> 8) & 0xFF, index = request->value & 0xFF;
 	uint16_t lanid = request->index;
 	
@@ -509,7 +509,7 @@ static vsf_err_t vsfusbd_stdreq_get_interface_descriptor_prepare(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	uint8_t type = (request->value >> 8) & 0xFF, index = request->value & 0xFF;
 	uint16_t iface = request->index;
@@ -522,8 +522,9 @@ static vsf_err_t vsfusbd_stdreq_get_interface_descriptor_prepare(
 		return VSFERR_FAIL;
 	}
 	
-	if (vsfusbd_device_get_descriptor(device, 
-				protocol->desc_filter, type, index, 0, buffer) && 
+	if (((NULL == protocol->desc_filter) ||
+			vsfusbd_device_get_descriptor(device, 
+				protocol->desc_filter, type, index, 0, buffer)) && 
 		((NULL == protocol->get_desc) || 
 		 	protocol->get_desc(device, type, index, 0, buffer)))
 	{
@@ -537,7 +538,7 @@ static vsf_err_t vsfusbd_stdreq_get_configuration_prepare(
 		uint8_t* (*data_io)(void *param))
 {
 	struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
-	struct vsfusbd_ctrl_request_t *request = &ctrl_handler->request;
+	struct usb_ctrl_request_t *request = &ctrl_handler->request;
 	
 	if ((request->value != 0) || (request->index != 0))
 	{
@@ -570,7 +571,7 @@ static vsf_err_t vsfusbd_stdreq_set_configuration_prepare(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	
 	if ((request->index != 0) || 
 		(vsfusbd_get_config(device, request->value) < 0))
@@ -736,7 +737,7 @@ vsf_err_t vsfusbd_auto_init(struct vsfusbd_device_t *device)
 static vsf_err_t vsfusbd_stdreq_set_configuration_process(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer)
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	struct vsfusbd_config_t *config;
 	int16_t config_idx;
 	uint8_t i;
@@ -786,7 +787,7 @@ static vsf_err_t vsfusbd_stdreq_get_interface_prepare(
 		uint8_t* (*data_io)(void *param))
 {
 	struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
-	struct vsfusbd_ctrl_request_t *request = &ctrl_handler->request;
+	struct usb_ctrl_request_t *request = &ctrl_handler->request;
 	uint8_t iface = request->index;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	
@@ -806,7 +807,7 @@ static vsf_err_t vsfusbd_stdreq_set_interface_prepare(
 		struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	uint8_t iface_idx = request->index;
 	uint8_t alternate_setting = request->value;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
@@ -938,7 +939,7 @@ static const struct vsfusbd_setup_filter_t vsfusbd_standard_req_filter[] =
 static struct vsfusbd_setup_filter_t *vsfusbd_get_request_filter_do(
 		struct vsfusbd_device_t *device, struct vsfusbd_setup_filter_t *list)
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	
 	if (list != NULL)
 	{
@@ -973,7 +974,7 @@ struct vsfusbd_setup_filter_t *vsfusbd_get_class_request_filter(
 static struct vsfusbd_setup_filter_t *vsfusbd_get_request_filter(
 		struct vsfusbd_device_t *device, int8_t *iface)
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	
 	if (USB_REQ_GET_TYPE(request->type) == USB_REQ_TYPE_STANDARD)
 	{
@@ -1036,14 +1037,14 @@ static void vsfusbd_setup_end_callback(void *param)
 {
 	struct vsfusbd_device_t *device = param;
 	struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
-	struct vsfusbd_ctrl_request_t *request = &ctrl_handler->request;
+	struct usb_ctrl_request_t *request = &ctrl_handler->request;
 	struct vsf_transaction_buffer_t *tbuffer;
 	
-	tbuffer = (USB_REQ_GET_DIR(request->type) == USB_REQ_DIR_HTOD) ?
-		&device->OUT_transact[0].tbuffer :
-		&device->IN_transact[0].tbuffer;
 	if (ctrl_handler->filter->process != NULL)
 	{
+		tbuffer = (USB_REQ_GET_DIR(request->type) == USB_REQ_DIR_HTOD) ?
+			&device->OUT_transact[0].tbuffer :
+			&device->IN_transact[0].tbuffer;
 		ctrl_handler->filter->process(device, &tbuffer->buffer);
 	}
 }
@@ -1052,18 +1053,32 @@ static void vsfusbd_setup_status_callback(void *param)
 {
 	struct vsfusbd_device_t *device = param;
 	struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
-	struct vsfusbd_ctrl_request_t *request = &ctrl_handler->request;
+	struct usb_ctrl_request_t *request = &ctrl_handler->request;
 	
-	if (USB_REQ_GET_DIR(request->type) == USB_REQ_DIR_HTOD)
+	if (device->drv->control_status())
 	{
-		device->IN_transact[0].tbuffer.buffer.buffer = NULL;
-		device->IN_transact[0].tbuffer.buffer.size = 0;
-		device->IN_transact[0].pkt.in.zlp = true;
-		device->IN_transact[0].callback.param = device;
-		device->IN_transact[0].callback.callback =
+		if (USB_REQ_GET_DIR(request->type) == USB_REQ_DIR_HTOD)
+		{
+			device->IN_transact[0].tbuffer.buffer.buffer = NULL;
+			device->IN_transact[0].tbuffer.buffer.size = 0;
+			device->IN_transact[0].pkt.in.zlp = false;
+			device->IN_transact[0].callback.param = device;
+			device->IN_transact[0].callback.callback =
 												vsfusbd_setup_end_callback;
-		device->IN_transact[0].callback.data_io = NULL;
-		vsfusbd_ep_send_nb(device, 0);
+			device->IN_transact[0].callback.data_io = NULL;
+			vsfusbd_ep_send_nb(device, 0);
+		}
+		else
+		{
+			device->OUT_transact[0].tbuffer.buffer.buffer = NULL;
+			device->OUT_transact[0].tbuffer.buffer.size = 0;
+			device->OUT_transact[0].callback.param = device;
+			device->OUT_transact[0].callback.callback =
+												vsfusbd_setup_end_callback;
+			device->OUT_transact[0].callback.data_io = NULL;
+			device->OUT_transact[0].need_poll = false;
+			vsfusbd_ep_receive_nb(device, 0);
+		}
 	}
 }
 
@@ -1071,7 +1086,7 @@ vsf_err_t vsfusbd_on_SETUP(void *p)
 {
 	struct vsfusbd_device_t *device = p;
 	struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
-	struct vsfusbd_ctrl_request_t *request = &ctrl_handler->request;
+	struct usb_ctrl_request_t *request = &ctrl_handler->request;
 	struct vsf_buffer_t buffer;
 	uint8_t buff[USB_SETUP_PKG_SIZE];
 	vsf_err_t err = VSFERR_NONE;
@@ -1101,53 +1116,34 @@ vsf_err_t vsfusbd_on_SETUP(void *p)
 		buffer.size = request->length;
 	}
 	
-	if (0 == request->length)
+	if (USB_REQ_GET_DIR(request->type) == USB_REQ_DIR_HTOD)
 	{
-		device->IN_transact[0].tbuffer.buffer.buffer = NULL;
-		device->IN_transact[0].tbuffer.buffer.size = 0;
-		device->IN_transact[0].pkt.in.zlp = true;
-		device->IN_transact[0].callback.param = device;
-		device->IN_transact[0].callback.callback =
-												vsfusbd_setup_end_callback;
-		device->IN_transact[0].callback.data_io = NULL;
-		device->IN_transact[0].need_poll = false;
-		vsfusbd_ep_send_nb(device, 0);
-	}
-	else
-	{
-		if (USB_REQ_GET_DIR(request->type) == USB_REQ_DIR_HTOD)
+		if (0 == request->length)
+		{
+			vsfusbd_setup_status_callback(device);
+		}
+		else
 		{
 			device->OUT_transact[0].tbuffer.buffer = buffer;
 			device->OUT_transact[0].callback.param = device;
 			device->OUT_transact[0].callback.callback =
-												vsfusbd_setup_status_callback;
+											vsfusbd_setup_status_callback;
 			device->OUT_transact[0].callback.data_io = data_io;
 			device->OUT_transact[0].need_poll = false;
 			err = vsfusbd_ep_receive_nb(device, 0);
 		}
-		else
-		{
-			device->IN_transact[0].tbuffer.buffer = buffer;
-			device->IN_transact[0].pkt.in.zlp =
-												buffer.size < request->length;
-			device->IN_transact[0].callback.param = device;
-			device->IN_transact[0].callback.callback =
-												vsfusbd_setup_status_callback;
-			device->IN_transact[0].callback.data_io = data_io;
-			device->IN_transact[0].need_poll = false;
-			err = vsfusbd_ep_send_nb(device, 0);
-			if (!err)
-			{
-				device->OUT_transact[0].tbuffer.buffer.buffer = NULL;
-				device->OUT_transact[0].tbuffer.buffer.size = 0;
-				device->OUT_transact[0].callback.param = device;
-				device->OUT_transact[0].callback.callback =
-													vsfusbd_setup_end_callback;
-				device->OUT_transact[0].callback.data_io = NULL;
-				device->OUT_transact[0].need_poll = false;
-				err = vsfusbd_ep_receive_nb(device, 0);
-			}
-		}
+	}
+	else
+	{
+		device->IN_transact[0].tbuffer.buffer = buffer;
+		device->IN_transact[0].pkt.in.zlp =
+											buffer.size < request->length;
+		device->IN_transact[0].callback.param = device;
+		device->IN_transact[0].callback.callback =
+											vsfusbd_setup_status_callback;
+		device->IN_transact[0].callback.data_io = data_io;
+		device->IN_transact[0].need_poll = false;
+		err = vsfusbd_ep_send_nb(device, 0);
 	}
 	
 exit:
@@ -1220,6 +1216,12 @@ static vsf_err_t vsfusbd_on_IN_do(struct vsfusbd_device_t *device, uint8_t ep)
 		}
 	}
 	
+	return VSFERR_NONE;
+}
+
+static vsf_err_t vsfusbd_on_CONTROL_STATUS(void *p)
+{
+	vsfusbd_setup_end_callback(p);
 	return VSFERR_NONE;
 }
 
@@ -1509,6 +1511,7 @@ vsf_err_t vsfusbd_device_init(struct vsfusbd_device_t *device)
 		device->drv->callback->on_detach = NULL;
 		device->drv->callback->on_reset = vsfusbd_on_RESET;
 		device->drv->callback->on_setup = vsfusbd_on_SETUP;
+		device->drv->callback->on_control_status = vsfusbd_on_CONTROL_STATUS;
 		device->drv->callback->on_error = vsfusbd_on_ERROR;
 		device->drv->callback->on_wakeup = vsfusbd_on_WAKEUP;
 		device->drv->callback->on_suspend = vsfusbd_on_SUSPEND;

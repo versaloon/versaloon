@@ -17,8 +17,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef __VSF_USBD_CONST_H_INCLUDED__
-#define __VSF_USBD_CONST_H_INCLUDED__
+#ifndef __VSF_USBD_COMMON_H_INCLUDED__
+#define __VSF_USBD_COMMON_H_INCLUDED__
 
 #define USB_SETUP_PKG_SIZE			8
 
@@ -85,6 +85,8 @@ enum usb_stdreq_t
 #define USB_REQ_RECP_MASK			0x1F
 #define USB_REQ_GET_RECP(req)		((req) & USB_REQ_RECP_MASK)
 
+#define USB_DCLASS_HUB				0x09
+
 // feature
 enum usb_feature_cmd_t
 {
@@ -106,5 +108,14 @@ enum usb_device_feature_t
 	USB_DEV_FEATURE_REMOTE_WEAKUP	= 0x02,
 };
 
-#endif	// __VSF_USBD_CONST_H_INCLUDED__
+PACKED_HEAD struct PACKED_MID usb_ctrl_request_t
+{
+	uint8_t type;
+	uint8_t request;
+	uint16_t value;
+	uint16_t index;
+	uint16_t length;
+}; PACKED_TAIL
+
+#endif	// __VSF_USBD_COMMON_H_INCLUDED__
 

@@ -22,8 +22,8 @@
 
 #include "interfaces.h"
 #include "tool/buffer/buffer.h"
-#include "vsf_usbd_cfg.h"
-#include "vsf_usbd_const.h"
+#include "vsfusbd_cfg.h"
+#include "../usb_common.h"
 
 struct vsfusbd_device_t;
 
@@ -41,20 +41,11 @@ enum vsfusbd_ctrl_state_t
 	USB_CTRL_STAT_PAUSE,
 };
 
-PACKED_HEAD struct PACKED_MID vsfusbd_ctrl_request_t
-{
-	uint8_t type;
-	uint8_t request;
-	uint16_t value;
-	uint16_t index;
-	uint16_t length;
-}; PACKED_TAIL
-
 struct vsfusbd_ctrl_handler_t
 {
 	enum vsfusbd_ctrl_state_t state;
 	uint16_t ep_size;
-	struct vsfusbd_ctrl_request_t request;
+	struct usb_ctrl_request_t request;
 	struct vsfusbd_setup_filter_t *filter;
 	int8_t iface;
 	uint8_t ctrl_reply_buffer[2];

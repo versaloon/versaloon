@@ -1,7 +1,7 @@
 #include "compiler.h"
 #include "interfaces.h"
 
-#include "stack/usb/vsfusb_const.h"
+#include "stack/usb/usb_common.h"
 #include "stack/usb/device/vsfusbd.h"
 
 #include "vsfusbd_MSC_BOT.h"
@@ -421,7 +421,7 @@ static vsf_err_t vsfusbd_MSCBOT_GetMaxLun_prepare(
 	struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	uint8_t iface = request->index;
 	struct vsfusbd_MSCBOT_param_t *param = 
@@ -443,7 +443,7 @@ static vsf_err_t vsfusbd_MSCBOT_Reset_prepare(
 		uint8_t* (*data_io)(void *param))
 {
 	struct interface_usbd_t *drv = device->drv;
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	uint8_t iface = request->index;
 	struct vsfusbd_MSCBOT_param_t *param = 

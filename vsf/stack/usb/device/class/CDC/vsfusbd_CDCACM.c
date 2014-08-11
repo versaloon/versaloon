@@ -1,7 +1,7 @@
 #include "app_cfg.h"
 #include "interfaces.h"
 
-#include "stack/usb/vsfusb_const.h"
+#include "stack/usb/usb_common.h"
 #include "stack/usb/device/vsfusbd.h"
 
 #include "vsfusbd_CDCACM.h"
@@ -37,7 +37,7 @@ static vsf_err_t vsfusbd_CDCACMControl_GetLineCoding_prepare(
 	struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	uint8_t iface = request->index;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	struct vsfusbd_CDCACM_param_t *param = 
@@ -63,7 +63,7 @@ static vsf_err_t vsfusbd_CDCACMControl_SetLineCoding_prepare(
 	struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	uint8_t iface = request->index;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	struct vsfusbd_CDCACM_param_t *param = 
@@ -81,7 +81,7 @@ static vsf_err_t vsfusbd_CDCACMControl_SetLineCoding_prepare(
 static vsf_err_t vsfusbd_CDCACMControl_SetLineCoding_process(
 	struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer)
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	uint8_t iface = request->index;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	struct vsfusbd_CDCACM_param_t *param = 
@@ -105,7 +105,7 @@ static vsf_err_t vsfusbd_CDCACMControl_SetControlLineState_prepare(
 	struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	uint8_t iface = request->index;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	struct vsfusbd_CDCACM_param_t *param = 
@@ -130,7 +130,7 @@ static vsf_err_t vsfusbd_CDCACMControl_SendBreak_prepare(
 	struct vsfusbd_device_t *device, struct vsf_buffer_t *buffer,
 		uint8_t* (*data_io)(void *param))
 {
-	struct vsfusbd_ctrl_request_t *request = &device->ctrl_handler.request;
+	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
 	uint8_t iface = request->index;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	struct vsfusbd_CDCACM_param_t *param = 
