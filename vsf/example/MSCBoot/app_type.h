@@ -40,6 +40,13 @@
 #ifndef max
 #	define max(a, b)				(((a) > (b)) ? (a) : (b))
 #endif
+#ifndef offset_of
+#	define offset_of(type, member)	((unsigned long)&((type *)0)->member)
+#endif
+#ifndef container_of
+#	define container_of(ptr, type, member)	\
+		(ptr ? (type *)((char *)(ptr) - offset_of(type, member)) : NULL)
+#endif
 #define TO_STR(name)				#name
 #define REFERENCE_PARAMETER(a)		(a) = (a)
 

@@ -1,13 +1,10 @@
-#include <stdint.h>
-#include <stdbool.h>
-#include <stdio.h>
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
 #include "compiler.h"
 #include "app_cfg.h"
+#include "app_type.h"
 
 #include "interfaces.h"
 #include "dal/mal/mal.h"
@@ -16,8 +13,8 @@
 #include "tool/mal_embflash/mal_embflash.h"
 #include "tool/fakefat32/fakefat32.h"
 
-#include "stack/usb_device/vsf_usbd.h"
-#include "stack/usb_device/class/MSC/vsfusbd_MSC_BOT.h"
+#include "stack/usb/device/vsfusbd.h"
+#include "stack/usb/device/class/MSC/vsfusbd_MSC_BOT.h"
 
 // mal
 // embedded flash

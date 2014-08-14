@@ -17,8 +17,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef __VSF_USBD_H_INCLUDED__
-#define __VSF_USBD_H_INCLUDED__
+#ifndef __VSFUSBD_H_INCLUDED__
+#define __VSFUSBD_H_INCLUDED__
 
 #include "interfaces.h"
 #include "tool/buffer/buffer.h"

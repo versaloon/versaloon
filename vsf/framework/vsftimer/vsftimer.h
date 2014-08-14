@@ -17,20 +17,26 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef __LIST_H_INCLUDED__
-#define __LIST_H_INCLUDED__
+#ifndef __VSFTIMER_H_INCLUDED__
+#define __VSFTIMER_H_INCLUDED__
 
-struct sllist
+#include "tool/list/list.h"
+#include "framework/vsfsm/vsfsm.h"
+
+struct vsftimer_timer_t
 {
-	struct sllist *next;
+	uint32_t interval;
+	struct vsfsm_t *sm;
+	vsfsm_evt_t evt;
+	
+	// private
+	struct sllist list;
+	uint32_t start_tickcnt;
 };
 
-#define sllist_init_node(node)			((node).next = NULL)
-#define sllist_insert(node, new)		((node).next = &(new))
-#define sllist_get_container(p, t, m)	container_of(p, t, m)
+vsf_err_t vsftimer_init(void);
+vsf_err_t vsftimer_poll(void);
+vsf_err_t vsftimer_register(struct vsftimer_timer_t *timer);
+vsf_err_t vsftimer_unregister(struct vsftimer_timer_t *timer);
 
-int sllist_is_in(struct sllist *head, struct sllist *node);
-int sllist_remove(struct sllist **head, struct sllist *node);
-
-#endif // __LIST_H_INCLUDED__
-
+#endif	// #ifndef __VSFTIMER_H_INCLUDED__

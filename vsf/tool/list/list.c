@@ -17,20 +17,41 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef __LIST_H_INCLUDED__
-#define __LIST_H_INCLUDED__
+#include "list.h"
 
-struct sllist
+int sllist_is_in(struct sllist *head, struct sllist *node)
 {
-	struct sllist *next;
-};
+	while (head != (struct sllist *)0)
+	{
+		if (head->next == node)
+		{
+			return 1;
+		}
+		head = head->next;
+	}
+	return 0;
+}
 
-#define sllist_init_node(node)			((node).next = NULL)
-#define sllist_insert(node, new)		((node).next = &(new))
-#define sllist_get_container(p, t, m)	container_of(p, t, m)
-
-int sllist_is_in(struct sllist *head, struct sllist *node);
-int sllist_remove(struct sllist **head, struct sllist *node);
-
-#endif // __LIST_H_INCLUDED__
-
+int sllist_remove(struct sllist **head, struct sllist *node)
+{
+	if (!sllist_is_in(*head, node))
+	{
+		return -1;
+	}
+	
+	if (*head == node)
+	{
+		head = &node->next;
+		return 0;
+	}
+	while (*head != (struct sllist *)0)
+	{
+		if ((*head)->next == node)
+		{
+			(*head)->next = node->next;
+			break;
+		}
+		*head = (*head)->next;
+	}
+	return 0;
+}

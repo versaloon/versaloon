@@ -297,6 +297,7 @@ const struct interfaces_info_t core_interfaces =
 		CORE_TICKCLK_START(__TARGET_CHIP__),
 		CORE_TICKCLK_STOP(__TARGET_CHIP__),
 		CORE_TICKCLK_GET_COUNT(__TARGET_CHIP__),
+		CORE_TICKCLK_SET_CALLBACK(__TARGET_CHIP__),
 	}
 	,{
 		// delay

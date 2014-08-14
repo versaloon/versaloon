@@ -445,6 +445,7 @@ struct interface_tickclk_t
 	vsf_err_t (*start)(void);
 	vsf_err_t (*stop)(void);
 	uint32_t (*get_count)(void);
+	vsf_err_t (*set_callback)(void (*callback)(void *param), void *param);
 };
 
 #define CORE_TICKCLK_INIT(m)			__CONNECT(m, _tickclk_init)
@@ -452,12 +453,15 @@ struct interface_tickclk_t
 #define CORE_TICKCLK_START(m)			__CONNECT(m, _tickclk_start)
 #define CORE_TICKCLK_STOP(m)			__CONNECT(m, _tickclk_stop)
 #define CORE_TICKCLK_GET_COUNT(m)		__CONNECT(m, _tickclk_get_count)
+#define CORE_TICKCLK_SET_CALLBACK(m)	__CONNECT(m, _tickclk_set_callback)
 
 vsf_err_t CORE_TICKCLK_INIT(__TARGET_CHIP__)(void);
 vsf_err_t CORE_TICKCLK_FINI(__TARGET_CHIP__)(void);
 vsf_err_t CORE_TICKCLK_START(__TARGET_CHIP__)(void);
 vsf_err_t CORE_TICKCLK_STOP(__TARGET_CHIP__)(void);
 uint32_t CORE_TICKCLK_GET_COUNT(__TARGET_CHIP__)(void);
+vsf_err_t CORE_TICKCLK_SET_CALLBACK(__TARGET_CHIP__)(
+					void (*callback)(void *param), void *param);
 
 #if IFS_IIC_EN
 

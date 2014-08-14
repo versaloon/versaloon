@@ -17,6 +17,7 @@ typedef vsf_int_t vsf_err_t;
 #define VSFERR_INVALID_RANGE			-8
 #define VSFERR_INVALID_PTR				-9
 #define VSFERR_IO						-10
+#define VSFERR_BUG						-11
 #define VSFERR_UNKNOWN					-100
 
 #endif	// __VSF_ERR_H_INCLUDED__

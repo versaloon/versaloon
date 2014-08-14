@@ -5,6 +5,7 @@
 
 #include "interfaces_cfg.h"
 #include "interfaces_const.h"
+#include "interfaces.h"
 #include "core.h"
 
 #define STM32_RCC_CR_HSEON				(1 << 16)
@@ -245,6 +246,8 @@ vsf_err_t stm32_delay_delayms(uint16_t ms)
 	return VSFERR_NONE;
 }
 
+static void (*stm32_tickclk_callback)(void *param) = NULL;
+static void *stm32_tickclk_param = NULL;
 vsf_err_t stm32_tickclk_start(void)
 {
 	TIM_Cmd(TIM1, ENABLE);
@@ -274,6 +277,52 @@ uint32_t stm32_tickclk_get_count(void)
 		count2 = stm32_tickclk_get_count_local();
 	} while (count1 != count2);
 	return count1;
+}
+
+#if defined(STM32F10X_XL)
+ROOTFUNC void TIM1_UP_TIM10_IRQHandler(void)
+#elif defined(STM32F10X_MD_VL) || defined(STM32F10X_LD_VL) || defined(STM32F10X_MD_VL)
+ROOTFUNC void TIM1_UP_IRQHandler(void)
+#elif defined(STM32F10X_MD_VL) || defined(STM32F10X_LD_VL) || defined(STM32F10X_MD_VL)
+ROOTFUNC void TIM1_UP_TIM16_IRQHandler(void)
+#endif
+{
+	if (stm32_tickclk_callback != NULL)
+	{
+		stm32_tickclk_callback(stm32_tickclk_param);
+	}
+}
+
+vsf_err_t stm32_tickclk_set_callback(void (*callback)(void *param), void *param)
+{
+	NVIC_InitTypeDef NVIC_InitStructure;
+	
+#if defined(STM32F10X_XL)
+	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_TIM10_IRQn;
+#elif defined(STM32F10X_MD_VL) || defined(STM32F10X_LD_VL) || defined(STM32F10X_MD_VL)
+	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_TIM16_IRQn;
+#elif defined(STM32F10X_LD) || defined(STM32F10X_MD) || defined(STM32F10X_HD) || defined(STM32F10X_CL)
+	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_IRQn;
+#endif
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	
+	if (callback != NULL)
+	{
+		// enable interrupt
+		TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE);
+		NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	}
+	else
+	{
+		// disable interrupt
+		TIM_ITConfig(TIM1, TIM_IT_Update, DISABLE);
+		NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
+	}
+	NVIC_Init(&NVIC_InitStructure);
+	stm32_tickclk_callback = callback;
+	stm32_tickclk_param = param;
+	return VSFERR_NONE;
 }
 
 vsf_err_t stm32_tickclk_init(void)
