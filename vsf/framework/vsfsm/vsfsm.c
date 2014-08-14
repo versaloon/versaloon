@@ -87,7 +87,10 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	}
 	
 	// need to transmit
-	
+	vsfsm_post_evt(sm, VSFSM_EVT_EXIT);
+	sm->cur_state = next;
+	vsfsm_post_evt(sm, VSFSM_EVT_ENTER);
+	return VSFERR_NONE;
 }
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
