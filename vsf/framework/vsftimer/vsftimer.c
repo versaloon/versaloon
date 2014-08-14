@@ -77,10 +77,14 @@ vsftimer_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 			// unregister and free the timer, beause timer on stack maintain
 			// the list pointing to the next timer
 			timer = *ptimer;
-			if (((cur_tickcnt - timer.start_tickcnt) >= timer.interval) &&
-				(timer.sm != NULL) && (timer.evt != VSFSM_EVT_INVALID))
+			if ((cur_tickcnt - timer.start_tickcnt) >= timer.interval)
 			{
-				vsfsm_post_evt(timer.sm, timer.evt);
+				// triggered
+				ptimer->start_tickcnt = cur_tickcnt;
+				if ((timer.sm != NULL) && (timer.evt != VSFSM_EVT_INVALID))
+				{
+					vsfsm_post_evt(timer.sm, timer.evt);
+				}
 			}
 			ptimer = sllist_get_container(timer.list.next,
 											struct vsftimer_timer_t, list);
