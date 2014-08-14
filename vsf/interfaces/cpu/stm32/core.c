@@ -281,7 +281,7 @@ uint32_t stm32_tickclk_get_count(void)
 
 #if defined(STM32F10X_XL)
 ROOTFUNC void TIM1_UP_TIM10_IRQHandler(void)
-#elif defined(STM32F10X_MD_VL) || defined(STM32F10X_LD_VL) || defined(STM32F10X_MD_VL)
+#elif defined(STM32F10X_LD) || defined(STM32F10X_MD) || defined(STM32F10X_HD) || defined(STM32F10X_CL)
 ROOTFUNC void TIM1_UP_IRQHandler(void)
 #elif defined(STM32F10X_MD_VL) || defined(STM32F10X_LD_VL) || defined(STM32F10X_MD_VL)
 ROOTFUNC void TIM1_UP_TIM16_IRQHandler(void)
@@ -291,6 +291,7 @@ ROOTFUNC void TIM1_UP_TIM16_IRQHandler(void)
 	{
 		stm32_tickclk_callback(stm32_tickclk_param);
 	}
+	TIM_ClearITPendingBit(TIM1, TIM_FLAG_Update);
 }
 
 vsf_err_t stm32_tickclk_set_callback(void (*callback)(void *param), void *param)
@@ -312,16 +313,19 @@ vsf_err_t stm32_tickclk_set_callback(void (*callback)(void *param), void *param)
 		// enable interrupt
 		TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE);
 		NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+		stm32_tickclk_callback = callback;
+		stm32_tickclk_param = param;
+		NVIC_Init(&NVIC_InitStructure);
 	}
 	else
 	{
 		// disable interrupt
 		TIM_ITConfig(TIM1, TIM_IT_Update, DISABLE);
 		NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
+		NVIC_Init(&NVIC_InitStructure);
+		stm32_tickclk_callback = callback;
+		stm32_tickclk_param = param;
 	}
-	NVIC_Init(&NVIC_InitStructure);
-	stm32_tickclk_callback = callback;
-	stm32_tickclk_param = param;
 	return VSFERR_NONE;
 }
 

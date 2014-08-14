@@ -82,7 +82,8 @@ vsftimer_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 			{
 				vsfsm_post_evt(timer.sm, timer.evt);
 			}
-			ptimer = sllist_get_container(&timer, struct vsftimer_timer_t, list);
+			ptimer = sllist_get_container(timer.list.next,
+											struct vsftimer_timer_t, list);
 		}
 		return NULL;
 	}
@@ -104,6 +105,12 @@ vsf_err_t vsftimer_poll(void)
 
 vsf_err_t vsftimer_register(struct vsftimer_timer_t *timer)
 {
+	timer->start_tickcnt = interfaces->tickclk.get_count();
+	if (NULL == vsftimer.timerlist)
+	{
+		vsftimer.timerlist = timer;
+		return VSFERR_NONE;
+	}
 	if (!sllist_is_in(&vsftimer.timerlist->list, &timer->list))
 	{
 		if (vsftimer.timerlist != NULL)
