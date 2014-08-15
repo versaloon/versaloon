@@ -125,7 +125,7 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	
 	if (NULL == target_state)
 	{
-		// handled, or even top can not handle this event
+		// handled, or even topstate can not handle this event
 		return VSFERR_NONE;
 	}
 	
@@ -136,7 +136,7 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 		temp_state->evt_handler(sm, VSFSM_EVT_EXIT);
 		temp_state = temp_state->super;
 	}
-	// 2. if some simple tramsmit which happens in most cases
+	// 2. some simple transition which happens in most cases
 	if ((processor_state == target_state) ||
 		(processor_state->super == target_state->super))
 	{
@@ -215,22 +215,28 @@ vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 {
 	vsfsm_evtq_init(&sm->evtq);
 	sm->cur_state = &sm->init_state;
-	vsfsm_post_evt(sm, VSFSM_EVT_ENTER);
+	// ignore any state transition on VSFSM_EVT_ENTER
+	sm->cur_state->evt_handler(sm, VSFSM_EVT_ENTER);
+	// process state transition on VSFSM_EVT_INIT
 	vsfsm_post_evt(sm, VSFSM_EVT_INIT);
-	return VSFERR_NONE;
-}
-
-vsf_err_t vsfsm_fini(struct vsfsm_t *sm)
-{
 	return VSFERR_NONE;
 }
 
 vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 {
+	vsfsm_evt_t evt;
+	
 	if (sm->evtq.count)
 	{
-		vsfsm_evt_t evt = vsfsm_evtq_get(&sm->evtq);
+		evt = vsfsm_evtq_get(&sm->evtq);
 		return vsfsm_dispatch_evt(sm, evt);
+	}
+	// poll subsm in cur_state
+	sm = sm->cur_state->subsm;
+	while (sm->cur_state->subsm != NULL)
+	{
+		vsfsm_poll(sm);
+		sm = sllist_get_container(&sm->list, struct vsfsm_t, list);
 	}
 	return VSFERR_NONE;
 }

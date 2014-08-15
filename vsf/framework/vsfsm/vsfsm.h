@@ -21,6 +21,7 @@
 #define __VSFSM_H_INCLUDED__
 
 #include "app_type.h"
+#include "tool/list/list.h"
 
 enum
 {
@@ -58,6 +59,10 @@ struct vsfsm_state_t
 	// return a vsfsm_state_t pointer means transition to the state
 	// return -1 means the event is not handled, should redirect to superstate
 	struct vsfsm_state_t * (*evt_handler)(struct vsfsm_t *sm, vsfsm_evt_t evt);
+	
+	// sub state machine list
+	// for subsm, user need to call vsfsm_init on VSFSM_EVT_ENTER
+	struct vsfsm_t *subsm;
 };
 
 struct vsfsm_t
@@ -73,15 +78,14 @@ struct vsfsm_t
 	
 	// private
 	struct vsfsm_state_t *cur_state;
+	struct sllist list;
 };
 
 extern struct vsfsm_state_t vsfsm_top;
+uint32_t vsfsm_get_event_pending(void);
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm);
-vsf_err_t vsfsm_fini(struct vsfsm_t *sm);
 vsf_err_t vsfsm_poll(struct vsfsm_t *sm);
-uint32_t vsfsm_get_event_pending(void);
-vsf_err_t vsfsm_transmit(struct vsfsm_t *sm, struct vsfsm_state_t *state);
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt);
 vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
 
