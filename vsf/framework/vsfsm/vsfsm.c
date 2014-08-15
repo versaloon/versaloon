@@ -87,9 +87,25 @@ static vsf_err_t vsfsm_evtq_post(struct vsfsm_evtqueue_t *evtq,
 	return VSFERR_NONE;
 }
 
+static bool vsfsm_is_in(struct vsfsm_state_t *s, struct vsfsm_state_t *t)
+{
+	while (t != NULL)
+	{
+		if (s == t)
+		{
+			return true;
+		}
+		t = t->super;
+	}
+	return false;
+}
+
 static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
-	struct vsfsm_state_t *next = sm->cur_state->evt_handler(sm, evt);
+	struct vsfsm_state_t *temp_state = NULL, *lca_state;
+	struct vsfsm_state_t *processor_state = sm->cur_state;
+	struct vsfsm_state_t *target_state = processor_state->evt_handler(sm, evt);
+	struct vsfsm_state_t *temp_processor_state, *temp_target_state;
 	
 	// local event can not transmit or be passed to superstate
 	if (evt >= VSFSM_EVT_LOCAL)
@@ -98,24 +114,92 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	}
 	
 	// superstate
-	while (next == (struct vsfsm_state_t *)-1)
+	while (target_state == (struct vsfsm_state_t *)-1)
 	{
-		next = sm->cur_state->evt_handler(sm, VSFSM_EVT_GET_SUPER);
-		if (next != NULL)
+		processor_state = sm->cur_state->super;
+		if (processor_state != NULL)
 		{
-			next = next->evt_handler(sm, evt);
+			target_state = processor_state->evt_handler(sm, evt);
 		}
 	}
 	
-	if (NULL == next)
+	if (NULL == target_state)
 	{
 		// handled, or even top can not handle this event
 		return VSFERR_NONE;
 	}
 	
 	// need to transmit
-	
-	return VSFERR_NONE;
+	// 1. exit to processor_state
+	for (temp_state = sm->cur_state; temp_state != processor_state;)
+	{
+		temp_state->evt_handler(sm, VSFSM_EVT_EXIT);
+		temp_state = temp_state->super;
+	}
+	// 2. if some simple tramsmit which happens in most cases
+	if ((processor_state == target_state) ||
+		(processor_state->super == target_state->super))
+	{
+		processor_state->evt_handler(sm, VSFSM_EVT_EXIT);
+		target_state->evt_handler(sm, VSFSM_EVT_ENTER);
+		goto update_cur_state;
+	}
+	if (processor_state->super == target_state)
+	{
+		processor_state->evt_handler(sm, VSFSM_EVT_EXIT);
+		goto update_cur_state;
+	}
+	if (processor_state == target_state->super)
+	{
+		target_state->evt_handler(sm, VSFSM_EVT_ENTER);
+		goto update_cur_state;
+	}
+	// 3. find the LCA
+	lca_state = NULL;
+	temp_processor_state = processor_state;
+	temp_target_state = target_state;
+	do
+	{
+		if (temp_processor_state != NULL)
+		{
+			if (vsfsm_is_in(temp_processor_state, target_state))
+			{
+				lca_state = temp_processor_state;
+				break;
+			}
+			temp_processor_state = temp_processor_state->super;
+		}
+		if (temp_target_state != NULL)
+		{
+			if (vsfsm_is_in(temp_target_state, processor_state))
+			{
+				lca_state = temp_target_state;
+				break;
+			}
+			temp_target_state = temp_target_state->super;
+		}
+		if ((NULL == temp_processor_state) && (NULL == temp_target_state))
+		{
+			return VSFERR_BUG;
+		}
+	} while (NULL == lca_state);
+	// 4. exit from processor_state to lca
+	for (temp_state = processor_state; temp_state != lca_state;)
+	{
+		temp_state->evt_handler(sm, VSFSM_EVT_EXIT);
+		temp_state = temp_state->super;
+	}
+	// 5. enter from lca to target_state
+	for (temp_state = lca_state; temp_state != target_state;)
+	{
+		temp_state->evt_handler(sm, VSFSM_EVT_ENTER);
+		temp_state = temp_state->super;
+	}
+	// 6. update cur_state
+update_cur_state:
+	sm->cur_state = target_state;
+	// 7. send VSFSM_EVT_INIT to target_state
+	return vsfsm_post_evt(sm, VSFSM_EVT_INIT);
 }
 
 static struct vsfsm_state_t *
@@ -125,7 +209,7 @@ vsfsm_top_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	REFERENCE_PARAMETER(evt);
 	return NULL;
 }
-struct vsfsm_state_t vsfsm_top = {vsfsm_top_handler};
+struct vsfsm_state_t vsfsm_top = {NULL, vsfsm_top_handler,};
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 {

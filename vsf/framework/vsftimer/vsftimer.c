@@ -42,7 +42,8 @@ struct vsftimer_t
 			dimof(vsftimer.evt_buffer),	// uint16_t evt_buffer_num;
 		},								// struct vsfsm_evtqueue_t evt_queue;
 		{
-			vsftimer_init_handler
+			NULL,
+			vsftimer_init_handler,
 		},								// struct vsfsm_state_t init_state;
 	},
 };

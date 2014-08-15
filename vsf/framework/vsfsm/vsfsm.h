@@ -26,8 +26,7 @@ enum
 {
 	VSFSM_EVT_INVALID = -1,
 	VSFSM_EVT_DUMMY = 0,
-	VSFSM_EVT_GET_SUPER = 1,
-	VSFSM_EVT_INIT = 2,
+	VSFSM_EVT_INIT = 1,
 	VSFSM_EVT_USER = 0x10,
 	// local event can not transmit or be passed to superstate
 	VSFSM_EVT_LOCAL = 0x4000,
@@ -52,10 +51,12 @@ struct vsfsm_evtqueue_t
 struct vsfsm_t;
 struct vsfsm_state_t
 {
+	// for top state, super is NULL; other super points to the superstate
+	struct vsfsm_state_t *super;
+	
 	// return NULL means the event is handled, and no transition
 	// return a vsfsm_state_t pointer means transition to the state
 	// return -1 means the event is not handled, should redirect to superstate
-	// for VSFSM_EVT_GET_SUPER, should return the superstate or NULL if in top
 	struct vsfsm_state_t * (*evt_handler)(struct vsfsm_t *sm, vsfsm_evt_t evt);
 };
 
