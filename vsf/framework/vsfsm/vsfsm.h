@@ -75,7 +75,7 @@ struct vsfsm_t
 	struct vsfsm_state_t *cur_state;
 };
 
-struct vsfsm_state_t vsfsm_top;
+extern struct vsfsm_state_t vsfsm_top;
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm);
 vsf_err_t vsfsm_fini(struct vsfsm_t *sm);
