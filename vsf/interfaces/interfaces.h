@@ -23,23 +23,31 @@
 
 #define IFS_DUMMY_PORT					0xFF
 
+#define CORE_SLEEP_WFI(m)			__CONNECT(m, _SLEEP_WFI)
+#define CORE_SLEEP_PWRDOWN(m)		__CONNECT(m, _SLEEP_PWRDOWN)
+#define SLEEP_WFI					CORE_SLEEP_WFI(__TARGET_CHIP__)
+#define SLEEP_PWRDOWN				CORE_SLEEP_PWRDOWN(__TARGET_CHIP__)
+
 struct interface_core_t
 {
 	vsf_err_t (*init)(void *p);
 	vsf_err_t (*fini)(void *p);
 	vsf_err_t (*reset)(void *p);
 	vsf_err_t (*set_stack)(uint32_t sp);
+	void (*sleep)(uint32_t mode);
 };
 
 #define CORE_INIT(m)					__CONNECT(m, _interface_init)
 #define CORE_FINI(m)					__CONNECT(m, _interface_fini)
 #define CORE_RESET(m)					__CONNECT(m, _interface_reset)
 #define CORE_SET_STACK(m)				__CONNECT(m, _interface_set_stack)
+#define CORE_SLEEP(m)					__CONNECT(m, _interface_sleep)
 
 vsf_err_t CORE_INIT(__TARGET_CHIP__)(void *p);
 vsf_err_t CORE_FINI(__TARGET_CHIP__)(void *p);
 vsf_err_t CORE_RESET(__TARGET_CHIP__)(void *p);
 vsf_err_t CORE_SET_STACK(__TARGET_CHIP__)(uint32_t sp);
+void CORE_SLEEP(__TARGET_CHIP__)(uint32_t mode);
 
 #if IFS_UNIQUEID_EN
 

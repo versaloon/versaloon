@@ -20,6 +20,18 @@
 #include "compiler.h"
 #include "vsfsm.h"
 
+static volatile uint32_t vsfsm_event_pending = 0;
+uint32_t vsfsm_get_event_pending(void)
+{
+	uint32_t ret;
+	
+	vsf_enter_critical();
+	ret = vsfsm_event_pending;
+	vsf_leave_critical();
+	
+	return ret;
+}
+
 // internal event queue processors
 static vsf_err_t vsfsm_evtq_init(struct vsfsm_evtqueue_t *evtq)
 {
@@ -44,6 +56,7 @@ static vsfsm_evt_t vsfsm_evtq_get(struct vsfsm_evtqueue_t *evtq)
 		evtq->tail = 0;
 	}
 	--evtq->count;
+	vsfsm_event_pending--;
 	
 	vsf_leave_critical();
 	
@@ -67,6 +80,7 @@ static vsf_err_t vsfsm_evtq_post(struct vsfsm_evtqueue_t *evtq,
 		evtq->head = 0;
 	}
 	++evtq->count;
+	vsfsm_event_pending++;
 	
 	vsf_leave_critical();
 	
@@ -76,14 +90,27 @@ static vsf_err_t vsfsm_evtq_post(struct vsfsm_evtqueue_t *evtq,
 static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
 	struct vsfsm_state_t *next = sm->cur_state->evt_handler(sm, evt);
-	if (NULL == next)
+	
+	// local event can not transmit or be passed to superstate
+	if (evt >= VSFSM_EVT_LOCAL)
 	{
 		return VSFERR_NONE;
 	}
-	if (evt >= VSFSM_EVT_USER_LOCAL)
+	
+	// superstate
+	while (next == (struct vsfsm_state_t *)-1)
 	{
-		// local event, can not transmit
-		return VSFERR_BUG;
+		next = sm->cur_state->evt_handler(sm, VSFSM_EVT_GET_SUPER);
+		if (next != NULL)
+		{
+			next = next->evt_handler(sm, evt);
+		}
+	}
+	
+	if (NULL == next)
+	{
+		// handled, or even top can not handle this event
+		return VSFERR_NONE;
 	}
 	
 	// need to transmit
@@ -93,12 +120,19 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	return VSFERR_NONE;
 }
 
+struct vsfsm_state_t * vsfsm_top(struct vsfsm_t *sm, vsfsm_evt_t evt)
+{
+	REFERENCE_PARAMETER(sm);
+	REFERENCE_PARAMETER(evt);
+	return NULL;
+}
+
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 {
 	vsfsm_evtq_init(&sm->evtq);
 	sm->cur_state = &sm->init_state;
-	vsfsm_post_evt(sm, VSFSM_EVT_INIT);
 	vsfsm_post_evt(sm, VSFSM_EVT_ENTER);
+	vsfsm_post_evt(sm, VSFSM_EVT_INIT);
 	return VSFERR_NONE;
 }
 
@@ -131,7 +165,7 @@ vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	}
 }
 
-vsf_err_t vsfsm_post_evt_int(struct vsfsm_t *sm, vsfsm_evt_t evt)
+vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
 	return vsfsm_evtq_post(&sm->evtq, evt);
 }

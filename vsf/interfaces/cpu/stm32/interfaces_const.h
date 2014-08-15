@@ -29,6 +29,9 @@
 #include "stm32f10x_usart.h"
 #include "core.h"
 
+#define stm32_SLEEP_WFI				0
+#define stm32_SLEEP_PWRDOWN			1
+
 #define stm32_USART_MODE0			0x00
 #define stm32_USART_MODE1			0x04
 #define stm32_USART_MODE2			0x08

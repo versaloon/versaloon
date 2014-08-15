@@ -55,6 +55,7 @@ vsf_err_t stm32_interface_init(void *p);
 vsf_err_t stm32_interface_fini(void *p);
 vsf_err_t stm32_interface_reset(void *p);
 vsf_err_t stm32_interface_set_stack(uint32_t sp);
+void stm32_interface_sleep(uint32_t mode);
 vsf_err_t stm32_interface_get_info(struct stm32_info_t **info);
 
 uint32_t stm32_uid_get(uint8_t *buffer, uint32_t size);

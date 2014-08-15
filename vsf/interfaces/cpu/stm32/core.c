@@ -67,6 +67,11 @@ vsf_err_t stm32_interface_set_stack(uint32_t sp)
 	return VSFERR_NONE;
 }
 
+void stm32_interface_sleep(uint32_t mode)
+{
+	__WFI();
+}
+
 static uint32_t __log2__(uint32_t n)
 {
 	uint32_t i, value = 1;

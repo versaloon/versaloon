@@ -22,14 +22,19 @@
 
 #include "app_type.h"
 
-#define VSFSM_EVT_INVALID				-1
-#define VSFSM_EVT_DUMMY					0
-#define VSFSM_EVT_INIT					1
-#define VSFSM_EVT_FINI					2
-#define VSFSM_EVT_ENTER					3
-#define VSFSM_EVT_EXIT					4
-#define VSFSM_EVT_USER					0x10
-#define VSFSM_EVT_USER_LOCAL			0x4000
+enum
+{
+	VSFSM_EVT_INVALID = -1,
+	VSFSM_EVT_DUMMY = 0,
+	VSFSM_EVT_GET_SUPER = 1,
+	VSFSM_EVT_INIT = 2,
+	VSFSM_EVT_USER = 0x10,
+	// local event can not transmit or be passed to superstate
+	VSFSM_EVT_LOCAL = 0x4000,
+	VSFSM_EVT_ENTER = VSFSM_EVT_LOCAL + 0,
+	VSFSM_EVT_EXIT = VSFSM_EVT_LOCAL + 1,
+	VSFSM_EVT_USER_LOCAL = VSFSM_EVT_LOCAL + 2,
+};
 
 typedef int vsfsm_evt_t;
 
@@ -47,13 +52,17 @@ struct vsfsm_evtqueue_t
 struct vsfsm_t;
 struct vsfsm_state_t
 {
+	// return NULL means the event is handled, and no transition
+	// return a vsfsm_state_t pointer means transition to the state
+	// return -1 means the event is not handled, should redirect to superstate
+	// for VSFSM_EVT_GET_SUPER, should return the superstate or NULL if in top
 	struct vsfsm_state_t * (*evt_handler)(struct vsfsm_t *sm, vsfsm_evt_t evt);
 };
 
 struct vsfsm_t
 {
-	struct vsfsm_state_t *super;
 	struct vsfsm_evtqueue_t evtq;
+	// initial state
 	struct vsfsm_state_t init_state;
 	// user_data point to the user specified data for the sm
 	void *user_data;
@@ -65,10 +74,14 @@ struct vsfsm_t
 	struct vsfsm_state_t *cur_state;
 };
 
+struct vsfsm_state_t * vsfsm_top(struct vsfsm_t *sm, vsfsm_evt_t evt);
+
 vsf_err_t vsfsm_init(struct vsfsm_t *sm);
 vsf_err_t vsfsm_fini(struct vsfsm_t *sm);
 vsf_err_t vsfsm_poll(struct vsfsm_t *sm);
+uint32_t vsfsm_get_event_pending(void);
+vsf_err_t vsfsm_transmit(struct vsfsm_t *sm, struct vsfsm_state_t *state);
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt);
-vsf_err_t vsfsm_post_evt_int(struct vsfsm_t *sm, vsfsm_evt_t evt);
+vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
 
 #endif	// #ifndef __VSFSM_H_INCLUDED__

@@ -24,7 +24,7 @@
 #define VSFSM_EVT_TIMER					8
 
 static struct vsfsm_state_t *
-vsftimer_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt);
+vsftimer_init_handler(struct vsfsm_t *sm, vsfsm_evt_t evt);
 
 struct vsftimer_t
 {
@@ -37,13 +37,12 @@ struct vsftimer_t
 {
 	NULL,
 	{
-		NULL,							// struct vsfsm_t *super;
 		{
 			vsftimer.evt_buffer,		// vsfsm_evt_t *evt_buffer;
 			dimof(vsftimer.evt_buffer),	// uint16_t evt_buffer_num;
 		},								// struct vsfsm_evtqueue_t evt_queue;
 		{
-			vsftimer_evt_handler
+			vsftimer_init_handler
 		},								// struct vsfsm_state_t init_state;
 	},
 };
@@ -54,18 +53,14 @@ static void vsftimer_callback_int(void *param)
 {
 	struct vsftimer_t *vsftimer = param;
 	
-	vsfsm_post_evt_int(&vsftimer->sm, VSFSM_EVT_TIMER);
+	vsfsm_post_evt_pending(&vsftimer->sm, VSFSM_EVT_TIMER);
 }
 
 static struct vsfsm_state_t *
-vsftimer_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
+vsftimer_init_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
 	switch (evt)
 	{
-	case VSFSM_EVT_INIT:
-		vsftimer.timerlist = NULL;
-		interfaces->tickclk.set_callback(vsftimer_callback_int, &vsftimer);
-		return NULL;
 	case VSFSM_EVT_TIMER:
 	{
 		uint32_t cur_tickcnt = interfaces->tickclk.get_count();
@@ -91,7 +86,6 @@ vsftimer_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 		}
 		return NULL;
 	}
-	case VSFSM_EVT_ENTER:
 	default:
 		return NULL;
 	}
@@ -99,6 +93,8 @@ vsftimer_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 
 vsf_err_t vsftimer_init(void)
 {
+	vsftimer.timerlist = NULL;
+	interfaces->tickclk.set_callback(vsftimer_callback_int, &vsftimer);
 	return vsfsm_init(&vsftimer.sm);
 }
 
