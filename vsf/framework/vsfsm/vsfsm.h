@@ -21,13 +21,13 @@
 #define __VSFSM_H_INCLUDED__
 
 #include "app_type.h"
-#include "tool/list/list.h"
 
 enum
 {
 	VSFSM_EVT_INVALID = -1,
 	VSFSM_EVT_DUMMY = 0,
 	VSFSM_EVT_INIT = 1,
+	VSFSM_EVT_SEM = 2,
 	VSFSM_EVT_USER = 0x10,
 	// local event can not transmit or be passed to superstate
 	VSFSM_EVT_LOCAL = 0x4000,
@@ -67,7 +67,7 @@ struct vsfsm_state_t
 	// for initialized historical subsm, vsfsm_set_active should be called to
 	// 		set the subsm active(means ready to accept events) on
 	// 		VSFSM_EVT_ENTER, and set the subsm inactive on VSFSM_EVT_EXIT
-	struct vsfsm_t *subsm;
+	struct vsfsm_t **subsm;
 };
 
 struct vsfsm_t
@@ -83,7 +83,10 @@ struct vsfsm_t
 	
 	// private
 	struct vsfsm_state_t *cur_state;
-	struct sllist list;
+#if VSFSM_CFG_SEM_EN
+	// pending_next is used for vsfsm_sem_t
+	struct vsfsm_t *pending_next;
+#endif
 	volatile bool active;
 };
 
@@ -98,5 +101,19 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm);
 vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active);
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt);
 vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
+
+#if VSFSM_CFG_SEM_EN
+// vsfsm_sem_t is used as access lock for resources
+struct vsfsm_sem_t
+{
+	uint32_t num_accessable;
+	uint32_t num_accessing;
+	struct vsfsm_t *sm_pending;
+};
+vsf_err_t vsfsm_sem_init(struct vsfsm_sem_t *sem);
+bool vsfsm_sem_acquire(struct vsfsm_t *sm, struct vsfsm_sem_t *sem);
+vsf_err_t vsfsm_sem_cancel(struct vsfsm_t *sm, struct vsfsm_sem_t *sem);
+vsf_err_t vsfsm_sem_release(struct vsfsm_sem_t *sem);
+#endif	// VSFSM_CFG_SEM_EN
 
 #endif	// #ifndef __VSFSM_H_INCLUDED__

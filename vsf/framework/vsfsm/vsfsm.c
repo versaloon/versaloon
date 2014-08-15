@@ -213,6 +213,7 @@ struct vsfsm_state_t vsfsm_top = {NULL, vsfsm_top_handler,};
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 {
+	sm->pending_next = NULL;
 	vsfsm_evtq_init(&sm->evtq);
 	sm->cur_state = &sm->init_state;
 	// ignore any state transition on VSFSM_EVT_ENTER
@@ -220,8 +221,7 @@ vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 	// set active so that sm can accept events
 	vsfsm_set_active(sm, true);
 	// process state transition on VSFSM_EVT_INIT
-	vsfsm_post_evt(sm, VSFSM_EVT_INIT);
-	return VSFERR_NONE;
+	return vsfsm_post_evt(sm, VSFSM_EVT_INIT);
 }
 
 vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
@@ -235,15 +235,17 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 		return vsfsm_dispatch_evt(sm, evt);
 	}
 	// poll subsm in cur_state
-	sm = sm->cur_state->subsm;
-	while (sm->cur_state->subsm != NULL)
+	if (sm->cur_state->subsm != NULL)
 	{
-		err_temp = vsfsm_poll(sm);
-		if (!err)
+		uint32_t i;
+		for (i = 0; sm->cur_state->subsm[i] != NULL; i++)
 		{
-			err = err_temp;
+			err_temp = vsfsm_poll(sm->cur_state->subsm[i]);
+			if (!err)
+			{
+				err = err_temp;
+			}
 		}
-		sm = sllist_get_container(&sm->list, struct vsfsm_t, list);
 	}
 	return err;
 }
@@ -267,3 +269,106 @@ vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
 	return (sm->active) ? vsfsm_evtq_post(&sm->evtq, evt) : VSFERR_FAIL;
 }
+
+#if VSFSM_CFG_SEM_EN
+// vsfsm_sem_t
+vsf_err_t vsfsm_sem_init(struct vsfsm_sem_t *sem)
+{
+	sem->num_accessing = 0;
+	sem->sm_pending = NULL;
+	return VSFERR_NONE;
+}
+
+static bool vsfsm_sem_in_pending(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
+{
+	struct vsfsm_t *sm_pending = sem->sm_pending;
+	while (sm_pending != NULL)
+	{
+		if (sm_pending == sm)
+		{
+			return true;
+		}
+		sm_pending = sm_pending->pending_next;
+	}
+	return false;
+}
+
+static void vsfsm_sem_append_sm(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
+{
+	sm->pending_next = NULL;
+	if (NULL == sem->sm_pending)
+	{
+		sem->sm_pending = sm;
+	}
+	else
+	{
+		struct vsfsm_t *sm_pending = sem->sm_pending;
+		while (sm_pending->pending_next != NULL)
+		{
+			sm_pending = sm_pending->pending_next;
+		}
+		sm_pending->pending_next = sm;
+	}
+}
+
+static void vsfsm_sem_remove_sm(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
+{
+	if (vsfsm_sem_in_pending(sm, sem))
+	{
+		if (sem->sm_pending == sm)
+		{
+			sem->sm_pending = sm->pending_next;
+		}
+		else
+		{
+			struct vsfsm_t *sm_pending = sem->sm_pending;
+			while (sm_pending->pending_next != sm)
+			{
+				sm_pending = sm_pending->pending_next;
+			}
+			sm_pending->pending_next = sm->pending_next;
+		}
+	}
+}
+
+bool vsfsm_sem_acquire(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
+{
+	if (sem->num_accessing < sem->num_accessable)
+	{
+		sem->num_accessing++;
+		return true;
+	}
+	
+	vsfsm_sem_append_sm(sm, sem);
+	return false;
+}
+
+vsf_err_t vsfsm_sem_cancel(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
+{
+	vsfsm_sem_remove_sm(sm, sem);
+	return VSFERR_NONE;
+}
+
+vsf_err_t vsfsm_sem_release(struct vsfsm_sem_t *sem)
+{
+	if (!sem->num_accessing)
+	{
+		return VSFERR_BUG;
+	}
+	
+	if (sem->sm_pending != NULL)
+	{
+		if (vsfsm_post_evt(sem->sm_pending, VSFSM_EVT_SEM))
+		{
+			// need to increase the evtq buffer size
+			return VSFERR_BUG;
+		}
+		sem->sm_pending = sem->sm_pending->pending_next;
+	}
+	else
+	{
+		sem->num_accessing--;
+	}
+	return VSFERR_NONE;
+}
+#endif	// VSFSM_CFG_SEM_EN
