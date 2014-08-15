@@ -114,18 +114,18 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	}
 	
 	// need to transmit
-	vsfsm_post_evt(sm, VSFSM_EVT_EXIT);
-	sm->cur_state = next;
-	vsfsm_post_evt(sm, VSFSM_EVT_ENTER);
+	
 	return VSFERR_NONE;
 }
 
-struct vsfsm_state_t * vsfsm_top(struct vsfsm_t *sm, vsfsm_evt_t evt)
+static struct vsfsm_state_t *
+vsfsm_top_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
 	REFERENCE_PARAMETER(sm);
 	REFERENCE_PARAMETER(evt);
 	return NULL;
 }
+struct vsfsm_state_t vsfsm_top = {vsfsm_top_handler};
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 {
