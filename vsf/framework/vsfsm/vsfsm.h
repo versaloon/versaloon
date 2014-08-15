@@ -62,6 +62,11 @@ struct vsfsm_state_t
 	
 	// sub state machine list
 	// for subsm, user need to call vsfsm_init on VSFSM_EVT_ENTER
+	// if the subsm is historical, vsfsm_init should only be called once on
+	// 		first VSFSM_EVT_ENTER
+	// for initialized historical subsm, vsfsm_set_active should be called to
+	// 		set the subsm active(means ready to accept events) on
+	// 		VSFSM_EVT_ENTER, and set the subsm inactive on VSFSM_EVT_EXIT
 	struct vsfsm_t *subsm;
 };
 
@@ -79,13 +84,18 @@ struct vsfsm_t
 	// private
 	struct vsfsm_state_t *cur_state;
 	struct sllist list;
+	volatile bool active;
 };
 
 extern struct vsfsm_state_t vsfsm_top;
 uint32_t vsfsm_get_event_pending(void);
 
+// vsfsm_init will set the sm to be active(means ready to accept events)
 vsf_err_t vsfsm_init(struct vsfsm_t *sm);
 vsf_err_t vsfsm_poll(struct vsfsm_t *sm);
+// sm is avtive after init, if sm will not accept further events
+// user MUST set the sm to be inactive
+vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active);
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt);
 vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
 

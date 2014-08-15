@@ -217,6 +217,8 @@ vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 	sm->cur_state = &sm->init_state;
 	// ignore any state transition on VSFSM_EVT_ENTER
 	sm->cur_state->evt_handler(sm, VSFSM_EVT_ENTER);
+	// set active so that sm can accept events
+	vsfsm_set_active(sm, true);
 	// process state transition on VSFSM_EVT_INIT
 	vsfsm_post_evt(sm, VSFSM_EVT_INIT);
 	return VSFERR_NONE;
@@ -225,6 +227,7 @@ vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 {
 	vsfsm_evt_t evt;
+	vsf_err_t err = VSFERR_NONE, err_temp;
 	
 	if (sm->evtq.count)
 	{
@@ -235,27 +238,32 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 	sm = sm->cur_state->subsm;
 	while (sm->cur_state->subsm != NULL)
 	{
-		vsfsm_poll(sm);
+		err_temp = vsfsm_poll(sm);
+		if (!err)
+		{
+			err = err_temp;
+		}
 		sm = sllist_get_container(&sm->list, struct vsfsm_t, list);
 	}
+	return err;
+}
+
+vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active)
+{
+	vsf_enter_critical();
+	sm->active = active;
+	vsf_leave_critical();
 	return VSFERR_NONE;
 }
 
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
-	if (0 == sm->evtq.count)
-	{
-		// if interrupt occur here and post event to the same statemachine,
-		// current event will be dispatched first
-		return vsfsm_dispatch_evt(sm, evt);
-	}
-	else
-	{
-		return vsfsm_evtq_post(&sm->evtq, evt);
-	}
+	return (!sm->active) ? VSFERR_FAIL :
+			(0 == sm->evtq.count) ?
+				vsfsm_dispatch_evt(sm, evt) : vsfsm_evtq_post(&sm->evtq, evt);
 }
 
 vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
-	return vsfsm_evtq_post(&sm->evtq, evt);
+	return (sm->active) ? vsfsm_evtq_post(&sm->evtq, evt) : VSFERR_FAIL;
 }
