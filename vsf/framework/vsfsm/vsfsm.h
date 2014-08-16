@@ -25,18 +25,23 @@
 enum
 {
 	VSFSM_EVT_INVALID = -1,
-	VSFSM_EVT_DUMMY = 0,
-	VSFSM_EVT_INIT = 1,
-	VSFSM_EVT_SEM = 2,
-	VSFSM_EVT_USER = 0x10,
+	VSFSM_EVT_SYSTEM = 0,
+	VSFSM_EVT_DUMMY = VSFSM_EVT_SYSTEM + 0,
+	VSFSM_EVT_INIT = VSFSM_EVT_SYSTEM + 1,
+	VSFSM_EVT_USER = VSFSM_EVT_SYSTEM + 0x10,
+	// instant message CANNOT be but in the event queue and
+	// can not be sent in interrupt
+	VSFSM_EVT_INSTANT = VSFSM_EVT_SYSTEM + 0x2000,
+	VSFSM_EVT_INSTANT_END = VSFSM_EVT_INSTANT + 0x2000 - 1,
 	// local event can not transmit or be passed to superstate
-	VSFSM_EVT_LOCAL = 0x4000,
+	VSFSM_EVT_LOCAL = VSFSM_EVT_INSTANT_END + 1,
 	VSFSM_EVT_ENTER = VSFSM_EVT_LOCAL + 0,
 	VSFSM_EVT_EXIT = VSFSM_EVT_LOCAL + 1,
 	VSFSM_EVT_USER_LOCAL = VSFSM_EVT_LOCAL + 2,
 	// local instant message CANNOT be but in the event queue and
 	// can not be sent in interrupt
 	VSFSM_EVT_LOCAL_INSTANT = VSFSM_EVT_LOCAL + 0x2000,
+	VSFSM_EVT_LOCAL_INSTANT_END = VSFSM_EVT_LOCAL_INSTANT + 0x2000 - 1,
 };
 
 typedef int vsfsm_evt_t;
@@ -110,6 +115,9 @@ vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
 struct vsfsm_sem_t
 {
 	uint32_t num_accessable;
+	vsfsm_evt_t evt;
+	
+	// private
 	uint32_t num_accessing;
 	struct vsfsm_t *sm_pending;
 };

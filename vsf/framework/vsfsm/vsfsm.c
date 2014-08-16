@@ -263,7 +263,11 @@ vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active)
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
 	return (!sm->active) ? VSFERR_FAIL :
-			(evt >= VSFSM_EVT_LOCAL_INSTANT) || (0 == sm->evtq.count) ?
+			(evt >= VSFSM_EVT_INSTANT) &&
+				(evt <= VSFSM_EVT_INSTANT_END) ||
+			(evt >= VSFSM_EVT_LOCAL_INSTANT) &&
+				(evt <= VSFSM_EVT_LOCAL_INSTANT_END) ||
+			(0 == sm->evtq.count) ?
 				vsfsm_dispatch_evt(sm, evt) : vsfsm_evtq_post(&sm->evtq, evt);
 }
 
@@ -361,7 +365,7 @@ vsf_err_t vsfsm_sem_release(struct vsfsm_sem_t *sem)
 	
 	if (sem->sm_pending != NULL)
 	{
-		if (vsfsm_post_evt(sem->sm_pending, VSFSM_EVT_SEM))
+		if (vsfsm_post_evt(sem->sm_pending, sem->evt))
 		{
 			// need to increase the evtq buffer size
 			return VSFERR_BUG;
