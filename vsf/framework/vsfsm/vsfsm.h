@@ -32,15 +32,18 @@ enum
 	// instant message CANNOT be but in the event queue and
 	// can not be sent in interrupt
 	VSFSM_EVT_INSTANT = VSFSM_EVT_SYSTEM + 0x2000,
+	VSFSM_EVT_USER_INSTANT = VSFSM_EVT_INSTANT,
 	VSFSM_EVT_INSTANT_END = VSFSM_EVT_INSTANT + 0x2000 - 1,
 	// local event can not transmit or be passed to superstate
 	VSFSM_EVT_LOCAL = VSFSM_EVT_INSTANT_END + 1,
-	VSFSM_EVT_ENTER = VSFSM_EVT_LOCAL + 0,
-	VSFSM_EVT_EXIT = VSFSM_EVT_LOCAL + 1,
-	VSFSM_EVT_USER_LOCAL = VSFSM_EVT_LOCAL + 2,
+	VSFSM_EVT_USER_LOCAL = VSFSM_EVT_LOCAL,
 	// local instant message CANNOT be but in the event queue and
 	// can not be sent in interrupt
 	VSFSM_EVT_LOCAL_INSTANT = VSFSM_EVT_LOCAL + 0x2000,
+	// VSFSM_EVT_ENTER and VSFSM_EVT_EXIT are local instant events
+	VSFSM_EVT_ENTER = VSFSM_EVT_LOCAL_INSTANT + 0,
+	VSFSM_EVT_EXIT = VSFSM_EVT_LOCAL_INSTANT + 1,
+	VSFSM_EVT_USER_LOCAL_INSTANT = VSFSM_EVT_LOCAL_INSTANT + 2,
 	VSFSM_EVT_LOCAL_INSTANT_END = VSFSM_EVT_LOCAL_INSTANT + 0x2000 - 1,
 };
 
