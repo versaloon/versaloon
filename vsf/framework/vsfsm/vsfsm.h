@@ -107,6 +107,8 @@ vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
 struct vsfsm_sem_t
 {
 	uint32_t num_accessable;
+	
+	// private
 	uint32_t num_accessing;
 	struct vsfsm_t *sm_pending;
 };

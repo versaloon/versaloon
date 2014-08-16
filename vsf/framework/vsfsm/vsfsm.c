@@ -213,7 +213,9 @@ struct vsfsm_state_t vsfsm_top = {NULL, vsfsm_top_handler,};
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 {
+#if VSFSM_CFG_SEM_EN
 	sm->pending_next = NULL;
+#endif
 	vsfsm_evtq_init(&sm->evtq);
 	sm->cur_state = &sm->init_state;
 	// ignore any state transition on VSFSM_EVT_ENTER
