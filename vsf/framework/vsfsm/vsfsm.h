@@ -34,6 +34,9 @@ enum
 	VSFSM_EVT_ENTER = VSFSM_EVT_LOCAL + 0,
 	VSFSM_EVT_EXIT = VSFSM_EVT_LOCAL + 1,
 	VSFSM_EVT_USER_LOCAL = VSFSM_EVT_LOCAL + 2,
+	// local instant message CANNOT be but in the event queue and
+	// can not be sent in interrupt
+	VSFSM_EVT_LOCAL_INSTANT = VSFSM_EVT_LOCAL + 0x2000,
 };
 
 typedef int vsfsm_evt_t;
@@ -107,8 +110,6 @@ vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
 struct vsfsm_sem_t
 {
 	uint32_t num_accessable;
-	
-	// private
 	uint32_t num_accessing;
 	struct vsfsm_t *sm_pending;
 };
