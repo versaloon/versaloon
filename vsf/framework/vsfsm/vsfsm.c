@@ -223,7 +223,7 @@ struct vsfsm_state_t vsfsm_top = {NULL, vsfsm_top_handler,};
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 {
-#if VSFSM_CFG_SEM_EN
+#if VSFSM_CFG_SYNC_EN
 	sm->pending_next = NULL;
 #endif
 	vsfsm_evtq_init(&sm->evtq);
@@ -287,18 +287,21 @@ vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	return (sm->active) ? vsfsm_evtq_post(&sm->evtq, evt) : VSFERR_FAIL;
 }
 
-#if VSFSM_CFG_SEM_EN
-// vsfsm_sem_t
-vsf_err_t vsfsm_sem_init(struct vsfsm_sem_t *sem)
+#if VSFSM_CFG_SYNC_EN
+// vsfsm_sync_t
+vsf_err_t vsfsm_sync_init(struct vsfsm_sync_t *sync, uint32_t cur_value,
+				uint32_t max_value, vsfsm_evt_t evt, bool valid_on_increase)
 {
-	sem->num_accessing = 0;
-	sem->sm_pending = NULL;
+	sync->cur_value = cur_value;
+	sync->max_value = max_value;
+	sync->valid_on_increase = valid_on_increase;
+	sync->sm_pending = NULL;
 	return VSFERR_NONE;
 }
 
-static bool vsfsm_sem_in_pending(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
+static bool vsfsm_sync_in_pending(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
 {
-	struct vsfsm_t *sm_pending = sem->sm_pending;
+	struct vsfsm_t *sm_pending = sync->sm_pending;
 	while (sm_pending != NULL)
 	{
 		if (sm_pending == sm)
@@ -310,16 +313,16 @@ static bool vsfsm_sem_in_pending(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
 	return false;
 }
 
-static void vsfsm_sem_append_sm(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
+static void vsfsm_sync_append_sm(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
 {
 	sm->pending_next = NULL;
-	if (NULL == sem->sm_pending)
+	if (NULL == sync->sm_pending)
 	{
-		sem->sm_pending = sm;
+		sync->sm_pending = sm;
 	}
 	else
 	{
-		struct vsfsm_t *sm_pending = sem->sm_pending;
+		struct vsfsm_t *sm_pending = sync->sm_pending;
 		while (sm_pending->pending_next != NULL)
 		{
 			sm_pending = sm_pending->pending_next;
@@ -328,17 +331,17 @@ static void vsfsm_sem_append_sm(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
 	}
 }
 
-static void vsfsm_sem_remove_sm(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
+static void vsfsm_sync_remove_sm(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
 {
-	if (vsfsm_sem_in_pending(sm, sem))
+	if (vsfsm_sync_in_pending(sm, sync))
 	{
-		if (sem->sm_pending == sm)
+		if (sync->sm_pending == sm)
 		{
-			sem->sm_pending = sm->pending_next;
+			sync->sm_pending = sm->pending_next;
 		}
 		else
 		{
-			struct vsfsm_t *sm_pending = sem->sm_pending;
+			struct vsfsm_t *sm_pending = sync->sm_pending;
 			while (sm_pending->pending_next != sm)
 			{
 				sm_pending = sm_pending->pending_next;
@@ -348,44 +351,81 @@ static void vsfsm_sem_remove_sm(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
 	}
 }
 
-bool vsfsm_sem_acquire(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
+vsf_err_t vsfsm_sync_cancel(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
 {
-	if (sem->num_accessing < sem->num_accessable)
-	{
-		sem->num_accessing++;
-		return true;
-	}
-	
-	vsfsm_sem_append_sm(sm, sem);
-	return false;
-}
-
-vsf_err_t vsfsm_sem_cancel(struct vsfsm_t *sm, struct vsfsm_sem_t *sem)
-{
-	vsfsm_sem_remove_sm(sm, sem);
+	vsfsm_sync_remove_sm(sm, sync);
 	return VSFERR_NONE;
 }
 
-vsf_err_t vsfsm_sem_release(struct vsfsm_sem_t *sem)
+vsf_err_t vsfsm_sync_increase(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
 {
-	if (!sem->num_accessing)
+	if (sync->cur_value >= sync->max_value)
 	{
 		return VSFERR_BUG;
 	}
 	
-	if (sem->sm_pending != NULL)
+	if (sync->valid_on_increase)
 	{
-		if (vsfsm_post_evt(sem->sm_pending, sem->evt))
+		if (sync->sm_pending)
 		{
-			// need to increase the evtq buffer size
-			return VSFERR_BUG;
+			if (vsfsm_post_evt(sync->sm_pending, sync->evt))
+			{
+				// should increase the evtq buffer size
+				return VSFERR_BUG;
+			}
+			sync->sm_pending = sync->sm_pending->pending_next;
 		}
-		sem->sm_pending = sem->sm_pending->pending_next;
+		else
+		{
+			sync->cur_value++;
+		}
+		return VSFERR_NONE;
 	}
 	else
 	{
-		sem->num_accessing--;
+		if (sync->cur_value < sync->max_value)
+		{
+			sync->cur_value++;
+			return VSFERR_NONE;
+		}
+		vsfsm_sync_append_sm(sm, sync);
+		return VSFERR_NOT_READY;
 	}
-	return VSFERR_NONE;
 }
-#endif	// VSFSM_CFG_SEM_EN
+
+vsf_err_t vsfsm_sync_decrease(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
+{
+	if (!sync->cur_value)
+	{
+		return VSFERR_BUG;
+	}
+	
+	if (!sync->valid_on_increase)
+	{
+		if (sync->sm_pending)
+		{
+			if (vsfsm_post_evt(sync->sm_pending, sync->evt))
+			{
+				// should increase the evtq buffer size
+				return VSFERR_BUG;
+			}
+			sync->sm_pending = sync->sm_pending->pending_next;
+		}
+		else
+		{
+			sync->cur_value--;
+		}
+		return VSFERR_NONE;
+	}
+	else
+	{
+		if (sync->cur_value < sync->max_value)
+		{
+			sync->cur_value--;
+			return VSFERR_NONE;
+		}
+		vsfsm_sync_append_sm(sm, sync);
+		return VSFERR_NOT_READY;
+	}
+}
+#endif	// VSFSM_CFG_SYNC_EN

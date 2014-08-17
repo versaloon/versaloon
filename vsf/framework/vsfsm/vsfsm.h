@@ -22,6 +22,8 @@
 
 #include "app_type.h"
 
+#define VSFSM_CFG_SYNC_EN		1
+
 enum
 {
 	VSFSM_EVT_INVALID = -1,
@@ -94,7 +96,7 @@ struct vsfsm_t
 	
 	// private
 	struct vsfsm_state_t *cur_state;
-#if VSFSM_CFG_SEM_EN
+#if VSFSM_CFG_SYNC_EN
 	// pending_next is used for vsfsm_sem_t
 	struct vsfsm_t *pending_next;
 #endif
@@ -113,21 +115,36 @@ vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active);
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt);
 vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
 
-#if VSFSM_CFG_SEM_EN
+#if VSFSM_CFG_SYNC_EN
 // vsfsm_sem_t is used as access lock for resources
-struct vsfsm_sem_t
+struct vsfsm_sync_t
 {
-	uint32_t num_accessable;
+	uint32_t cur_value;
 	vsfsm_evt_t evt;
+	bool valid_on_increase;
 	
 	// private
-	uint32_t num_accessing;
+	uint32_t max_value;
 	struct vsfsm_t *sm_pending;
 };
-vsf_err_t vsfsm_sem_init(struct vsfsm_sem_t *sem);
-bool vsfsm_sem_acquire(struct vsfsm_t *sm, struct vsfsm_sem_t *sem);
-vsf_err_t vsfsm_sem_cancel(struct vsfsm_t *sm, struct vsfsm_sem_t *sem);
-vsf_err_t vsfsm_sem_release(struct vsfsm_sem_t *sem);
-#endif	// VSFSM_CFG_SEM_EN
+vsf_err_t vsfsm_sync_init(struct vsfsm_sync_t *sem, uint32_t cur_value,
+				uint32_t max_value, vsfsm_evt_t evt, bool valid_on_increase);
+vsf_err_t vsfsm_sync_cancel(struct vsfsm_t *sm, struct vsfsm_sync_t *sync);
+vsf_err_t vsfsm_sync_increase(struct vsfsm_t *sm, struct vsfsm_sync_t *sync);
+vsf_err_t vsfsm_sync_decrease(struct vsfsm_t *sm, struct vsfsm_sync_t *sync);
+
+// SEMAPHORE
+#define vsfsm_sem_t					vsfsm_sync_t
+#define vsfsm_sem_init(sem, evt)	vsfsm_sync_init((sem), 0, 1, (evt), true)
+#define vsfsm_sem_send(sm, sem)		vsfsm_sync_increase((sm), (sem))
+#define vsfsm_sem_wait(sm, sem)		vsfsm_sync_decrease((sm), (sem))
+
+// CRITICAL
+#define vsfsm_crit_t				vsfsm_sync_t
+#define vsfsm_crit_init(crit, evt)	vsfsm_sync_init((cirt), 1, 1, (evt), false)
+#define vsfsm_cirt_enter(sm, crit)	vsfsm_sync_decrease((sm), (crit))
+#define vsfsm_cirt_leave(sm, crit)	vsfsm_sync_increase((sm), (crit))
+
+#endif	// VSFSM_CFG_SYNC_EN
 
 #endif	// #ifndef __VSFSM_H_INCLUDED__
