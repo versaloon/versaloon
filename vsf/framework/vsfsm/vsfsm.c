@@ -87,6 +87,7 @@ static vsf_err_t vsfsm_evtq_post(struct vsfsm_evtqueue_t *evtq,
 	return VSFERR_NONE;
 }
 
+#if VSFSM_CFG_HSM_EN
 static bool vsfsm_is_in(struct vsfsm_state_t *s, struct vsfsm_state_t *t)
 {
 	while (t != NULL)
@@ -99,13 +100,16 @@ static bool vsfsm_is_in(struct vsfsm_state_t *s, struct vsfsm_state_t *t)
 	}
 	return false;
 }
+#endif
 
 static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
+#if VSFSM_CFG_HSM_EN
 	struct vsfsm_state_t *temp_state = NULL, *lca_state;
+	struct vsfsm_state_t *temp_processor_state, *temp_target_state;
+#endif
 	struct vsfsm_state_t *processor_state = sm->cur_state;
 	struct vsfsm_state_t *target_state = processor_state->evt_handler(sm, evt);
-	struct vsfsm_state_t *temp_processor_state, *temp_target_state;
 	
 	// local event can not transmit or be passed to superstate
 	if (evt >= VSFSM_EVT_LOCAL)
@@ -130,6 +134,7 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	}
 	
 	// need to transmit
+#if VSFSM_CFG_HSM_EN
 	// 1. exit to processor_state
 	for (temp_state = sm->cur_state; temp_state != processor_state;)
 	{
@@ -199,6 +204,11 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 update_cur_state:
 	sm->cur_state = target_state;
 	// 7. send VSFSM_EVT_INIT to target_state
+#else
+	sm->cur_state->evt_handler(sm, VSFSM_EVT_EXIT);
+	sm->cur_state = target_state;
+	sm->cur_state->evt_handler(sm, VSFSM_EVT_ENTER);
+#endif
 	return vsfsm_post_evt(sm, VSFSM_EVT_INIT);
 }
 
