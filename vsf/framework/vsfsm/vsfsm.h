@@ -21,8 +21,7 @@
 #define __VSFSM_H_INCLUDED__
 
 #include "app_type.h"
-
-#define VSFSM_CFG_SYNC_EN		1
+#include "vsfsm_cfg.h"
 
 enum
 {
