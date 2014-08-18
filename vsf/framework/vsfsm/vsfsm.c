@@ -112,6 +112,7 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 		return VSFERR_NONE;
 	}
 	
+#if VSFSM_CFG_HSM_EN
 	// superstate
 	while (target_state == (struct vsfsm_state_t *)-1)
 	{
@@ -121,6 +122,7 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 			target_state = processor_state->evt_handler(sm, evt);
 		}
 	}
+#endif
 	
 	if (NULL == target_state)
 	{
@@ -207,6 +209,7 @@ update_cur_state:
 	return vsfsm_post_evt(sm, VSFSM_EVT_INIT);
 }
 
+#if VSFSM_CFG_HSM_EN
 static struct vsfsm_state_t *
 vsfsm_top_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
@@ -215,6 +218,7 @@ vsfsm_top_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	return NULL;
 }
 struct vsfsm_state_t vsfsm_top = {NULL, vsfsm_top_handler,};
+#endif
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 {

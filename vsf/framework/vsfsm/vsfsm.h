@@ -64,13 +64,15 @@ struct vsfsm_evtqueue_t
 struct vsfsm_t;
 struct vsfsm_state_t
 {
-	// for top state, super is NULL; other super points to the superstate
-	struct vsfsm_state_t *super;
-	
 	// return NULL means the event is handled, and no transition
 	// return a vsfsm_state_t pointer means transition to the state
 	// return -1 means the event is not handled, should redirect to superstate
 	struct vsfsm_state_t * (*evt_handler)(struct vsfsm_t *sm, vsfsm_evt_t evt);
+	
+#if VSFSM_CFG_HSM_EN
+	// for top state, super is NULL; other super points to the superstate
+	struct vsfsm_state_t *super;
+#endif
 	
 	// sub state machine list
 	// for subsm, user need to call vsfsm_init on VSFSM_EVT_ENTER
@@ -102,7 +104,9 @@ struct vsfsm_t
 	volatile bool active;
 };
 
+#if VSFSM_CFG_HSM_EN
 extern struct vsfsm_state_t vsfsm_top;
+#endif
 // vsfsm_get_event_pending should be called with interrupt disabled
 uint32_t vsfsm_get_event_pending(void);
 
