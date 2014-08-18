@@ -224,6 +224,59 @@ vsfsm_top_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 struct vsfsm_state_t vsfsm_top = {vsfsm_top_handler};
 #endif
 
+static bool vsfsm_subsm_exists(struct vsfsm_state_t *state, struct vsfsm_t *sm)
+{
+	struct vsfsm_t *sm_temp = state->subsm;
+	while (sm_temp != NULL)
+	{
+		if (sm_temp == sm)
+		{
+			return true;
+		}
+		sm_temp = sm_temp->next;
+	}
+	return false;
+}
+
+vsf_err_t vsfsm_add_subsm(struct vsfsm_state_t *state, struct vsfsm_t *sm)
+{
+	if (!vsfsm_subsm_exists(state, sm))
+	{
+		if (NULL == state->subsm)
+		{
+			sm->next = NULL;
+		}
+		else
+		{
+			sm->next = state->subsm;
+		}
+		state->subsm = sm;
+	}
+	return VSFERR_NONE;
+}
+
+vsf_err_t vsfsm_remove_subsm(struct vsfsm_state_t *state, struct vsfsm_t *sm)
+{
+	struct vsfsm_t *sm_temp = state->subsm;
+	if (sm_temp == sm)
+	{
+		state->subsm = sm->next;
+	}
+	else
+	{
+		while (sm_temp != NULL)
+		{
+			if (sm_temp->next == sm)
+			{
+				sm_temp->next = sm->next;
+				break;
+			}
+			sm_temp = sm_temp->next;
+		}
+	}
+	return VSFERR_NONE;
+}
+
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 {
 #if VSFSM_CFG_SYNC_EN
@@ -243,6 +296,7 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 {
 	vsfsm_evt_t evt;
 	vsf_err_t err = VSFERR_NONE, err_temp;
+	struct vsfsm_t *sm_temp;
 	
 	if (sm->evtq.count)
 	{
@@ -250,17 +304,15 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 		return vsfsm_dispatch_evt(sm, evt);
 	}
 	// poll subsm in cur_state
-	if (sm->cur_state->subsm != NULL)
+	sm_temp = sm->cur_state->subsm;
+	while (sm_temp != NULL)
 	{
-		uint32_t i;
-		for (i = 0; sm->cur_state->subsm[i] != NULL; i++)
+		err_temp = vsfsm_poll(sm_temp);
+		if (!err)
 		{
-			err_temp = vsfsm_poll(sm->cur_state->subsm[i]);
-			if (!err)
-			{
-				err = err_temp;
-			}
+			err = err_temp;
 		}
+		sm_temp = sm_temp->next;
 	}
 	return err;
 }

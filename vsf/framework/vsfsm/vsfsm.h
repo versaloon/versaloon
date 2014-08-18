@@ -76,7 +76,7 @@ struct vsfsm_state_t
 	// for initialized historical subsm, vsfsm_set_active should be called to
 	// 		set the subsm active(means ready to accept events) on
 	// 		VSFSM_EVT_ENTER, and set the subsm inactive on VSFSM_EVT_EXIT
-	struct vsfsm_t **subsm;
+	struct vsfsm_t *subsm;
 	
 #if VSFSM_CFG_HSM_EN
 	// for top state, super is NULL; other super points to the superstate
@@ -102,6 +102,7 @@ struct vsfsm_t
 	struct vsfsm_t *pending_next;
 #endif
 	volatile bool active;
+	struct vsfsm_t *next;
 };
 
 #if VSFSM_CFG_HSM_EN
@@ -109,6 +110,10 @@ extern struct vsfsm_state_t vsfsm_top;
 #endif
 // vsfsm_get_event_pending should be called with interrupt disabled
 uint32_t vsfsm_get_event_pending(void);
+
+// sub-statemachine add/remove
+vsf_err_t vsfsm_add_subsm(struct vsfsm_state_t *state, struct vsfsm_t *sm);
+vsf_err_t vsfsm_remove_subsm(struct vsfsm_state_t *state, struct vsfsm_t *sm);
 
 // vsfsm_init will set the sm to be active(means ready to accept events)
 vsf_err_t vsfsm_init(struct vsfsm_t *sm);
