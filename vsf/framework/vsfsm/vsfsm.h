@@ -103,6 +103,7 @@ struct vsfsm_t
 };
 
 extern struct vsfsm_state_t vsfsm_top;
+// vsfsm_get_event_pending should be called with interrupt disabled
 uint32_t vsfsm_get_event_pending(void);
 
 // vsfsm_init will set the sm to be active(means ready to accept events)

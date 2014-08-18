@@ -21,15 +21,10 @@
 #include "vsfsm.h"
 
 static volatile uint32_t vsfsm_event_pending = 0;
+// vsfsm_get_event_pending should be called with interrupt disabled
 uint32_t vsfsm_get_event_pending(void)
 {
-	uint32_t ret;
-	
-	vsf_enter_critical();
-	ret = vsfsm_event_pending;
-	vsf_leave_critical();
-	
-	return ret;
+	return vsfsm_event_pending;
 }
 
 // internal event queue processors
@@ -273,10 +268,10 @@ vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active)
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
 	return (!sm->active) ? VSFERR_FAIL :
-			(evt >= VSFSM_EVT_INSTANT) &&
-				(evt <= VSFSM_EVT_INSTANT_END) ||
-			(evt >= VSFSM_EVT_LOCAL_INSTANT) &&
-				(evt <= VSFSM_EVT_LOCAL_INSTANT_END) ||
+			((evt >= VSFSM_EVT_INSTANT) &&
+				(evt <= VSFSM_EVT_INSTANT_END)) ||
+			((evt >= VSFSM_EVT_LOCAL_INSTANT) &&
+				(evt <= VSFSM_EVT_LOCAL_INSTANT_END)) ||
 			(0 == sm->evtq.count) ?
 				vsfsm_dispatch_evt(sm, evt) : vsfsm_evtq_post(&sm->evtq, evt);
 }
