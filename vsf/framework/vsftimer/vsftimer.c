@@ -43,9 +43,6 @@ struct vsftimer_t
 		},								// struct vsfsm_evtqueue_t evt_queue;
 		{
 			vsftimer_init_handler,
-#if VSFSM_CFG_HSM_EN
-			NULL,
-#endif
 		},								// struct vsfsm_state_t init_state;
 	},
 };

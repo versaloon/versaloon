@@ -69,11 +69,6 @@ struct vsfsm_state_t
 	// return -1 means the event is not handled, should redirect to superstate
 	struct vsfsm_state_t * (*evt_handler)(struct vsfsm_t *sm, vsfsm_evt_t evt);
 	
-#if VSFSM_CFG_HSM_EN
-	// for top state, super is NULL; other super points to the superstate
-	struct vsfsm_state_t *super;
-#endif
-	
 	// sub state machine list
 	// for subsm, user need to call vsfsm_init on VSFSM_EVT_ENTER
 	// if the subsm is historical, vsfsm_init should only be called once on
@@ -82,6 +77,11 @@ struct vsfsm_state_t
 	// 		set the subsm active(means ready to accept events) on
 	// 		VSFSM_EVT_ENTER, and set the subsm inactive on VSFSM_EVT_EXIT
 	struct vsfsm_t **subsm;
+	
+#if VSFSM_CFG_HSM_EN
+	// for top state, super is NULL; other super points to the superstate
+	struct vsfsm_state_t *super;
+#endif
 };
 
 struct vsfsm_t
@@ -92,7 +92,7 @@ struct vsfsm_t
 	// user_data point to the user specified data for the sm
 	void *user_data;
 	// sm_extra is used for specific sm type
-	// for MSM, sm_extra point to the transmit table
+	// for MSM, sm_extra point to the transition table
 	void *sm_extra;
 	
 	// private

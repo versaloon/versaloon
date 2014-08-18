@@ -124,7 +124,11 @@ static vsf_err_t vsfsm_dispatch_evt(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	}
 #endif
 	
-	if (NULL == target_state)
+	if ((NULL == target_state)
+#if !VSFSM_CFG_HSM_EN
+		|| ((struct vsfsm_state_t *)-1 == target_state)
+#endif
+		)
 	{
 		// handled, or even topstate can not handle this event
 		return VSFERR_NONE;
@@ -217,7 +221,7 @@ vsfsm_top_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	REFERENCE_PARAMETER(evt);
 	return NULL;
 }
-struct vsfsm_state_t vsfsm_top = {NULL, vsfsm_top_handler,};
+struct vsfsm_state_t vsfsm_top = {vsfsm_top_handler};
 #endif
 
 vsf_err_t vsfsm_init(struct vsfsm_t *sm)
