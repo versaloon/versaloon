@@ -296,7 +296,7 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 {
 	vsfsm_evt_t evt;
 	vsf_err_t err = VSFERR_NONE, err_temp;
-	struct vsfsm_t *sm_temp;
+	struct vsfsm_t *sm_temp, *sm_next;
 	
 	if (sm->evtq.count)
 	{
@@ -304,7 +304,9 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 		return vsfsm_dispatch_evt(sm, evt);
 	}
 	// poll subsm in cur_state
+	// save sm_next incase sm_temp remove itself from the list
 	sm_temp = sm->cur_state->subsm;
+	sm_next = (NULL == sm_temp) ? NULL : sm_temp->next;
 	while (sm_temp != NULL)
 	{
 		err_temp = vsfsm_poll(sm_temp);
@@ -312,7 +314,8 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 		{
 			err = err_temp;
 		}
-		sm_temp = sm_temp->next;
+		sm_temp = sm_next;
+		sm_next = (NULL == sm_next) ? NULL : sm_next->next;
 	}
 	return err;
 }
@@ -354,61 +357,35 @@ vsf_err_t vsfsm_sync_init(struct vsfsm_sync_t *sync, uint32_t cur_value,
 	return VSFERR_NONE;
 }
 
-static bool vsfsm_sync_in_pending(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
-{
-	struct vsfsm_t *sm_pending = sync->sm_pending;
-	while (sm_pending != NULL)
-	{
-		if (sm_pending == sm)
-		{
-			return true;
-		}
-		sm_pending = sm_pending->pending_next;
-	}
-	return false;
-}
-
 static void vsfsm_sync_append_sm(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
 {
+	struct vsfsm_t sm_temp, *sm_pending;
+	sm_temp.next = sync->sm_pending;
+	sm_pending = &sm_temp;
+	
+	while (sm_pending->next != NULL)
+	{
+		sm_pending->next = sm_pending->pending_next;
+	}
 	sm->pending_next = NULL;
-	if (NULL == sync->sm_pending)
-	{
-		sync->sm_pending = sm;
-	}
-	else
-	{
-		struct vsfsm_t *sm_pending = sync->sm_pending;
-		while (sm_pending->pending_next != NULL)
-		{
-			sm_pending = sm_pending->pending_next;
-		}
-		sm_pending->pending_next = sm;
-	}
-}
-
-static void vsfsm_sync_remove_sm(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
-{
-	if (vsfsm_sync_in_pending(sm, sync))
-	{
-		if (sync->sm_pending == sm)
-		{
-			sync->sm_pending = sm->pending_next;
-		}
-		else
-		{
-			struct vsfsm_t *sm_pending = sync->sm_pending;
-			while (sm_pending->pending_next != sm)
-			{
-				sm_pending = sm_pending->pending_next;
-			}
-			sm_pending->pending_next = sm->pending_next;
-		}
-	}
+	sm_pending->pending_next = sm;
 }
 
 vsf_err_t vsfsm_sync_cancel(struct vsfsm_t *sm, struct vsfsm_sync_t *sync)
 {
-	vsfsm_sync_remove_sm(sm, sync);
+	struct vsfsm_t sm_temp, *sm_pending;
+	sm_temp.next = sync->sm_pending;
+	sm_pending = &sm_temp;
+	
+	while (sm_pending != NULL)
+	{
+		if (sm_pending->next == sm)
+		{
+			sm_pending->next = sm->pending_next;
+			break;
+		}
+		sm_pending = sm_pending->pending_next;
+	}
 	return VSFERR_NONE;
 }
 
