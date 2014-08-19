@@ -105,9 +105,7 @@ struct vsfsm_t
 	struct vsfsm_t *next;
 };
 
-#if VSFSM_CFG_HSM_EN
 extern struct vsfsm_state_t vsfsm_top;
-#endif
 // vsfsm_get_event_pending should be called with interrupt disabled
 uint32_t vsfsm_get_event_pending(void);
 
@@ -116,8 +114,8 @@ vsf_err_t vsfsm_add_subsm(struct vsfsm_state_t *state, struct vsfsm_t *sm);
 vsf_err_t vsfsm_remove_subsm(struct vsfsm_state_t *state, struct vsfsm_t *sm);
 
 // vsfsm_init will set the sm to be active(means ready to accept events)
-vsf_err_t vsfsm_init(struct vsfsm_t *sm);
-vsf_err_t vsfsm_poll(struct vsfsm_t *sm);
+vsf_err_t vsfsm_init(struct vsfsm_t *sm, bool add_to_top);
+vsf_err_t vsfsm_poll(void);
 // sm is avtive after init, if sm will not accept further events
 // user MUST set the sm to be inactive
 vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active);

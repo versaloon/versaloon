@@ -95,12 +95,7 @@ vsf_err_t vsftimer_init(void)
 {
 	vsftimer.timerlist = NULL;
 	interfaces->tickclk.set_callback(vsftimer_callback_int, &vsftimer);
-	return vsfsm_init(&vsftimer.sm);
-}
-
-vsf_err_t vsftimer_poll(void)
-{
-	return vsfsm_poll(&vsftimer.sm);
+	return vsfsm_init(&vsftimer.sm, true);
 }
 
 vsf_err_t vsftimer_register(struct vsftimer_timer_t *timer)

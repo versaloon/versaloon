@@ -222,6 +222,8 @@ vsfsm_top_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	return NULL;
 }
 struct vsfsm_state_t vsfsm_top = {vsfsm_top_handler};
+#else
+struct vsfsm_state_t vsfsm_top;
 #endif
 
 static bool vsfsm_subsm_exists(struct vsfsm_state_t *state, struct vsfsm_t *sm)
@@ -277,8 +279,13 @@ vsf_err_t vsfsm_remove_subsm(struct vsfsm_state_t *state, struct vsfsm_t *sm)
 	return VSFERR_NONE;
 }
 
-vsf_err_t vsfsm_init(struct vsfsm_t *sm)
+vsf_err_t vsfsm_init(struct vsfsm_t *sm, bool add_to_top)
 {
+	if (add_to_top)
+	{
+		vsfsm_add_subsm(&vsfsm_top, sm);
+	}
+	
 #if VSFSM_CFG_SYNC_EN
 	sm->pending_next = NULL;
 #endif
@@ -292,7 +299,7 @@ vsf_err_t vsfsm_init(struct vsfsm_t *sm)
 	return vsfsm_post_evt(sm, VSFSM_EVT_INIT);
 }
 
-vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
+static vsf_err_t vsfsm_poll_sm(struct vsfsm_t *sm)
 {
 	vsfsm_evt_t evt;
 	vsf_err_t err = VSFERR_NONE, err_temp;
@@ -309,7 +316,7 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 	sm_next = (NULL == sm_temp) ? NULL : sm_temp->next;
 	while (sm_temp != NULL)
 	{
-		err_temp = vsfsm_poll(sm_temp);
+		err_temp = vsfsm_poll_sm(sm_temp);
 		if (!err)
 		{
 			err = err_temp;
@@ -318,6 +325,17 @@ vsf_err_t vsfsm_poll(struct vsfsm_t *sm)
 		sm_next = (NULL == sm_next) ? NULL : sm_next->next;
 	}
 	return err;
+}
+
+vsf_err_t vsfsm_poll(void)
+{
+	struct vsfsm_t *sm = vsfsm_top.subsm;
+	while (sm != NULL)
+	{
+		vsfsm_poll_sm(sm);
+		sm = sm->next;
+	}
+	return VSFERR_NONE;
 }
 
 vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active)
