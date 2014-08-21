@@ -252,14 +252,23 @@ app_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	switch (evt)
 	{
 	case VSFSM_EVT_INIT:
-		interfaces->gpio.init(app.usb_pullup.port);
-		interfaces->gpio.clear(app.usb_pullup.port, 1 << app.usb_pullup.pin);
-		interfaces->gpio.config_pin(app.usb_pullup.port, app.usb_pullup.pin,
-									GPIO_OUTPP);
+		if (app.usb_pullup.port != IFS_DUMMY_PORT)
+		{
+			interfaces->gpio.init(app.usb_pullup.port);
+			interfaces->gpio.clear(app.usb_pullup.port,
+									1 << app.usb_pullup.pin);
+			interfaces->gpio.config_pin(app.usb_pullup.port, app.usb_pullup.pin,
+										GPIO_OUTPP);
+		}
+		app.usbd_hid.device.drv->disconnect();
 		vsftimer_register(&app.usbpu_timer);
 		break;
 	case APP_EVT_USBPU_TO:
-		interfaces->gpio.set(app.usb_pullup.port, 1 << app.usb_pullup.pin);
+		if (app.usb_pullup.port != IFS_DUMMY_PORT)
+		{
+			interfaces->gpio.set(app.usb_pullup.port, 1 << app.usb_pullup.pin);
+		}
+		app.usbd_hid.device.drv->connect();
 		vsftimer_unregister(&app.usbpu_timer);
 		break;
 	}
@@ -273,8 +282,8 @@ int main(void)
 	interfaces->tickclk.start();
 	
 	vsftimer_init();
-	vsfsm_init(&app.sm, true);
 	vsfusbd_device_init(&app.usbd_hid.device);
+	vsfsm_init(&app.sm, true);
 	while (1)
 	{
 		vsfsm_poll();

@@ -1146,8 +1146,7 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 			}
 			
 			// reset usb hw
-			if (device->drv->reset() || device->drv->init() ||
-				device->drv->connect())
+			if (device->drv->reset() || device->drv->init())
 			{
 				err = VSFERR_FAIL;
 				goto reset_exit;
@@ -1573,7 +1572,7 @@ vsf_err_t vsfusbd_device_init(struct vsfusbd_device_t *device)
 	device->sm.user_data = (void*)device;
 	vsfsm_init(&device->sm, true);
 	
-	if (device->drv->init() || device->drv->connect() || 
+	if (device->drv->init() ||
 		((device->callback.init != NULL) && device->callback.init()))
 	{
 		return VSFERR_FAIL;
