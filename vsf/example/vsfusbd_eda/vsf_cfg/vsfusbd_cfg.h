@@ -17,8 +17,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#define VSFUSBD_CFG_MAX_IN_EP				1
-#define VSFUSBD_CFG_MAX_OUT_EP				1
+#define VSFUSBD_CFG_MAX_IN_EP				2
+#define VSFUSBD_CFG_MAX_OUT_EP				2
 
 #define VSFUSBD_CFG_AUTOSETUP				1
 #define VSFUSBD_CFG_DBUFFER_EN				1
@@ -26,4 +26,4 @@
 
 #define VSFUSBD_CFG_LP_EN					0
 
-#define VSFUSBD_CFG_EVTQ_SIZE				64
+#define VSFUSBD_CFG_EVTQ_SIZE				16

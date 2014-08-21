@@ -78,7 +78,7 @@ struct vsfsm_state_t
 	// 		VSFSM_EVT_ENTER, and set the subsm inactive on VSFSM_EVT_EXIT
 	struct vsfsm_t *subsm;
 	
-#if VSFSM_CFG_HSM_EN
+#if VSFSM_CFG_SM_EN && VSFSM_CFG_HSM_EN
 	// for top state, super is NULL; other super points to the superstate
 	struct vsfsm_state_t *super;
 #endif
@@ -91,9 +91,11 @@ struct vsfsm_t
 	struct vsfsm_state_t init_state;
 	// user_data point to the user specified data for the sm
 	void *user_data;
+#if VSFSM_CFG_SM_EN
 	// sm_extra is used for specific sm type
 	// for MSM, sm_extra point to the transition table
 	void *sm_extra;
+#endif
 	
 	// private
 	struct vsfsm_state_t *cur_state;

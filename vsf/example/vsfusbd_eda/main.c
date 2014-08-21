@@ -77,7 +77,7 @@ static const uint8_t HID_ConfigDescriptor[] =
 	USB_DESC_TYPE_ENDPOINT,	// Endpoint descriptor type
 	0x81,	// Endpoint address (IN, address 1)
 	0x03,	// interrupt endpoint type
-	0x04,	// Maximum packet size (64 bytes)
+	0x40,	// Maximum packet size (64 bytes)
 	0x00,
 	0x20	// Polling interval in milliseconds
 };
@@ -195,8 +195,7 @@ struct vsfapp_t
 		struct vsfusbd_config_t config[1];
 		struct vsfusbd_device_t device;
 		// private
-		uint8_t HID_temp_buffer[64];
-		uint8_t HID_report0_buffer[64];
+		uint8_t HID_report0_buffer[8];
 	} usbd_hid;
 	
 	struct vsfsm_t sm;
@@ -213,8 +212,6 @@ struct vsfapp_t
 			(struct vsfusbd_desc_filter_t *)HID_Report_Descriptors,
 			dimof(app.usbd_hid.HID_reports),
 			(struct vsfusbd_HID_report_t *)&app.usbd_hid.HID_reports,
-			{app.usbd_hid.HID_temp_buffer,
-				sizeof(app.usbd_hid.HID_temp_buffer)},
 		},						// struct vsfusbd_HID_param_t HID_param;
 		{
 			{USB_HID_REPORT_INPUT, 1, NULL,

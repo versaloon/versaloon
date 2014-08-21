@@ -69,8 +69,6 @@ struct vsfusbd_HID_param_t
 	uint8_t num_of_report;
 	struct vsfusbd_HID_report_t *reports;
 	
-	struct vsf_buffer_t temp_buffer;
-	
 	// private
 	uint8_t protocol;
 	

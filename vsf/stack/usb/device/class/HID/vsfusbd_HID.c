@@ -182,6 +182,7 @@ vsfusbd_HID_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 			
 			for (i = 0; i < param->num_of_report; i++)
 			{
+				report = &param->reports[i];
 				if ((report->type == USB_HID_REPORT_TYPE_INPUT) &&
 					(report->changed || ((report->idle != 0) &&
 							(report->idle_cnt >= report->idle))))
