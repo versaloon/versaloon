@@ -6,10 +6,15 @@
 
 #include "vsfusbd_HID.h"
 
+enum vsfusbd_HID_EVT_t
+{
+	VSFUSBD_HID_EVT_TIMER4MS = VSFSM_EVT_USER_LOCAL_INSTANT + 0,
+	VSFUSBD_HID_EVT_INREPORT = VSFSM_EVT_USER_LOCAL_INSTANT + 1,
+};
+
 static struct vsfusbd_HID_report_t* vsfusbd_HID_find_report(
 		struct vsfusbd_HID_param_t *param, uint8_t type, uint8_t id)
 {
-	struct vsfusbd_HID_report_t *report = param->reports;
 	uint8_t i;
 	
 	if (NULL == param)
@@ -21,40 +26,11 @@ static struct vsfusbd_HID_report_t* vsfusbd_HID_find_report(
 	{
 		if ((param->reports[i].type == type) && (param->reports[i].id == id))
 		{
-			return report;
+			return &param->reports[i];
 		}
 	}
 	
 	return NULL;
-}
-
-static vsf_err_t vsfusbd_HID_class_update_report(
-		struct vsfusbd_HID_report_t *report, struct vsf_buffer_t *temp_buffer)
-{
-	if ((NULL == report) || (NULL == temp_buffer))
-	{
-		return VSFERR_FAIL;
-	}
-	
-	if (report->type == USB_HID_REPORT_TYPE_INPUT)
-	{
-		uint32_t size = report->buffer.size;
-		
-		if (NULL == report->on_set_get_report)
-		{
-			return VSFERR_FAIL;
-		}
-		
-		memcpy(temp_buffer->buffer, report->buffer.buffer, size);
-		report->lock = true;
-		if (report->on_set_get_report(report))
-		{
-			report->lock = false;
-			return VSFERR_FAIL;
-		}
-		report->lock = false;
-	}
-	return VSFERR_NONE;
 }
 
 static vsf_err_t vsfusbd_HID_OUT_hanlder(struct vsfusbd_device_t *device,
@@ -114,9 +90,9 @@ static vsf_err_t vsfusbd_HID_OUT_hanlder(struct vsfusbd_device_t *device,
 			param->output_state = HID_OUTPUT_STATE_RECEIVING;
 			param->current_output_report_id = report_id;
 		}
-		else if (report->on_set_get_report != NULL)
+		else if (report->on_set_report != NULL)
 		{
-			report->on_set_get_report(report);
+			report->on_set_report(report);
 		}
 		break;
 	case HID_OUTPUT_STATE_RECEIVING:
@@ -131,12 +107,12 @@ static vsf_err_t vsfusbd_HID_OUT_hanlder(struct vsfusbd_device_t *device,
 		
 		memcpy(report->buffer.buffer + report->pos, pbuffer, pkg_size);
 		report->pos += pkg_size;
-		if (report->pos == report->buffer.size)
+		if (report->pos >= report->buffer.size)
 		{
 			report->pos = 0;
-			if (report->on_set_get_report != NULL)
+			if (report->on_set_report != NULL)
 			{
-				report->on_set_get_report(report);
+				report->on_set_report(report);
 			}
 			param->output_state = HID_OUTPUT_STATE_WAIT;
 		}
@@ -147,64 +123,93 @@ static vsf_err_t vsfusbd_HID_OUT_hanlder(struct vsfusbd_device_t *device,
 	return drv->ep.enable_OUT(param->ep_out);
 }
 
-static vsf_err_t vsfusbd_HID_class_poll(uint8_t iface, 
-										struct vsfusbd_device_t *device)
+// state machines
+static void vsfusbd_HID_INREPORT_callback(void *param)
 {
-	struct vsfusbd_config_t *config = &device->config[device->configuration];
-	struct vsfusbd_HID_param_t *param = 
-		(struct vsfusbd_HID_param_t *)config->iface[iface].protocol_param;
-	struct vsfusbd_HID_report_t *report;
-	uint8_t ep = param->ep_in;
-	struct vsfusbd_transact_t *transact = &device->IN_transact[ep];
-	struct vsf_buffer_t *buffer = &transact->tbuffer.buffer;
+	struct vsfusbd_HID_param_t *HID_param =
+								(struct vsfusbd_HID_param_t *)param;
 	
-	if (NULL == param)
+	vsfsm_post_evt(&HID_param->iface->sm, VSFUSBD_HID_EVT_INREPORT);
+}
+
+vsf_err_t vsfusbd_HID_IN_report_changed(struct vsfusbd_HID_param_t *param,
+										struct vsfusbd_HID_report_t *report)
+{
+	report->changed = true;
+	if (!param->busy)
 	{
-		return VSFERR_FAIL;
+		vsfsm_post_evt(&param->iface->sm, VSFUSBD_HID_EVT_INREPORT);
 	}
+	return VSFERR_NONE;
+}
+
+static struct vsfsm_state_t *
+vsfusbd_HID_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
+{
+	struct vsfusbd_HID_param_t *param =
+						(struct vsfusbd_HID_param_t *)sm->user_data;
 	
-	report = &param->reports[param->poll_report_idx];
-	buffer->buffer = report->buffer.buffer;
-	buffer->size = report->buffer.size;
-	transact->callback.callback = NULL;
-	transact->pkt.in.zlp = true;
-	switch (report->type)
+	switch (evt)
 	{
-	case USB_HID_REPORT_TYPE_INPUT:
-		// TODO: process multi-report and idle, need 1 ms systick module
-		if (!vsfusbd_ep_send_nb_isready(device, ep))
+	case VSFUSBD_HID_EVT_TIMER4MS:
 		{
-			if (vsfusbd_HID_class_update_report(report, &param->temp_buffer))
+			struct vsfusbd_HID_report_t *report;
+			uint8_t i;
+			
+			for (i = 0; i < param->num_of_report; i++)
 			{
-				return VSFERR_FAIL;
+				report = &param->reports[i];
+				if ((report->type == USB_HID_REPORT_TYPE_INPUT) &&
+					(report->idle != 0))
+				{
+					report->idle_cnt++;
+				}
 			}
-			transact->tbuffer.buffer = param->temp_buffer;
-			if (vsfusbd_ep_send_nb(device, ep))
+			if (param->busy)
 			{
-				return VSFERR_FAIL;
-			}
-			param->poll_report_idx++;
-			if (param->poll_report_idx >= param->num_of_report)
-			{
-				param->poll_report_idx = 0;
+				break;
 			}
 		}
-		break;
-	case USB_HID_REPORT_TYPE_OUTPUT:
-		break;
-	default:
+		// fall through
+	case VSFUSBD_HID_EVT_INREPORT:
+		{
+			uint8_t ep = param->ep_in;
+			struct vsfusbd_device_t *device = param->device;
+			struct vsfusbd_transact_t *transact = &device->IN_transact[ep];
+			struct vsfusbd_HID_report_t *report;
+			bool busy = false;
+			uint8_t i;
+			
+			for (i = 0; i < param->num_of_report; i++)
+			{
+				if ((report->type == USB_HID_REPORT_TYPE_INPUT) &&
+					(report->changed || ((report->idle != 0) &&
+							(report->idle_cnt >= report->idle))))
+				{
+					report->idle_cnt = 0;
+					transact->tbuffer.buffer = report->buffer;
+					transact->callback.callback = vsfusbd_HID_INREPORT_callback;
+					transact->callback.param = param;
+					vsfusbd_ep_send_nb(device, ep);
+					busy = true;
+					break;
+				}
+			}
+			param->busy = busy;
+		}
 		break;
 	}
 	
-	return VSFERR_NONE;
+	return NULL;
 }
 
 static vsf_err_t vsfusbd_HID_class_init(uint8_t iface, 
 										struct vsfusbd_device_t *device)
 {
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
+	struct vsfusbd_iface_t *ifs = &config->iface[iface];
 	struct vsfusbd_HID_param_t *param = 
-		(struct vsfusbd_HID_param_t *)config->iface[iface].protocol_param;
+						(struct vsfusbd_HID_param_t *)ifs->protocol_param;
 	struct interface_usbd_t *drv = device->drv;
 	uint8_t input_reports = 0, output_reports = 0, feature_reports = 0;
 	uint8_t i;
@@ -217,13 +222,15 @@ static vsf_err_t vsfusbd_HID_class_init(uint8_t iface,
 		return VSFERR_FAIL;
 	}
 	
+	param->iface = ifs;
+	param->device = device;
 	param->output_state = HID_OUTPUT_STATE_WAIT;
-	param->poll_report_idx = 0;
+	param->busy = false;
 	for(i = 0; i < param->num_of_report; i++)
 	{
-		param->reports[i].lock = false;
 		param->reports[i].pos = 0;
 		param->reports[i].idle_cnt = 0;
+		param->reports[i].changed = true;
 		switch (param->reports[i].type)
 		{
 		case USB_HID_REPORT_OUTPUT:
@@ -240,7 +247,18 @@ static vsf_err_t vsfusbd_HID_class_init(uint8_t iface,
 	param->num_of_INPUT_report = input_reports;
 	param->num_of_OUTPUT_report = output_reports;
 	param->num_of_FEATURE_report = feature_reports;
-	return vsfusbd_HID_class_poll(iface, device);
+	
+	// state machine init
+	memset(&ifs->sm, 0, sizeof(ifs->sm));
+	ifs->sm.init_state.evt_handler = vsfusbd_HID_evt_handler;
+	ifs->sm.user_data = (void*)param;
+	vsfsm_init(&ifs->sm, false);
+	
+	// enable timer
+	param->timer4ms.sm = &ifs->sm;
+	param->timer4ms.evt = VSFUSBD_HID_EVT_TIMER4MS;
+	param->timer4ms.interval = 4;
+	return vsftimer_register(&param->timer4ms);
 }
 
 static vsf_err_t vsfusbd_HID_GetReport_prepare(
@@ -262,14 +280,7 @@ static vsf_err_t vsfusbd_HID_GetReport_prepare(
 	}
 	
 	buffer->size = report->buffer.size;
-	if (report->lock)
-	{
-		buffer->buffer = param->temp_buffer.buffer;
-	}
-	else
-	{
-		buffer->buffer = report->buffer.buffer;
-	}
+	buffer->buffer = report->buffer.buffer;
 	return VSFERR_NONE;
 }
 
@@ -355,9 +366,9 @@ static vsf_err_t vsfusbd_HID_SetReport_process(
 		return VSFERR_FAIL;
 	}
 	
-	if (report->on_set_get_report != NULL)
+	if (report->on_set_report != NULL)
 	{
-		return report->on_set_get_report(report);
+		return report->on_set_report(report);
 	}
 	return VSFERR_NONE;
 }
@@ -367,20 +378,26 @@ static vsf_err_t vsfusbd_HID_SetIdle_prepare(
 		uint8_t* (*data_io)(void *param))
 {
 	struct usb_ctrl_request_t *request = &device->ctrl_handler.request;
-	uint8_t id = request->value;
+	uint8_t id = request->value & 0xFF;
 	uint8_t iface = request->index;
 	struct vsfusbd_config_t *config = &device->config[device->configuration];
 	struct vsfusbd_HID_param_t *param = 
 		(struct vsfusbd_HID_param_t *)config->iface[iface].protocol_param;
-	struct vsfusbd_HID_report_t *report = 
-				vsfusbd_HID_find_report(param, USB_HID_REPORT_INPUT, id);
+	uint8_t i;
 	
-	if ((NULL == param) || (NULL == report) || (request->length != 0))
+	if ((NULL == param) || (request->length != 0))
 	{
 		return VSFERR_FAIL;
 	}
 	
-	report->idle = request->value >> 8;
+	for(i = 0; i < param->num_of_report; i++)
+	{
+		if ((param->reports[i].type == USB_HID_REPORT_INPUT) &&
+			((0 == id) || (param->reports[i].id == id)))
+		{
+			param->reports[i].idle = request->value >> 8;
+		}
+	}
 	return VSFERR_NONE;
 }
 
@@ -469,5 +486,5 @@ const struct vsfusbd_class_protocol_t vsfusbd_HID_class =
 	vsfusbd_HID_get_desc, NULL,
 	(struct vsfusbd_setup_filter_t *)vsfusbd_HID_class_setup, NULL,
 	
-	vsfusbd_HID_class_init, NULL, vsfusbd_HID_class_poll
+	vsfusbd_HID_class_init, NULL
 };

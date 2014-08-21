@@ -1,6 +1,8 @@
 #ifndef __VSFUSBD_HID_H_INCLUDED__
 #define __VSFUSBD_HID_H_INCLUDED__
 
+#include "framework/vsftimer/vsftimer.h"
+
 enum usb_HID_description_type_t
 {
 	USB_HIDDESC_TYPE_HID					= 0x21,
@@ -40,9 +42,10 @@ struct vsfusbd_HID_report_t
 	uint8_t id;
 	uint8_t idle;
 	struct vsf_buffer_t buffer;
-	vsf_err_t (*on_set_get_report)(struct vsfusbd_HID_report_t *report);
-	// no need to initialize below by user
-	bool lock;
+	vsf_err_t (*on_set_report)(struct vsfusbd_HID_report_t *report);
+	bool changed;
+	
+	// private
 	uint32_t pos;
 	uint8_t idle_cnt;
 };
@@ -67,14 +70,24 @@ struct vsfusbd_HID_param_t
 	struct vsfusbd_HID_report_t *reports;
 	
 	struct vsf_buffer_t temp_buffer;
-	// no need to initialize below by user
+	
+	// private
 	uint8_t protocol;
+	
 	enum vsfusbd_HID_output_state_t output_state;
+	uint8_t current_output_report_id;
+	
 	uint8_t num_of_INPUT_report;
 	uint8_t num_of_OUTPUT_report;
 	uint8_t num_of_FEATURE_report;
-	uint8_t current_output_report_id;
-	uint8_t poll_report_idx;
+	
+	struct vsftimer_timer_t timer4ms;
+	struct vsfusbd_device_t *device;
+	struct vsfusbd_iface_t *iface;
+	bool busy;
 };
+
+vsf_err_t vsfusbd_HID_IN_report_changed(struct vsfusbd_HID_param_t *param,
+										struct vsfusbd_HID_report_t *report);
 
 #endif	// __VSFUSBD_HID_H_INCLUDED__

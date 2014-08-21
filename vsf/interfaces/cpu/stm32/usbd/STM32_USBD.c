@@ -43,6 +43,7 @@ int8_t stm32_usbd_epaddr[STM32_USBD_EP_NUM];
 
 vsf_err_t stm32_usbd_init(void)
 {
+	NVIC_InitTypeDef NVIC_InitStructure;
 	struct stm32_info_t *stm32_info;
 	
 	memset(stm32_usbd_IN_epsize, 0, sizeof(stm32_usbd_IN_epsize));
@@ -67,6 +68,13 @@ vsf_err_t stm32_usbd_init(void)
 		return VSFERR_INVALID_PARAMETER;
 	}
 	RCC->APB1ENR |= STM32_RCC_APB1ENR_USBEN;
+	NVIC_InitStructure.NVIC_IRQChannel = USB_HP_CAN1_TX_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+	NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn;
+	NVIC_Init(&NVIC_InitStructure);
 	
 	// reset
 	SetCNTR(CNTR_FRES);

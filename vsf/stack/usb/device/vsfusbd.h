@@ -25,6 +25,11 @@
 #include "vsfusbd_cfg.h"
 #include "../usb_common.h"
 
+#include "framework/vsfsm/vsfsm.h"
+
+#define VSFUSBD_EVT_DATAIO_INEP(ep)		(VSFUSBD_EVT_DATAIO_IN + (ep))
+#define VSFUSBD_EVT_DATAIO_OUTEP(ep)	(VSFUSBD_EVT_DATAIO_OUT + (ep))
+
 struct vsfusbd_device_t;
 
 enum vsfusbd_ctrl_state_t
@@ -79,6 +84,9 @@ struct vsfusbd_transact_callback_t
 struct vsfusbd_transact_t
 {
 	struct vsf_transaction_buffer_t tbuffer;
+	struct vsfusbd_transact_callback_t callback;
+	
+	// private
 	union
 	{
 		struct
@@ -91,7 +99,6 @@ struct vsfusbd_transact_t
 			bool isshort;	// used for OUT, indicating the short package
 		} out;
 	} pkt;
-	struct vsfusbd_transact_callback_t callback;
 	bool need_poll;
 };
 
@@ -121,7 +128,6 @@ struct vsfusbd_class_protocol_t
 	
 	vsf_err_t (*init)(uint8_t iface, struct vsfusbd_device_t *device);
 	vsf_err_t (*fini)(uint8_t iface, struct vsfusbd_device_t *device);
-	vsf_err_t (*poll)(uint8_t iface, struct vsfusbd_device_t *device);
 };
 
 struct vsfusbd_iface_t
@@ -131,6 +137,8 @@ struct vsfusbd_iface_t
 	void *protocol_param;
 	
 	// private
+	// for interface sm, no evtq is defined, so instant events MUST be used
+	struct vsfsm_t sm;
 	uint8_t alternate_setting;
 };
 
@@ -162,18 +170,19 @@ struct vsfusbd_device_t
 	{
 		vsf_err_t (*init)(void);
 		vsf_err_t (*fini)(void);
-		vsf_err_t (*poll)(void);
 		vsf_err_t (*on_set_interface)(uint8_t iface,
 										uint8_t alternate_setting);
 		
 		void (*on_ATTACH)(void);
 		void (*on_DETACH)(void);
 		void (*on_RESET)(void);
+		void (*on_SOF)(void);
 		void (*on_ERROR)(enum interface_usbd_error_t type);
+#if VSFUSBD_CFG_LP_EN
 		void (*on_WAKEUP)(void);
 		void (*on_SUSPEND)(void);
 		void (*on_RESUME)(void);
-		void (*on_SOF)(void);
+#endif
 		
 		void (*on_IN)(uint8_t ep);
 		void (*on_OUT)(uint8_t ep);
@@ -184,6 +193,9 @@ struct vsfusbd_device_t
 	} callback;
 	
 	// private
+	struct vsfsm_t sm;
+	vsfsm_evt_t evtq[VSFUSBD_CFG_EVTQ_SIZE];
+	
 	uint8_t address;
 	bool configured;
 	uint8_t configuration;
@@ -207,24 +219,13 @@ struct vsfusbd_setup_filter_t *vsfusbd_get_class_request_filter(
 		struct vsfusbd_class_protocol_t *class_protocol);
 
 vsf_err_t vsfusbd_device_init(struct vsfusbd_device_t *device);
-vsf_err_t vsfusbd_auto_init(struct vsfusbd_device_t *device);
-vsf_err_t vsfusbd_device_fini(struct vsfusbd_device_t *device);
-vsf_err_t vsfusbd_device_poll(struct vsfusbd_device_t *device);
+vsf_err_t vsfusbd_ep_send_nb(struct vsfusbd_device_t *device, uint8_t ep);
+vsf_err_t vsfusbd_ep_receive_nb(struct vsfusbd_device_t *device, uint8_t ep);
 
 vsf_err_t vsfusbd_set_IN_handler(struct vsfusbd_device_t *device,
 		uint8_t ep, vsf_err_t (*handler)(struct vsfusbd_device_t*, uint8_t));
 vsf_err_t vsfusbd_set_OUT_handler(struct vsfusbd_device_t *device,
 		uint8_t ep, vsf_err_t (*handler)(struct vsfusbd_device_t*, uint8_t));
-
-vsf_err_t vsfusbd_ep_receive_nb(struct vsfusbd_device_t *device, uint8_t ep);
-vsf_err_t vsfusbd_ep_receive_nb_isready(struct vsfusbd_device_t *device,
-										uint8_t ep, uint32_t *size);
-vsf_err_t vsfusbd_ep_receive(struct vsfusbd_device_t *device, uint8_t ep);
-
-vsf_err_t vsfusbd_ep_send_nb(struct vsfusbd_device_t *device, uint8_t ep);
-vsf_err_t vsfusbd_ep_send_nb_isready(struct vsfusbd_device_t *device,
-										uint8_t ep);
-vsf_err_t vsfusbd_ep_send(struct vsfusbd_device_t *device, uint8_t ep);
 
 #endif	// __VSF_USBD_H_INCLUDED__
 

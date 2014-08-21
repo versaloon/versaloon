@@ -67,8 +67,12 @@ vsf_err_t stm32_interface_set_stack(uint32_t sp)
 	return VSFERR_NONE;
 }
 
+// sleep will enable interrupt
+// for cortex processor, if an interrupt occur between enable the interrupt
+// 		and __WFI, wfi will not make the core sleep
 void stm32_interface_sleep(uint32_t mode)
 {
+	vsf_leave_critical();
 	__WFI();
 }
 
