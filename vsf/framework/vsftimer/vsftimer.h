@@ -35,6 +35,8 @@ struct vsftimer_timer_t
 };
 
 vsf_err_t vsftimer_init(void);
+// call vsftimer_callback_int in hw timer interrupt
+void vsftimer_callback_int(void);
 vsf_err_t vsftimer_register(struct vsftimer_timer_t *timer);
 vsf_err_t vsftimer_unregister(struct vsftimer_timer_t *timer);
 

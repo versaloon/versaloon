@@ -275,13 +275,20 @@ app_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	return NULL;
 }
 
+// tickclk interrupt, simply call vsftimer_callback_int
+static void app_tickclk_callback_int(void *param)
+{
+	vsftimer_callback_int();
+}
+
 int main(void)
 {
 	interfaces->core.init(NULL);
 	interfaces->tickclk.init();
 	interfaces->tickclk.start();
-	
 	vsftimer_init();
+	interfaces->tickclk.set_callback(app_tickclk_callback_int, NULL);
+	
 	vsfusbd_device_init(&app.usbd_hid.device);
 	vsfsm_init(&app.sm, true);
 	while (1)

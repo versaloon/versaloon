@@ -49,11 +49,9 @@ struct vsftimer_t
 
 // vsftimer_callback_int is called in interrupt,
 // simply send event to vsftimer SM
-static void vsftimer_callback_int(void *param)
+void vsftimer_callback_int(void)
 {
-	struct vsftimer_t *vsftimer = param;
-	
-	vsfsm_post_evt_pending(&vsftimer->sm, VSFSM_EVT_TIMER);
+	vsfsm_post_evt_pending(&vsftimer.sm, VSFSM_EVT_TIMER);
 }
 
 static struct vsfsm_state_t *
@@ -94,7 +92,6 @@ vsftimer_init_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 vsf_err_t vsftimer_init(void)
 {
 	vsftimer.timerlist = NULL;
-	interfaces->tickclk.set_callback(vsftimer_callback_int, &vsftimer);
 	return vsfsm_init(&vsftimer.sm, true);
 }
 
