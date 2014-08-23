@@ -23,8 +23,6 @@
 #include "config.h"
 #endif
 
-#include <time.h>
-
 #if IS_WIN32
 
 #include <windows.h>

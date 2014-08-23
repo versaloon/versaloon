@@ -7,7 +7,6 @@
 #include "interfaces.h"
 #include "versaloon_libusb.h"
 
-#include "usb.h"
 #include "usbapi.h"
 
 #define VERSALOON_PRODUCTSTRING_INDEX	2
@@ -21,7 +20,7 @@
 #define VERSALOON_OUTP					0x03
 #define VERSALOON_IFACE					0x00
 
-static usb_dev_handle *versaloon_device_handle = NULL;
+static struct libusb_device_handle *versaloon_device_handle = NULL;
 static uint32_t versaloon_to;
 
 static vsf_err_t versaloon_usb_comm_init(void)
@@ -56,8 +55,8 @@ static vsf_err_t versaloon_usb_comm_fini(void)
 {
 	if (versaloon_device_handle != NULL)
 	{
-		usb_release_interface(versaloon_device_handle, usb_param_interface());
-		usb_close(versaloon_device_handle);
+		libusb_release_interface(versaloon_device_handle, usb_param_interface());
+		libusb_close(versaloon_device_handle);
 		versaloon_device_handle = NULL;
 	}
 	
@@ -72,30 +71,28 @@ static void versaloon_usb_comm_set_timeout(uint32_t ms)
 static vsf_err_t versaloon_usb_comm_transact(uint8_t *buffer_out,
 						uint16_t out_len, uint8_t *buffer_in, uint16_t *in_len)
 {
-	int ret;
+	int ret, transferred;
 	
-	ret = usb_bulk_write(versaloon_device_handle, usb_param_epout(),
-							(char *)buffer_out, out_len, versaloon_to);
-	if (ret != out_len)
+	ret = libusb_bulk_transfer(versaloon_device_handle, usb_param_epout(),
+			(unsigned char *)buffer_out, out_len, &transferred, versaloon_to);
+	if (ret || (transferred != out_len))
 	{
-		LOG_ERROR(ERRMSG_FAILURE_OPERATION_ERRSTRING, "send usb data",
-					usb_strerror());
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "send usb data");
 		return ERRCODE_FAILURE_OPERATION;
 	}
 	
 	if (in_len != NULL)
 	{
-		ret = usb_bulk_read(versaloon_device_handle, usb_param_epin(),
-							(char *)buffer_in, *in_len, versaloon_to);
-		if (ret > 0)
+		ret = libusb_bulk_transfer(versaloon_device_handle, usb_param_epin(),
+			(unsigned char *)buffer_in, *in_len, &transferred, versaloon_to);
+		if (!ret)
 		{
-			*in_len = (uint16_t)ret;
+			*in_len = (uint16_t)transferred;
 			return VSFERR_NONE;
 		}
 		else
 		{
-			LOG_ERROR(ERRMSG_FAILURE_OPERATION_ERRSTRING, "receive usb data",
-						usb_strerror());
+			LOG_ERROR(ERRMSG_FAILURE_OPERATION, "receive usb data");
 			return VSFERR_FAIL;
 		}
 	}

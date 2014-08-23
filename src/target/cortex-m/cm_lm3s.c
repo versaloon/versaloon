@@ -193,7 +193,7 @@ static vsf_err_t lm3sswj_iap_wait_param_taken(struct lm3s_fl_t *fl)
 	vsf_err_t err;
 	uint32_t start, end;
 	
-	start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+	start = interfaces->tickclk.get_count();
 	while (1)
 	{
 		err = lm3sswj_iap_poll_param_taken(fl);
@@ -206,7 +206,7 @@ static vsf_err_t lm3sswj_iap_wait_param_taken(struct lm3s_fl_t *fl)
 			LOG_ERROR(ERRMSG_FAILURE_OPERATION, "poll iap param taken");
 			return err;
 		}
-		end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+		end = interfaces->tickclk.get_count();
 		// wait 1s at most
 		if ((end - start) > 1000)
 		{
@@ -224,7 +224,7 @@ static vsf_err_t lm3sswj_iap_wait_finish(struct lm3s_fl_t *fl)
 	vsf_err_t err;
 	uint32_t start, end;
 	
-	start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+	start = interfaces->tickclk.get_count();
 	while (1)
 	{
 		err = lm3sswj_iap_poll_finish(fl);
@@ -237,7 +237,7 @@ static vsf_err_t lm3sswj_iap_wait_finish(struct lm3s_fl_t *fl)
 			LOG_ERROR(ERRMSG_FAILURE_OPERATION, "poll iap finish");
 			return VSFERR_FAIL;
 		}
-		end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+		end = interfaces->tickclk.get_count();
 		// wait 1s at most
 		if ((end - start) > 1000)
 		{

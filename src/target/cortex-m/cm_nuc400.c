@@ -212,7 +212,7 @@ static vsf_err_t nuc400swj_iap_wait_param_taken(struct nuc400_fl_t *fl)
 	vsf_err_t err;
 	uint32_t start, end;
 	
-	start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 4000));
+	start = interfaces->tickclk.get_count();
 	while (1)
 	{
 		err = nuc400swj_iap_poll_param_taken(fl);
@@ -225,9 +225,9 @@ static vsf_err_t nuc400swj_iap_wait_param_taken(struct nuc400_fl_t *fl)
 			LOG_ERROR(ERRMSG_FAILURE_OPERATION, "poll iap param taken");
 			return err;
 		}
-		end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 4000));
+		end = interfaces->tickclk.get_count();
 		// wait 1s at most
-		if ((end - start) > 4000)
+		if ((end - start) > 1000)
 		{
 			cm_dump(NUC400_IAP_BASE, sizeof(iap_code));
 			LOG_ERROR(ERRMSG_TIMEOUT, "wait for iap param taken");
@@ -248,7 +248,7 @@ static vsf_err_t nuc400swj_iap_wait_finish(struct nuc400_fl_t *fl)
 		return VSFERR_NONE;
 	}
 	
-	start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 4000));
+	start = interfaces->tickclk.get_count();
 	while (1)
 	{
 		err = nuc400swj_iap_poll_finish(fl);
@@ -261,9 +261,9 @@ static vsf_err_t nuc400swj_iap_wait_finish(struct nuc400_fl_t *fl)
 			LOG_ERROR(ERRMSG_FAILURE_OPERATION, "poll iap finish");
 			return VSFERR_FAIL;
 		}
-		end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 4000));
+		end = interfaces->tickclk.get_count();
 		// wait 1s at most
-		if ((end - start) > 4000)
+		if ((end - start) > 1000)
 		{
 			cm_dump(NUC400_IAP_BASE, sizeof(iap_code));
 			LOG_ERROR(ERRMSG_TIMEOUT, "wait for iap finish");

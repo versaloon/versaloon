@@ -257,7 +257,7 @@ static vsf_err_t kinetisswj_iap_wait_ready(struct kinetis_fl_t *fl,
 	vsf_err_t err;
 	uint32_t start, end;
 	
-	start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+	start = interfaces->tickclk.get_count();
 	while (1)
 	{
 		err = kinetisswj_iap_poll_result(fl, reply);
@@ -276,7 +276,7 @@ static vsf_err_t kinetisswj_iap_wait_ready(struct kinetis_fl_t *fl,
 			LOG_ERROR(ERRMSG_FAILURE_OPERATION, "poll iap result");
 			return VSFERR_FAIL;
 		}
-		end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+		end = interfaces->tickclk.get_count();
 		// wait 1s at most
 		if ((end - start) > 1000)
 		{

@@ -41,6 +41,6 @@ vsprog_LDADD = \
     $(top_builddir)/src/tools/libtool.a \
     $(top_builddir)/src/driver/libdrv.a \
     $(top_builddir)/vsf/libvsf.a \
-    $(MINGWLDADD) -lusb $(XML_LIBS)
+    $(MINGWLDADD) -llibusb-1.0 $(XML_LIBS)
 
 MAINTAINERCLEANFILES = Makefile.in

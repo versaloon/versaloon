@@ -101,12 +101,12 @@ char *usb_param_serial(void)
 	}
 }
 
-static uint8_t usb_check_string(usb_dev_handle *usb, uint8_t stringidx,
-								char * string, char * buff, uint16_t buf_size)
+static bool usb_check_string(struct libusb_device_handle *dev,
+							uint8_t stringidx, char * string,
+							char * buff, uint16_t buf_size)
 {
-	int len;
-	uint8_t alloced = 0;
-	uint8_t ret = 1;
+	bool alloced = false;
+	bool ret = true;
 	
 	if (NULL == buff)
 	{
@@ -117,21 +117,21 @@ static uint8_t usb_check_string(usb_dev_handle *usb, uint8_t stringidx,
 			ret = 0;
 			goto free_and_return;
 		}
-		alloced = 1;
+		alloced = true;
 	}
 	
 	strcpy(buff, "");
-	len = usb_get_string_simple(usb, stringidx, (char *)buff, buf_size);
-	if ((len < 0) || (len != ((int)strlen((const char *)buff))))
+	
+	if (libusb_get_string_descriptor_ascii(dev, stringidx,
+										(unsigned char *)buff, buf_size) < 0)
 	{
-		ret = 0;
+		ret = false;
 		goto free_and_return;
 	}
 	
-	buff[len] = '\0';
 	if ((string != NULL) && strcmp((const char *)buff, string))
 	{
-		ret = 0;
+		ret = false;
 		goto free_and_return;
 	}
 	
@@ -144,141 +144,130 @@ free_and_return:
 	return ret;
 }
 
+static struct libusb_context *libusb_ctx = NULL;
+
 uint32_t print_usb_devices(uint16_t VID, uint16_t PID, int8_t serialindex,
 							char *serialstring, int8_t productindex,
 							char *productstring)
 {
-	usb_dev_handle *dev_handle = NULL;
-	struct usb_bus *busses;
-	struct usb_bus *bus;
-	struct usb_device *dev;
+	ssize_t usb_devices_num;
+	libusb_device **usb_devices;
 	int c = 0;
 	uint8_t buf[256];
 	
-	memset(buf, 0, sizeof(buf));
-	usb_init();
-	usb_find_busses();
-	usb_find_devices();
-	busses = usb_get_busses();
-
-	for (bus = busses; bus; bus = bus->next)
+	if (NULL == libusb_ctx)
 	{
-		for (dev = bus->devices; dev; dev = dev->next)
+		libusb_init(&libusb_ctx);
+	}
+	
+	usb_devices_num = libusb_get_device_list(libusb_ctx, &usb_devices);
+	if (usb_devices_num > 0)
+	{
+		ssize_t i;
+		libusb_device *dev;
+		struct libusb_device_descriptor device_desc;
+		struct libusb_device_handle *dev_handle = NULL;
+		
+		for (i = 0; i < usb_devices_num; i++)
 		{
-			if ((dev->descriptor.idVendor == VID)
-				&& (dev->descriptor.idProduct == PID))
+			dev = usb_devices[i];
+			if (libusb_get_device_descriptor(dev, &device_desc) ||
+				(device_desc.idVendor != VID) ||
+				(device_desc.idProduct != PID) ||
+				libusb_open(dev, &dev_handle))
 			{
-				dev_handle = usb_open(dev);
-				if (NULL == dev_handle)
-				{
-					LOG_ERROR("failed to open %04X:%04X, %s", VID, PID,
-								usb_strerror());
-					continue;
-				}
-				
-				// check description string
-				if (((productstring != NULL) && (productindex >= 0)
-						&& !usb_check_string(dev_handle, productindex,
-												productstring, NULL, 0))
-				    || ((serialindex >= 0)
-						&& !usb_check_string(dev_handle, serialindex, serialstring,
-								 (char*)buf, sizeof(buf))))
-				{
-					usb_close(dev_handle);
-					dev_handle = NULL;
-					continue;
-				}
-				
-				if (dev_handle != NULL)
-				{
-					// print current device
-					if (strlen((char *)buf) > 0)
-					{
-						PRINTF("%s%d: 0x%04X:0x%04X:%s on %s.\n",
-								productstring, c, VID, PID, buf, dev->filename);
-					}
-					else
-					{
-						PRINTF("%s%d: 0x%04X:0x%04X on %s.\n",
-								productstring, c, VID, PID, dev->filename);
-					}
-					c++;
-					
-					usb_close(dev_handle);
-					dev_handle = NULL;
-				}
+				continue;
 			}
+			
+			if (((productstring != NULL) && (productindex >= 0) &&
+					!usb_check_string(dev_handle, productindex, productstring,
+										NULL, 0))
+			    || ((serialindex >= 0) &&
+					!usb_check_string(dev_handle, serialindex, serialstring,
+										(char*)buf, sizeof(buf))))
+			{
+				libusb_close(dev_handle);
+				dev_handle = NULL;
+				continue;
+			}
+			
+			// print current device
+			if (strlen((char *)buf) > 0)
+			{
+				PRINTF("%s%d: 0x%04X:0x%04X:%s.\n",
+						productstring, c, VID, PID, buf);
+			}
+			else
+			{
+				PRINTF("%s%d: 0x%04X:0x%04X.\n", productstring, c, VID, PID);
+			}
+			c++;
+			
+			libusb_close(dev_handle);
 		}
 	}
 	
-	if (dev_handle != NULL)
-	{
-		usb_close(dev_handle);
-		dev_handle = NULL;
-	}
-	
+	libusb_free_device_list(usb_devices, 1);
 	return c;
 }
 
-usb_dev_handle* find_usb_device(uint16_t VID, uint16_t PID, uint8_t interface,
-								int8_t serialindex, char *serialstring,
-								int8_t productindex, char *productstring)
+struct libusb_device_handle* find_usb_device(uint16_t VID, uint16_t PID,
+							uint8_t interface, int8_t serialindex,
+							char *serialstring, int8_t productindex,
+							char *productstring)
 {
-	usb_dev_handle *dev_handle = NULL;
-	struct usb_bus *busses;
-	struct usb_bus *bus;
-	struct usb_device *dev;
-
-	usb_init();
-	usb_find_busses();
-	usb_find_devices();
-	busses = usb_get_busses();
-
-	for (bus = busses; bus; bus = bus->next)
+	ssize_t usb_devices_num;
+	libusb_device **usb_devices;
+	struct libusb_device_handle *dev_handle = NULL;
+	uint8_t buf[256];
+	
+	if (NULL == libusb_ctx)
 	{
-		for (dev = bus->devices; dev; dev = dev->next)
+		libusb_init(&libusb_ctx);
+	}
+	
+	usb_devices_num = libusb_get_device_list(libusb_ctx, &usb_devices);
+	if (usb_devices_num > 0)
+	{
+		ssize_t i;
+		libusb_device *dev;
+		struct libusb_device_descriptor device_desc;
+		
+		for (i = 0; i < usb_devices_num; i++)
 		{
-			if ((dev->descriptor.idVendor == VID)
-				&& (dev->descriptor.idProduct == PID))
+			dev = usb_devices[i];
+			if (libusb_get_device_descriptor(dev, &device_desc) ||
+				(device_desc.idVendor != VID) ||
+				(device_desc.idProduct != PID) ||
+				libusb_open(dev, &dev_handle))
 			{
-				dev_handle = usb_open(dev);
-				if (NULL == dev_handle)
-				{
-					LOG_ERROR("failed to open %04X:%04X, %s", VID, PID,
-								usb_strerror());
-					continue;
-				}
-				
-				// check description string
-				if (((productstring != NULL) && (productindex >= 0)
-						&& !usb_check_string(dev_handle, productindex,
-												productstring, NULL, 0))
-					|| ((serialstring != NULL) && (serialindex >= 0)
-						&& !usb_check_string(dev_handle, serialindex,
-												serialstring, NULL, 0)))
-				{
-					usb_close(dev_handle);
-					dev_handle = NULL;
-					continue;
-				}
-				
-				if (usb_claim_interface(dev_handle, interface) != 0)
-				{
-					LOG_ERROR(ERRMSG_FAILURE_OPERATION_MESSAGE,
-								"claim interface", usb_strerror());
-					usb_close(dev_handle);
-					dev_handle = NULL;
-					continue;
-				}
-				
-				if (dev_handle != NULL)
-				{
-					return dev_handle;
-				}
+				continue;
 			}
+			
+			if (((productstring != NULL) && (productindex >= 0) &&
+					!usb_check_string(dev_handle, productindex, productstring,
+										NULL, 0))
+			    || ((serialindex >= 0) &&
+					!usb_check_string(dev_handle, serialindex, serialstring,
+										(char*)buf, sizeof(buf))))
+			{
+				libusb_close(dev_handle);
+				dev_handle = NULL;
+				continue;
+			}
+			
+			if (libusb_claim_interface(dev_handle, interface))
+			{
+				LOG_ERROR(ERRMSG_FAILURE_OPERATION, "claim interface");
+				libusb_close(dev_handle);
+				continue;
+			}
+			
+			break;
 		}
 	}
 	
+	libusb_free_device_list(usb_devices, 1);
 	return dev_handle;
 }
 

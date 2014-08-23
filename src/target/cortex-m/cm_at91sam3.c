@@ -258,7 +258,7 @@ static vsf_err_t at91sam3swj_iap_wait_ready(struct at91sam3swj_iap_reply_t *repl
 	vsf_err_t err;
 	uint32_t start, end;
 	
-	start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+	start = interfaces->tickclk.get_count();
 	while (1)
 	{
 		err = at91sam3swj_iap_poll_result(reply);
@@ -271,7 +271,7 @@ static vsf_err_t at91sam3swj_iap_wait_ready(struct at91sam3swj_iap_reply_t *repl
 			LOG_ERROR(ERRMSG_FAILURE_OPERATION, "poll iap result");
 			return VSFERR_FAIL;
 		}
-		end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+		end = interfaces->tickclk.get_count();
 		
 		// wait 1s at most
 		if ((end - start) > 1000)
@@ -312,7 +312,7 @@ static vsf_err_t at91sam3swj_iap_call(struct at91sam3swj_iap_command_t *cmd,
 		return ERRCODE_FAILURE_OPERATION;
 	}
 	
-	start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+	start = interfaces->tickclk.get_count();
 	do
 	{
 		reg = 0;
@@ -323,7 +323,7 @@ static vsf_err_t at91sam3swj_iap_call(struct at91sam3swj_iap_command_t *cmd,
 			return ERRCODE_FAILURE_OPERATION;
 		}
 		reg = LE_TO_SYS_U32(reg);
-		end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+		end = interfaces->tickclk.get_count();
 	} while (!(reg & 1) && ((end - start) < 500));
 	if (!(reg & 1) || (reg & 0x60))
 	{

@@ -31,6 +31,8 @@
 #include "app_log.h"
 #include "app_err.h"
 
+#include "interfaces.h"
+
 #include "port.h"
 #include "pgbar.h"
 #include "scripts.h"
@@ -170,7 +172,7 @@ vsf_err_t pgbar_init(char *s, char *e, uint32_t min, uint32_t max,
 	}
 	
 	// get start time
-	start_time = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+	start_time = interfaces->tickclk.get_count();
 	
 	// flush output
 	fflush(stdout);
@@ -189,7 +191,7 @@ uint32_t pgbar_fini(void)
 	}
 	
 	// get current time and calculate time used
-	end_time = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+	end_time = interfaces->tickclk.get_count();
 	PRINTF("%02.02fs used\n", (float)(end_time - start_time) / 1000);
 	
 	// flush output

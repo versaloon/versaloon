@@ -12,7 +12,8 @@ INCLUDES = \
     -I$(top_srcdir)/src/tools/s19 \
     -I$(top_srcdir)/src/tools/fileparser \
     -I$(top_srcdir)/src/tools/strparser \
-    -I$(top_srcdir)/src/scripts
+    -I$(top_srcdir)/src/scripts \
+    -I$(top_srcdir)/src/programmer/interfaces
 
 METASOURCES = AUTO
 noinst_LIBRARIES = libtool.a

@@ -19,7 +19,7 @@
 #ifndef __USBAPI_H_INCLUDED__
 #define __USBAPI_H_INCLUDED__
 
-#include "usb.h"
+#include "libusb.h"
 
 extern struct vss_cmd_list_t usbapi_cmd_list;
 
@@ -49,9 +49,10 @@ void usb_set_param(uint16_t vid, uint16_t pid, uint8_t epin, uint8_t epout,
 uint32_t print_usb_devices(uint16_t VID, uint16_t PID, int8_t serialindex,
 							char *serialstring, int8_t productindex,
 							char *productstring);
-usb_dev_handle* find_usb_device(uint16_t VID, uint16_t PID, uint8_t interface,
-								int8_t serialindex, char *serialstring,
-								int8_t productindex, char *productstring);
+struct libusb_device_handle* find_usb_device(uint16_t VID, uint16_t PID,
+							uint8_t interface, int8_t serialindex,
+							char *serialstring, int8_t productindex,
+							char *productstring);
 
 #endif /* __USBAPI_H_INCLUDED__ */
 

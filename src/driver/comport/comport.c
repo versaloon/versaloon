@@ -593,7 +593,7 @@ int32_t comm_read_usbtocomm(uint8_t *buffer, uint32_t num_of_bytes)
 		return -1;
 	}
 	
-	start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+	start = interfaces->tickclk.get_count();
 	do
 	{
 		LOG_PUSH();
@@ -608,7 +608,7 @@ int32_t comm_read_usbtocomm(uint8_t *buffer, uint32_t num_of_bytes)
 			LOG_POP();
 			return (int32_t)num_of_bytes;
 		}
-		end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+		end = interfaces->tickclk.get_count();
 	} while ((end - start) < (100 + 5 * num_of_bytes));
 	
 	// fail to receive data
@@ -699,7 +699,7 @@ int32_t comm_write_usbtocomm(uint8_t *buffer, uint32_t num_of_bytes)
 		LOG_POP();
 		
 		// get current time
-		start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+		start = interfaces->tickclk.get_count();
 		do
 		{
 			LOG_PUSH();
@@ -716,7 +716,7 @@ int32_t comm_write_usbtocomm(uint8_t *buffer, uint32_t num_of_bytes)
 				data_sent += num_of_bytes - data_sent;
 				break;
 			}
-			end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+			end = interfaces->tickclk.get_count();
 		} while ((end - start) < 50 + 5 * (num_of_bytes - status.tx_buff_avail));
 		
 		// time out

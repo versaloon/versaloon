@@ -37,7 +37,13 @@
 #	define dimof(arr)				(sizeof(arr) / sizeof((arr)[0]))
 #endif
 #ifndef offsetof
-#	define offsetof(s, m)			(uint32_t)(&(((struct s *)0)->m))
+#	define offsetof(s, m)			(uint32_t)(&(((s *)0)->m))
+#endif
+#ifndef container_of
+#	define container_of(ptr, type, member)\
+						(ptr != NULL ? \
+							((type *)((char *)(ptr)-offsetof(type, member))) \
+							: NULL)
 #endif
 #ifndef min
 #	define min(a, b)				(((a) < (b)) ? (a) : (b))
@@ -45,8 +51,12 @@
 #ifndef max
 #	define max(a, b)				(((a) > (b)) ? (a) : (b))
 #endif
-#define TO_STR(name)				#name
-#define REFERENCE_PARAMETER(a)		(a) = (a)
+#ifndef TO_STR
+#	define TO_STR(name)				#name
+#endif
+#ifndef REFERENCE_PARAMETER
+#	define REFERENCE_PARAMETER(a)	(a) = (a)
+#endif
 
 
 
@@ -262,5 +272,5 @@
 #	define GET_SYS_U64(p)			GET_LE_U64(p)
 #endif
 
-#endif /* __APP_TYPE_H_INCLUDED__ */
+#endif	// __APP_TYPE_H_INCLUDED__
 

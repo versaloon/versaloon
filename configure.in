@@ -28,8 +28,6 @@ AC_CHECK_HEADERS(malloc.h)
 AC_CHECK_HEADERS(sys/time.h)
 AC_CHECK_HEADERS(strings.h)
 AC_CHECK_HEADERS(unistd.h)
-AC_CHECK_HEADERS([usb.h],[],
-  [AC_MSG_ERROR([usb.h is required to build vsprog])])
 
 AC_HEADER_ASSERT
 AC_HEADER_STDBOOL

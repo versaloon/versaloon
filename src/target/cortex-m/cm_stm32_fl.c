@@ -275,7 +275,7 @@ vsf_err_t stm32swj_fl_wait_ready(struct stm32_fl_t *fl,
 	vsf_err_t err;
 	uint32_t start, end;
 	
-	start = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+	start = interfaces->tickclk.get_count();
 	while (1)
 	{
 		err = stm32swj_fl_poll_result(fl, result);
@@ -288,7 +288,7 @@ vsf_err_t stm32swj_fl_wait_ready(struct stm32_fl_t *fl,
 			LOG_ERROR(ERRMSG_FAILURE_OPERATION, "poll flashloader result");
 			return VSFERR_FAIL;
 		}
-		end = (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+		end = interfaces->tickclk.get_count();
 		// wait 20s at most
 		if ((end - start) > 20000)
 		{
