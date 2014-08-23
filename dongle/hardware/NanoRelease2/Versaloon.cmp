@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-04-19 BZR 4011)-stable date = 11/08/2014 13:29:59
+Cmp-Mod V01 Created by CvPcb (2013-04-19 BZR 4011)-stable date = 24/08/2014 03:03:07
 
 BeginCmp
 TimeStamp = /53E3E003;
@@ -61,6 +61,20 @@ TimeStamp = /53E3DDBE;
 Reference = C17;
 ValeurCmp = 4.7uF;
 IdModule  = SM0402;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F8E8B4;
+Reference = D0;
+ValeurCmp = LED_Red;
+IdModule  = DSM0402;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F8E867;
+Reference = D1;
+ValeurCmp = LED_Green;
+IdModule  = DSM0402;
 EndCmp
 
 BeginCmp
@@ -127,9 +141,23 @@ IdModule  = SM0402;
 EndCmp
 
 BeginCmp
+TimeStamp = /53F8E894;
+Reference = R11;
+ValeurCmp = 1K;
+IdModule  = SM0402;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F8E8D0;
+Reference = R12;
+ValeurCmp = 1K;
+IdModule  = SM0402;
+EndCmp
+
+BeginCmp
 TimeStamp = /53E3FF67;
 Reference = R14;
-ValeurCmp = 10K;
+ValeurCmp = 100K;
 IdModule  = SM0402;
 EndCmp
 
