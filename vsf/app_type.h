@@ -36,14 +36,12 @@
 #ifndef dimof
 #	define dimof(arr)				(sizeof(arr) / sizeof((arr)[0]))
 #endif
-#ifndef offsetof
-#	define offsetof(s, m)			(uint32_t)(&(((s *)0)->m))
+#ifndef offset_of
+#	define offset_of(s, m)			(uint32_t)(&(((s *)0)->m))
 #endif
 #ifndef container_of
-#	define container_of(ptr, type, member)\
-						(ptr != NULL ? \
-							((type *)((char *)(ptr)-offsetof(type, member))) \
-							: NULL)
+#	define container_of(ptr, type, member)	\
+		(ptr ? (type *)((char *)(ptr) - offset_of(type, member)) : NULL)
 #endif
 #ifndef min
 #	define min(a, b)				(((a) < (b)) ? (a) : (b))
