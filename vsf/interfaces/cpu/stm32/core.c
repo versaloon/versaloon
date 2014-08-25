@@ -303,7 +303,7 @@ ROOTFUNC void TIM1_UP_TIM16_IRQHandler(void)
 	TIM_ClearITPendingBit(TIM1, TIM_FLAG_Update);
 }
 
-vsf_err_t stm32_tickclk_set_callback(void (*callback)(void *param), void *param)
+vsf_err_t stm32_tickclk_set_callback(void (*callback)(void*), void *param)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
 	

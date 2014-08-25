@@ -1213,13 +1213,6 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 				goto setup_exit;
 			}
 			memcpy(request, buff, USB_SETUP_PKG_SIZE);
-// TODO
-{
-	if (request->type == 0x21)
-	{
-		__asm("nop");
-	}
-}
 			ctrl_handler->state		= USB_CTRL_STAT_SETTING_UP;
 			ctrl_handler->filter	= vsfusbd_get_request_filter(device, 
 														&ctrl_handler->iface);
