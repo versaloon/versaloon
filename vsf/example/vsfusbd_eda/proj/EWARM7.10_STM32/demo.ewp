@@ -1925,19 +1925,15 @@
     <group>
       <name>dal</name>
       <excluded>
-        <configuration>Debug</configuration>
         <configuration>Release</configuration>
       </excluded>
       <group>
         <name>mal</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
         <file>
           <name>$PROJ_DIR$\..\..\..\..\dal\mal\mal.c</name>
-        </file>
-      </group>
-      <group>
-        <name>sst32hfxx</name>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\dal\sst32hfxx\sst32hfxx_drv.c</name>
         </file>
       </group>
     </group>
