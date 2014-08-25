@@ -163,8 +163,8 @@ static const struct vsfusbd_desc_filter_t HID_descriptors[] =
 
 static const struct vsfusbd_desc_filter_t HID_Report_Descriptors[] =
 {
-    	VSFUSBD_DESC_HID_REPORT(HID_ReportDescriptor, sizeof(HID_ReportDescriptor), NULL),
-		VSFUSBD_DESC_NULL
+	VSFUSBD_DESC_HID_REPORT(HID_ReportDescriptor, sizeof(HID_ReportDescriptor), NULL),
+	VSFUSBD_DESC_NULL
 };
 
 static vsf_err_t HID_on_set_get_report(struct vsfusbd_HID_report_t *report)
