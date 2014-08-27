@@ -273,6 +273,7 @@ WRITE_TARGET_HANDLER(stm32f2swj)
 READ_TARGET_HANDLER(stm32f2swj)
 {
 	struct program_info_t *pi = context->pi;
+	struct program_area_t *flash_area = NULL;
 	uint32_t reg;
 	uint32_t cur_block_size;
 	vsf_err_t err = VSFERR_NONE;
@@ -297,6 +298,20 @@ READ_TARGET_HANDLER(stm32f2swj)
 		}
 		reg &= STM32F2_DEN_MSK;
 		*(uint32_t *)buff = reg;
+		
+		// read flash ram size
+		if (adi_memap_read_reg32(STM32F2_REG_FLASH_RAM_SIZE, &reg, 1))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		flash_area = target_get_program_area(pi, APPLICATION_IDX);
+		if (flash_area != NULL)
+		{
+			flash_area->size = (reg >> 16) * 1024;
+		}
+		LOG_INFO("Flash memory size: %i KB", reg >> 16);
+		LOG_INFO("SRAM memory size: %i KB", (reg & 0xFFFF) / 512);
 		break;
 	case FUSE_CHAR:
 		if (adi_memap_read_reg32(STM32F2_FLASH_OPTCR, &reg, 1))
