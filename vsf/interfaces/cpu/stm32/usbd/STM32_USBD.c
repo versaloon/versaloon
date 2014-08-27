@@ -171,11 +171,6 @@ vsf_err_t stm32_usbd_get_setup(uint8_t *buffer)
 	return stm32_usbd_ep_read_OUT_buffer(0, buffer, 8);
 }
 
-vsf_err_t stm32_usbd_control_status(void)
-{
-	return VSFERR_NOT_SUPPORT;
-}
-
 vsf_err_t stm32_usbd_prepare_buffer(void)
 {
 	EP_Cfg_Ptr = 0x200;

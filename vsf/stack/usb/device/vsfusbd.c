@@ -38,7 +38,6 @@ enum vsfusbd_evt_t
 	VSFUSBD_INTEVT_ATTACH = VSFUSBD_INTEVT_BASE + 5,
 	VSFUSBD_INTEVT_SOF = VSFUSBD_INTEVT_BASE + 6,
 	VSFUSBD_INTEVT_SETUP = VSFUSBD_INTEVT_BASE + 7,
-	VSFUSBD_INTEVT_CONTROL_STATUS = VSFUSBD_INTEVT_BASE + 8,
 	VSFUSBD_INTEVT_IN = VSFUSBD_INTEVT_BASE + 0x10,
 	VSFUSBD_INTEVT_OUT = VSFUSBD_INTEVT_BASE + 0x20,
 	VSFUSBD_EVT_DATAIO_IN = VSFUSBD_INTEVT_BASE + 0x30,
@@ -1082,30 +1081,27 @@ static void vsfusbd_setup_status_callback(void *param)
 	struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
 	struct usb_ctrl_request_t *request = &ctrl_handler->request;
 	
-	if (device->drv->control_status())
+	if (USB_REQ_GET_DIR(request->type) == USB_REQ_DIR_HTOD)
 	{
-		if (USB_REQ_GET_DIR(request->type) == USB_REQ_DIR_HTOD)
-		{
-			device->IN_transact[0].tbuffer.buffer.buffer = NULL;
-			device->IN_transact[0].tbuffer.buffer.size = 0;
-			device->IN_transact[0].pkt.in.zlp = true;
-			device->IN_transact[0].callback.param = device;
-			device->IN_transact[0].callback.callback =
-												vsfusbd_setup_end_callback;
-			device->IN_transact[0].callback.data_io = NULL;
-			vsfusbd_ep_send_nb(device, 0);
-		}
-		else
-		{
-			device->OUT_transact[0].tbuffer.buffer.buffer = NULL;
-			device->OUT_transact[0].tbuffer.buffer.size = 0;
-			device->OUT_transact[0].callback.param = device;
-			device->OUT_transact[0].callback.callback =
-												vsfusbd_setup_end_callback;
-			device->OUT_transact[0].callback.data_io = NULL;
-			device->OUT_transact[0].need_poll = false;
-			vsfusbd_ep_receive_nb(device, 0);
-		}
+		device->IN_transact[0].tbuffer.buffer.buffer = NULL;
+		device->IN_transact[0].tbuffer.buffer.size = 0;
+		device->IN_transact[0].pkt.in.zlp = true;
+		device->IN_transact[0].callback.param = device;
+		device->IN_transact[0].callback.callback =
+											vsfusbd_setup_end_callback;
+		device->IN_transact[0].callback.data_io = NULL;
+		vsfusbd_ep_send_nb(device, 0);
+	}
+	else
+	{
+		device->OUT_transact[0].tbuffer.buffer.buffer = NULL;
+		device->OUT_transact[0].tbuffer.buffer.size = 0;
+		device->OUT_transact[0].callback.param = device;
+		device->OUT_transact[0].callback.callback =
+											vsfusbd_setup_end_callback;
+		device->OUT_transact[0].callback.data_io = NULL;
+		device->OUT_transact[0].need_poll = false;
+		vsfusbd_ep_receive_nb(device, 0);
 	}
 }
 
@@ -1271,9 +1267,6 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 			}
 			break;
 		}
-	case VSFUSBD_INTEVT_CONTROL_STATUS:
-		vsfusbd_setup_end_callback((void *)device);
-		break;
 #if VSFUSBD_CFG_LP_EN
 	case VSFUSBD_INTEVT_WAKEUP:
 		if (device->callback.on_WAKEUP != NULL)
@@ -1403,13 +1396,6 @@ static vsf_err_t vsfusbd_on_SETUP(void *p)
 	struct vsfusbd_device_t *device = p;
 	struct vsfsm_t *sm = &device->sm;
 	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_SETUP);
-}
-
-static vsf_err_t vsfusbd_on_CONTROL_STATUS(void *p)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_CONTROL_STATUS);
 }
 
 static vsf_err_t vsfusbd_on_IN(void *p, uint8_t ep)
@@ -1542,7 +1528,6 @@ vsf_err_t vsfusbd_device_init(struct vsfusbd_device_t *device)
 		device->drv->callback->on_detach = NULL;
 		device->drv->callback->on_reset = vsfusbd_on_RESET;
 		device->drv->callback->on_setup = vsfusbd_on_SETUP;
-		device->drv->callback->on_control_status = vsfusbd_on_CONTROL_STATUS;
 		device->drv->callback->on_error = vsfusbd_on_ERROR;
 #if VSFUSBD_CFG_LP_EN
 		device->drv->callback->on_wakeup = vsfusbd_on_WAKEUP;

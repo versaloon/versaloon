@@ -64,6 +64,9 @@ struct interface_usbd_callback_t nuc400_usbd_callback;
 static uint16_t EP_Cfg_Ptr = 0x1000;
 static uint16_t max_ctl_ep_size = 64;
 
+// true if data direction in setup packet is device to host
+static bool nuc400_setup_status_IN;
+
 static int8_t nuc400_usbd_epaddr[NUC400_USBD_EP_NUM];
 
 extern void nuc400_unlock_reg(void);
@@ -168,6 +171,7 @@ uint32_t nuc400_usbd_get_frame_number(void)
 vsf_err_t nuc400_usbd_get_setup(uint8_t *buffer)
 {
 	buffer[0] = USBD->SETUP1_0 & 0xFF;
+	nuc400_setup_status_IN = (buffer[0] & 0x80) > 0;
 	buffer[1] = (USBD->SETUP1_0 >> 8) & 0xFF;
 	buffer[2] = USBD->SETUP3_2 & 0xFF;
 	buffer[3] = (USBD->SETUP3_2 >> 8) & 0xFF;
@@ -175,12 +179,6 @@ vsf_err_t nuc400_usbd_get_setup(uint8_t *buffer)
 	buffer[5] = (USBD->SETUP5_4 >> 8) & 0xFF;
 	buffer[6] = USBD->SETUP7_6 & 0xFF;
 	buffer[7] = (USBD->SETUP7_6 >> 8) & 0xFF;
-	return VSFERR_NONE;
-}
-
-vsf_err_t nuc400_usbd_control_status(void)
-{
-	USBD->CEPCTL = USB_CEPCTL_NAKCLR;
 	return VSFERR_NONE;
 }
 
@@ -498,7 +496,11 @@ vsf_err_t nuc400_usbd_ep_set_IN_count(uint8_t idx, uint16_t size)
 	
 	if (0 == idx)
 	{
-		if (size != 0)
+		if (nuc400_setup_status_IN && (0 == size))
+		{
+			USBD->CEPCTL = USB_CEPCTL_NAKCLR;
+		}
+		else
 		{
 			USBD->CEPTXCNT = size;
 		}
@@ -822,7 +824,10 @@ vsf_err_t nuc400_usbd_ep_enable_OUT(uint8_t idx)
 	}
 	if (0 == idx)
 	{	
-		return VSFERR_NONE;
+		if (!nuc400_setup_status_IN)
+		{
+			USBD->CEPCTL = USB_CEPCTL_NAKCLR;
+		}
 	}
 	else
 	{
@@ -903,9 +908,19 @@ void USB_Istr(void)
 		if (IrqSt & USBD_CEPINTSTS_STSDONEIF_Msk) {
 			USBD->CEPINTSTS = USBD_CEPINTSTS_STSDONEIF_Msk;
 			
-			if (nuc400_usbd_callback.on_control_status != NULL)
+			if (nuc400_setup_status_IN)
 			{
-				nuc400_usbd_callback.on_control_status(nuc400_usbd_callback.param);
+				if (nuc400_usbd_callback.on_in != NULL)
+				{
+					nuc400_usbd_callback.on_in(nuc400_usbd_callback.param, 0);
+				}
+			}
+			else
+			{
+				if (nuc400_usbd_callback.on_out != NULL)
+				{
+					nuc400_usbd_callback.on_out(nuc400_usbd_callback.param, 0);
+				}
 			}
 		}
 	}

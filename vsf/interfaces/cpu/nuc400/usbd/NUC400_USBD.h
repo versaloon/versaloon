@@ -30,7 +30,6 @@ vsf_err_t nuc400_usbd_resume(void);
 vsf_err_t nuc400_usbd_lowpower(uint8_t level);
 uint32_t nuc400_usbd_get_frame_number(void);
 vsf_err_t nuc400_usbd_get_setup(uint8_t *buffer);
-vsf_err_t nuc400_usbd_control_status(void);
 
 vsf_err_t nuc400_usbd_ep_reset(uint8_t idx);
 vsf_err_t nuc400_usbd_ep_set_type(uint8_t idx,
