@@ -17,7 +17,7 @@
 extern const uint8_t stm32_usbd_ep_num;
 extern struct interface_usbd_callback_t stm32_usbd_callback;
 
-vsf_err_t stm32_usbd_init(void);
+vsf_err_t stm32_usbd_init(uint32_t int_priority);
 vsf_err_t stm32_usbd_fini(void);
 vsf_err_t stm32_usbd_reset(void);
 vsf_err_t stm32_usbd_poll(void);

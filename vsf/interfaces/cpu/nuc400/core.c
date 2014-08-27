@@ -39,9 +39,9 @@
 
 static struct nuc400_info_t nuc400_info =
 {
-	CORE_CLKEN, CORE_HCLKSRC, CORE_PCLKSRC, CORE_PLLSRC, OSC0_FREQ_HZ,
-	OSC32_FREQ_HZ, CORE_PLL_FREQ_HZ, CPU_FREQ_HZ, HCLK_FREQ_HZ, PCLK_FREQ_HZ,
-	CORE_VECTOR_TABLE,
+	0, CORE_VECTOR_TABLE, CORE_CLKEN, CORE_HCLKSRC, CORE_PCLKSRC, CORE_PLLSRC,
+	OSC0_FREQ_HZ, OSC32_FREQ_HZ, CORE_PLL_FREQ_HZ, CPU_FREQ_HZ, HCLK_FREQ_HZ,
+	PCLK_FREQ_HZ,
 };
 
 vsf_err_t nuc400_interface_get_info(struct nuc400_info_t **info)
@@ -93,16 +93,16 @@ vsf_err_t nuc400_interface_init(void *p)
 {
 	uint32_t temp32;
 	uint32_t freq_in;
-
+	
 	if (p != NULL)
 	{
 		nuc400_info = *(struct nuc400_info_t *)p;
 	}
 	nuc400_info.hirc_freq_hz = 22 * 1000 * 1000;
 	nuc400_info.lirc_freq_hz = 10 * 1000;
-
+	
 	nuc400_unlock_reg();
-
+	
 	// enable clocks
 	CLK->PWRCTL |= nuc400_info.clk_enable;
 	temp32 = nuc400_info.clk_enable;
@@ -111,7 +111,7 @@ vsf_err_t nuc400_interface_init(void *p)
 				((temp32 & NUC400_CLK_HIRC) ? CLK_STATUS_HIRCSTB_Msk : 0) |
 				((temp32 & NUC400_CLK_LIRC) ? CLK_STATUS_LIRCSTB_Msk : 0);
 	while ((CLK->STATUS & temp32) != temp32);
-
+	
 	// enable PLLs
 	if (nuc400_info.pllsrc != NUC400_PLLSRC_NONE)
 	{
@@ -154,13 +154,13 @@ vsf_err_t nuc400_interface_init(void *p)
 		{
 			return VSFERR_INVALID_PARAMETER;
 		}
-
+		
 		CLK->PLLCTL = temp32 | no_mask |
 			NUC400_CLK_PLLCTL_NR(freq_in / 2000000) |
 			NUC400_CLK_PLLCTL_NF(nuc400_info.pll_freq_hz * no / 2000000);
 		while ((CLK->STATUS & CLK_STATUS_PLLSTB_Msk) != CLK_STATUS_PLLSTB_Msk);
 	}
-
+	
 	// set hclk
 	switch (nuc400_info.hclksrc)
 	{
@@ -194,8 +194,11 @@ vsf_err_t nuc400_interface_init(void *p)
 	CLK->CLKSEL0 = (CLK->CLKSEL0 & ~CLK_CLKSEL0_HCLKSEL_Msk) | temp32;
 	CLK->CLKDIV0 = (CLK->CLKDIV0 & ~CLK_CLKDIV0_HCLKDIV_Msk) |
 			((freq_in / nuc400_info.hclk_freq_hz) - 1);
-
+	
 	nuc400_lock_reg();
+	
+	SCB->VTOR = nuc400_info.vector_table;
+	SCB->AIRCR = 0x05FA0000 | nuc400_info.priority_group;
 	return VSFERR_NONE;
 }
 
@@ -218,7 +221,7 @@ vsf_err_t nuc400_delay_init(void)
 static vsf_err_t nuc400_delay_delayus_do(uint32_t tick)
 {
 	uint32_t dly_tmp;
-
+	
 	nuc400_delay_init();
 	while (tick)
 	{
@@ -278,7 +281,7 @@ static uint32_t nuc400_tickclk_get_count_local(void)
 uint32_t nuc400_tickclk_get_count(void)
 {
 	uint32_t count1, count2;
-
+	
 	do {
 		count1 = nuc400_tickclk_get_count_local();
 		count2 = nuc400_tickclk_get_count_local();

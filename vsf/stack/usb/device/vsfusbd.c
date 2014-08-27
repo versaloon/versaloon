@@ -1146,7 +1146,7 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 			}
 			
 			// reset usb hw
-			if (device->drv->reset() || device->drv->init())
+			if (device->drv->reset() || device->drv->init(device->int_priority))
 			{
 				err = VSFERR_FAIL;
 				goto reset_exit;
@@ -1195,9 +1195,8 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 			}
 		reset_exit:
 			// what to do if fail to process setup?
-			
+			break;
 		}
-		break;
 	case VSFUSBD_INTEVT_SETUP:
 		{
 			struct vsfusbd_ctrl_handler_t *ctrl_handler = &device->ctrl_handler;
@@ -1270,8 +1269,8 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 				device->drv->ep.set_IN_stall(0);
 				device->drv->ep.set_OUT_stall(0);
 			}
+			break;
 		}
-		break;
 	case VSFUSBD_INTEVT_CONTROL_STATUS:
 		vsfusbd_setup_end_callback((void *)device);
 		break;
@@ -1361,8 +1360,8 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 							transact->need_poll = false;
 						}
 					}
+					break;
 				}
-				break;
 			case VSFUSBD_EVT_DATAIO_OUT:
 				{
 					transact = &device->OUT_transact[ep];
@@ -1380,8 +1379,8 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 							transact->need_poll = false;
 						}
 					}
+					break;
 				}
-				break;
 			default:
 				if (((evt & VSFUSBD_INTEVT_ERR_MASK) == VSFUSBD_INTEVT_ERR) &&
 					(device->callback.on_ERROR != NULL))
@@ -1391,8 +1390,8 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 					device->callback.on_ERROR(type);
 				}
 			}
+			break;
 		}
-		break;
 	}
 	// top sm, all events are processed here
 	return NULL;
@@ -1565,7 +1564,7 @@ vsf_err_t vsfusbd_device_init(struct vsfusbd_device_t *device)
 	device->sm.user_data = (void*)device;
 	vsfsm_init(&device->sm, true);
 	
-	if (device->drv->init() ||
+	if (device->drv->init(device->int_priority) ||
 		((device->callback.init != NULL) && device->callback.init()))
 	{
 		return VSFERR_FAIL;

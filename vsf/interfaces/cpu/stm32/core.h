@@ -32,6 +32,9 @@ enum debug_setting_t
 };
 struct stm32_info_t
 {
+	uint8_t priority_group;
+	uint32_t vector_table;
+	
 	enum stm32_clksrc_t clksrc;
 	enum stm32_pllsrc_t pllsrc;
 	enum stm32_rtcsrc_t rtcsrc;
@@ -44,7 +47,6 @@ struct stm32_info_t
 	uint32_t apb2_freq_hz;
 	
 	uint8_t flash_latency;
-	uint32_t vector_table;
 	enum debug_setting_t debug_setting;
 	
 	// calculated internally

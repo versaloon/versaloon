@@ -28,6 +28,9 @@ enum nuc400_pllsrc_t
 };
 struct nuc400_info_t
 {
+	uint8_t priority_group;
+	uint32_t vector_table;
+	
 	uint32_t clk_enable;
 	
 	enum nuc400_hclksrc_t hclksrc;
@@ -42,8 +45,6 @@ struct nuc400_info_t
 	uint32_t cpu_freq_hz;
 	uint32_t hclk_freq_hz;
 	uint32_t pclk_freq_hz;
-	
-	uint32_t vector_table;
 };
 
 vsf_err_t nuc400_interface_init(void *p);

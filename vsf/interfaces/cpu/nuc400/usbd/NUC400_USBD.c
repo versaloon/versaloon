@@ -69,7 +69,7 @@ static int8_t nuc400_usbd_epaddr[NUC400_USBD_EP_NUM];
 extern void nuc400_unlock_reg(void);
 extern void nuc400_lock_reg(void);
 
-vsf_err_t nuc400_usbd_init(void)
+vsf_err_t nuc400_usbd_init(uint32_t int_priority)
 {
 	memset(nuc400_usbd_epaddr, -1, sizeof(nuc400_usbd_epaddr));
 	nuc400_usbd_epaddr[0] = 0;
@@ -97,7 +97,8 @@ vsf_err_t nuc400_usbd_init(void)
 	USBD->CEPINTEN = USBD_CEPINTEN_SETUPPKIEN_Msk |
 					USBD_CEPINTEN_TXPKIEN_Msk | USBD_CEPINTEN_STSDONEIEN_Msk;
 	
-	NVIC_EnableIRQ(USBD_IRQn);
+	NVIC->IP[USBD_IRQn] = int_priority;
+	NVIC->ISER[USBD_IRQn >> 0x05] = 1UL << (USBD_IRQn & (uint8_t)0x1F);
 	return VSFERR_NONE;
 }
 
@@ -105,6 +106,7 @@ vsf_err_t nuc400_usbd_fini(void)
 {
 	USBD->PHYCTL &= ~USBD_PHYCTL_PHYEN_Msk;
 	CLK->AHBCLK &= ~CLK_AHBCLK_USBDCKEN_Msk;
+	NVIC->ICER[USBD_IRQn >> 0x05] = 1UL << (USBD_IRQn & (uint8_t)0x1F);
 	return VSFERR_NONE;
 }
 

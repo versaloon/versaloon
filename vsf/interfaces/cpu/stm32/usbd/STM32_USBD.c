@@ -41,9 +41,8 @@ bool stm32_usbd_IN_dbuffer[STM32_USBD_EP_NUM];
 bool stm32_usbd_OUT_dbuffer[STM32_USBD_EP_NUM];
 int8_t stm32_usbd_epaddr[STM32_USBD_EP_NUM];
 
-vsf_err_t stm32_usbd_init(void)
+vsf_err_t stm32_usbd_init(uint32_t int_priority)
 {
-	NVIC_InitTypeDef NVIC_InitStructure;
 	struct stm32_info_t *stm32_info;
 	
 	memset(stm32_usbd_IN_epsize, 0, sizeof(stm32_usbd_IN_epsize));
@@ -68,13 +67,13 @@ vsf_err_t stm32_usbd_init(void)
 		return VSFERR_INVALID_PARAMETER;
 	}
 	RCC->APB1ENR |= STM32_RCC_APB1ENR_USBEN;
-	NVIC_InitStructure.NVIC_IRQChannel = USB_HP_CAN1_TX_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-	NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn;
-	NVIC_Init(&NVIC_InitStructure);
+	
+	NVIC->IP[USB_HP_CAN1_TX_IRQn] = int_priority;
+	NVIC->ISER[USB_HP_CAN1_TX_IRQn >> 0x05] =
+		1UL << (USB_HP_CAN1_TX_IRQn & 0x1F);
+	NVIC->IP[USB_LP_CAN1_RX0_IRQn] = int_priority;
+	NVIC->ISER[USB_LP_CAN1_RX0_IRQn >> 0x05] =
+		1UL << (USB_LP_CAN1_RX0_IRQn & 0x1F);
 	
 	// reset
 	SetCNTR(CNTR_FRES);
@@ -102,6 +101,10 @@ vsf_err_t stm32_usbd_fini(void)
 	SetISTR(0);
 	
 	SetCNTR(CNTR_FRES + CNTR_PDWN);
+	NVIC->ICER[USB_HP_CAN1_TX_IRQn >> 0x05] =
+		1UL << (USB_HP_CAN1_TX_IRQn & 0x1F);
+	NVIC->ICER[USB_LP_CAN1_RX0_IRQn >> 0x05] =
+		1UL << (USB_LP_CAN1_RX0_IRQn & 0x1F);
 	return VSFERR_NONE;
 }
 

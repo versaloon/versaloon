@@ -39,9 +39,9 @@
 
 static struct stm32_info_t stm32_info = 
 {
-	CORE_CLKSRC, CORE_PLLSRC, CORE_RTCSRC, CORE_HSE_TYPE, OSC0_FREQ_HZ, 
-	CORE_PLL_FREQ_HZ, CORE_AHB_FREQ_HZ, CORE_APB1_FREQ_HZ, CORE_APB2_FREQ_HZ, 
-	CORE_FLASH_LATENCY, CORE_VECTOR_TABLE, CORE_DEBUG
+	0, CORE_VECTOR_TABLE, CORE_CLKSRC, CORE_PLLSRC, CORE_RTCSRC, CORE_HSE_TYPE,
+	OSC0_FREQ_HZ, CORE_PLL_FREQ_HZ, CORE_AHB_FREQ_HZ, CORE_APB1_FREQ_HZ,
+	CORE_APB2_FREQ_HZ, CORE_FLASH_LATENCY, CORE_DEBUG
 };
 
 vsf_err_t stm32_interface_get_info(struct stm32_info_t **info)
@@ -196,6 +196,7 @@ vsf_err_t stm32_interface_init(void *p)
 	AFIO->MAPR |= stm32_info.debug_setting << STM32_AFIO_MAPR_SWJCFG_SFT;
 	
 	SCB->VTOR = stm32_info.vector_table;
+	SCB->AIRCR = 0x05FA0000 | stm32_info.priority_group;
 	return VSFERR_NONE;
 }
 

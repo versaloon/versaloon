@@ -962,7 +962,7 @@ struct interface_usbd_callback_t
 
 struct interface_usbd_t
 {
-	vsf_err_t (*init)(void);
+	vsf_err_t (*init)(uint32_t int_priority);
 	vsf_err_t (*fini)(void);
 	vsf_err_t (*reset)(void);
 	vsf_err_t (*poll)(void);
@@ -1071,7 +1071,7 @@ struct interface_usbd_t
 #define CORE_USBD_EP_ENABLE_OUT(m)		__CONNECT(m, _usbd_ep_enable_OUT)
 #define CORE_USBD_CALLBACK(m)			__CONNECT(m, _usbd_callback)
 
-vsf_err_t CORE_USBD_INIT(__TARGET_CHIP__)(void);
+vsf_err_t CORE_USBD_INIT(__TARGET_CHIP__)(uint32_t int_priority);
 vsf_err_t CORE_USBD_FINI(__TARGET_CHIP__)(void);
 vsf_err_t CORE_USBD_RESET(__TARGET_CHIP__)(void);
 vsf_err_t CORE_USBD_POLL(__TARGET_CHIP__)(void);

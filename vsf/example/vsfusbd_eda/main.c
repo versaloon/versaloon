@@ -233,6 +233,7 @@ struct vsfapp_t
 			(struct vsfusbd_desc_filter_t *)HID_descriptors,
 			0,
 			(struct interface_usbd_t *)&core_interfaces.usbd,
+			0,
 		},						// struct vsfusbd_device_t device;
 	},							// struct usbd_hid_t usbd_hid;
 	{
