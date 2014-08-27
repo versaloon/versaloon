@@ -76,7 +76,7 @@ vsf_err_t nuc400_usbd_init(void)
 	
 	nuc400_unlock_reg();
 	// Enable IP clock
-	CLK->AHBCLK |= 1 << 10;
+	CLK->AHBCLK |= CLK_AHBCLK_USBDCKEN_Msk;
 	// Enable USB PHY: USB device
 	SYS->USBPHY = 0x100;
 	nuc400_lock_reg();
@@ -104,7 +104,7 @@ vsf_err_t nuc400_usbd_init(void)
 vsf_err_t nuc400_usbd_fini(void)
 {
 	USBD->PHYCTL &= ~USBD_PHYCTL_PHYEN_Msk;
-	CLK->AHBCLK &= ~(1<<10);
+	CLK->AHBCLK &= ~CLK_AHBCLK_USBDCKEN_Msk;
 	return VSFERR_NONE;
 }
 

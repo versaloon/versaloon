@@ -8,8 +8,29 @@
     <app_seg>0</app_seg>
     <sram_addr>0x20000000</sram_addr>
   </chip>
-  <chip name="stm32f4_xl">
+  <chip name="stm32f4x5">
     <chip_id>0x0411</chip_id>
+    <program_mode>jsi</program_mode>
+    <app_page_size>1024</app_page_size>
+    <app_page_num>1024</app_page_num>
+    <uid init="0xFF" bytesize="12" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x"></uid>
+  </chip>
+  <chip name="stm32f4x7">
+    <chip_id>0x0411</chip_id>
+    <program_mode>jsi</program_mode>
+    <app_page_size>1024</app_page_size>
+    <app_page_num>1024</app_page_num>
+    <uid init="0xFF" bytesize="12" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x"></uid>
+  </chip>
+  <chip name="stm32f401xbc">
+    <chip_id>0x0423</chip_id>
+    <program_mode>jsi</program_mode>
+    <app_page_size>1024</app_page_size>
+    <app_page_num>1024</app_page_num>
+    <uid init="0xFF" bytesize="12" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x"></uid>
+  </chip>
+  <chip name="stm32f401xde">
+    <chip_id>0x0433</chip_id>
     <program_mode>jsi</program_mode>
     <app_page_size>1024</app_page_size>
     <app_page_num>1024</app_page_num>

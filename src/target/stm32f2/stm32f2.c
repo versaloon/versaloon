@@ -170,29 +170,43 @@ const struct vss_cmd_t stm32f2_notifier[] =
 
 void stm32f4_print_device(uint32_t mcuid)
 {
-	char rev_char = 0;
-	uint16_t den, rev;
+	uint16_t dev, rev;
 	
-	den = mcuid & STM32F2_DEN_MSK;
+	dev = mcuid & STM32F2_DEN_MSK;
 	rev = (mcuid & STM32F2_REV_MSK) >> 16;
-	switch (den)
+	switch (dev)
 	{
-	case STM32F4_DEN_XL:
-		LOG_INFO("STM32F2 type: XL device");
-		switch (rev)
-		{
-		case 0x1000:
-			rev_char = 'A';
-			break;
-		}
+	case STM32F4_DEV_4x5_4x7:
+		LOG_INFO("STM32F4 type: 42xx/43xx");
+		break;
+	case STM32F4_DEV_42xx_43xx:
+		LOG_INFO("STM32F4 type: 405/415/407/417");
+		break;
+	case STM32F4_DEV_401xBC:
+		LOG_INFO("STM32F4 type: 401xB/C");
+		break;
+	case STM32F4_DEV_401xDE:
+		LOG_INFO("STM32F4 type: 401xD/E");
 		break;
 	default:
 		LOG_INFO("STM32F4 type: unknown device(%08X)", mcuid);
 		break;
 	}
-	if (rev_char != 0)
+	if (rev != 0)
 	{
-		LOG_INFO("STM32F2 revision: %c", rev_char);
+		char rev_char = 0;
+		switch (rev)
+		{
+		case 0x1000:	rev_char = 'A';	break;
+		case 0x1001:	rev_char = 'Z'; break;
+		case 0x1003:	rev_char = 'Y'; break;
+		case 0x1007:	rev_char = '1'; break;
+		case 0x2001:	rev_char = '3'; break;
+		}
+		if (rev_char != 0)
+		{
+			LOG_INFO("STM32F4 revision: %c", rev_char);
+		}
 	}
 }
 
@@ -209,18 +223,10 @@ void stm32f2_print_device(uint32_t mcuid)
 		LOG_INFO("STM32F2 type: XL device");
 		switch (rev)
 		{
-		case 0x1000:
-			rev_char = 'A';
-			break;
-		case 0x2000:
-			rev_char = 'B';
-			break;
-		case 0x1001:
-			rev_char = 'z';
-			break;
-		case 0x2001:
-			rev_char = 'Y';
-			break;
+		case 0x1000:	rev_char = 'A'; break;
+		case 0x2000:	rev_char = 'B'; break;
+		case 0x1001:	rev_char = 'Z'; break;
+		case 0x2001:	rev_char = 'Y'; break;
 		}
 		break;
 	default:

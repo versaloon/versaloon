@@ -28,7 +28,10 @@
 #define STM32F2_DEN_MSK					0x00000FFF
 #define STM32F2_DEN_XL					0x0411
 
-#define STM32F4_DEN_XL					0x0413
+#define STM32F4_DEV_4x5_4x7				0x0413
+#define STM32F4_DEV_42xx_43xx			0x0419
+#define STM32F4_DEV_401xBC				0x0423
+#define STM32F4_DEV_401xDE				0x0433
 
 #define STM32F2_REG_MCU_ID				0xE0042000
 
