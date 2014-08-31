@@ -8,4 +8,3 @@ uint32_t stm32_adc_get_max_value(uint8_t index);
 vsf_err_t stm32_adc_start(uint8_t index, uint8_t channel);
 vsf_err_t stm32_adc_isready(uint8_t index, uint8_t channel);
 uint32_t stm32_adc_get(uint8_t index, uint8_t channel);
-vsf_err_t stm32_adc_sample(uint8_t index, uint8_t channel, uint32_t *voltage);

@@ -157,8 +157,7 @@ const struct interfaces_info_t core_interfaces =
 		CORE_ADC_CALIBRATE(__TARGET_CHIP__),
 		CORE_ADC_START(__TARGET_CHIP__),
 		CORE_ADC_ISREADY(__TARGET_CHIP__),
-		CORE_ADC_GET(__TARGET_CHIP__),
-		CORE_ADC_SAMPLE(__TARGET_CHIP__)
+		CORE_ADC_GET(__TARGET_CHIP__)
 	}
 #endif
 #if IFS_IIC_EN

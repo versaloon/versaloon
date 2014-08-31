@@ -282,18 +282,4 @@ uint32_t stm32_adc_get(uint8_t index, uint8_t channel)
 	return adc->DR;
 }
 
-vsf_err_t stm32_adc_sample(uint8_t index, uint8_t channel, uint32_t *voltage)
-{
-#if __VSF_DEBUG__
-	if (index >= STM32_ADC_NUM)
-	{
-		return 0;
-	}
-#endif
-	stm32_adc_start(index, channel);
-	while (VSFERR_NONE != stm32_adc_isready(index, channel));
-	*voltage = stm32_adc_get(index, channel);
-	return VSFERR_NONE;
-}
-
 #endif
