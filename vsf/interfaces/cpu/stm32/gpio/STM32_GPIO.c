@@ -23,6 +23,8 @@
 
 #define STM32_GPIO_NUM					7
 
+#define RCC_APB2Periph_GPIOA			((uint32_t)0x00000004)
+
 vsf_err_t stm32_gpio_init(uint8_t index)
 {
 #if __VSF_DEBUG__

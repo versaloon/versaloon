@@ -72,15 +72,6 @@
  - Connectivity line devices are STM32F105xx and STM32F107xx microcontrollers.
   */
 
-#if !defined  USE_STDPERIPH_DRIVER
-/**
- * @brief Comment the line below if you will not use the peripherals drivers.
-   In this case, these drivers will not be included and the application code will 
-   be based on direct access to peripherals registers 
-   */
-  /*#define USE_STDPERIPH_DRIVER*/
-#endif
-
 /**
  * @brief In the following line adjust the value of External High Speed oscillator (HSE)
    used in your application 
@@ -410,7 +401,6 @@ typedef enum IRQn
   */
 
 #include "core_cm3.h"
-#include "system_stm32f10x.h"
 #include <stdint.h>
 
 /** @addtogroup Exported_types
@@ -8180,10 +8170,6 @@ typedef struct
  /**
   * @}
   */ 
-
-#ifdef USE_STDPERIPH_DRIVER
-  #include "stm32f10x_conf.h"
-#endif
 
 /** @addtogroup Exported_macro
   * @{

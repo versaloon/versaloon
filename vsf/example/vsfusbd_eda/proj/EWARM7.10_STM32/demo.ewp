@@ -172,7 +172,6 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>USE_STDPERIPH_DRIVER</state>
           <state>STM32F10X_XL</state>
           <state>__TARGET_CHIP__=stm32</state>
           <state>FLASH_LOAD_OFFSET=0x0000</state>
@@ -312,12 +311,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\vsf\compiler\IAR</state>
           <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces</state>
           <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\Port\IAR</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\CoreSupport</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32_USB-FS-Device_Driver\inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32F10x_StdPeriph_Driver\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1130,7 +1123,6 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>USE_STDPERIPH_DRIVER</state>
           <state>STM32F10X_XL</state>
           <state>__TARGET_CHIP__=stm32</state>
           <state>FLASH_LOAD_OFFSET=0x8000</state>
@@ -1270,12 +1262,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\vsf\compiler\IAR</state>
           <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces</state>
           <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\Port\IAR</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\CoreSupport</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32_USB-FS-Device_Driver\inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\vsf\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32F10x_StdPeriph_Driver\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1917,9 +1903,6 @@
       <data/>
     </settings>
   </configuration>
-  <mfc>
-    <configuration>Debug</configuration>
-  </mfc>
   <group>
     <name>vsf</name>
     <group>
@@ -1989,130 +1972,6 @@
             </file>
           </group>
           <group>
-            <name>hw</name>
-            <group>
-              <name>STM32F10x_Lib</name>
-              <group>
-                <name>Libraries</name>
-                <group>
-                  <name>CMSIS</name>
-                  <group>
-                    <name>CM3</name>
-                    <group>
-                      <name>CoreSupport</name>
-                      <file>
-                        <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\CoreSupport\core_cm3.c</name>
-                        <excluded>
-                          <configuration>Debug</configuration>
-                          <configuration>Release</configuration>
-                        </excluded>
-                      </file>
-                    </group>
-                    <group>
-                      <name>DeviceSupport</name>
-                      <group>
-                        <name>ST</name>
-                        <group>
-                          <name>STM32F10x</name>
-                          <group>
-                            <name>startup</name>
-                            <file>
-                              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\iar\startup_stm32f10x_cl.s</name>
-                              <excluded>
-                                <configuration>Debug</configuration>
-                                <configuration>Release</configuration>
-                              </excluded>
-                            </file>
-                            <file>
-                              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\iar\startup_stm32f10x_hd.s</name>
-                              <excluded>
-                                <configuration>Debug</configuration>
-                              </excluded>
-                            </file>
-                            <file>
-                              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\iar\startup_stm32f10x_ld.s</name>
-                              <excluded>
-                                <configuration>Debug</configuration>
-                                <configuration>Release</configuration>
-                              </excluded>
-                            </file>
-                            <file>
-                              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\iar\startup_stm32f10x_ld_vl.s</name>
-                              <excluded>
-                                <configuration>Debug</configuration>
-                                <configuration>Release</configuration>
-                              </excluded>
-                            </file>
-                            <file>
-                              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\iar\startup_stm32f10x_md.s</name>
-                              <excluded>
-                                <configuration>Debug</configuration>
-                                <configuration>Release</configuration>
-                              </excluded>
-                            </file>
-                            <file>
-                              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\iar\startup_stm32f10x_md_vl.s</name>
-                              <excluded>
-                                <configuration>Debug</configuration>
-                                <configuration>Release</configuration>
-                              </excluded>
-                            </file>
-                            <file>
-                              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\iar\startup_stm32f10x_xl.s</name>
-                              <excluded>
-                                <configuration>Release</configuration>
-                              </excluded>
-                            </file>
-                          </group>
-                          <file>
-                            <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.c</name>
-                            <excluded>
-                              <configuration>Debug</configuration>
-                              <configuration>Release</configuration>
-                            </excluded>
-                          </file>
-                        </group>
-                      </group>
-                    </group>
-                  </group>
-                </group>
-                <group>
-                  <name>STM32_USB-FS-Device_Driver</name>
-                  <file>
-                    <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32_USB-FS-Device_Driver\src\usb_mem.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32_USB-FS-Device_Driver\src\usb_regs.c</name>
-                  </file>
-                </group>
-                <group>
-                  <name>STM32F10x_StdPeriph_Driver</name>
-                  <file>
-                    <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\hw\STM32F10x_Lib\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.c</name>
-                  </file>
-                </group>
-              </group>
-            </group>
-          </group>
-          <group>
             <name>sdio</name>
             <file>
               <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\sdio\STM32_SDIO.c</name>
@@ -2122,6 +1981,54 @@
             <name>spi</name>
             <file>
               <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\spi\STM32_SPI.c</name>
+            </file>
+          </group>
+          <group>
+            <name>startup</name>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\startup\iar\startup_stm32f10x_cl.s</name>
+              <excluded>
+                <configuration>Debug</configuration>
+                <configuration>Release</configuration>
+              </excluded>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\startup\iar\startup_stm32f10x_hd.s</name>
+              <excluded>
+                <configuration>Debug</configuration>
+                <configuration>Release</configuration>
+              </excluded>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\startup\iar\startup_stm32f10x_ld.s</name>
+              <excluded>
+                <configuration>Debug</configuration>
+                <configuration>Release</configuration>
+              </excluded>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\startup\iar\startup_stm32f10x_ld_vl.s</name>
+              <excluded>
+                <configuration>Debug</configuration>
+                <configuration>Release</configuration>
+              </excluded>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\startup\iar\startup_stm32f10x_md.s</name>
+              <excluded>
+                <configuration>Debug</configuration>
+                <configuration>Release</configuration>
+              </excluded>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\startup\iar\startup_stm32f10x_md_vl.s</name>
+              <excluded>
+                <configuration>Debug</configuration>
+                <configuration>Release</configuration>
+              </excluded>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\interfaces\cpu\stm32\startup\iar\startup_stm32f10x_xl.s</name>
             </file>
           </group>
           <group>
