@@ -26,85 +26,56 @@
 #define RegBase							0x40005C00L
 #define PMAAddr							0x40006000L
 #define CNTR							((volatile unsigned *)(RegBase + 0x40))
-#	define CNTR_CTRM					0x8000
-#	define CNTR_DOVRM					0x4000
-#	define CNTR_ERRM					0x2000
-#	define CNTR_WKUPM					0x1000
-#	define CNTR_SUSPM					0x0800
-#	define CNTR_RESETM					0x0400
-#	define CNTR_SOFM					0x0200
-#	define CNTR_ESOFM					0x0100
-#	define CNTR_RESUME					0x0010
-#	define CNTR_FSUSP					0x0008
-#	define CNTR_LPMODE					0x0004
-#	define CNTR_PDWN					0x0002
-#	define CNTR_FRES					0x0001
 #define ISTR							((volatile unsigned *)(RegBase + 0x44))
-#	define ISTR_CTR						0x8000
-#	define ISTR_DOVR					0x4000
-#	define ISTR_ERR						0x2000
-#	define ISTR_WKUP					0x1000
-#	define ISTR_SUSP					0x0800
-#	define ISTR_RESET					0x0400
-#	define ISTR_SOF						0x0200
-#	define ISTR_ESOF					0x0100
-#	define ISTR_DIR						0x0010
-#	define ISTR_EP_ID					0x000F
 #define FNR								((volatile unsigned *)(RegBase + 0x48))
 #define DADDR							((volatile unsigned *)(RegBase + 0x4C))
-#	define DADDR_EF						0x80
-#	define DADDR_ADD					0x7F
 #define BTABLE							((volatile unsigned *)(RegBase + 0x50))
-
 #define EP0REG							((volatile unsigned *)(RegBase))
-#	define EPREG_MASK					(EP_CTR_RX | EP_SETUP | EP_T_FIELD |\
-											EP_KIND | EP_CTR_TX | EPADDR_FIELD)
+#	define EPREG_MASK					(USB_EP0R_CTR_RX | USB_EP0R_SETUP | USB_EP0R_EP_TYPE |\
+											USB_EP0R_EP_KIND | USB_EP0R_CTR_TX | USB_EP0R_EA)
 #	define GetEPReg(ep)					(EP0REG[(ep)] & EPREG_MASK)
-#	define SetEPReg(ep, value)			(EP0REG[(ep)] = (value) | EP_CTR_RX | EP_CTR_TX)
-#	define EP_CTR_RX					0x8000
-#		define ClearEP_CTR_RX(ep)		(EP0REG[(ep)] = (GetEPReg(ep) & ~EP_CTR_RX) | EP_CTR_TX)
-#	define EP_DTOG_RX					0x4000
-#		define ToggleDTOG_RX(ep)		SetEPReg((ep), GetEPReg(ep) | EP_DTOG_RX)
+#	define SetEPReg(ep, value)			(EP0REG[(ep)] = (value) | USB_EP0R_CTR_RX | USB_EP0R_CTR_TX)
+#		define ClearEP_CTR_RX(ep)		(EP0REG[(ep)] = (GetEPReg(ep) & ~USB_EP0R_CTR_RX) | USB_EP0R_CTR_TX)
+#		define ToggleDTOG_RX(ep)		SetEPReg((ep), GetEPReg(ep) | USB_EP0R_DTOG_RX)
 #		define ClearDTOG_RX(ep)			\
 			do {\
-				if((EP0REG[(ep)] & EP_DTOG_RX) != 0) ToggleDTOG_RX(ep);\
+				if((EP0REG[(ep)] & USB_EP0R_DTOG_RX) != 0) ToggleDTOG_RX(ep);\
 			} while (0)
-#	define EPRX_STAT					0x3000
-#		define EP_RX_DIS				0x0000
-#		define EP_RX_STALL				0x1000
-#		define EP_RX_NAK				0x2000
-#		define EP_RX_VALID				0x3000
-#		define EPRX_DTOG1				0x1000
-#		define EPRX_DTOG2				0x2000
-#	define EP_SETUP						0x0800
-#	define EP_T_FIELD					0x0600
+
+//#	define USB_EP0R_STAT_RX				0x3000
+#		define USB_EPRX_STAT_DIS		0x0000
+#		define USB_EPRX_STAT_STALL		0x1000
+#		define USB_EPRX_STAT_NAK		0x2000
+#		define USB_EPRX_STAT_VALID		0x3000
+#		define USB_EPRX_STAT_DTOG1		0x1000
+#		define USB_EPRX_STAT_DTOG2		0x2000
+//#	define USB_EP0R_EP_TYPE				0x0600
 #		define EP_TYPE_MASK				0x0600
 #		define EP_BULK					0x0000
 #		define EP_CONTROL				0x0200
 #		define EP_ISOCHRONOUS			0x0400
 #		define EP_INTERRUPT				0x0600
-#	define EP_KIND						0x0100
-#		define SetEP_KIND(ep)			SetEPReg((ep), GetEPReg(ep) | EP_KIND)
-#		define ClearEP_KIND(ep)			SetEPReg((ep), GetEPReg(ep) & ~EP_KIND)
+
+#		define SetEP_KIND(ep)			SetEPReg((ep), GetEPReg(ep) | USB_EP0R_EP_KIND)
+#		define ClearEP_KIND(ep)			SetEPReg((ep), GetEPReg(ep) & ~USB_EP0R_EP_KIND)
 #		define ClearStatusOut(ep)		ClearEP_KIND(ep)
 #		define ClearEPDoubleBuff(ep)	ClearEP_KIND(ep)
 #		define SetEPDoubleBuff(ep)		SetEP_KIND(ep)
-#	define EP_CTR_TX					0x0080
-#		define ClearEP_CTR_TX(ep)		(EP0REG[(ep)] = (GetEPReg(ep) & ~EP_CTR_TX) | EP_CTR_RX)
-#	define EP_DTOG_TX					0x0040
-#		define ToggleDTOG_TX(ep)		SetEPReg((ep), GetEPReg(ep) | EP_DTOG_TX)
+#		define ClearEP_CTR_TX(ep)		(EP0REG[(ep)] = (GetEPReg(ep) & ~USB_EP0R_CTR_TX) | USB_EP0R_CTR_RX)
+#		define ToggleDTOG_TX(ep)		SetEPReg((ep), GetEPReg(ep) | USB_EP0R_DTOG_TX)
 #		define ClearDTOG_TX(ep)			\
 			do {\
-				if((EP0REG[(ep)] & EP_DTOG_TX) != 0) ToggleDTOG_TX(ep);\
+				if((EP0REG[(ep)] & USB_EP0R_DTOG_TX) != 0) ToggleDTOG_TX(ep);\
 			} while (0)
-#	define EPTX_STAT					0x0030
-#		define EP_TX_DIS				0x0000
-#		define EP_TX_STALL				0x0010
-#		define EP_TX_NAK				0x0020
-#		define EP_TX_VALID				0x0030
-#		define EPTX_DTOG1				0x0010
-#		define EPTX_DTOG2				0x0020
-#	define EPADDR_FIELD					0x000F
+
+//#	define USB_EP0R_STAT_TX				0x0030
+#		define USB_EPTX_STAT_DIS		0x0000
+#		define USB_EPTX_STAT_STALL		0x0010
+#		define USB_EPTX_STAT_NAK		0x0020
+#		define USB_EPTX_STAT_VALID		0x0030
+#		define USB_EPTX_STAT_DTOG1		0x0010
+#		define USB_EPTX_STAT_DTOG2		0x0020
+
 #	define SetEPAddress(ep, addr)		SetEPReg((ep), GetEPReg(ep) | (addr))
 #	define SetEPType(ep, type)			SetEPReg((ep), ((GetEPReg(ep) & ~EP_TYPE_MASK) | (type)))
 
@@ -113,6 +84,7 @@
 #	define _pEPTxCount(ep)				((uint32_t *)(((uint16_t)*BTABLE + (ep) * 8 + 2) * 2 + PMAAddr))
 #	define _pEPRxAddr(ep)				((uint32_t *)(((uint16_t)*BTABLE + (ep) * 8 + 4) * 2 + PMAAddr))
 #	define _pEPRxCount(ep)				((uint32_t *)(((uint16_t)*BTABLE + (ep) * 8 + 6) * 2 + PMAAddr))
+
 #	define GetEPTxAddr(ep)				((uint16_t)*_pEPTxAddr(ep))
 #	define GetEPRxAddr(ep)				((uint16_t)*_pEPRxAddr(ep))
 #	define GetEPDblBuf0Addr(ep)			GetEPTxAddr(ep)
@@ -133,6 +105,7 @@
 
 #define SetEPTxAddr(ep, addr)			(*_pEPTxAddr(ep) = (((addr) >> 1) << 1))
 #define SetEPRxAddr(ep, addr)			(*_pEPRxAddr(ep) = (((addr) >> 1) << 1))
+
 #define SetEPDblBuf0Addr(ep, buf0addr)	SetEPTxAddr(ep, buf0addr)
 #define SetEPDblBuf1Addr(ep, buf1addr)	SetEPRxAddr(ep, buf1addr)
 #define SetEPDblBuffAddr(ep, buf0addr, buf1addr)\
@@ -168,20 +141,21 @@
 
 #define SetEPTxStatus(ep, state)		\
 		do {\
-			register uint16_t _wRegVal = GetEPReg(ep) & EPTX_STAT;\
-			if((EPTX_DTOG1 & state) !=  0)\
-				_wRegVal ^= EPTX_DTOG1;\
-			if((EPTX_DTOG2 & state)!= 0)\
-				_wRegVal ^= EPTX_DTOG2;\
+			register uint16_t _wRegVal = EP0REG[(ep)] & (EPREG_MASK | USB_EP0R_STAT_TX);\
+			if((USB_EPTX_STAT_DTOG1 & state) != 0)\
+				_wRegVal ^= USB_EPTX_STAT_DTOG1;\
+			if((USB_EPTX_STAT_DTOG2 & state)!= 0)\
+				_wRegVal ^= USB_EPTX_STAT_DTOG2;\
 			SetEPReg(ep, _wRegVal);\
 		} while (0)
+
 #define SetEPRxStatus(ep, state)		\
 		do {\
-			register uint16_t _wRegVal = GetEPReg(ep) & EPRX_STAT;\
-			if((EPRX_DTOG1 & state)!= 0) \
-				_wRegVal ^= EPRX_DTOG1;  \
-			if((EPRX_DTOG2 & state)!= 0) \
-				_wRegVal ^= EPRX_DTOG2;  \
+			register uint16_t _wRegVal = EP0REG[(ep)] & (EPREG_MASK | USB_EP0R_STAT_RX);\
+			if((USB_EPRX_STAT_DTOG1 & state)!= 0) \
+				_wRegVal ^= USB_EPRX_STAT_DTOG1;  \
+			if((USB_EPRX_STAT_DTOG2 & state)!= 0) \
+				_wRegVal ^= USB_EPRX_STAT_DTOG2;  \
 			SetEPReg(ep, _wRegVal);\
 		} while (0)
 
@@ -244,8 +218,8 @@ vsf_err_t stm32_usbd_init(uint32_t int_priority)
 	NVIC->ISER[irqn >> 0x05] = 1UL << (irqn & 0x1F);
 	
 	// reset
-	*CNTR = CNTR_FRES;
-	*CNTR = (uint16_t)0;
+	*CNTR = USB_CNTR_FRES;
+	*CNTR = 0;
 	
 	// It seems that there MUST be at least 8 clock cycles
 	// between clear FRES and clear ISTR, or RESET flash can't be cleared
@@ -257,7 +231,8 @@ vsf_err_t stm32_usbd_init(uint32_t int_priority)
 	__asm("nop");
 	__asm("nop");
 	*ISTR = 0;
-	*CNTR = CNTR_CTRM | CNTR_WKUPM | CNTR_SUSPM | CNTR_ERRM | CNTR_RESETM;
+	*CNTR = USB_CNTR_CTRM | USB_CNTR_WKUPM | USB_CNTR_SUSPM | USB_CNTR_ERRM |
+				USB_CNTR_RESETM;
 	*BTABLE = 0;
 	return VSFERR_NONE;
 }
@@ -266,10 +241,10 @@ vsf_err_t stm32_usbd_fini(void)
 {
 	uint8_t irqn;
 	// reset
-	*CNTR = CNTR_FRES;
+	*CNTR = USB_CNTR_FRES;
 	*ISTR = 0;
 	
-	*CNTR = CNTR_FRES | CNTR_PDWN;
+	*CNTR = USB_CNTR_FRES | USB_CNTR_PDWN;
 	irqn = USB_HP_CAN1_TX_IRQn;
 	NVIC->ICER[irqn >> 0x05] = 1UL << (irqn & 0x1F);
 	irqn = USB_LP_CAN1_RX0_IRQn;
@@ -301,13 +276,13 @@ vsf_err_t stm32_usbd_disconnect(void)
 
 vsf_err_t stm32_usbd_set_address(uint8_t address)
 {
-	*DADDR = address | DADDR_EF;
+	*DADDR = address | USB_DADDR_EF;
 	return VSFERR_NONE;
 }
 
 uint8_t stm32_usbd_get_address(void)
 {
-	return *DADDR & 0x7F;
+	return *DADDR & USB_DADDR_ADD;
 }
 
 vsf_err_t stm32_usbd_suspend(void)
@@ -443,8 +418,8 @@ vsf_err_t stm32_usbd_ep_set_IN_dbuffer(uint8_t idx)
 	SetEPDblBuffCount(idx, true, 0);
 	ClearDTOG_RX(idx);
 	ClearDTOG_TX(idx);
-	SetEPRxStatus(idx, EP_RX_DIS);
-	SetEPTxStatus(idx, EP_TX_NAK);
+	SetEPRxStatus(idx, USB_EPRX_STAT_DIS);
+	SetEPTxStatus(idx, USB_EPTX_STAT_NAK);
 	stm32_usbd_IN_dbuffer[idx] = true;
 	return VSFERR_NONE;
 }
@@ -497,7 +472,7 @@ vsf_err_t stm32_usbd_ep_set_IN_epsize(uint8_t idx, uint16_t epsize)
 	// fix for 16-bit aligned memory
 	EP_Cfg_Ptr -= epsize & 1 ? epsize + 1 : epsize;
 	SetEPTxAddr(idx, EP_Cfg_Ptr);
-	SetEPTxStatus(idx, EP_TX_NAK);
+	SetEPTxStatus(idx, USB_EPTX_STAT_NAK);
 	return VSFERR_NONE;
 }
 
@@ -524,7 +499,7 @@ vsf_err_t stm32_usbd_ep_set_IN_stall(uint8_t idx)
 		return VSFERR_FAIL;
 	}
 	idx = (uint8_t)index;
-	SetEPTxStatus(idx, EP_TX_STALL);
+	SetEPTxStatus(idx, USB_EPTX_STAT_STALL);
 	return VSFERR_NONE;
 }
 
@@ -538,7 +513,7 @@ vsf_err_t stm32_usbd_ep_clear_IN_stall(uint8_t idx)
 		return VSFERR_FAIL;
 	}
 	idx = (uint8_t)index;
-	SetEPTxStatus(idx, EP_TX_NAK);
+	SetEPTxStatus(idx, USB_EPTX_STAT_NAK);
 	return VSFERR_NONE;
 }
 
@@ -553,7 +528,7 @@ bool stm32_usbd_ep_is_IN_stall(uint8_t idx)
 	}
 	idx = (uint8_t)index;
 	
-	return (EP_TX_STALL == EP0REG[idx] & EPTX_STAT);
+	return (USB_EPTX_STAT_STALL == (EP0REG[idx] & USB_EP0R_STAT_TX));
 }
 
 vsf_err_t stm32_usbd_ep_reset_IN_toggle(uint8_t idx)
@@ -598,7 +573,7 @@ vsf_err_t stm32_usbd_ep_set_IN_count(uint8_t idx, uint16_t size)
 	
 	if (stm32_usbd_IN_dbuffer[idx])
 	{
-		if(EP0REG[idx] & EP_DTOG_RX)
+		if(EP0REG[idx] & USB_EP0R_DTOG_RX)
 		{
 			SetEPDblBuf1Count(idx, true, size);
 		}
@@ -611,7 +586,7 @@ vsf_err_t stm32_usbd_ep_set_IN_count(uint8_t idx, uint16_t size)
 	{
 		SetEPTxCount(idx, size);
 	}
-	SetEPTxStatus(idx, EP_TX_VALID);
+	SetEPTxStatus(idx, USB_EPTX_STAT_VALID);
 	return VSFERR_NONE;
 }
 
@@ -644,7 +619,7 @@ vsf_err_t stm32_usbd_ep_write_IN_buffer(uint8_t idx, uint8_t *buffer,
 	
 	if (stm32_usbd_IN_dbuffer[idx])
 	{
-		if(EP0REG[idx] & EP_DTOG_RX)
+		if(EP0REG[idx] & USB_EP0R_DTOG_RX)
 		{
 			PMA_ptr = GetEPDblBuf1Addr(idx);
 		}
@@ -685,8 +660,8 @@ vsf_err_t stm32_usbd_ep_set_OUT_dbuffer(uint8_t idx)
 	ClearDTOG_RX(idx);
 	ClearDTOG_TX(idx);
 	ToggleDTOG_TX(idx);
-	SetEPRxStatus(idx, EP_RX_VALID);
-	SetEPTxStatus(idx, EP_TX_DIS);
+	SetEPRxStatus(idx, USB_EPRX_STAT_VALID);
+	SetEPTxStatus(idx, USB_EPTX_STAT_DIS);
 	stm32_usbd_OUT_dbuffer[idx] = true;
 	return VSFERR_NONE;
 }
@@ -743,11 +718,11 @@ vsf_err_t stm32_usbd_ep_set_OUT_epsize(uint8_t idx, uint16_t epsize)
 	SetEPRxAddr(idx, EP_Cfg_Ptr);
 	if (ep0)
 	{
-		SetEPRxStatus(idx, EP_RX_VALID);
+		SetEPRxStatus(idx, USB_EPRX_STAT_VALID);
 	}
 	else
 	{
-		SetEPRxStatus(idx, EP_RX_NAK);
+		SetEPRxStatus(idx, USB_EPRX_STAT_NAK);
 	}
 	return VSFERR_NONE;
 }
@@ -775,7 +750,7 @@ vsf_err_t stm32_usbd_ep_set_OUT_stall(uint8_t idx)
 		return VSFERR_FAIL;
 	}
 	idx = (uint8_t)index;
-	SetEPRxStatus(idx, EP_RX_STALL);
+	SetEPRxStatus(idx, USB_EPRX_STAT_STALL);
 	return VSFERR_NONE;
 }
 
@@ -793,11 +768,11 @@ vsf_err_t stm32_usbd_ep_clear_OUT_stall(uint8_t idx)
 	idx = (uint8_t)index;
 	if (ep0)
 	{
-		SetEPRxStatus(idx, EP_RX_VALID);
+		SetEPRxStatus(idx, USB_EPRX_STAT_VALID);
 	}
 	else
 	{
-		SetEPRxStatus(idx, EP_RX_NAK);
+		SetEPRxStatus(idx, USB_EPRX_STAT_NAK);
 	}
 	return VSFERR_NONE;
 }
@@ -813,7 +788,7 @@ bool stm32_usbd_ep_is_OUT_stall(uint8_t idx)
 	}
 	idx = (uint8_t)index;
 	
-	return (EP_RX_STALL == EP0REG[idx] & EPRX_STAT);
+	return (USB_EPRX_STAT_STALL == (EP0REG[idx] & USB_EP0R_STAT_RX));
 }
 
 vsf_err_t stm32_usbd_ep_reset_OUT_toggle(uint8_t idx)
@@ -857,7 +832,7 @@ uint16_t stm32_usbd_ep_get_OUT_count(uint8_t idx)
 	
 	if (stm32_usbd_OUT_dbuffer[idx])
 	{
-		if(EP0REG[idx] & EP_DTOG_TX)
+		if(EP0REG[idx] & USB_EP0R_DTOG_TX)
 		{
 			return GetEPDblBuf1Count(idx);
 		}
@@ -875,9 +850,9 @@ uint16_t stm32_usbd_ep_get_OUT_count(uint8_t idx)
 static void stm32_pma2usr_copy(uint8_t *usr, uint16_t pma_addr, uint16_t bytes)
 {
 	uint16_t i;
-	uint16_t *pma_ptr;
+	uint32_t *pma_ptr;
 	
-	pma_ptr = (uint16_t *)(pma_addr * 2 + PMAAddr);
+	pma_ptr = (uint32_t *)(pma_addr * 2 + PMAAddr);
 	for (i = ((bytes + 1) >> 1); i > 0; i--)
 	{
 		*(uint16_t*)usr = *pma_ptr++;
@@ -899,7 +874,7 @@ vsf_err_t stm32_usbd_ep_read_OUT_buffer(uint8_t idx, uint8_t *buffer,
 	
 	if (stm32_usbd_OUT_dbuffer[idx])
 	{
-		if(EP0REG[idx] & EP_DTOG_TX)
+		if(EP0REG[idx] & USB_EP0R_DTOG_TX)
 		{
 			stm32_pma2usr_copy(buffer, GetEPDblBuf1Addr(idx), size);
 		}
@@ -926,7 +901,7 @@ vsf_err_t stm32_usbd_ep_enable_OUT(uint8_t idx)
 	}
 	idx = (uint8_t)index;
 	
-	SetEPRxStatus(idx, EP_RX_VALID);
+	SetEPRxStatus(idx, USB_EPRX_STAT_VALID);
 	return VSFERR_NONE;
 }
 
@@ -942,14 +917,14 @@ void CTR_LP(void)
 	uint16_t wIstr;
 	volatile uint16_t wEPVal = 0;
 	
-	while (((wIstr = *ISTR) & ISTR_CTR) != 0)
+	while (((wIstr = *ISTR) & USB_ISTR_CTR) != 0)
 	{
-		EPindex = (uint8_t)(wIstr & ISTR_EP_ID);
+		EPindex = (uint8_t)(wIstr & USB_ISTR_EP_ID);
 		epaddr = stm32_usbd_epaddr[EPindex];
 		
 		if (epaddr == 0)
 		{
-			if ((wIstr & ISTR_DIR) == 0)
+			if ((wIstr & USB_ISTR_DIR) == 0)
 			{
 				ClearEP_CTR_TX(0);
 				if (stm32_usbd_callback.on_in != NULL)
@@ -963,14 +938,14 @@ void CTR_LP(void)
 			{
 				wEPVal = EP0REG[0];
 				ClearEP_CTR_RX(0);
-				if ((wEPVal & EP_SETUP) != 0)
+				if ((wEPVal & USB_EP0R_SETUP) != 0)
 				{
 					if (stm32_usbd_callback.on_setup != NULL)
 					{
 						stm32_usbd_callback.on_setup(stm32_usbd_callback.param);
 					}
 				}
-				else if ((wEPVal & EP_CTR_RX) != 0)
+				else if ((wEPVal & USB_EP0R_CTR_RX) != 0)
 				{
 					if (stm32_usbd_callback.on_out != NULL)
 					{
@@ -984,7 +959,7 @@ void CTR_LP(void)
 		else
 		{
 			wEPVal = EP0REG[EPindex];
-			if ((wEPVal & EP_CTR_RX) != 0)
+			if ((wEPVal & USB_EP0R_CTR_RX) != 0)
 			{
 				ClearEP_CTR_RX(EPindex);
 				if ((stm32_usbd_callback.on_out != NULL) && (epaddr >= 0))
@@ -993,7 +968,7 @@ void CTR_LP(void)
 												epaddr);
 				}
 			}
-			if ((wEPVal & EP_CTR_TX) != 0)
+			if ((wEPVal & USB_EP0R_CTR_TX) != 0)
 			{
 				ClearEP_CTR_TX(EPindex);
 				if ((stm32_usbd_callback.on_in != NULL) && (epaddr >= 0))
@@ -1013,14 +988,14 @@ void CTR_HP(void)
 	uint16_t wIstr;
 	uint32_t wEPVal = 0;
 	
-	while (((wIstr = *ISTR) & ISTR_CTR) != 0)
+	while (((wIstr = *ISTR) & USB_ISTR_CTR) != 0)
 	{
-		*ISTR = ~ISTR_CTR;
+		*ISTR = ~USB_ISTR_CTR;
 		
-		EPindex = (uint8_t)(wIstr & ISTR_EP_ID);
+		EPindex = (uint8_t)(wIstr & USB_ISTR_EP_ID);
 		epaddr = stm32_usbd_epaddr[EPindex];
 		wEPVal = EP0REG[EPindex];
-		if ((wEPVal & EP_CTR_RX) != 0)
+		if ((wEPVal & USB_EP0R_CTR_RX) != 0)
 		{
 			ClearEP_CTR_RX(EPindex);
 			if ((stm32_usbd_callback.on_out != NULL) && (epaddr >= 0))
@@ -1028,7 +1003,7 @@ void CTR_HP(void)
 				stm32_usbd_callback.on_out(stm32_usbd_callback.param, epaddr);
 			}
 		}
-		else if ((wEPVal & EP_CTR_TX) != 0)
+		else if ((wEPVal & USB_EP0R_CTR_TX) != 0)
 		{
 			ClearEP_CTR_TX(EPindex);
 			if ((stm32_usbd_callback.on_in != NULL) && (epaddr >= 0))
@@ -1043,61 +1018,61 @@ void USB_Istr(void)
 {
 	uint16_t wIstr = *ISTR;
 	
-	if (wIstr & ISTR_RESET)
+	if (wIstr & USB_ISTR_RESET)
 	{
-		*ISTR = ~ISTR_RESET;
+		*ISTR = ~USB_ISTR_RESET;
 		if (stm32_usbd_callback.on_reset != NULL)
 		{
 			stm32_usbd_callback.on_reset(stm32_usbd_callback.param);
 		}
 	}
-	if (wIstr & ISTR_DOVR)
+	if (wIstr & USB_ISTR_PMAOVR)
 	{
-		*ISTR = ~ISTR_DOVR;
+		*ISTR = ~USB_ISTR_PMAOVR;
 	}
-	if (wIstr & ISTR_ERR)
+	if (wIstr & USB_ISTR_ERR)
 	{
-		*ISTR = ~ISTR_ERR;
+		*ISTR = ~USB_ISTR_ERR;
 		if (stm32_usbd_callback.on_error != NULL)
 		{
 			stm32_usbd_callback.on_error(stm32_usbd_callback.param,
 											USBERR_ERROR);
 		}
 	}
-	if (wIstr & ISTR_WKUP)
+	if (wIstr & USB_ISTR_WKUP)
 	{
-		*ISTR = ~ISTR_WKUP;
+		*ISTR = ~USB_ISTR_WKUP;
 		if (stm32_usbd_callback.on_wakeup != NULL)
 		{
 			stm32_usbd_callback.on_wakeup(stm32_usbd_callback.param);
 		}
 	}
-	if (wIstr & ISTR_SUSP)
+	if (wIstr & USB_ISTR_SUSP)
 	{
 		if (stm32_usbd_callback.on_suspend != NULL)
 		{
 			stm32_usbd_callback.on_suspend(stm32_usbd_callback.param);
 		}
-		*ISTR = ~ISTR_SUSP;
+		*ISTR = ~USB_ISTR_SUSP;
 	}
-	if (wIstr & ISTR_SOF)
+	if (wIstr & USB_ISTR_SOF)
 	{
-		*ISTR = ~ISTR_SOF;
+		*ISTR = ~USB_ISTR_SOF;
 		if (stm32_usbd_callback.on_sof != NULL)
 		{
 			stm32_usbd_callback.on_sof(stm32_usbd_callback.param);
 		}
 	}
-	if (wIstr & ISTR_ESOF)
+	if (wIstr & USB_ISTR_ESOF)
 	{
-		*ISTR = ~ISTR_ESOF;
+		*ISTR = ~USB_ISTR_ESOF;
 		if (stm32_usbd_callback.on_error != NULL)
 		{
 			stm32_usbd_callback.on_error(stm32_usbd_callback.param,
 											USBERR_SOF_TO);
 		}
 	}
-	if (wIstr & ISTR_CTR)
+	if (wIstr & USB_ISTR_CTR)
 	{
 		CTR_LP();
 	}

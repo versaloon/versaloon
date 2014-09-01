@@ -322,23 +322,10 @@ ROOTFUNC void TIM5_IRQHandler(void)
 
 vsf_err_t stm32_tickclk_set_callback(void (*callback)(void*), void *param)
 {
-	if (callback != NULL)
-	{
-		// enable interrupt
-		TICKCLK_TIM->DIER |= TIM_DIER_UIE;
-		stm32_tickclk_callback = callback;
-		stm32_tickclk_param = param;
-		NVIC->IP[TIM5_IRQn] = 0xFF;
-		NVIC->ISER[TIM5_IRQn >> 0x05] = 1UL << (TIM5_IRQn & 0x1F);
-	}
-	else
-	{
-		// disable interrupt
-		TICKCLK_TIM->DIER &= ~TIM_DIER_UIE;
-		stm32_tickclk_callback = callback;
-		stm32_tickclk_param = param;
-		NVIC->ICER[TIM5_IRQn >> 0x05] = 1UL << (TIM5_IRQn & 0x1F);
-	}
+	TICKCLK_TIM->DIER &= ~TIM_DIER_UIE;
+	stm32_tickclk_callback = callback;
+	stm32_tickclk_param = param;
+	TICKCLK_TIM->DIER |= TIM_DIER_UIE;
 	return VSFERR_NONE;
 }
 
@@ -355,6 +342,9 @@ vsf_err_t stm32_tickclk_init(void)
 	TICKCLK_TIM->PSC = 1;
 	TICKCLK_TIM->RCR = 0;
 	TICKCLK_TIM->EGR |= TIM_EGR_UG;
+	TICKCLK_TIM->DIER |= TIM_DIER_UIE;
+	NVIC->IP[TIM5_IRQn] = 0xFF;
+	NVIC->ISER[TIM5_IRQn >> 0x05] = 1UL << (TIM5_IRQn & 0x1F);
 	
 	return VSFERR_NONE;
 }
