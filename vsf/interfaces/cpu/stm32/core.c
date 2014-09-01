@@ -26,10 +26,6 @@
 #define STM32_RCC_CFGR_PLLMUL_SFT		18
 #define STM32_RCC_CFGR_PLLMUL_MSK		(0x0F << STM32_RCC_CFGR_PLLMUL_SFT)
 
-#define RCC_APB2Periph_TIM1              ((uint32_t)0x00000800)
-#define RCC_APB1Periph_TIM2              ((uint32_t)0x00000001)
-#define RCC_APB1Periph_TIM5              ((uint32_t)0x00000008)
-
 #define STM32_FLASH_ACR_PRFTBE			(1 << 4)
 
 #define STM32_RCC_APB2ENR_AFIO			(1 << 0)
@@ -281,37 +277,26 @@ vsf_err_t stm32_delay_delayms(uint16_t ms)
 }
 
 // tickclk
-#define TIM_INT_Update						((uint16_t)0x0001)
-#define TIM_SlaveMode_External1				((uint16_t)0x0007)
-#define TIM_TRGOSource_Update				((uint16_t)0x0020)
-#define TIM_TS_ITR0							((uint16_t)0x0000)
-#define TIM_CounterMode_Up					((uint16_t)0x0000)
-#define TIM_PSCReloadMode_Immediate			((uint16_t)0x0001)
+#define TICKCLK_TIM							TIM5
 
 static void (*stm32_tickclk_callback)(void *param) = NULL;
 static void *stm32_tickclk_param = NULL;
+static uint32_t stm32_tickcnt = 0;
 vsf_err_t stm32_tickclk_start(void)
 {
-	TIM5->CR1 |= TIM_CR1_CEN;
-	TIM2->CR1 |= TIM_CR1_CEN;
-	TIM1->CR1 |= TIM_CR1_CEN;
+	TICKCLK_TIM->CR1 |= TIM_CR1_CEN;
 	return VSFERR_NONE;
 }
 
 vsf_err_t stm32_tickclk_stop(void)
 {
-	TIM1->CR1 &= ~TIM_CR1_CEN;
-	TIM2->CR1 &= ~TIM_CR1_CEN;
-	TIM5->CR1 &= ~TIM_CR1_CEN;
+	TICKCLK_TIM->CR1 &= ~TIM_CR1_CEN;
 	return VSFERR_NONE;
 }
 
 static uint32_t stm32_tickclk_get_count_local(void)
 {
-	uint32_t count;
-	count = TIM2->CNT;
-	count |= (uint32_t)TIM5->CNT << 16;
-	return count;
+	return stm32_tickcnt;
 }
 
 uint32_t stm32_tickclk_get_count(void)
@@ -325,117 +310,57 @@ uint32_t stm32_tickclk_get_count(void)
 	return count1;
 }
 
-#if defined(STM32F10X_XL)
-ROOTFUNC void TIM1_UP_TIM10_IRQHandler(void)
-#elif defined(STM32F10X_LD) || defined(STM32F10X_MD) || defined(STM32F10X_HD) || defined(STM32F10X_CL)
-ROOTFUNC void TIM1_UP_IRQHandler(void)
-#elif defined(STM32F10X_MD_VL) || defined(STM32F10X_LD_VL) || defined(STM32F10X_MD_VL)
-ROOTFUNC void TIM1_UP_TIM16_IRQHandler(void)
-#endif
+ROOTFUNC void TIM5_IRQHandler(void)
 {
+	stm32_tickcnt++;
 	if (stm32_tickclk_callback != NULL)
 	{
 		stm32_tickclk_callback(stm32_tickclk_param);
 	}
-	TIM1->SR = ~TIM_INT_Update;
+	TICKCLK_TIM->SR = ~TIM_SR_UIF;
 }
 
 vsf_err_t stm32_tickclk_set_callback(void (*callback)(void*), void *param)
 {
-	uint8_t irqn;
-	
-#if defined(STM32F10X_XL)
-	irqn = TIM1_UP_TIM10_IRQn;
-#elif defined(STM32F10X_MD_VL) || defined(STM32F10X_LD_VL) || defined(STM32F10X_MD_VL)
-	irqn = TIM1_UP_TIM16_IRQn;
-#elif defined(STM32F10X_LD) || defined(STM32F10X_MD) || defined(STM32F10X_HD) || defined(STM32F10X_CL)
-	irqn = TIM1_UP_IRQn;
-#endif
-	
 	if (callback != NULL)
 	{
 		// enable interrupt
-		TIM1->DIER |= TIM_INT_Update;
+		TICKCLK_TIM->DIER |= TIM_DIER_UIE;
 		stm32_tickclk_callback = callback;
 		stm32_tickclk_param = param;
-		NVIC->IP[irqn] = 0xFF;
-		NVIC->ISER[irqn >> 0x05] = 1UL << (irqn & 0x1F);
+		NVIC->IP[TIM5_IRQn] = 0xFF;
+		NVIC->ISER[TIM5_IRQn >> 0x05] = 1UL << (TIM5_IRQn & 0x1F);
 	}
 	else
 	{
 		// disable interrupt
-		TIM1->DIER &= ~TIM_INT_Update;
+		TICKCLK_TIM->DIER &= ~TIM_DIER_UIE;
 		stm32_tickclk_callback = callback;
 		stm32_tickclk_param = param;
-		NVIC->ICER[irqn >> 0x05] = 1UL << (irqn & 0x1F);
+		NVIC->ICER[TIM5_IRQn >> 0x05] = 1UL << (TIM5_IRQn & 0x1F);
 	}
 	return VSFERR_NONE;
 }
 
 vsf_err_t stm32_tickclk_init(void)
 {
-	uint16_t tmp_reg;
+	stm32_tickcnt = 0;
+	RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;
+	RCC->APB1RSTR |= RCC_APB1RSTR_TIM5RST;
+	RCC->APB1RSTR &= ~RCC_APB1RSTR_TIM5RST;
 	
-	RCC->APB2ENR |= RCC_APB2Periph_TIM1;
-	RCC->APB1ENR |= RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM5;
-	RCC->APB2RSTR |= RCC_APB2Periph_TIM1;
-	RCC->APB1RSTR |= RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM5;
-	RCC->APB2RSTR &= ~RCC_APB2Periph_TIM1;
-	RCC->APB1RSTR &= ~(RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM5);
-	
-	// TIM1 generate 1ms event
-	tmp_reg = TIM1->CR1;
-	tmp_reg &= ~(TIM_CR1_DIR | TIM_CR1_CMS);
-    tmp_reg |= TIM_CounterMode_Up;
-	tmp_reg &= ~TIM_CR1_CKD;
-	TIM1->CR1 = tmp_reg;
-	TIM1->ARR = stm32_info.apb2_freq_hz / 2 / 1000;
-	TIM1->PSC = 1;
-	TIM1->RCR = 0;
-	TIM1->EGR = TIM_PSCReloadMode_Immediate;
-	TIM1->CR2 &= ~TIM_CR2_MMS;
-	TIM1->CR2 |= TIM_TRGOSource_Update;
-	TIM1->SMCR &= ~TIM_SMCR_MSM;
-	TIM1->SMCR |= TIM_SMCR_MSM;
-	
-	// TIM2 accept 1ms clock from TIM1
-	tmp_reg = TIM2->CR1;
-	tmp_reg &= ~(TIM_CR1_DIR | TIM_CR1_CMS);
-    tmp_reg |= TIM_CounterMode_Up;
-	tmp_reg &= ~TIM_CR1_CKD;
-	TIM2->CR1 = tmp_reg;
-	TIM2->ARR = 0xFFFF;
-	TIM2->PSC = 0;
-	TIM2->RCR = 0;
-	TIM2->EGR = TIM_PSCReloadMode_Immediate;
-	TIM2->SMCR = (TIM2->SMCR & ~TIM_SMCR_TS) | TIM_TS_ITR0;
-	TIM2->SMCR &= ~TIM_SMCR_SMS;
-	TIM2->SMCR |= TIM_SlaveMode_External1;
-	TIM2->CR2 &= ~TIM_CR2_MMS;
-	TIM2->CR2 |= TIM_TRGOSource_Update;
-	TIM2->SMCR &= ~TIM_SMCR_MSM;
-	TIM2->SMCR |= TIM_SMCR_MSM;
-	
-	// TIM5 accept 65536ms clock from TIM2
-	tmp_reg = TIM5->CR1;
-	tmp_reg &= ~(TIM_CR1_DIR | TIM_CR1_CMS);
-    tmp_reg |= TIM_CounterMode_Up;
-	tmp_reg &= ~TIM_CR1_CKD;
-	TIM5->CR1 = tmp_reg;
-	TIM5->ARR = 0xFFFF;
-	TIM5->PSC = 0;
-	TIM5->RCR = 0;
-	TIM5->EGR = TIM_PSCReloadMode_Immediate;
-	TIM5->SMCR = (TIM5->SMCR & ~TIM_SMCR_TS) | TIM_TS_ITR0;
-	TIM5->SMCR &= ~TIM_SMCR_SMS;
-	TIM5->SMCR |= TIM_SlaveMode_External1;
+	// TIM5 generate 1ms event
+	TICKCLK_TIM->CR1 &= 0x03FF;
+	TICKCLK_TIM->ARR = stm32_info.apb1_freq_hz / 2 / 1000;
+	TICKCLK_TIM->PSC = 1;
+	TICKCLK_TIM->RCR = 0;
+	TICKCLK_TIM->EGR |= TIM_EGR_UG;
 	
 	return VSFERR_NONE;
 }
 
 vsf_err_t stm32_tickclk_fini(void)
 {
-	RCC->APB2ENR &= ~RCC_APB2Periph_TIM1;
-	RCC->APB1ENR &= ~(RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM5);
+	RCC->APB1ENR &= ~RCC_APB1ENR_TIM5EN;
 	return VSFERR_NONE;
 }

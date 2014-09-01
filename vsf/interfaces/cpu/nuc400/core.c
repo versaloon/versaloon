@@ -249,7 +249,7 @@ vsf_err_t nuc400_delay_delayms(uint16_t ms)
 
 static void (*nuc400_tickclk_callback)(void *param) = NULL;
 static void *nuc400_tickclk_param = NULL;
-static volatile uint8_t nuc400_tickcnt = 0;
+static volatile uint32_t nuc400_tickcnt = 0;
 
 void TMR0_IRQHandler(void)
 {
