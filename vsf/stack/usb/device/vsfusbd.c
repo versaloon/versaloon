@@ -597,7 +597,6 @@ static vsf_err_t vsfusbd_auto_init(struct vsfusbd_device_t *device)
 			default:
 				return VSFERR_FAIL;
 			}
-			device->drv->ep.set_type(ep_index, ep_type);
 			if (ep_addr & 0x80)
 			{
 				// IN ep
@@ -612,6 +611,7 @@ static vsf_err_t vsfusbd_auto_init(struct vsfusbd_device_t *device)
 				vsfusbd_set_OUT_handler(device, ep_index, vsfusbd_on_OUT_do);
 				config->ep_OUT_iface_map[ep_index] = cur_iface;
 			}
+			device->drv->ep.set_type(ep_index, ep_type);
 			break;
 		}
 		pos += desc.buffer[pos];
@@ -1168,9 +1168,9 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 			
 			// config ep0
 			if (device->drv->prepare_buffer() || 
-				device->drv->ep.set_type(0, USB_EP_TYPE_CONTROL) || 
 				device->drv->ep.set_IN_epsize(0, ep_size) || 
-				device->drv->ep.set_OUT_epsize(0, ep_size))
+				device->drv->ep.set_OUT_epsize(0, ep_size) ||
+				device->drv->ep.set_type(0, USB_EP_TYPE_CONTROL))
 			{
 				err = VSFERR_FAIL;
 				goto reset_exit;

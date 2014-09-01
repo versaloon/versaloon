@@ -51,14 +51,16 @@
 #define USB_EP_RSPCTL_DISBUF				((uint32_t)0x00000080)
 
 #define NUC400_USBD_EP_REG(ep, reg)			\
-			*((__IO uint32_t *)((uint32_t)&USBD->reg + (uint32_t)(ep * 0x28)))
+			*((__IO uint32_t *)((uint32_t)&USBD->reg + (uint32_t)((ep) * 0x28)))
+#define NUC400_USBD_EP_REG8(ep, reg)		\
+			*((__IO uint8_t *)((uint32_t)&USBD->reg + (uint32_t)((ep) * 0x28)))
 
 #if IFS_USBD_EN
 
 #include "NUC400_USBD.h"
 #include "NUC472_442.h"
 
-#define NUC400_USBD_EP_NUM					6
+#define NUC400_USBD_EP_NUM					7
 const uint8_t nuc400_usbd_ep_num = NUC400_USBD_EP_NUM;
 struct interface_usbd_callback_t nuc400_usbd_callback;
 static uint16_t EP_Cfg_Ptr = 0x1000;
@@ -67,6 +69,8 @@ static uint16_t max_ctl_ep_size = 64;
 // true if data direction in setup packet is device to host
 static bool nuc400_setup_status_IN;
 
+#define NUC400_USBD_EPIN					0x10
+#define NUC400_USBD_EPOUT					0x00
 static int8_t nuc400_usbd_epaddr[NUC400_USBD_EP_NUM];
 
 extern void nuc400_unlock_reg(void);
@@ -93,6 +97,10 @@ vsf_err_t nuc400_usbd_init(uint32_t int_priority)
 		if (USBD->EPAMPS == 0x20)
 			break;
 	}
+	
+	// Enable USB FULL SPEED
+	USBD->OPER = 0;
+	while ((USBD->OPER & 0x4) != 0);
 	// Enable USB interrupt
 	USBD->GINTEN = USBD_GINTEN_USBIE_Msk | USBD_GINTEN_CEPIE_Msk;
 	// Enable BUS interrupt
@@ -199,7 +207,7 @@ static int8_t nuc400_usbd_ep(uint8_t idx)
 	
 	for (i = 0; i < sizeof(nuc400_usbd_epaddr); i++)
 	{
-		if (idx == nuc400_usbd_epaddr[i])
+		if ((int8_t)idx == nuc400_usbd_epaddr[i])
 		{
 			return (int8_t)i;
 		}
@@ -207,43 +215,22 @@ static int8_t nuc400_usbd_ep(uint8_t idx)
 	return -1;
 }
 
-void set_ep_addr(uint8_t ep, uint8_t epaddr)
+static int8_t nuc400_usbd_get_free_ep(uint8_t idx)
 {
-	if (0 == ep)
-	{
-		return;
-	}
-	else
-	{
-		ep--;
-		NUC400_USBD_EP_REG(ep, EPACFG) &= (0xF << 4);
-		NUC400_USBD_EP_REG(ep, EPACFG) |= ((0xF & epaddr) << 4);
-	}
-}
-
-static int8_t nuc400_usbd_get_ep(uint8_t idx)
-{
-	int8_t i;
+	uint8_t i;
 	
-	i = nuc400_usbd_ep(idx);
-	if (i >= 0)
-	{
-		return i;
-	}
-	
-	for (i = 0; i < sizeof(nuc400_usbd_epaddr); i++)
+	for (i = 1; i < sizeof(nuc400_usbd_epaddr); i++)
 	{
 		if (-1 == nuc400_usbd_epaddr[i])
 		{
-			nuc400_usbd_epaddr[i] = idx;
-			set_ep_addr(i, idx);
+			nuc400_usbd_epaddr[i] = (int8_t)idx;
 			return i;
 		}
 	}
 	return -1;
 }
 
-static void nuc400_usbd_set_eptype(uint32_t ep, uint32_t type)
+static void nuc400_usbd_set_eptype(uint8_t ep, uint32_t type)
 {
 	NUC400_USBD_EP_REG(ep, EPARSPCTL) =
 				USB_EP_RSPCTL_FLUSH | USB_EP_RSPCTL_MODE_MANUAL;
@@ -253,35 +240,41 @@ static void nuc400_usbd_set_eptype(uint32_t ep, uint32_t type)
 
 vsf_err_t nuc400_usbd_ep_set_type(uint8_t idx, enum interface_usbd_eptype_t type)
 {
-	int8_t index;
+	int8_t index_in, index_out;
+	uint32_t eptype;
 	
-	index = nuc400_usbd_get_ep(idx);
-	if (index < 0)
+	index_in = nuc400_usbd_ep(idx | NUC400_USBD_EPIN);
+	index_out = nuc400_usbd_ep(idx | NUC400_USBD_EPOUT);
+	if ((0 == idx) || ((index_in < 0) && (index_out < 0)))
 	{
 		return VSFERR_FAIL;
 	}
-	idx = (uint8_t)index;
 	
-	if (0 == idx)
-	{
-		return VSFERR_NONE;
-	}
-	idx--;
 	switch (type)
 	{
 	case USB_EP_TYPE_CONTROL:
 		return VSFERR_NONE;
 	case USB_EP_TYPE_INTERRUPT:
-		nuc400_usbd_set_eptype(idx, USB_EP_CFG_TYPE_INT);
+		eptype = USB_EP_CFG_TYPE_INT;
 		break;
 	case USB_EP_TYPE_BULK:
-		nuc400_usbd_set_eptype(idx, USB_EP_CFG_TYPE_BULK);
+		eptype = USB_EP_CFG_TYPE_BULK;
 		break;
 	case USB_EP_TYPE_ISO:
-		nuc400_usbd_set_eptype(idx, USB_EP_CFG_TYPE_ISO);
+		eptype = USB_EP_CFG_TYPE_ISO;
 		break;
 	default:
 		return VSFERR_INVALID_PARAMETER;
+	}
+	if (index_in > 0)
+	{
+		idx = (uint8_t)index_in;
+		nuc400_usbd_set_eptype(idx, eptype);
+	}
+	if (index_out > 0)
+	{
+		idx = (uint8_t)index_out;
+		nuc400_usbd_set_eptype(idx, eptype);
 	}
 	USBD->GINTEN |= USBD_GINTEN_EPAIE_Msk << idx;
 	NUC400_USBD_EP_REG(idx, EPAINTEN) =
@@ -308,7 +301,7 @@ vsf_err_t nuc400_usbd_ep_set_IN_epsize(uint8_t idx, uint16_t epsize)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_get_free_ep(idx | NUC400_USBD_EPIN);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -335,6 +328,8 @@ vsf_err_t nuc400_usbd_ep_set_IN_epsize(uint8_t idx, uint16_t epsize)
 		NUC400_USBD_EP_REG(idx, EPABUFSTART) = EP_Cfg_Ptr;
 		NUC400_USBD_EP_REG(idx, EPABUFEND) = EP_Cfg_Ptr + epsize - 1;
 		NUC400_USBD_EP_REG(idx, EPACFG) |= USB_EP_CFG_DIR_IN;
+		NUC400_USBD_EP_REG(idx, EPACFG) &= ~(0xF << 4);
+		NUC400_USBD_EP_REG(idx, EPACFG) |= (idx & 0x0F) << 4;
 	}
 	return VSFERR_NONE;
 }
@@ -343,7 +338,7 @@ uint16_t nuc400_usbd_ep_get_IN_epsize(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return 0;
@@ -370,7 +365,7 @@ vsf_err_t nuc400_usbd_ep_set_IN_stall(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -399,7 +394,7 @@ vsf_err_t nuc400_usbd_ep_clear_IN_stall(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -423,7 +418,7 @@ bool nuc400_usbd_ep_is_IN_stall(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return true;
@@ -449,7 +444,7 @@ vsf_err_t nuc400_usbd_ep_reset_IN_toggle(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -482,7 +477,7 @@ vsf_err_t nuc400_usbd_ep_set_IN_count(uint8_t idx, uint16_t size)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -519,7 +514,7 @@ vsf_err_t nuc400_usbd_ep_write_IN_buffer(uint8_t idx, uint8_t *buffer,
 	int8_t index;
 	uint32_t i;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -543,7 +538,7 @@ vsf_err_t nuc400_usbd_ep_write_IN_buffer(uint8_t idx, uint8_t *buffer,
 		idx--;
 		for (i = 0; i < size; i++)
 		{
-			NUC400_USBD_EP_REG(idx, EPADAT) = buffer[i];
+			NUC400_USBD_EP_REG8(idx, EPADAT_BYTE) = buffer[i];
 		}
 	}
 	return VSFERR_NONE;
@@ -568,7 +563,7 @@ vsf_err_t nuc400_usbd_ep_set_OUT_epsize(uint8_t idx, uint16_t epsize)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_get_free_ep(idx | NUC400_USBD_EPOUT);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -595,6 +590,8 @@ vsf_err_t nuc400_usbd_ep_set_OUT_epsize(uint8_t idx, uint16_t epsize)
 		NUC400_USBD_EP_REG(idx, EPABUFSTART) = EP_Cfg_Ptr;
 		NUC400_USBD_EP_REG(idx, EPABUFEND) = EP_Cfg_Ptr + epsize - 1;
 		NUC400_USBD_EP_REG(idx, EPACFG) &= ~USB_EP_CFG_DIR_IN;
+		NUC400_USBD_EP_REG(idx, EPACFG) &= ~(0xF << 4);
+		NUC400_USBD_EP_REG(idx, EPACFG) |= (idx & 0x0F) << 4;
 	}
 	return VSFERR_NONE;
 }
@@ -603,7 +600,7 @@ uint16_t nuc400_usbd_ep_get_OUT_epsize(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return 0;
@@ -630,7 +627,7 @@ vsf_err_t nuc400_usbd_ep_set_OUT_stall(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -659,7 +656,7 @@ vsf_err_t nuc400_usbd_ep_clear_OUT_stall(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -683,7 +680,7 @@ bool nuc400_usbd_ep_is_OUT_stall(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return true;
@@ -709,7 +706,7 @@ vsf_err_t nuc400_usbd_ep_reset_OUT_toggle(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -742,7 +739,7 @@ uint16_t nuc400_usbd_ep_get_OUT_count(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return 0;
@@ -770,7 +767,7 @@ vsf_err_t nuc400_usbd_ep_read_OUT_buffer(uint8_t idx, uint8_t *buffer,
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
@@ -801,7 +798,7 @@ vsf_err_t nuc400_usbd_ep_read_OUT_buffer(uint8_t idx, uint8_t *buffer,
 		size = min(size, NUC400_USBD_EP_REG(idx, EPAMPS));
 		for (i = 0; i < size; i++)
 		{
-			buffer[i] = NUC400_USBD_EP_REG(idx, EPADAT);
+			buffer[i] = NUC400_USBD_EP_REG8(idx, EPADAT_BYTE);
 		}
 	}
 	return VSFERR_NONE;
@@ -811,7 +808,7 @@ vsf_err_t nuc400_usbd_ep_enable_OUT(uint8_t idx)
 {
 	int8_t index;
 	
-	index = nuc400_usbd_get_ep(idx);
+	index = nuc400_usbd_ep(idx);
 	if (index < 0)
 	{
 		return VSFERR_FAIL;
