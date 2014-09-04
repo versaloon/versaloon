@@ -368,7 +368,8 @@ vsf_err_t swd_transact(uint8_t index, uint8_t request, uint32_t *data,
 		{
 			*ack = ack_tmp;
 		}
-		return VSFERR_NONE;
+		return (ack_tmp == (SWD_SUCCESS | SWD_ACK_OK)) ?
+					VSFERR_NONE : VSFERR_FAIL;
 	default:
 		return VSFERR_NOT_SUPPORT;
 	}
