@@ -9,8 +9,8 @@
     <app_seg>0</app_seg>
     <app_addr>0x00000000</app_addr>
   </chip>
-  <chip name="nuc400test">
-    <chip_id>0x00044201</chip_id>
+  <chip name="nuc442rg8ae">
+    <chip_id>0x00044212</chip_id>
     <program_mode>s</program_mode>
     <app_page_num>64</app_page_num>
   </chip>
