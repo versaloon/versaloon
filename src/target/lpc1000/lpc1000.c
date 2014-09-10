@@ -150,7 +150,7 @@ ADJUST_SETTING_HANDLER(lpc1000)
 	struct chip_area_info_t *flash_info = NULL, *sram_info = NULL;
 	
 	flash_info = target_get_chip_area(param, APPLICATION_IDX);
-	sram_info = target_get_chip_area(param, SRAM_IDX);
+	sram_info = target_get_chip_area(param, RAM_IDX);
 	if ((NULL == flash_info) || (NULL == sram_info))
 	{
 		return VSFERR_FAIL;

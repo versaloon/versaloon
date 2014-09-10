@@ -1093,23 +1093,23 @@ vsf_err_t target_build_chip_series(struct target_info_t *target,
 			}
 			else if (!xmlStrcmp(paramNode->name, BAD_CAST "sram_addr"))
 			{
-				target_assert_chip_area(p_param, SRAM_IDX);
-				p_area_info = target_get_chip_area(p_param, SRAM_IDX);
+				target_assert_chip_area(p_param, RAM_IDX);
+				p_area_info = target_get_chip_area(p_param, RAM_IDX);
 				p_area_info->addr = (uint32_t)strtoul(
 						(const char *)xmlNodeGetContent(paramNode), NULL, 0);
 			}
 			else if (!xmlStrcmp(paramNode->name, BAD_CAST "sram_page_size"))
 			{
-				target_assert_chip_area(p_param, SRAM_IDX);
-				p_area_info = target_get_chip_area(p_param, SRAM_IDX);
+				target_assert_chip_area(p_param, RAM_IDX);
+				p_area_info = target_get_chip_area(p_param, RAM_IDX);
 				p_area_info->page_size = (uint32_t)strtoul(
 						(const char *)xmlNodeGetContent(paramNode), NULL, 0);
 				p_area_info->size = 0;
 			}
 			else if (!xmlStrcmp(paramNode->name, BAD_CAST "sram_page_num"))
 			{
-				target_assert_chip_area(p_param, SRAM_IDX);
-				p_area_info = target_get_chip_area(p_param, SRAM_IDX);
+				target_assert_chip_area(p_param, RAM_IDX);
+				p_area_info = target_get_chip_area(p_param, RAM_IDX);
 				p_area_info->page_num = (uint32_t)strtoul(
 						(const char *)xmlNodeGetContent(paramNode), NULL, 0);
 				p_area_info->size = 0;
@@ -1385,9 +1385,9 @@ vsf_err_t target_build_chip_series(struct target_info_t *target,
 			}
 			else if (!xmlStrcmp(paramNode->name, BAD_CAST "sram_size"))
 			{
-				target_para_size_defined |= SRAM;
-				target_assert_chip_area(p_param, SRAM_IDX);
-				p_area_info = target_get_chip_area(p_param, SRAM_IDX);
+				target_para_size_defined |= RAM;
+				target_assert_chip_area(p_param, RAM_IDX);
+				p_area_info = target_get_chip_area(p_param, RAM_IDX);
 				p_area_info->size = (uint32_t)strtoul(
 						(const char *)xmlNodeGetContent(paramNode), NULL, 0);
 			}

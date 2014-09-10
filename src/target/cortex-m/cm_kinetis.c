@@ -414,7 +414,7 @@ READ_TARGET_HANDLER(kinetisswj)
 		*(uint32_t *)buff = mcuid;
 		kinetis_print_device(mcuid, fcfg1);
 		
-		sram_area = target_get_program_area(pi, SRAM_IDX);
+		sram_area = target_get_program_area(pi, RAM_IDX);
 		if (sram_area != NULL)
 		{
 			sram_area->size = kinetis_get_sram_size(mcuid);

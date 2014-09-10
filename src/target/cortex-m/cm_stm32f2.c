@@ -86,7 +86,7 @@ ENTER_PROGRAM_MODE_HANDLER(stm32f2swj)
 		return VSFERR_FAIL;
 	}
 	
-	sram_info = target_get_chip_area(context->param, SRAM_IDX);
+	sram_info = target_get_chip_area(context->param, RAM_IDX);
 	if (NULL == sram_info)
 	{
 		return VSFERR_FAIL;

@@ -304,7 +304,7 @@ const struct target_area_name_t target_area_name[NUM_OF_TARGET_AREA] =
 	{USRSIG_CHKSUM_CHAR,		USRSIG_CHKSUM,		"usrsig_checksum"},
 	{CALIBRATION_CHAR,			CALIBRATION,		"calibration"},
 	{CALIBRATION_CHKSUM_CHAR,	CALIBRATION_CHKSUM,	"calibration_checksum"},
-	{SRAM_CHAR,					SRAM,				"sram"},
+	{RAM_CHAR,					RAM,				"ram"},
 	{SPECIAL_STRING_CHAR,		SPECIAL_STRING,		"special_str"},
 	{UNIQUEID_CHAR,				UNIQUEID,			"uniqueid"}
 };

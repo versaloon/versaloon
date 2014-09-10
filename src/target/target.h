@@ -49,7 +49,7 @@
 #define USRSIG_CHKSUM_IDX			(1 + USRSIG_IDX)
 #define CALIBRATION_IDX				16
 #define CALIBRATION_CHKSUM_IDX		(1 + CALIBRATION_IDX)
-#define SRAM_IDX					18
+#define RAM_IDX						18
 #define SPECIAL_STRING_IDX			19
 #define UNIQUEID_IDX				20
 
@@ -71,7 +71,7 @@
 #define USRSIG_CHKSUM				(1 << USRSIG_CHKSUM_IDX)
 #define CALIBRATION					(1 << CALIBRATION_IDX)
 #define CALIBRATION_CHKSUM			(1 << CALIBRATION_CHKSUM_IDX)
-#define SRAM						(1 << SRAM_IDX)
+#define RAM							(1 << RAM_IDX)
 #define SPECIAL_STRING				(1 << SPECIAL_STRING_IDX)
 #define UNIQUEID					(1 << UNIQUEID_IDX)
 #define ALL							0x80000000UL
@@ -119,7 +119,7 @@ enum area_attr_t
 #define USRSIG_CHKSUM_CHAR			'S'
 #define CALIBRATION_CHAR			'c'
 #define CALIBRATION_CHKSUM_CHAR		'C'
-#define SRAM_CHAR					'r'
+#define RAM_CHAR					'r'
 #define SPECIAL_STRING_CHAR			't'
 #define UNIQUEID_CHAR				'q'
 
