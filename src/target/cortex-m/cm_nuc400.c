@@ -573,8 +573,7 @@ ERASE_TARGET_HANDLER(nuc400swj)
 		break;
 	case FUSE_CHAR:
 		// wait previous flashloader operation finish first
-		if (nuc400swj_iap_wait_finish(
-								&((struct cm_nuc400_t *)(context->priv))->fl))
+		if (nuc400swj_iap_wait_finish(&nuc400->fl))
 		{
 			err = ERRCODE_FAILURE_OPERATION;
 			break;
@@ -674,8 +673,7 @@ WRITE_TARGET_HANDLER(nuc400swj)
 			}
 			
 			// wait previous flashloader operation finish first
-			if (nuc400swj_iap_wait_finish(
-								&((struct cm_nuc400_t *)(context->priv))->fl))
+			if (nuc400swj_iap_wait_finish(&nuc400->fl))
 			{
 				err = ERRCODE_FAILURE_OPERATION;
 				break;
@@ -699,6 +697,7 @@ WRITE_TARGET_HANDLER(nuc400swj)
 
 READ_TARGET_HANDLER(nuc400swj)
 {
+	struct cm_nuc400_t *nuc400 = (struct cm_nuc400_t *)context->priv;
 	uint32_t cur_block_size;
 	vsf_err_t err = VSFERR_NONE;
 	uint32_t reg;
@@ -717,8 +716,7 @@ READ_TARGET_HANDLER(nuc400swj)
 		break;
 	case UNIQUEID_CHAR:
 		// wait previous flashloader operation finish first
-		if (nuc400swj_iap_wait_finish(
-							&((struct cm_nuc400_t *)(context->priv))->fl))
+		if (nuc400swj_iap_wait_finish(&nuc400->fl))
 		{
 			err = ERRCODE_FAILURE_OPERATION;
 			break;
@@ -733,8 +731,7 @@ READ_TARGET_HANDLER(nuc400swj)
 		break;
 	case USRSIG_CHAR:
 		// wait previous flashloader operation finish first
-		if (nuc400swj_iap_wait_finish(
-							&((struct cm_nuc400_t *)(context->priv))->fl))
+		if (nuc400swj_iap_wait_finish(&nuc400->fl))
 		{
 			err = ERRCODE_FAILURE_OPERATION;
 			break;

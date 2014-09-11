@@ -26,6 +26,7 @@ libvsf_a_SOURCES = \
     dal/cfi/cfi_drv.c \
     dal/nand/nand_drv.c \
     dal/nrf24l01/nrf24l01_drv.c \
-    dal/sst32hfxx/sst32hfxx_drv.c
+    dal/sst32hfxx/sst32hfxx_drv.c \
+    tool/crc/crc.c
 
 MAINTAINERCLEANFILES = Makefile.in
