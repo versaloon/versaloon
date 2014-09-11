@@ -843,6 +843,60 @@ vsf_err_t target_release_chip_series(struct chip_series_t *s)
 	return VSFERR_NONE;
 }
 
+static vsf_err_t target_parse_chip_area(struct chip_area_info_t *area,
+										xmlNodePtr node)
+{
+	uint32_t size;
+	char *format, *str, format_tmp[32];
+	
+	area->size = (uint32_t)strtoul(
+					(const char *)xmlGetProp(node, BAD_CAST "bytesize"),
+					NULL, 0);
+	size = area->size;
+	area->default_value = strtoull(
+					(const char *)xmlGetProp(node, BAD_CAST "init"),
+					NULL, 0);
+	area->cli_format = NULL;
+	area->mask = NULL;
+	str = (char *)xmlGetProp(node, BAD_CAST "format");
+	if (str != NULL)
+	{
+		area->cli_format = strdup(str);
+		if (NULL == area->cli_format)
+		{
+			LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
+			return VSFERR_NOT_ENOUGH_RESOURCES;
+		}
+		format = area->cli_format;
+	}
+	else
+	{
+		if (size > 8)
+		{
+			LOG_ERROR(ERRMSG_NOT_DEFINED, "format node");
+			return VSFERR_FAIL;
+		}
+		snprintf(format_tmp, sizeof(format_tmp), "%%%dx", size);
+		format = format_tmp;
+	}
+	str = (char *)xmlGetProp(node, BAD_CAST "mask");
+	if (str != NULL)
+	{
+		area->mask = (uint8_t *)malloc(size);
+		if (NULL == area->mask)
+		{
+			LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
+			return VSFERR_NOT_ENOUGH_RESOURCES;
+		}
+		if (strparser_parse(str, format, area->mask, size))
+		{
+			LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse mask node");
+			return ERRCODE_FAILURE_OPERATION;
+		}
+	}
+	return VSFERR_NONE;
+}
+
 vsf_err_t target_build_chip_series(struct target_info_t *target,
 		const struct program_mode_t *program_mode, struct chip_series_t *s)
 {
@@ -969,10 +1023,6 @@ vsf_err_t target_build_chip_series(struct target_info_t *target,
 	for (i = 0; i < s->num_of_chips; i++)
 	{
 		xmlNodePtr paramNode;
-		uint32_t size;
-		char *format, *str;
-		char format_tmp[32];
-		uint8_t *buff;
 		
 		p_param = &(s->chips_param[i]);
 		
@@ -1436,55 +1486,11 @@ vsf_err_t target_build_chip_series(struct target_info_t *target,
 				target_para_size_defined |= UNIQUEID;
 				target_assert_chip_area(p_param, UNIQUEID_IDX);
 				p_area_info = target_get_chip_area(p_param, UNIQUEID_IDX);
-				p_area_info->size = (uint32_t)strtoul(
-					(const char *)xmlGetProp(paramNode, BAD_CAST "bytesize"),
-					NULL, 0);
-				size = p_area_info->size;
-				p_area_info->default_value = strtoull(
-					(const char *)xmlGetProp(paramNode, BAD_CAST "init"),
-					NULL, 0);
-				p_area_info->cli_format = NULL;
-				p_area_info->mask = NULL;
-				str = (char *)xmlGetProp(paramNode, BAD_CAST "format");
-				if (str != NULL)
+				if (target_parse_chip_area(p_area_info, paramNode))
 				{
-					p_area_info->cli_format = strdup(str);
-					if (NULL == p_area_info->cli_format)
-					{
-						LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
-						err = VSFERR_NOT_ENOUGH_RESOURCES;
-						goto free_and_exit;
-					}
-					format = p_area_info->cli_format;
-				}
-				else
-				{
-					if (size > 8)
-					{
-						LOG_ERROR(ERRMSG_NOT_DEFINED, "format node");
-						err = VSFERR_FAIL;
-						goto free_and_exit;
-					}
-					snprintf(format_tmp, sizeof(format_tmp), "%%%dx", size);
-					format = format_tmp;
-				}
-				str = (char *)xmlGetProp(paramNode, BAD_CAST "mask");
-				if (str != NULL)
-				{
-					p_area_info->mask = (uint8_t *)malloc(size);
-					if (NULL == p_area_info->mask)
-					{
-						LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
-						err = VSFERR_NOT_ENOUGH_RESOURCES;
-						goto free_and_exit;
-					}
-					buff = p_area_info->mask;
-					if (strparser_parse(str, format, buff, size))
-					{
-						LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse mask node");
-						err = ERRCODE_FAILURE_OPERATION;
-						goto free_and_exit;
-					}
+					LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse chip area");
+					err = ERRCODE_FAILURE_OPERATION;
+					goto free_and_exit;
 				}
 			}
 			else if (!xmlStrcmp(paramNode->name, BAD_CAST "fuse"))
@@ -1492,55 +1498,11 @@ vsf_err_t target_build_chip_series(struct target_info_t *target,
 				target_para_size_defined |= FUSE;
 				target_assert_chip_area(p_param, FUSE_IDX);
 				p_area_info = target_get_chip_area(p_param, FUSE_IDX);
-				p_area_info->size = (uint32_t)strtoul(
-					(const char *)xmlGetProp(paramNode, BAD_CAST "bytesize"),
-					NULL, 0);
-				size = p_area_info->size;
-				p_area_info->default_value = strtoull(
-					(const char *)xmlGetProp(paramNode, BAD_CAST "init"),
-					NULL, 0);
-				p_area_info->cli_format = NULL;
-				p_area_info->mask = NULL;
-				str = (char *)xmlGetProp(paramNode, BAD_CAST "format");
-				if (str != NULL)
+				if (target_parse_chip_area(p_area_info, paramNode))
 				{
-					p_area_info->cli_format = strdup(str);
-					if (NULL == p_area_info->cli_format)
-					{
-						LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
-						err = VSFERR_NOT_ENOUGH_RESOURCES;
-						goto free_and_exit;
-					}
-					format = p_area_info->cli_format;
-				}
-				else
-				{
-					if (size > 8)
-					{
-						LOG_ERROR(ERRMSG_NOT_DEFINED, "format node");
-						err = VSFERR_FAIL;
-						goto free_and_exit;
-					}
-					snprintf(format_tmp, sizeof(format_tmp), "%%%dx", size);
-					format = format_tmp;
-				}
-				str = (char *)xmlGetProp(paramNode, BAD_CAST "mask");
-				if (str != NULL)
-				{
-					p_area_info->mask = (uint8_t *)malloc(size);
-					if (NULL == p_area_info->mask)
-					{
-						LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
-						err = VSFERR_NOT_ENOUGH_RESOURCES;
-						goto free_and_exit;
-					}
-					buff = p_area_info->mask;
-					if (strparser_parse(str, format, buff, size))
-					{
-						LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse mask node");
-						err = ERRCODE_FAILURE_OPERATION;
-						goto free_and_exit;
-					}
+					LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse chip area");
+					err = ERRCODE_FAILURE_OPERATION;
+					goto free_and_exit;
 				}
 			}
 			else if (!xmlStrcmp(paramNode->name, BAD_CAST "lock"))
@@ -1548,55 +1510,11 @@ vsf_err_t target_build_chip_series(struct target_info_t *target,
 				target_para_size_defined |= LOCK;
 				target_assert_chip_area(p_param, LOCK_IDX);
 				p_area_info = target_get_chip_area(p_param, LOCK_IDX);
-				p_area_info->size = (uint32_t)strtoul(
-					(const char *)xmlGetProp(paramNode, BAD_CAST "bytesize"),
-					NULL, 0);
-				size = p_area_info->size;
-				p_area_info->default_value = strtoull(
-					(const char *)xmlGetProp(paramNode, BAD_CAST "init"),
-					NULL, 0);
-				p_area_info->cli_format = NULL;
-				p_area_info->mask = NULL;
-				str = (char *)xmlGetProp(paramNode, BAD_CAST "format");
-				if (str != NULL)
+				if (target_parse_chip_area(p_area_info, paramNode))
 				{
-					p_area_info->cli_format = strdup(str);
-					if (NULL == p_area_info->cli_format)
-					{
-						LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
-						err = VSFERR_NOT_ENOUGH_RESOURCES;
-						goto free_and_exit;
-					}
-					format = p_area_info->cli_format;
-				}
-				else
-				{
-					if (size > 8)
-					{
-						LOG_ERROR(ERRMSG_NOT_DEFINED, "format node");
-						err = VSFERR_FAIL;
-						goto free_and_exit;
-					}
-					snprintf(format_tmp, sizeof(format_tmp), "%%%dx", size);
-					format = format_tmp;
-				}
-				str = (char *)xmlGetProp(paramNode, BAD_CAST "mask");
-				if (str != NULL)
-				{
-					p_area_info->mask = (uint8_t *)malloc(size);
-					if (NULL == p_area_info->mask)
-					{
-						LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
-						err = VSFERR_NOT_ENOUGH_RESOURCES;
-						goto free_and_exit;
-					}
-					buff = p_area_info->mask;
-					if (strparser_parse(str, format, buff, size))
-					{
-						LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse mask node");
-						err = ERRCODE_FAILURE_OPERATION;
-						goto free_and_exit;
-					}
+					LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse chip area");
+					err = ERRCODE_FAILURE_OPERATION;
+					goto free_and_exit;
 				}
 			}
 			else if (!xmlStrcmp(paramNode->name, BAD_CAST "calibration"))
@@ -1604,55 +1522,23 @@ vsf_err_t target_build_chip_series(struct target_info_t *target,
 				target_para_size_defined |= CALIBRATION;
 				target_assert_chip_area(p_param, CALIBRATION_IDX);
 				p_area_info = target_get_chip_area(p_param, CALIBRATION_IDX);
-				p_area_info->size = (uint32_t)strtoul(
-					(const char *)xmlGetProp(paramNode,BAD_CAST "bytesize"),
-					NULL, 0);
-				size = p_area_info->size;
-				p_area_info->default_value = strtoull(
-						(const char *)xmlGetProp(paramNode, BAD_CAST "init"),
-						NULL, 0);
-				p_area_info->cli_format = NULL;
-				p_area_info->mask = NULL;
-				str = (char *)xmlGetProp(paramNode, BAD_CAST "format");
-				if (str != NULL)
+				if (target_parse_chip_area(p_area_info, paramNode))
 				{
-					p_area_info->cli_format = strdup(str);
-					if (NULL == p_area_info->cli_format)
-					{
-						LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
-						err = VSFERR_NOT_ENOUGH_RESOURCES;
-						goto free_and_exit;
-					}
-					format = p_area_info->cli_format;
+					LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse chip area");
+					err = ERRCODE_FAILURE_OPERATION;
+					goto free_and_exit;
 				}
-				else
+			}
+			else if (!xmlStrcmp(paramNode->name, BAD_CAST "usrsig"))
+			{
+				target_para_size_defined |= USRSIG;
+				target_assert_chip_area(p_param, USRSIG_IDX);
+				p_area_info = target_get_chip_area(p_param, USRSIG_IDX);
+				if (target_parse_chip_area(p_area_info, paramNode))
 				{
-					if (size > 8)
-					{
-						LOG_ERROR(ERRMSG_NOT_DEFINED, "format node");
-						err = VSFERR_FAIL;
-						goto free_and_exit;
-					}
-					snprintf(format_tmp, sizeof(format_tmp), "%%%dx", size);
-					format = format_tmp;
-				}
-				str = (char *)xmlGetProp(paramNode, BAD_CAST "mask");
-				if (str != NULL)
-				{
-					p_area_info->mask = (uint8_t *)malloc(size);
-					if (NULL == p_area_info->mask)
-					{
-						LOG_ERROR(ERRMSG_NOT_ENOUGH_MEMORY);
-						err = VSFERR_NOT_ENOUGH_RESOURCES;
-						goto free_and_exit;
-					}
-					buff = p_area_info->mask;
-					if (strparser_parse(str, format, buff, size))
-					{
-						LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse mask node");
-						err = ERRCODE_FAILURE_OPERATION;
-						goto free_and_exit;
-					}
+					LOG_ERROR(ERRMSG_FAILURE_OPERATION, "parse chip area");
+					err = ERRCODE_FAILURE_OPERATION;
+					goto free_and_exit;
 				}
 			}
 			else

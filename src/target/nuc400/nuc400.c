@@ -47,8 +47,9 @@ struct program_area_map_t nuc400_program_area_map[] =
 {
 //	{BOOTLOADER_CHAR, 1, 0, 0, 0, AREA_ATTR_EWR | AREA_ATTR_EP},
 	{APPLICATION_CHAR, 1, 0, 0, 0, AREA_ATTR_EWR | AREA_ATTR_EP | AREA_ATTR_RAW},
-//	{FUSE_CHAR, 0, 0, 0, 0, AREA_ATTR_EWR},
-//	{UNIQUEID_CHAR, 0, 0, 0, 0, AREA_ATTR_R},
+	{FUSE_CHAR, 0, 0, 0, 0, AREA_ATTR_EWR},
+	{UNIQUEID_CHAR, 0, 0, 0, 0, AREA_ATTR_R},
+	{USRSIG_CHAR, 0, 0, 0, 0, AREA_ATTR_EWR},
 	{0, 0, 0, 0, 0, AREA_ATTR_NONE}
 };
 

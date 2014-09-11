@@ -46,6 +46,8 @@
 #include "adi_v5p1.h"
 #include "cm_common.h"
 
+#include "tool/crc/crc.h"
+
 ENTER_PROGRAM_MODE_HANDLER(nuc400swj);
 LEAVE_PROGRAM_MODE_HANDLER(nuc400swj);
 ERASE_TARGET_HANDLER(nuc400swj);
@@ -64,6 +66,7 @@ const struct program_functions_t nuc400swj_program_functions =
 struct nuc400_fl_t
 {
 	uint32_t iap_cnt;
+	bool iap_busy;
 };
 struct cm_nuc400_t
 {
@@ -73,7 +76,6 @@ struct cm_nuc400_t
 	
 	struct nuc400_fl_t fl;
 	bool apmode;
-	bool ldmode;
 	uint8_t tick_tock;
 };
 
@@ -106,7 +108,7 @@ static uint8_t iap_code[] =
 	0x1B, 0x42,				// tst		r3, r3
 	0x02, 0xD0,				// beq		isp_go
 	0x18, 0x68,				// ldr		r0, [r3]
-	0x1B, 0x1D,				// adds		r3, r3, #4			// src_addr ++ 4
+	0x1B, 0x1D,				// adds		r3, r3, #4			// src_addr += 4
 	0xB0, 0x60,				// str		r0, [r6, #0x8]		// set ISPDAT
 							// isp_go:
 	0x01, 0x20,				// mov		r0, #1
@@ -188,7 +190,12 @@ static vsf_err_t nuc400swj_iap_poll_finish(struct nuc400_fl_t *fl)
 		cm_dump(NUC400_IAP_BASE, sizeof(iap_code));
 		return VSFERR_FAIL;
 	}
-	return (iap_cnt == fl->iap_cnt) ? VSFERR_NONE : VSFERR_NOT_READY;
+	else if (iap_cnt == fl->iap_cnt)
+	{
+		fl->iap_busy = false;
+		return VSFERR_NONE;
+	}
+	return VSFERR_NOT_READY;
 }
 
 static vsf_err_t nuc400swj_iap_poll_param_taken(struct nuc400_fl_t *fl)
@@ -243,7 +250,7 @@ static vsf_err_t nuc400swj_iap_wait_finish(struct nuc400_fl_t *fl)
 	vsf_err_t err;
 	uint32_t start, end;
 	
-	if (!fl->iap_cnt)
+	if (!fl->iap_busy)
 	{
 		return VSFERR_NONE;
 	}
@@ -301,6 +308,7 @@ static vsf_err_t nuc400swj_iap_run(struct nuc400_fl_t *fl,
 		return ERRCODE_FAILURE_OPERATION;
 	}
 	fl->iap_cnt++;
+	fl->iap_busy = true;
 	
 	return VSFERR_NONE;
 }
@@ -320,31 +328,16 @@ static vsf_err_t nuc400swj_unlock(void)
 	return VSFERR_NONE;
 }
 
-static vsf_err_t nuc400swj_reset(void)
+static vsf_err_t nuc400swj_fmc_enable(void)
 {
-	uint32_t iprstc1 = NUC400_REG_IPRSTC1_CUP_RST;
-	
-	return adi_memap_write_reg32(NUC400_REG_IPRSTC1, &iprstc1, 1);
-}
-
-static vsf_err_t nuc400swj_reset_to_aprom(void)
-{
-	uint32_t ispcon = NUC400_REG_ISPCON_BS_APROM;
-	
-	if (adi_memap_write_reg32(NUC400_REG_ISPCON, &ispcon, 1) ||
-		nuc400swj_reset())
+	uint32_t reg = NUC400_REG_AHBCLK_ISPEN;
+	if (adi_memap_write_reg32(NUC400_REG_AHBCLK, &reg, 0))
 	{
 		return VSFERR_FAIL;
 	}
-	return VSFERR_NONE;
-}
-
-static vsf_err_t nuc400swj_reset_to_ldrom(void)
-{
-	uint32_t ispcon = NUC400_REG_ISPCON_BS_LDROM;
-	
-	if (adi_memap_write_reg32(NUC400_REG_ISPCON, &ispcon, 1) ||
-		nuc400swj_reset())
+	reg = NUC400_REG_ISPCON_ISPFF | NUC400_REG_ISPCON_LDUEN |
+			NUC400_REG_ISPCON_CFGUEN | NUC400_REG_ISPCON_ISPEN;
+	if (adi_memap_write_reg32(NUC400_REG_ISPCON, &reg, 1))
 	{
 		return VSFERR_FAIL;
 	}
@@ -360,19 +353,6 @@ static vsf_err_t nuc400swj_init_iap(void)
 	{
 		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "halt nuc400");
 		return ERRCODE_FAILURE_OPERATION;
-	}
-	
-	// enable isp clock and ispen bit
-	reg = NUC400_REG_AHBCLK_ISPEN;
-	if (adi_memap_write_reg32(NUC400_REG_AHBCLK, &reg, 0))
-	{
-		return VSFERR_FAIL;
-	}
-	reg = NUC400_REG_ISPCON_ISPFF | NUC400_REG_ISPCON_LDUEN |
-			NUC400_REG_ISPCON_CFGUEN | NUC400_REG_ISPCON_ISPEN;
-	if (adi_memap_write_reg32(NUC400_REG_ISPCON, &reg, 1))
-	{
-		return VSFERR_FAIL;
 	}
 	
 	// write iap_code
@@ -412,6 +392,103 @@ static vsf_err_t nuc400swj_init_iap(void)
 	return VSFERR_NONE;
 }
 
+static vsf_err_t nuc400swj_reset(void)
+{
+	uint32_t reg = NUC400_REG_IPRSTC1_CUP_RST;
+	
+	if (adi_memap_write_reg32(NUC400_REG_IPRSTC1, &reg, 1) ||
+		nuc400swj_unlock() || nuc400swj_fmc_enable() || nuc400swj_init_iap())
+	{
+		return VSFERR_FAIL;
+	}
+	return VSFERR_NONE;
+}
+
+static vsf_err_t nuc400swj_reset_to_aprom(void)
+{
+	uint32_t reg = NUC400_REG_ISPCON_BS_APROM;
+	
+	if (adi_memap_write_reg32(NUC400_REG_ISPCON, &reg, 1) || nuc400swj_reset())
+	{
+		return VSFERR_FAIL;
+	}
+	return VSFERR_NONE;
+}
+
+static vsf_err_t nuc400swj_reset_to_ldrom(void)
+{
+	uint32_t reg = NUC400_REG_ISPCON_BS_LDROM;
+	
+	if (adi_memap_write_reg32(NUC400_REG_ISPCON, &reg, 1) || nuc400swj_reset())
+	{
+		return VSFERR_FAIL;
+	}
+	return VSFERR_NONE;
+}
+
+static vsf_err_t nuc400swj_isp_run(uint8_t cmd, uint32_t addr, uint32_t *data,
+									uint32_t num, bool read)
+{
+	vsf_err_t err = VSFERR_NONE;
+	uint32_t reg, i;
+	
+	for (i = 0; i < num; i++)
+	{
+		if (!read && (data != NULL))
+		{
+			if (adi_memap_write_reg32(NUC400_REG_ISPADR, &data[i], 0))
+			{
+				err = ERRCODE_FAILURE_OPERATION;
+				break;
+			}
+		}
+		reg = addr;
+		addr += 4;
+		if (adi_memap_write_reg32(NUC400_REG_ISPADR, &reg, 0))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		reg = cmd;
+		if (adi_memap_write_reg32(NUC400_REG_ISPCMD, &reg, 0))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		reg = NUC400_REG_ISPTRG_ISPGO;
+		if (adi_memap_write_reg32(NUC400_REG_ISPTRG, &reg, 0))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		while (1)
+		{
+			if (adi_memap_read_reg32(NUC400_REG_ISPTRG, &reg, 1))
+			{
+				err = ERRCODE_FAILURE_OPERATION;
+				break;
+			}
+			if (!(reg & NUC400_REG_ISPTRG_ISPGO))
+			{
+				break;
+			}
+		}
+		if (adi_memap_read_reg32(NUC400_REG_ISPCON, &reg, 1) ||
+			(reg & NUC400_REG_ISPCON_ISPFF))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		if (read && (data != NULL) &&
+			adi_memap_read_reg32(NUC400_REG_ISPDAT, &data[i], 1))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+	}
+	return err;
+}
+
 ENTER_PROGRAM_MODE_HANDLER(nuc400swj)
 {
 	struct cm_nuc400_t *nuc400 = (struct cm_nuc400_t *)context->priv;
@@ -424,9 +501,14 @@ ENTER_PROGRAM_MODE_HANDLER(nuc400swj)
 	}
 	
 	fl->iap_cnt = 0;
-	nuc400->apmode = false;
-	nuc400->ldmode = false;
+	fl->iap_busy = false;
 	
+	// enter LDMODE by default
+	nuc400->apmode = false;
+	if (nuc400swj_unlock() || nuc400swj_reset_to_ldrom())
+	{
+		return VSFERR_FAIL;
+	}
 	return VSFERR_NONE;
 }
 
@@ -456,20 +538,17 @@ ERASE_TARGET_HANDLER(nuc400swj)
 	switch (area)
 	{
 	case BOOTLOADER_CHAR:
-		if (!nuc400->ldmode)
+		if (nuc400->apmode)
 		{
-			if (nuc400swj_unlock() || nuc400swj_reset_to_aprom() ||
-				nuc400swj_unlock() || nuc400swj_init_iap())
+			if (nuc400swj_reset_to_aprom())
 			{
 				return VSFERR_FAIL;
 			}
-			
-			nuc400->ldmode = true;
 			nuc400->apmode = false;
 		}
 		
 		cmd.tgt_addr = addr;
-		if (nuc400swj_iap_run(fl, &cmd) ||
+		if (nuc400swj_iap_run(fl, &cmd) || interfaces->delay.delayms(20) ||
 			nuc400swj_iap_wait_finish(fl))
 		{
 			err = VSFERR_FAIL;
@@ -478,21 +557,34 @@ ERASE_TARGET_HANDLER(nuc400swj)
 	case APPLICATION_CHAR:
 		if (!nuc400->apmode)
 		{
-			if (nuc400swj_unlock() || nuc400swj_reset_to_ldrom() ||
-				nuc400swj_unlock() || nuc400swj_init_iap())
+			if (nuc400swj_reset_to_ldrom())
 			{
 				return VSFERR_FAIL;
 			}
-			
 			nuc400->apmode = true;
-			nuc400->ldmode = false;
 		}
 		
 		cmd.tgt_addr = addr;
-		if (nuc400swj_iap_run(fl, &cmd) ||
+		if (nuc400swj_iap_run(fl, &cmd) || interfaces->delay.delayms(20) ||
 			nuc400swj_iap_wait_finish(fl))
 		{
 			err = VSFERR_FAIL;
+		}
+		break;
+	case FUSE_CHAR:
+		// wait previous flashloader operation finish first
+		if (nuc400swj_iap_wait_finish(
+								&((struct cm_nuc400_t *)(context->priv))->fl))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		
+		if (nuc400swj_isp_run(NUC400_REG_ISPCMD_PAGE_ERASE,
+										NUC400_REG_CFG_BA, NULL, 1, false))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
 		}
 		break;
 	default:
@@ -516,14 +608,11 @@ WRITE_TARGET_HANDLER(nuc400swj)
 	case APPLICATION_CHAR:
 		if (!nuc400->apmode)
 		{
-			if (nuc400swj_unlock() || nuc400swj_reset_to_ldrom() ||
-				nuc400swj_unlock() || nuc400swj_init_iap())
+			if (nuc400swj_reset_to_ldrom())
 			{
 				return VSFERR_FAIL;
 			}
-			
 			nuc400->apmode = true;
-			nuc400->ldmode = false;
 		}
 		
 		// check alignment
@@ -559,6 +648,47 @@ WRITE_TARGET_HANDLER(nuc400swj)
 			addr += page_size;
 		}
 		break;
+	case FUSE_CHAR:
+		{
+			uint32_t fuse_data[4];
+
+			memcpy(fuse_data, buff, 12);
+			fuse_data[3] = 0xFFFFFFFF;
+			
+			if ((fuse_data[0] != 0xFFFFFFFF) || (fuse_data[1] != 0xFFFFFFFF) ||
+				(fuse_data[2] != 0xFFFFFFFF))
+			{
+				struct crc_t crc8 = {CRC_BITLEN_8, 0xFF, 0x07};
+				uint8_t *fuse_byte = (uint8_t *)fuse_data;
+				uint8_t i;
+				
+				fuse_data[3] = 0;
+				for (i = 0; i < 4; i++)
+				{
+					crc8.result = 0xFF;
+					crc_calc(&crc8, &fuse_byte[i + 0], 1);
+					crc_calc(&crc8, &fuse_byte[i + 4], 1);
+					crc_calc(&crc8, &fuse_byte[i + 8], 1);
+					fuse_data[3] |= crc8.result << (i * 8);
+				}
+			}
+			
+			// wait previous flashloader operation finish first
+			if (nuc400swj_iap_wait_finish(
+								&((struct cm_nuc400_t *)(context->priv))->fl))
+			{
+				err = ERRCODE_FAILURE_OPERATION;
+				break;
+			}
+			
+			if (nuc400swj_isp_run(NUC400_REG_ISPCMD_PROGRAM,
+									NUC400_REG_CFG_BA, fuse_data, 4, false))
+			{
+				err = ERRCODE_FAILURE_OPERATION;
+				break;
+			}
+			break;
+		}
 	default:
 		err = VSFERR_FAIL;
 		break;
@@ -571,19 +701,85 @@ READ_TARGET_HANDLER(nuc400swj)
 {
 	uint32_t cur_block_size;
 	vsf_err_t err = VSFERR_NONE;
-	uint32_t pdid;
+	uint32_t reg;
 	
 	REFERENCE_PARAMETER(context);
 	
 	switch (area)
 	{
 	case CHIPID_CHAR:
-		if (adi_memap_read_reg32(NUC400_REG_PDID, &pdid, 1))
+		if (adi_memap_read_reg32(NUC400_REG_PDID, &reg, 1))
 		{
 			err = ERRCODE_FAILURE_OPERATION;
 			break;
 		}
-		*(uint32_t*)buff = pdid;
+		*(uint32_t*)buff = reg;
+		break;
+	case UNIQUEID_CHAR:
+		// wait previous flashloader operation finish first
+		if (nuc400swj_iap_wait_finish(
+							&((struct cm_nuc400_t *)(context->priv))->fl))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		
+		if (nuc400swj_isp_run(NUC400_REG_ISPCMD_READUID, 0,
+									(uint32_t *)buff, 3, true))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		break;
+	case USRSIG_CHAR:
+		// wait previous flashloader operation finish first
+		if (nuc400swj_iap_wait_finish(
+							&((struct cm_nuc400_t *)(context->priv))->fl))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		
+		if (nuc400swj_isp_run(NUC400_REG_ISPCMD_READUID, 0x10,
+									(uint32_t *)buff, 4, true))
+		{
+			err = ERRCODE_FAILURE_OPERATION;
+			break;
+		}
+		break;
+	case FUSE_CHAR:
+		{
+			uint32_t fuse_data[4];
+			
+			if (adi_memap_read_buf32(NUC400_REG_CFG_BA, (uint8_t*)fuse_data, 16))
+			{
+				err = ERRCODE_FAILURE_OPERATION;
+				break;
+			}
+			// checksum verification
+			if ((fuse_data[0] != 0xFFFFFFFF) || (fuse_data[1] != 0xFFFFFFFF) ||
+				(fuse_data[2] != 0xFFFFFFFF))
+			{
+				uint32_t crc32 = 0;
+				struct crc_t crc8 = {CRC_BITLEN_8, 0xFF, 0x07};
+				uint8_t *fuse_byte = (uint8_t *)fuse_data;
+				uint8_t i;
+				
+				for (i = 0; i < 4; i++)
+				{
+					crc8.result = 0xFF;
+					crc_calc(&crc8, &fuse_byte[i + 0], 1);
+					crc_calc(&crc8, &fuse_byte[i + 4], 1);
+					crc_calc(&crc8, &fuse_byte[i + 8], 1);
+					crc32 |= crc8.result << (i * 8);
+				}
+				if (crc32 != fuse_data[3])
+				{
+					// checksum fails
+					err =  VSFERR_FAIL;
+				}
+			}
+		}
 		break;
 	case APPLICATION_CHAR:
 		while (size)
