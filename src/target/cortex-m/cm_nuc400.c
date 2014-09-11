@@ -75,7 +75,12 @@ struct cm_nuc400_t
 	struct cm_info_t cm;
 	
 	struct nuc400_fl_t fl;
-	bool apmode;
+	enum nuc400_bootmode_t
+	{
+		NUC400_BOOTMODE_NONE,
+		NUC400_BOOTMODE_AP,
+		NUC400_BOOTMODE_LD,
+	} bootmode;
 	uint8_t tick_tock;
 };
 
@@ -355,6 +360,18 @@ static vsf_err_t nuc400swj_init_iap(void)
 		return ERRCODE_FAILURE_OPERATION;
 	}
 	
+	if (nuc400swj_unlock())
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "unlock NUC chip");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	
+	if (nuc400swj_fmc_enable())
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "enable FMC");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	
 	// write iap_code
 	if (adi_memap_write_buf32(NUC400_IAP_BASE, (uint8_t*)iap_code,
 											sizeof(iap_code)))
@@ -396,12 +413,7 @@ static vsf_err_t nuc400swj_reset(void)
 {
 	uint32_t reg = NUC400_REG_IPRSTC1_CUP_RST;
 	
-	if (adi_memap_write_reg32(NUC400_REG_IPRSTC1, &reg, 1) ||
-		nuc400swj_unlock() || nuc400swj_fmc_enable() || nuc400swj_init_iap())
-	{
-		return VSFERR_FAIL;
-	}
-	return VSFERR_NONE;
+	return adi_memap_write_reg32(NUC400_REG_IPRSTC1, &reg, 1);
 }
 
 static vsf_err_t nuc400swj_reset_to_aprom(void)
@@ -493,6 +505,7 @@ ENTER_PROGRAM_MODE_HANDLER(nuc400swj)
 {
 	struct cm_nuc400_t *nuc400 = (struct cm_nuc400_t *)context->priv;
 	struct nuc400_fl_t *fl = &nuc400->fl;
+	uint32_t reg;
 	
 	if (sizeof(*nuc400) > sizeof(context->priv))
 	{
@@ -501,15 +514,14 @@ ENTER_PROGRAM_MODE_HANDLER(nuc400swj)
 	}
 	
 	fl->iap_cnt = 0;
-	fl->iap_busy = false;
-	
-	// enter LDMODE by default
-	nuc400->apmode = false;
-	if (nuc400swj_unlock() || nuc400swj_reset_to_ldrom())
+	if (adi_memap_read_reg32(NUC400_REG_ISPCON, &reg, 1))
 	{
 		return VSFERR_FAIL;
 	}
-	return VSFERR_NONE;
+	nuc400->bootmode = reg & NUC400_REG_ISPCON_BS_LDROM ?
+		NUC400_BOOTMODE_LD : NUC400_BOOTMODE_AP;
+	
+	return nuc400swj_init_iap();
 }
 
 LEAVE_PROGRAM_MODE_HANDLER(nuc400swj)
@@ -538,13 +550,13 @@ ERASE_TARGET_HANDLER(nuc400swj)
 	switch (area)
 	{
 	case BOOTLOADER_CHAR:
-		if (nuc400->apmode)
+		if (nuc400->bootmode != NUC400_BOOTMODE_AP)
 		{
-			if (nuc400swj_reset_to_aprom())
+			if (nuc400swj_reset_to_aprom() || nuc400swj_init_iap())
 			{
 				return VSFERR_FAIL;
 			}
-			nuc400->apmode = false;
+			nuc400->bootmode = NUC400_BOOTMODE_AP;
 		}
 		
 		cmd.tgt_addr = addr;
@@ -555,13 +567,13 @@ ERASE_TARGET_HANDLER(nuc400swj)
 		}
 		break;
 	case APPLICATION_CHAR:
-		if (!nuc400->apmode)
+		if (nuc400->bootmode != NUC400_BOOTMODE_LD)
 		{
-			if (nuc400swj_reset_to_ldrom())
+			if (nuc400swj_reset_to_ldrom() || nuc400swj_init_iap())
 			{
 				return VSFERR_FAIL;
 			}
-			nuc400->apmode = true;
+			nuc400->bootmode = NUC400_BOOTMODE_LD;
 		}
 		
 		cmd.tgt_addr = addr;
@@ -605,13 +617,13 @@ WRITE_TARGET_HANDLER(nuc400swj)
 	switch (area)
 	{
 	case APPLICATION_CHAR:
-		if (!nuc400->apmode)
+		if (nuc400->bootmode != NUC400_BOOTMODE_LD)
 		{
-			if (nuc400swj_reset_to_ldrom())
+			if (nuc400swj_reset_to_ldrom() || nuc400swj_init_iap())
 			{
 				return VSFERR_FAIL;
 			}
-			nuc400->apmode = true;
+			nuc400->bootmode = NUC400_BOOTMODE_LD;
 		}
 		
 		// check alignment
@@ -650,7 +662,7 @@ WRITE_TARGET_HANDLER(nuc400swj)
 	case FUSE_CHAR:
 		{
 			uint32_t fuse_data[4];
-
+			
 			memcpy(fuse_data, buff, 12);
 			fuse_data[3] = 0xFFFFFFFF;
 			
@@ -776,8 +788,8 @@ READ_TARGET_HANDLER(nuc400swj)
 					err =  VSFERR_FAIL;
 				}
 			}
+			break;
 		}
-		break;
 	case APPLICATION_CHAR:
 		while (size)
 		{
