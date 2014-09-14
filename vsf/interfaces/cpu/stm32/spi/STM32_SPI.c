@@ -293,7 +293,6 @@ vsf_err_t stm32_spi_fini(uint8_t index)
 		break;
 	#endif
 	}
-	SPI_I2S_DeInit((SPI_TypeDef *)stm32_spis[spi_idx]);
 	return VSFERR_NONE;
 }
 
@@ -803,7 +802,7 @@ vsf_err_t stm32_spi_io(uint8_t index, uint8_t *out, uint8_t *in, uint32_t len)
 			for(i = 0; i < len; i++)
 			{
 				spi->DR = out8;
-				while(!(spi->SR & SPI_I2S_FLAG_RXNE));
+				while(!(spi->SR & SPI_SR_RXNE));
 				dummy = spi->DR;
 			}
 		}
@@ -812,7 +811,7 @@ vsf_err_t stm32_spi_io(uint8_t index, uint8_t *out, uint8_t *in, uint32_t len)
 			for(i = 0; i < len; i++)
 			{
 				spi->DR = out8;
-				while(!(spi->SR & SPI_I2S_FLAG_RXNE));
+				while(!(spi->SR & SPI_SR_RXNE));
 				in[i] = spi->DR;
 			}
 		}
@@ -824,7 +823,7 @@ vsf_err_t stm32_spi_io(uint8_t index, uint8_t *out, uint8_t *in, uint32_t len)
 			for(i = 0; i < len; i++)
 			{
 				spi->DR = out[i];
-				while(!(spi->SR & SPI_I2S_FLAG_RXNE));
+				while(!(spi->SR & SPI_SR_RXNE));
 				dummy = spi->DR;
 			}
 		}
@@ -833,7 +832,7 @@ vsf_err_t stm32_spi_io(uint8_t index, uint8_t *out, uint8_t *in, uint32_t len)
 			for(i = 0; i < len; i++)
 			{
 				spi->DR = out[i];
-				while(!(spi->SR & SPI_I2S_FLAG_RXNE));
+				while(!(spi->SR & SPI_SR_RXNE));
 				in[i] = spi->DR;
 			}
 		}

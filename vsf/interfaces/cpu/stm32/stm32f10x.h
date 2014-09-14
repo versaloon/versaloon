@@ -8292,10 +8292,6 @@ typedef struct
   * @}
   */ 
 
-#ifdef USE_STDPERIPH_DRIVER
-  #include "stm32f10x_conf.h"
-#endif
-
 /** @addtogroup Exported_macro
   * @{
   */

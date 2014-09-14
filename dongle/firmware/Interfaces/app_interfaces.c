@@ -309,8 +309,7 @@ const struct app_interfaces_info_t app_interfaces =
 		usart_config,
 		usart_send,
 		usart_receive,
-		usart_status,
-		usart_poll
+		usart_status
 	}
 #endif
 #if INTERFACE_SPI_EN
@@ -536,8 +535,7 @@ const struct app_interfaces_info_t app_interfaces =
 		adc_calibrate,
 		adc_start,
 		adc_isready,
-		adc_get,
-		adc_sample
+		adc_get
 	}
 #endif
 	,{

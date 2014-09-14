@@ -733,13 +733,13 @@ vsf_err_t stm32_usart_config(uint8_t index, uint32_t baudrate,
 	return VSFERR_NONE;
 }
 
-vsf_err_t stm32_usart_config_callback(uint8_t index, void *p, 
-						void (*ontx)(void *), void (*onrx)(void *, uint16_t))
+vsf_err_t stm32_usart_config_callback(uint8_t index, uint32_t int_priority,
+				void *p, void (*ontx)(void *), void (*onrx)(void *, uint16_t))
 {
-	NVIC_InitTypeDef NVIC_InitStructure;
 	USART_TypeDef *usart;
 	uint8_t usart_idx = index & 0x0F;
 	uint32_t cr1 = 0;
+	uint8_t irqn;
 	
 #if __VSF_DEBUG__
 	if (usart_idx >= USART_NUM)
@@ -748,10 +748,7 @@ vsf_err_t stm32_usart_config_callback(uint8_t index, void *p,
 	}
 #endif
 	usart = (USART_TypeDef *)stm32_usarts[usart_idx];
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-	NVIC_InitStructure.NVIC_IRQChannel = stm32_usart_irqn[index];
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	irqn = stm32_usart_irqn[index];
 	
 	stm32_usart_ontx[usart_idx] = ontx;
 	stm32_usart_onrx[usart_idx] = onrx;
@@ -764,11 +761,18 @@ vsf_err_t stm32_usart_config_callback(uint8_t index, void *p,
 	{
 		cr1 |= STM32_USART_CR1_RXNEIE;
 	}
-	NVIC_InitStructure.NVIC_IRQChannelCmd =
-		((ontx != NULL) || (onrx != NULL)) ? ENABLE : DISABLE;
 	usart->CR1 &= ~(STM32_USART_CR1_TXEIE | STM32_USART_CR1_RXNEIE);
 	usart->CR1 |= cr1;
-	NVIC_Init(&NVIC_InitStructure);
+	
+	if ((ontx != NULL) || (onrx != NULL))
+	{
+		NVIC->IP[irqn] = int_priority;
+		NVIC->ISER[irqn >> 0x05] = 1UL << (irqn & 0x1F);
+	}
+	else
+	{
+		NVIC->ICER[irqn >> 0x05] = 1UL << (irqn & 0x1F);
+	}
 	return VSFERR_NONE;
 }
 

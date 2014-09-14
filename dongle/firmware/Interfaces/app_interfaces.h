@@ -86,7 +86,6 @@ struct app_interface_usart_t
 	vsf_err_t (*send)(uint8_t index, uint8_t *buf, uint16_t len);
 	vsf_err_t (*receive)(uint8_t index, uint8_t *buf, uint16_t len);
 	vsf_err_t (*status)(uint8_t index, struct usart_status_t *status);
-	vsf_err_t (*poll)(uint8_t index);
 };
 
 struct interface_issp_t
