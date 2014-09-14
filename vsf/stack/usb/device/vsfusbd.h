@@ -220,6 +220,7 @@ struct vsfusbd_setup_filter_t *vsfusbd_get_class_request_filter(
 		struct vsfusbd_class_protocol_t *class_protocol);
 
 vsf_err_t vsfusbd_device_init(struct vsfusbd_device_t *device);
+vsf_err_t vsfusbd_device_fini(struct vsfusbd_device_t *device);
 vsf_err_t vsfusbd_ep_send_nb(struct vsfusbd_device_t *device, uint8_t ep);
 vsf_err_t vsfusbd_ep_receive_nb(struct vsfusbd_device_t *device, uint8_t ep);
 

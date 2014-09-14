@@ -1105,6 +1105,104 @@ static void vsfusbd_setup_status_callback(void *param)
 	}
 }
 
+// interrupts, simply send(pending) interrupt event to sm
+static vsf_err_t vsfusbd_on_SETUP(void *p)
+{
+	struct vsfusbd_device_t *device = p;
+	struct vsfsm_t *sm = &device->sm;
+	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_SETUP);
+}
+
+static vsf_err_t vsfusbd_on_IN(void *p, uint8_t ep)
+{
+	struct vsfusbd_device_t *device = (struct vsfusbd_device_t *)p;
+	struct vsfsm_t *sm = &device->sm;
+	if ((ep < VSFUSBD_CFG_MAX_OUT_EP) && (device->OUT_handler[ep] != NULL))
+	{
+		return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_INEP(ep));
+	}
+	return VSFERR_NOT_SUPPORT;
+}
+
+static vsf_err_t vsfusbd_on_OUT(void *p, uint8_t ep)
+{
+	struct vsfusbd_device_t *device = (struct vsfusbd_device_t *)p;
+	struct vsfsm_t *sm = &device->sm;
+	if ((ep < VSFUSBD_CFG_MAX_OUT_EP) && (device->OUT_handler[ep] != NULL))
+	{
+		return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_OUTEP(ep));
+	}
+	return VSFERR_NOT_SUPPORT;
+}
+
+vsf_err_t vsfusbd_on_UNDERFLOW(void *p, uint8_t ep)
+{
+	return VSFERR_NONE;
+}
+
+vsf_err_t vsfusbd_on_OVERFLOW(void *p, uint8_t ep)
+{
+	return VSFERR_NONE;
+}
+
+vsf_err_t vsfusbd_on_RESET(void *p)
+{
+	struct vsfusbd_device_t *device = p;
+	struct vsfsm_t *sm = &device->sm;
+	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_RESET);
+}
+
+#if VSFUSBD_CFG_LP_EN
+vsf_err_t vsfusbd_on_WAKEUP(void *p)
+{
+	struct vsfusbd_device_t *device = p;
+	struct vsfsm_t *sm = &device->sm;
+	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_WAKEUP);
+}
+
+vsf_err_t vsfusbd_on_SUSPEND(void *p)
+{
+	struct vsfusbd_device_t *device = p;
+	struct vsfsm_t *sm = &device->sm;
+	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_SUSPEND);
+}
+
+vsf_err_t vsfusbd_on_RESUME(void *p)
+{
+	struct vsfusbd_device_t *device = p;
+	struct vsfsm_t *sm = &device->sm;
+	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_RESUME);
+}
+#endif
+
+vsf_err_t vsfusbd_on_SOF(void *p)
+{
+	struct vsfusbd_device_t *device = p;
+	struct vsfsm_t *sm = &device->sm;
+	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_SOF);
+}
+
+vsf_err_t vsfusbd_on_ATTACH(void *p)
+{
+	struct vsfusbd_device_t *device = p;
+	struct vsfsm_t *sm = &device->sm;
+	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_ATTACH);
+}
+
+vsf_err_t vsfusbd_on_DETACH(void *p)
+{
+	struct vsfusbd_device_t *device = p;
+	struct vsfsm_t *sm = &device->sm;
+	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_DETACH);
+}
+
+vsf_err_t vsfusbd_on_ERROR(void *p, enum interface_usbd_error_t type)
+{
+	struct vsfusbd_device_t *device = p;
+	struct vsfsm_t *sm = &device->sm;
+	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_ERR);
+}
+
 // state machines
 static struct vsfsm_state_t *
 vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
@@ -1115,6 +1213,80 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	
 	switch (evt)
 	{
+	case VSFSM_EVT_FINI:
+		device->drv->fini();
+		device->drv->disconnect();
+		if (device->callback.fini != NULL)
+		{
+			device->callback.fini();
+		}
+		vsfsm_remove_subsm(&vsfsm_top, sm);
+		break;
+	case VSFSM_EVT_INIT:
+		{
+		#if VSFUSBD_CFG_AUTOSETUP
+			struct vsf_buffer_t desc = {NULL, 0};
+			uint8_t i;
+		#endif
+			
+			device->configured = false;
+			device->configuration = 0;
+			device->feature = 0;
+			
+		#if VSFUSBD_CFG_AUTOSETUP
+			for (i = 0; i < device->num_of_configuration; i++)
+			{
+				if (vsfusbd_device_get_descriptor(device, device->desc_filter, 
+									USB_DESC_TYPE_CONFIGURATION, i, 0, &desc)
+		#if __VSF_DEBUG__
+					|| (NULL == desc.buffer) 
+					|| (desc.size <= USB_DESC_SIZE_CONFIGURATION)
+					|| (desc.buffer[0] != USB_DESC_SIZE_CONFIGURATION)
+					|| (desc.buffer[1] != USB_DESC_TYPE_CONFIGURATION)
+					|| (config->num_of_ifaces != desc.buffer[USB_DESC_CONFIG_OFF_IFNUM])
+		#endif
+					)
+				{
+					err = VSFERR_FAIL;
+					goto init_exit;
+				}
+				device->config[i].configuration_value = 
+									desc.buffer[USB_DESC_CONFIG_OFF_CFGVAL];
+			}
+		#endif	// VSFUSBD_CFG_AUTOSETUP
+	
+			// initialize callback for low level driver before
+			// initializing the hardware
+			if (device->drv->callback != NULL)
+			{
+				device->drv->callback->param = (void *)device;
+				device->drv->callback->on_attach = NULL;
+				device->drv->callback->on_detach = NULL;
+				device->drv->callback->on_reset = vsfusbd_on_RESET;
+				device->drv->callback->on_setup = vsfusbd_on_SETUP;
+				device->drv->callback->on_error = vsfusbd_on_ERROR;
+		#if VSFUSBD_CFG_LP_EN
+				device->drv->callback->on_wakeup = vsfusbd_on_WAKEUP;
+				device->drv->callback->on_suspend = vsfusbd_on_SUSPEND;
+		//		device->drv->callback->on_resume = vsfusbd_on_RESUME;
+		#endif
+				device->drv->callback->on_sof = vsfusbd_on_SOF;
+				device->drv->callback->on_underflow = vsfusbd_on_UNDERFLOW;
+				device->drv->callback->on_overflow = vsfusbd_on_OVERFLOW;
+				device->drv->callback->on_in = vsfusbd_on_IN;
+				device->drv->callback->on_out = vsfusbd_on_OUT;
+			}
+			
+			if (device->drv->init(device->int_priority) ||
+				((device->callback.init != NULL) && device->callback.init()))
+			{
+				err = VSFERR_FAIL;
+				goto init_exit;
+			}
+			
+		init_exit:
+			break;
+		}
 	case VSFUSBD_INTEVT_RESET:
 		{
 			struct vsfusbd_config_t *config;
@@ -1390,170 +1562,17 @@ vsfusbd_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	return NULL;
 }
 
-// interrupts, simply send(pending) interrupt event to sm
-static vsf_err_t vsfusbd_on_SETUP(void *p)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_SETUP);
-}
-
-static vsf_err_t vsfusbd_on_IN(void *p, uint8_t ep)
-{
-	struct vsfusbd_device_t *device = (struct vsfusbd_device_t *)p;
-	struct vsfsm_t *sm = &device->sm;
-	if ((ep < VSFUSBD_CFG_MAX_OUT_EP) && (device->OUT_handler[ep] != NULL))
-	{
-		return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_INEP(ep));
-	}
-	return VSFERR_NOT_SUPPORT;
-}
-
-static vsf_err_t vsfusbd_on_OUT(void *p, uint8_t ep)
-{
-	struct vsfusbd_device_t *device = (struct vsfusbd_device_t *)p;
-	struct vsfsm_t *sm = &device->sm;
-	if ((ep < VSFUSBD_CFG_MAX_OUT_EP) && (device->OUT_handler[ep] != NULL))
-	{
-		return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_OUTEP(ep));
-	}
-	return VSFERR_NOT_SUPPORT;
-}
-
-vsf_err_t vsfusbd_on_UNDERFLOW(void *p, uint8_t ep)
-{
-	return VSFERR_NONE;
-}
-
-vsf_err_t vsfusbd_on_OVERFLOW(void *p, uint8_t ep)
-{
-	return VSFERR_NONE;
-}
-
-vsf_err_t vsfusbd_on_RESET(void *p)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_RESET);
-}
-
-#if VSFUSBD_CFG_LP_EN
-vsf_err_t vsfusbd_on_WAKEUP(void *p)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_WAKEUP);
-}
-
-vsf_err_t vsfusbd_on_SUSPEND(void *p)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_SUSPEND);
-}
-
-vsf_err_t vsfusbd_on_RESUME(void *p)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_RESUME);
-}
-#endif
-
-vsf_err_t vsfusbd_on_SOF(void *p)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_SOF);
-}
-
-vsf_err_t vsfusbd_on_ATTACH(void *p)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_ATTACH);
-}
-
-vsf_err_t vsfusbd_on_DETACH(void *p)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_DETACH);
-}
-
-vsf_err_t vsfusbd_on_ERROR(void *p, enum interface_usbd_error_t type)
-{
-	struct vsfusbd_device_t *device = p;
-	struct vsfsm_t *sm = &device->sm;
-	return vsfsm_post_evt_pending(sm, VSFUSBD_INTEVT_ERR);
-}
-
 vsf_err_t vsfusbd_device_init(struct vsfusbd_device_t *device)
 {
-#if VSFUSBD_CFG_AUTOSETUP
-	struct vsf_buffer_t desc = {NULL, 0};
-	uint8_t i;
-#endif
-	
-	device->configured = false;
-	device->configuration = 0;
-	device->feature = 0;
-	
-#if VSFUSBD_CFG_AUTOSETUP
-	for (i = 0; i < device->num_of_configuration; i++)
-	{
-		if (vsfusbd_device_get_descriptor(device, device->desc_filter, 
-									USB_DESC_TYPE_CONFIGURATION, i, 0, &desc)
-#if __VSF_DEBUG__
-			|| (NULL == desc.buffer) 
-			|| (desc.size <= USB_DESC_SIZE_CONFIGURATION)
-			|| (desc.buffer[0] != USB_DESC_SIZE_CONFIGURATION)
-			|| (desc.buffer[1] != USB_DESC_TYPE_CONFIGURATION)
-			|| (config->num_of_ifaces != desc.buffer[USB_DESC_CONFIG_OFF_IFNUM])
-#endif
-			)
-		{
-			return VSFERR_FAIL;
-		}
-		device->config[i].configuration_value = 
-									desc.buffer[USB_DESC_CONFIG_OFF_CFGVAL];
-	}
-#endif	// VSFUSBD_CFG_AUTOSETUP
-	
-	// initialize callback for low level driver before initializing the hardware
-	if (device->drv->callback != NULL)
-	{
-		device->drv->callback->param = (void *)device;
-		device->drv->callback->on_attach = NULL;
-		device->drv->callback->on_detach = NULL;
-		device->drv->callback->on_reset = vsfusbd_on_RESET;
-		device->drv->callback->on_setup = vsfusbd_on_SETUP;
-		device->drv->callback->on_error = vsfusbd_on_ERROR;
-#if VSFUSBD_CFG_LP_EN
-		device->drv->callback->on_wakeup = vsfusbd_on_WAKEUP;
-		device->drv->callback->on_suspend = vsfusbd_on_SUSPEND;
-//		device->drv->callback->on_resume = vsfusbd_on_RESUME;
-#endif
-		device->drv->callback->on_sof = vsfusbd_on_SOF;
-		device->drv->callback->on_underflow = vsfusbd_on_UNDERFLOW;
-		device->drv->callback->on_overflow = vsfusbd_on_OVERFLOW;
-		device->drv->callback->on_in = vsfusbd_on_IN;
-		device->drv->callback->on_out = vsfusbd_on_OUT;
-	}
-	
-	// state machine init
 	memset(&device->sm, 0, sizeof(device->sm));
 	device->sm.evtq.evt_buffer = device->evtq;
 	device->sm.evtq.evt_buffer_num = dimof(device->evtq);
 	device->sm.init_state.evt_handler = vsfusbd_evt_handler;
 	device->sm.user_data = (void*)device;
-	vsfsm_init(&device->sm, true);
-	
-	if (device->drv->init(device->int_priority) ||
-		((device->callback.init != NULL) && device->callback.init()))
-	{
-		return VSFERR_FAIL;
-	}
-	return VSFERR_NONE;
+	return vsfsm_init(&device->sm, true);
 }
 
+vsf_err_t vsfusbd_device_fini(struct vsfusbd_device_t *device)
+{
+	return vsfsm_post_evt_pending(&device->sm, VSFSM_EVT_FINI);
+}

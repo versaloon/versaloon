@@ -889,10 +889,6 @@ vsf_err_t usb_protocol_init(void)
 
 vsf_err_t usb_protocol_poll(void)
 {
-	usart_stream_poll(&usart_stream_p0);
-#if SCRIPTS_EN
-	usart_stream_poll(&shell_stream);
-#endif
 #if POWER_OUT_EN
 	app_interfaces.target_voltage.poll(0);
 #endif
