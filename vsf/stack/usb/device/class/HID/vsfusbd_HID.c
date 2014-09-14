@@ -148,9 +148,49 @@ vsfusbd_HID_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
 	struct vsfusbd_HID_param_t *param =
 						(struct vsfusbd_HID_param_t *)sm->user_data;
+	struct vsfusbd_device_t *device = param->device;
+	uint8_t i;
 	
 	switch (evt)
 	{
+	case VSFSM_EVT_INIT:
+		if (param->ep_out != 0)
+		{
+			vsfusbd_set_OUT_handler(device, param->ep_out,
+										vsfusbd_HID_OUT_hanlder);
+			device->drv->ep.enable_OUT(param->ep_out);
+		}
+		
+		param->output_state = HID_OUTPUT_STATE_WAIT;
+		param->busy = false;
+		param->num_of_INPUT_report = 0;
+		param->num_of_OUTPUT_report = 0;
+		param->num_of_FEATURE_report = 0;
+		for(i = 0; i < param->num_of_report; i++)
+		{
+			param->reports[i].pos = 0;
+			param->reports[i].idle_cnt = 0;
+			param->reports[i].changed = true;
+			switch (param->reports[i].type)
+			{
+			case USB_HID_REPORT_OUTPUT:
+				param->num_of_OUTPUT_report++;
+				break;
+			case USB_HID_REPORT_INPUT:
+				param->num_of_INPUT_report++;
+				break;
+			case USB_HID_REPORT_FEATURE:
+				param->num_of_FEATURE_report++;
+				break;
+			}
+		}
+		
+		// enable timer
+		param->timer4ms.sm = &param->iface->sm;
+		param->timer4ms.evt = VSFUSBD_HID_EVT_TIMER4MS;
+		param->timer4ms.interval = 4;
+		vsftimer_register(&param->timer4ms);
+		break;
 	case VSFUSBD_HID_EVT_TIMER4MS:
 		{
 			struct vsfusbd_HID_report_t *report;
@@ -174,7 +214,6 @@ vsfusbd_HID_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	case VSFUSBD_HID_EVT_INREPORT:
 		{
 			uint8_t ep = param->ep_in;
-			struct vsfusbd_device_t *device = param->device;
 			struct vsfusbd_transact_t *transact = &device->IN_transact[ep];
 			struct vsfusbd_HID_report_t *report;
 			bool busy = false;
@@ -211,55 +250,14 @@ static vsf_err_t vsfusbd_HID_class_init(uint8_t iface,
 	struct vsfusbd_iface_t *ifs = &config->iface[iface];
 	struct vsfusbd_HID_param_t *param = 
 						(struct vsfusbd_HID_param_t *)ifs->protocol_param;
-	struct interface_usbd_t *drv = device->drv;
-	uint8_t input_reports = 0, output_reports = 0, feature_reports = 0;
-	uint8_t i;
-	
-	if ((param->ep_out != 0) && 
-		(	vsfusbd_set_OUT_handler(device, param->ep_out,
-												vsfusbd_HID_OUT_hanlder) ||
-			drv->ep.enable_OUT(param->ep_out)))
-	{
-		return VSFERR_FAIL;
-	}
-	
-	param->iface = ifs;
-	param->device = device;
-	param->output_state = HID_OUTPUT_STATE_WAIT;
-	param->busy = false;
-	for(i = 0; i < param->num_of_report; i++)
-	{
-		param->reports[i].pos = 0;
-		param->reports[i].idle_cnt = 0;
-		param->reports[i].changed = true;
-		switch (param->reports[i].type)
-		{
-		case USB_HID_REPORT_OUTPUT:
-			output_reports++;
-			break;
-		case USB_HID_REPORT_INPUT:
-			input_reports++;
-			break;
-		case USB_HID_REPORT_FEATURE:
-			feature_reports++;
-			break;
-		}
-	}
-	param->num_of_INPUT_report = input_reports;
-	param->num_of_OUTPUT_report = output_reports;
-	param->num_of_FEATURE_report = feature_reports;
 	
 	// state machine init
 	memset(&ifs->sm, 0, sizeof(ifs->sm));
 	ifs->sm.init_state.evt_handler = vsfusbd_HID_evt_handler;
+	param->iface = ifs;
+	param->device = device;
 	ifs->sm.user_data = (void*)param;
-	vsfsm_init(&ifs->sm, false);
-	
-	// enable timer
-	param->timer4ms.sm = &ifs->sm;
-	param->timer4ms.evt = VSFUSBD_HID_EVT_TIMER4MS;
-	param->timer4ms.interval = 4;
-	return vsftimer_register(&param->timer4ms);
+	return vsfsm_init(&ifs->sm, false);
 }
 
 static vsf_err_t vsfusbd_HID_GetReport_prepare(

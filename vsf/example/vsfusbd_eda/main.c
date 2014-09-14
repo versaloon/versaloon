@@ -271,6 +271,7 @@ app_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 		}
 		app.usbd_hid.device.drv->connect();
 		vsftimer_unregister(&app.usbpu_timer);
+		vsfsm_remove_subsm(&vsfsm_top, sm);
 		break;
 	}
 	return NULL;
