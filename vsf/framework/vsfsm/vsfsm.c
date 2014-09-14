@@ -333,11 +333,14 @@ static vsf_err_t vsfsm_poll_sm(struct vsfsm_t *sm)
 
 vsf_err_t vsfsm_poll(void)
 {
-	struct vsfsm_t *sm = vsfsm_top.subsm;
-	while (sm != NULL)
+	if (vsfsm_event_pending)
 	{
-		vsfsm_poll_sm(sm);
-		sm = sm->next;
+		struct vsfsm_t *sm = vsfsm_top.subsm;
+		while (sm != NULL)
+		{
+			vsfsm_poll_sm(sm);
+			sm = sm->next;
+		}
 	}
 	return VSFERR_NONE;
 }
