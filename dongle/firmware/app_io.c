@@ -65,6 +65,7 @@ static uint8_t shell_buff_tx[64], shell_buff_rx[64];
 struct usart_stream_info_t shell_stream =
 {
 	IFS_DUMMY_PORT,								// usart_index
+	0,											// int_priority
 	{
 		{shell_buff_rx, sizeof(shell_buff_rx)}	// fifo
 	},											// struct vsf_stream_t stream_rx;
