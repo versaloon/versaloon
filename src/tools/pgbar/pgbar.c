@@ -172,7 +172,7 @@ vsf_err_t pgbar_init(char *s, char *e, uint32_t min, uint32_t max,
 	}
 	
 	// get start time
-	start_time = interfaces->tickclk.get_count();
+	start_time = (interfaces != NULL) ? interfaces->tickclk.get_count() : 0;
 	
 	// flush output
 	fflush(stdout);
@@ -191,7 +191,7 @@ uint32_t pgbar_fini(void)
 	}
 	
 	// get current time and calculate time used
-	end_time = interfaces->tickclk.get_count();
+	end_time = (interfaces != NULL) ? interfaces->tickclk.get_count() : 0;
 	PRINTF("%02.02fs used\n", (float)(end_time - start_time) / 1000);
 	
 	// flush output
