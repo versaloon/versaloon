@@ -45,7 +45,7 @@ uint32_t crc_calc(struct crc_t *crc, void *buff, uint32_t num)
 		}
 		for (i = 0; i < bitlen; i++)
 		{
-			if (result & 0x80)
+			if (result & (1UL << (bitlen - 1)))
 			{
 				result = (result << 1) ^ crc->poly;
 			}
@@ -55,7 +55,7 @@ uint32_t crc_calc(struct crc_t *crc, void *buff, uint32_t num)
 			}
 		}
 	}
-	result &= (1 << bitlen) - 1;
+	result &= (1ULL << bitlen) - 1;
 	crc->result = result;
 	return result;
 }
