@@ -16,7 +16,7 @@
  **************************************************************************/
 
 #ifndef HSE_VALUE
-#define HSE_VALUE						((uint32_t)12000000)
+#define HSE_VALUE						((uint32_t)8000000)
 #endif
 
 #define OSC_HZ							HSE_VALUE
