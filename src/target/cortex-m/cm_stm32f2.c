@@ -74,6 +74,30 @@ const struct program_functions_t stm32f2swj_program_functions =
 	READ_TARGET_FUNCNAME(stm32f2swj)
 };
 
+static vsf_err_t stm32f2_flash_unlock(void)
+{
+	uint32_t reg;
+	
+	if (adi_memap_read_reg32(STM32F2_FLASH_CR, &reg, 1))
+	{
+		return VSFERR_FAIL;
+	}
+	
+	if (reg & STM32F2_FLASH_CR_LOCK)
+	{
+		reg = STM32F2_FLASH_UNLOCK_KEY1;
+		adi_memap_write_reg32(STM32F2_FLASH_KEYR, &reg, 1);
+		reg = STM32F2_FLASH_UNLOCK_KEY2;
+		adi_memap_write_reg32(STM32F2_FLASH_KEYR, &reg, 1);
+		reg = STM32F2_OPT_UNLOCK_KEY1;
+		adi_memap_write_reg32(STM32F2_FLASH_OPTKEYR, &reg, 1);
+		reg = STM32F2_OPT_UNLOCK_KEY2;
+		adi_memap_write_reg32(STM32F2_FLASH_OPTKEYR, &reg, 1);
+	}
+	
+	return VSFERR_NONE;
+}
+
 ENTER_PROGRAM_MODE_HANDLER(stm32f2swj)
 {
 	struct cm_stm32f2_t *cm_stm32f2 = (struct cm_stm32f2_t *)context->priv;
@@ -96,14 +120,10 @@ ENTER_PROGRAM_MODE_HANDLER(stm32f2swj)
 	cm_stm32f2->page1_addr = cm_stm32f2->page0_addr + STM32F2_FL_PAGE_SIZE;
 	
 	// unlock flash and option bytes
-	reg = STM32F2_FLASH_UNLOCK_KEY1;
-	adi_memap_write_reg32(STM32F2_FLASH_KEYR, &reg, 0);
-	reg = STM32F2_FLASH_UNLOCK_KEY2;
-	adi_memap_write_reg32(STM32F2_FLASH_KEYR, &reg, 0);
-	reg = STM32F2_OPT_UNLOCK_KEY1;
-	adi_memap_write_reg32(STM32F2_FLASH_OPTKEYR, &reg, 0);
-	reg = STM32F2_OPT_UNLOCK_KEY2;
-	adi_memap_write_reg32(STM32F2_FLASH_OPTKEYR, &reg, 0);
+	if (stm32f2_flash_unlock())
+	{
+		return VSFERR_FAIL;
+	}
 	
 	if (adi_memap_read_reg32(STM32F2_FLASH_OPTCR, &reg, 1))
 	{
