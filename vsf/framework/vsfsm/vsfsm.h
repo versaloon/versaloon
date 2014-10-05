@@ -26,14 +26,15 @@
 enum
 {
 	VSFSM_EVT_INVALID = -1,
-	VSFSM_EVT_SYSTEM = 0,
+	VSFSM_EVT_NONE = 0,
+	VSFSM_EVT_SYSTEM = 1,
 	VSFSM_EVT_DUMMY = VSFSM_EVT_SYSTEM + 0,
 	VSFSM_EVT_INIT = VSFSM_EVT_SYSTEM + 1,
 	VSFSM_EVT_FINI = VSFSM_EVT_SYSTEM + 2,
-	VSFSM_EVT_USER = VSFSM_EVT_SYSTEM + 0x10,
+	VSFSM_EVT_USER = 0x10,
 	// instant message CANNOT be but in the event queue and
 	// can not be sent in interrupt
-	VSFSM_EVT_INSTANT = VSFSM_EVT_SYSTEM + 0x2000,
+	VSFSM_EVT_INSTANT = 0x2000,
 	VSFSM_EVT_USER_INSTANT = VSFSM_EVT_INSTANT,
 	VSFSM_EVT_INSTANT_END = VSFSM_EVT_INSTANT + 0x2000 - 1,
 	// local event can not transmit or be passed to superstate
@@ -119,6 +120,8 @@ struct vsfsm_pt_t
 	void *user_data;
 	
 #if VSFSM_CFG_PT_STACK_EN
+	// stack for the current pt, can be NULL to indicate using the main stack
+	// note that the size of the stack MUST be large enough for the interrupts
 	void *stack;
 #endif
 	
@@ -129,6 +132,26 @@ struct vsfsm_pt_t
 	// private
 	vsfsm_evt_t evt_waiting;
 };
+
+vsf_err_t vsfsm_pt_init(struct vsfsm_t *sm, struct vsfsm_pt_t *pt,
+						bool add_to_top);
+#define vsfsm_pt_begin(pt)				switch ((pt)->state) { case 0:
+// wait for event
+#define vsfsm_pt_wfe(pt, evt)			(pt)->state = __LINE__; return (evt); case __LINE__:
+// wait for pt, slave pt uses the same stack as the master pt
+#define vsfsm_pt_wfpt(pt, ptslave)		do {\
+											(ptslave)->state = 0;\
+											(ptslave)->sm = (pt)->sm;\
+											(pt)->state = __LINE__; case __LINE__:\
+											{\
+												vsfsm_evt_t __evt = (ptslave)->thread(ptslave);\
+												if (__evt != VSFSM_EVT_NONE)\
+												{\
+													return __evt;\
+												}\
+											}\
+										} while (0)
+#define vsfsm_pt_end(pt)				}
 #endif
 
 extern struct vsfsm_state_t vsfsm_top;
@@ -147,11 +170,6 @@ vsf_err_t vsfsm_poll(void);
 vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active);
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt);
 vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
-
-#if VSFSM_CFG_PT_EN
-vsf_err_t vsfsm_pt_init(struct vsfsm_t *sm, struct vsfsm_pt_t *pt,
-						bool add_to_top);
-#endif
 
 #if VSFSM_CFG_SYNC_EN
 // vsfsm_sem_t is used as access lock for resources

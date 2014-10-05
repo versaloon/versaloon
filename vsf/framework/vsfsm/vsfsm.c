@@ -400,12 +400,16 @@ struct vsfsm_state_t * vsfsm_pt_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	{
 	case VSFSM_EVT_INIT:
 		pt->state = 0;
-		vsfsm_pt_run(pt);
-		break;
+		pt->evt_waiting = VSFSM_EVT_INIT;
+		// fall through
 	default:
 		if (evt == pt->evt_waiting)
 		{
 			vsfsm_pt_run(pt);
+			if (pt->evt_waiting < 0)
+			{
+				// event < 0 indicates failure
+			}
 		}
 		else
 		{
@@ -422,7 +426,6 @@ vsf_err_t vsfsm_pt_init(struct vsfsm_t *sm, struct vsfsm_pt_t *pt,
 	sm->init_state.evt_handler = vsfsm_pt_evt_handler;
 	sm->init_state.subsm = NULL;
 	pt->sm = sm;
-	pt->evt_waiting = VSFSM_EVT_INVALID;
 	return vsfsm_init(sm, add_to_top);
 }
 #endif
