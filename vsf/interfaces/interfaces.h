@@ -33,6 +33,7 @@ struct interface_core_t
 	vsf_err_t (*init)(void *p);
 	vsf_err_t (*fini)(void *p);
 	vsf_err_t (*reset)(void *p);
+	uint32_t (*get_stack)(void);
 	vsf_err_t (*set_stack)(uint32_t sp);
 	void (*sleep)(uint32_t mode);
 };
@@ -40,12 +41,14 @@ struct interface_core_t
 #define CORE_INIT(m)					__CONNECT(m, _interface_init)
 #define CORE_FINI(m)					__CONNECT(m, _interface_fini)
 #define CORE_RESET(m)					__CONNECT(m, _interface_reset)
+#define CORE_GET_STACK(m)				__CONNECT(m, _interface_get_stack)
 #define CORE_SET_STACK(m)				__CONNECT(m, _interface_set_stack)
 #define CORE_SLEEP(m)					__CONNECT(m, _interface_sleep)
 
 vsf_err_t CORE_INIT(__TARGET_CHIP__)(void *p);
 vsf_err_t CORE_FINI(__TARGET_CHIP__)(void *p);
 vsf_err_t CORE_RESET(__TARGET_CHIP__)(void *p);
+uint32_t CORE_GET_STACK(__TARGET_CHIP__)(void);
 vsf_err_t CORE_SET_STACK(__TARGET_CHIP__)(uint32_t sp);
 void CORE_SLEEP(__TARGET_CHIP__)(uint32_t mode);
 

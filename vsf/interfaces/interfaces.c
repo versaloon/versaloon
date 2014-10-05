@@ -31,6 +31,7 @@ const struct interfaces_info_t core_interfaces =
 		CORE_INIT(__TARGET_CHIP__),
 		CORE_FINI(__TARGET_CHIP__),
 		CORE_RESET(__TARGET_CHIP__),
+		CORE_GET_STACK(__TARGET_CHIP__),
 		CORE_SET_STACK(__TARGET_CHIP__),
 		CORE_SLEEP(__TARGET_CHIP__),
 	}

@@ -61,6 +61,11 @@ vsf_err_t stm32_interface_reset(void *p)
 	return VSFERR_NONE;
 }
 
+uint32_t stm32_interface_get_stack(void)
+{
+	return __get_MSP();
+}
+
 vsf_err_t stm32_interface_set_stack(uint32_t sp)
 {
 	__set_MSP(sp);

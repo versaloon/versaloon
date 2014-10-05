@@ -370,6 +370,63 @@ vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	return (sm->active) ? vsfsm_evtq_post(&sm->evtq, evt) : VSFERR_FAIL;
 }
 
+#if VSFSM_CFG_PT_EN
+#include "interfaces.h"
+static void vsfsm_pt_run(struct vsfsm_pt_t *pt)
+{
+#if VSFSM_CFG_PT_STACK_EN
+	uint32_t stack = interfaces->core.get_stack();
+	if (pt->stack != NULL)
+	{
+		interfaces->core.set_stack((uint32_t)pt->stack);
+	}
+#endif
+	
+	pt->evt_waiting = pt->thread(pt);
+	
+#if VSFSM_CFG_PT_STACK_EN
+	if (pt->stack != NULL)
+	{
+		interfaces->core.set_stack(stack);
+	}
+#endif
+}
+
+struct vsfsm_state_t * vsfsm_pt_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
+{
+	struct vsfsm_pt_t *pt = (struct vsfsm_pt_t *)sm->user_data;
+	
+	switch (evt)
+	{
+	case VSFSM_EVT_INIT:
+		pt->state = 0;
+		vsfsm_pt_run(pt);
+		break;
+	default:
+		if (evt == pt->evt_waiting)
+		{
+			vsfsm_pt_run(pt);
+		}
+		else
+		{
+			// unwanted event
+		}
+	}
+	return NULL;
+}
+
+vsf_err_t vsfsm_pt_init(struct vsfsm_t *sm, struct vsfsm_pt_t *pt,
+						bool add_to_top)
+{
+	sm->user_data = pt;
+	sm->init_state.evt_handler = vsfsm_pt_evt_handler;
+	sm->init_state.subsm = NULL;
+	pt->sm = sm;
+	pt->evt_waiting = VSFSM_EVT_INVALID;
+	return vsfsm_init(sm, add_to_top);
+}
+#endif
+
 #if VSFSM_CFG_SYNC_EN
 // vsfsm_sync_t
 vsf_err_t vsfsm_sync_init(struct vsfsm_sync_t *sync, uint32_t cur_value,

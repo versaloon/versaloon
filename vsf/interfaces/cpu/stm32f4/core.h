@@ -56,6 +56,7 @@ struct stm32f4_info_t
 vsf_err_t stm32f4_interface_init(void *p);
 vsf_err_t stm32f4_interface_fini(void *p);
 vsf_err_t stm32f4_interface_reset(void *p);
+uint32_t stm32f4_interface_get_stack(void);
 vsf_err_t stm32f4_interface_set_stack(uint32_t sp);
 void stm32f4_interface_sleep(uint32_t mode);
 vsf_err_t stm32f4_interface_get_info(struct stm32f4_info_t **info);

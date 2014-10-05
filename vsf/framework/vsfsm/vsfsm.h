@@ -89,8 +89,12 @@ struct vsfsm_t
 {
 	struct vsfsm_evtqueue_t evtq;
 	// initial state
+	// for protothread, evt_handler MUST point to vsfsm_pt_evt_handler
+	// 		which will be initialized in vsfsm_pt_init
 	struct vsfsm_state_t init_state;
 	// user_data point to the user specified data for the sm
+	// for protothread, user_data should point to vsfsm_pt_t structure
+	// 		which will be initialized in vsfsm_pt_init
 	void *user_data;
 #if VSFSM_CFG_SM_EN
 	// sm_extra is used for specific sm type
@@ -108,6 +112,25 @@ struct vsfsm_t
 	struct vsfsm_t *next;
 };
 
+#if VSFSM_CFG_PT_EN
+struct vsfsm_pt_t
+{
+	vsfsm_evt_t (*thread)(struct vsfsm_pt_t *pt);
+	void *user_data;
+	
+#if VSFSM_CFG_PT_STACK_EN
+	void *stack;
+#endif
+	
+	// protected
+	int state;
+	struct vsfsm_t *sm;
+	
+	// private
+	vsfsm_evt_t evt_waiting;
+};
+#endif
+
 extern struct vsfsm_state_t vsfsm_top;
 // vsfsm_get_event_pending should be called with interrupt disabled
 uint32_t vsfsm_get_event_pending(void);
@@ -124,6 +147,11 @@ vsf_err_t vsfsm_poll(void);
 vsf_err_t vsfsm_set_active(struct vsfsm_t *sm, bool active);
 vsf_err_t vsfsm_post_evt(struct vsfsm_t *sm, vsfsm_evt_t evt);
 vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt);
+
+#if VSFSM_CFG_PT_EN
+vsf_err_t vsfsm_pt_init(struct vsfsm_t *sm, struct vsfsm_pt_t *pt,
+						bool add_to_top);
+#endif
 
 #if VSFSM_CFG_SYNC_EN
 // vsfsm_sem_t is used as access lock for resources
