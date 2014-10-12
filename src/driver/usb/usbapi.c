@@ -20,6 +20,8 @@
 #include "config.h"
 #endif
 
+#include <stdlib.h>
+
 #include "compiler.h"
 
 #include "vsf_err.h"

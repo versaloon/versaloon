@@ -54,7 +54,7 @@ extern int verbosity_stack[16];
 		LOG_BUF_ADDR16(addr16, (uint16_t *)buff, len, func, "%04X", 8);\
 		break;\
 	case 4:\
-		LOG_BUF_ADDR16(addr16, (unsigned int *)buff, len, func, "%08X", 4);\
+		LOG_BUF_ADDR16(addr16, (uint32_t *)buff, len, func, "%08X", 4);\
 		break;\
 	}
 
@@ -84,7 +84,7 @@ extern int verbosity_stack[16];
 		LOG_BUF_ADDR32(addr32, (uint16_t *)buff, len, func, "%04X", 8);\
 		break;\
 	case 4:\
-		LOG_BUF_ADDR32(addr32, (unsigned int *)buff, len, func, "%08X", 4);\
+		LOG_BUF_ADDR32(addr32, (uint32_t *)buff, len, func, "%08X", 4);\
 		break;\
 	}
 
@@ -114,7 +114,7 @@ extern int verbosity_stack[16];
 		LOG_BUF_ADDR64(addr64, (uint16_t *)buff, len, func, "%04X", 8);\
 		break;\
 	case 4:\
-		LOG_BUF_ADDR64(addr64, (unsigned int *)buff, len, func, "%08X", 4);\
+		LOG_BUF_ADDR64(addr64, (uint32_t *)buff, len, func, "%08X", 4);\
 		break;\
 	}
 

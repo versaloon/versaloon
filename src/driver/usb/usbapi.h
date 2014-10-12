@@ -19,7 +19,7 @@
 #ifndef __USBAPI_H_INCLUDED__
 #define __USBAPI_H_INCLUDED__
 
-#include "libusb.h"
+#include "libusb-1.0/libusb.h"
 
 extern struct vss_cmd_list_t usbapi_cmd_list;
 

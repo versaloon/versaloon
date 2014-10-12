@@ -137,27 +137,34 @@ static vsf_err_t vi_stm32_init(void *p)
 
 static vsf_err_t vi_stm32_fini(void *p)
 {
+	REFERENCE_PARAMETER(p);
 	return cur_real_interface->core.fini(cur_real_interface);
 }
 
 static vsf_err_t vi_stm32_reset(void *p)
 {
+	REFERENCE_PARAMETER(p);
 	return VSFERR_NONE;
 }
 
 // GPIO
 vsf_err_t vi_stm32_gpio_init(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_gpio_fini(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_gpio_config_pin(uint8_t index, uint8_t pin_idx, uint8_t mode)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(pin_idx);
+	REFERENCE_PARAMETER(mode);
 	return VSFERR_NONE;
 }
 
@@ -165,121 +172,173 @@ vsf_err_t vi_stm32_gpio_config(uint8_t index, uint32_t mask,
 								uint32_t dir_mask, uint32_t pull_en_mask,
 								uint32_t input_pull_mask)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(mask);
+	REFERENCE_PARAMETER(dir_mask);
+	REFERENCE_PARAMETER(pull_en_mask);
+	REFERENCE_PARAMETER(input_pull_mask);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_gpio_in(uint8_t index, uint32_t mask, uint32_t *value)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(mask);
+	REFERENCE_PARAMETER(value);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_gpio_set(uint8_t index, uint32_t mask)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(mask);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_gpio_clear(uint8_t index, uint32_t mask)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(mask);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_gpio_out(uint8_t index, uint32_t mask, uint32_t value)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(mask);
+	REFERENCE_PARAMETER(value);
 	return VSFERR_NONE;
 }
 
 // USART
 vsf_err_t vi_stm32_usart_init(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_usart_fini(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_usart_config(uint8_t index, uint32_t baudrate,
 								uint8_t datalength, uint8_t mode)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(baudrate);
+	REFERENCE_PARAMETER(datalength);
+	REFERENCE_PARAMETER(mode);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_usart_receive(uint8_t index, uint8_t *buf, uint16_t len)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(buf);
+	REFERENCE_PARAMETER(len);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_usart_send(uint8_t index, uint8_t *buf, uint16_t len)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(buf);
+	REFERENCE_PARAMETER(len);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_usart_status(uint8_t index, struct usart_status_t *status)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(status);
 	return VSFERR_NONE;
 }
 
 // SPI
 vsf_err_t vi_stm32_spi_init(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_spi_fini(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_spi_get_ability(uint8_t index, struct spi_ability_t *ability)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(ability);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_spi_enable(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 vsf_err_t vs_stm32_spi_disable(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_spi_config(uint8_t index, uint32_t kHz, uint8_t mode)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(kHz);
+	REFERENCE_PARAMETER(mode);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_spi_select(uint8_t index, uint8_t cs)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(cs);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_spi_deselect(uint8_t index, uint8_t cs)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(cs);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_spi_io(uint8_t index, uint8_t *out, uint8_t *in,
 							uint32_t bytelen)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(out);
+	REFERENCE_PARAMETER(in);
+	REFERENCE_PARAMETER(bytelen);
 	return VSFERR_NONE;
 }
 
 // IIC
 vsf_err_t vi_stm32_iic_init(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_iic_fini(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_iic_config(uint8_t index, uint16_t kHz,
 								uint16_t byte_interval, uint16_t max_dly)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(kHz);
+	REFERENCE_PARAMETER(byte_interval);
+	REFERENCE_PARAMETER(max_dly);
 	return VSFERR_NONE;
 }
 
@@ -287,69 +346,98 @@ vsf_err_t vi_stm32_iic_read(uint8_t index, uint16_t chip_addr,
 							uint8_t *data, uint16_t data_len, uint8_t stop,
 							bool nacklast)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(chip_addr);
+	REFERENCE_PARAMETER(data);
+	REFERENCE_PARAMETER(data_len);
+	REFERENCE_PARAMETER(stop);
+	REFERENCE_PARAMETER(nacklast);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_iic_write(uint8_t index, uint16_t chip_addr,
 								uint8_t *data, uint16_t data_len, uint8_t stop)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(chip_addr);
+	REFERENCE_PARAMETER(data);
+	REFERENCE_PARAMETER(data_len);
+	REFERENCE_PARAMETER(stop);
 	return VSFERR_NONE;
 }
 
 // PWM
 vsf_err_t vi_stm32_pwm_init(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_pwm_fini(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_pwm_config_mode(uint8_t index, uint8_t mode)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(mode);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_pwm_config_freq(uint8_t index, uint16_t kHz)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(kHz);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_pwm_out(uint8_t index, uint16_t count, uint16_t *rate)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(count);
+	REFERENCE_PARAMETER(rate);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_pwm_in(uint8_t index, uint16_t count, uint16_t *rate)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(count);
+	REFERENCE_PARAMETER(rate);
 	return VSFERR_NONE;
 }
 
 // clko
 vsf_err_t vi_stm32_clko_init(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_clko_fini(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_clko_config(uint8_t index, uint32_t kHz)
 {
+	REFERENCE_PARAMETER(index);
+	REFERENCE_PARAMETER(kHz);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_clko_enable(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_clko_disable(uint8_t index)
 {
+	REFERENCE_PARAMETER(index);
 	return VSFERR_NONE;
 }
 
@@ -387,11 +475,13 @@ vsf_err_t vi_stm32_delayinit(void)
 
 vsf_err_t vi_stm32_delayms(uint16_t ms)
 {
+	REFERENCE_PARAMETER(ms);
 	return VSFERR_NONE;
 }
 
 vsf_err_t vi_stm32_delayus(uint16_t us)
 {
+	REFERENCE_PARAMETER(us);
 	return VSFERR_NONE;
 }
 

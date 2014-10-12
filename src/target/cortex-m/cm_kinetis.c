@@ -375,6 +375,9 @@ WRITE_TARGET_HANDLER(kinetisswj)
 	struct chip_area_info_t *flash_info = NULL;
 	vsf_err_t err = VSFERR_NONE;
 	
+	REFERENCE_PARAMETER(addr);
+	REFERENCE_PARAMETER(buff);
+	
 	switch (area)
 	{
 	case FUSE_CHAR:
