@@ -372,25 +372,6 @@ vsf_err_t vsfsm_post_evt_pending(struct vsfsm_t *sm, vsfsm_evt_t evt)
 
 #if VSFSM_CFG_PT_EN
 #include "interfaces.h"
-static void vsfsm_pt_run(struct vsfsm_pt_t *pt)
-{
-#if VSFSM_CFG_PT_STACK_EN
-	uint32_t stack = interfaces->core.get_stack();
-	if (pt->stack != NULL)
-	{
-		interfaces->core.set_stack((uint32_t)pt->stack);
-	}
-#endif
-	
-	pt->evt_waiting = pt->thread(pt);
-	
-#if VSFSM_CFG_PT_STACK_EN
-	if (pt->stack != NULL)
-	{
-		interfaces->core.set_stack(stack);
-	}
-#endif
-}
 
 struct vsfsm_state_t * vsfsm_pt_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 {
@@ -400,20 +381,25 @@ struct vsfsm_state_t * vsfsm_pt_evt_handler(struct vsfsm_t *sm, vsfsm_evt_t evt)
 	{
 	case VSFSM_EVT_INIT:
 		pt->state = 0;
-		pt->evt_waiting = VSFSM_EVT_INIT;
 		// fall through
 	default:
-		if (evt == pt->evt_waiting)
 		{
-			vsfsm_pt_run(pt);
-			if (pt->evt_waiting < 0)
+		#if VSFSM_CFG_PT_STACK_EN
+			uint32_t stack = interfaces->core.get_stack();
+			if (pt->stack != NULL)
 			{
-				// event < 0 indicates failure
+				interfaces->core.set_stack((uint32_t)pt->stack);
 			}
-		}
-		else
-		{
-			// unwanted event
+		#endif
+			
+			pt->thread(pt, evt);
+			
+		#if VSFSM_CFG_PT_STACK_EN
+			if (pt->stack != NULL)
+			{
+				interfaces->core.set_stack(stack);
+			}
+		#endif
 		}
 	}
 	return NULL;
