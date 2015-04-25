@@ -3,9 +3,9 @@
 
 #include "app_interfaces.h"
 
-#include "vsfusbd_cfg.h"
-#include "stack/usb/usb_common.h"
-#include "stack/usb/device/vsfusbd.h"
+#include "vsf_usbd_cfg.h"
+#include "stack/usb_device/vsf_usbd_const.h"
+#include "stack/usb_device/vsf_usbd.h"
 
 #include "vsfusbd_Versaloon.h"
 

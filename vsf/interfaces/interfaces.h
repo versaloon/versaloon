@@ -23,34 +23,23 @@
 
 #define IFS_DUMMY_PORT					0xFF
 
-#define CORE_SLEEP_WFI(m)			__CONNECT(m, _SLEEP_WFI)
-#define CORE_SLEEP_PWRDOWN(m)		__CONNECT(m, _SLEEP_PWRDOWN)
-#define SLEEP_WFI					CORE_SLEEP_WFI(__TARGET_CHIP__)
-#define SLEEP_PWRDOWN				CORE_SLEEP_PWRDOWN(__TARGET_CHIP__)
-
 struct interface_core_t
 {
 	vsf_err_t (*init)(void *p);
 	vsf_err_t (*fini)(void *p);
 	vsf_err_t (*reset)(void *p);
-	uint32_t (*get_stack)(void);
 	vsf_err_t (*set_stack)(uint32_t sp);
-	void (*sleep)(uint32_t mode);
 };
 
 #define CORE_INIT(m)					__CONNECT(m, _interface_init)
 #define CORE_FINI(m)					__CONNECT(m, _interface_fini)
 #define CORE_RESET(m)					__CONNECT(m, _interface_reset)
-#define CORE_GET_STACK(m)				__CONNECT(m, _interface_get_stack)
 #define CORE_SET_STACK(m)				__CONNECT(m, _interface_set_stack)
-#define CORE_SLEEP(m)					__CONNECT(m, _interface_sleep)
 
 vsf_err_t CORE_INIT(__TARGET_CHIP__)(void *p);
 vsf_err_t CORE_FINI(__TARGET_CHIP__)(void *p);
 vsf_err_t CORE_RESET(__TARGET_CHIP__)(void *p);
-uint32_t CORE_GET_STACK(__TARGET_CHIP__)(void);
 vsf_err_t CORE_SET_STACK(__TARGET_CHIP__)(uint32_t sp);
-void CORE_SLEEP(__TARGET_CHIP__)(uint32_t mode);
 
 #if IFS_UNIQUEID_EN
 
@@ -204,8 +193,8 @@ struct interface_usart_t
 	vsf_err_t (*fini)(uint8_t index);
 	vsf_err_t (*config)(uint8_t index, uint32_t baudrate, uint8_t datalength, 
 						uint8_t mode);
-	vsf_err_t (*config_callback)(uint8_t index, uint32_t int_priority,
-			void *p, void (*ontx)(void *), void (*onrx)(void *, uint16_t));
+	vsf_err_t (*config_callback)(uint8_t index, void *p, void (*ontx)(void *), 
+								void (*onrx)(void *, uint16_t));
 	vsf_err_t (*tx)(uint8_t index, uint16_t data);
 	vsf_err_t (*tx_isready)(uint8_t index);
 	uint16_t (*rx)(uint8_t index);
@@ -232,9 +221,8 @@ vsf_err_t CORE_USART_INIT(__TARGET_CHIP__)(uint8_t index);
 vsf_err_t CORE_USART_FINI(__TARGET_CHIP__)(uint8_t index);
 vsf_err_t CORE_USART_CONFIG(__TARGET_CHIP__)(uint8_t index, uint32_t baudrate, 
 	uint8_t datalength, uint8_t mode);
-vsf_err_t CORE_USART_CONFIG_CALLBACK(__TARGET_CHIP__)(uint8_t index,
-	uint32_t int_priority, void *p, void (*ontx)(void *),
-	void (*onrx)(void *, uint16_t));
+vsf_err_t CORE_USART_CONFIG_CALLBACK(__TARGET_CHIP__)(uint8_t index, 
+	void *p, void (*ontx)(void *), void (*onrx)(void *, uint16_t));
 vsf_err_t CORE_USART_TX(__TARGET_CHIP__)(uint8_t index, uint16_t data);
 vsf_err_t CORE_USART_TX_ISREADY(__TARGET_CHIP__)(uint8_t index);
 uint16_t CORE_USART_RX(__TARGET_CHIP__)(uint8_t index);
@@ -347,6 +335,7 @@ struct interface_adc_t
 	vsf_err_t (*start)(uint8_t index, uint8_t channel);
 	vsf_err_t (*isready)(uint8_t index, uint8_t channel);
 	uint32_t (*get)(uint8_t index, uint8_t channel);
+	vsf_err_t (*sample)(uint8_t index, uint8_t channel, uint32_t *voltage);
 };
 
 #define CORE_ADC_INIT(m)				__CONNECT(m, _adc_init)
@@ -358,6 +347,7 @@ struct interface_adc_t
 #define CORE_ADC_START(m)				__CONNECT(m, _adc_start)
 #define CORE_ADC_ISREADY(m)				__CONNECT(m, _adc_isready)
 #define CORE_ADC_GET(m)					__CONNECT(m, _adc_get)
+#define CORE_ADC_SAMPLE(m)				__CONNECT(m, _adc_sample)
 
 vsf_err_t CORE_ADC_INIT(__TARGET_CHIP__)(uint8_t index);
 vsf_err_t CORE_ADC_FINI(__TARGET_CHIP__)(uint8_t index);
@@ -370,6 +360,8 @@ uint32_t CORE_ADC_GET_MAX_VALUE(__TARGET_CHIP__)(uint8_t index);
 vsf_err_t CORE_ADC_START(__TARGET_CHIP__)(uint8_t index, uint8_t channel);
 vsf_err_t CORE_ADC_ISREADY(__TARGET_CHIP__)(uint8_t index, uint8_t channel);
 uint32_t CORE_ADC_GET(__TARGET_CHIP__)(uint8_t index, uint8_t channel);
+vsf_err_t CORE_ADC_SAMPLE(__TARGET_CHIP__)(uint8_t index, uint8_t channel, 
+											uint32_t *voltage);
 
 #endif
 
@@ -453,7 +445,6 @@ struct interface_tickclk_t
 	vsf_err_t (*start)(void);
 	vsf_err_t (*stop)(void);
 	uint32_t (*get_count)(void);
-	vsf_err_t (*set_callback)(void (*callback)(void *param), void *param);
 };
 
 #define CORE_TICKCLK_INIT(m)			__CONNECT(m, _tickclk_init)
@@ -461,15 +452,12 @@ struct interface_tickclk_t
 #define CORE_TICKCLK_START(m)			__CONNECT(m, _tickclk_start)
 #define CORE_TICKCLK_STOP(m)			__CONNECT(m, _tickclk_stop)
 #define CORE_TICKCLK_GET_COUNT(m)		__CONNECT(m, _tickclk_get_count)
-#define CORE_TICKCLK_SET_CALLBACK(m)	__CONNECT(m, _tickclk_set_callback)
 
 vsf_err_t CORE_TICKCLK_INIT(__TARGET_CHIP__)(void);
 vsf_err_t CORE_TICKCLK_FINI(__TARGET_CHIP__)(void);
 vsf_err_t CORE_TICKCLK_START(__TARGET_CHIP__)(void);
 vsf_err_t CORE_TICKCLK_STOP(__TARGET_CHIP__)(void);
 uint32_t CORE_TICKCLK_GET_COUNT(__TARGET_CHIP__)(void);
-vsf_err_t CORE_TICKCLK_SET_CALLBACK(__TARGET_CHIP__)(
-					void (*callback)(void *param), void *param);
 
 #if IFS_IIC_EN
 
@@ -961,7 +949,7 @@ struct interface_usbd_callback_t
 
 struct interface_usbd_t
 {
-	vsf_err_t (*init)(uint32_t int_priority);
+	vsf_err_t (*init)(void);
 	vsf_err_t (*fini)(void);
 	vsf_err_t (*reset)(void);
 	vsf_err_t (*poll)(void);
@@ -1068,7 +1056,7 @@ struct interface_usbd_t
 #define CORE_USBD_EP_ENABLE_OUT(m)		__CONNECT(m, _usbd_ep_enable_OUT)
 #define CORE_USBD_CALLBACK(m)			__CONNECT(m, _usbd_callback)
 
-vsf_err_t CORE_USBD_INIT(__TARGET_CHIP__)(uint32_t int_priority);
+vsf_err_t CORE_USBD_INIT(__TARGET_CHIP__)(void);
 vsf_err_t CORE_USBD_FINI(__TARGET_CHIP__)(void);
 vsf_err_t CORE_USBD_RESET(__TARGET_CHIP__)(void);
 vsf_err_t CORE_USBD_POLL(__TARGET_CHIP__)(void);

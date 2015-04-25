@@ -824,6 +824,16 @@ struct vsfusbd_device_t usb_device =
 
 vsf_err_t usb_protocol_init(void)
 {
+	NVIC_InitTypeDef NVIC_InitStructure;
+	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+	
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+	
 	core_interfaces.gpio.init(0);
 	core_interfaces.gpio.init(1);
 	core_interfaces.gpio.init(2);
@@ -889,6 +899,10 @@ vsf_err_t usb_protocol_init(void)
 
 vsf_err_t usb_protocol_poll(void)
 {
+	usart_stream_poll(&usart_stream_p0);
+#if SCRIPTS_EN
+	usart_stream_poll(&shell_stream);
+#endif
 #if POWER_OUT_EN
 	app_interfaces.target_voltage.poll(0);
 #endif

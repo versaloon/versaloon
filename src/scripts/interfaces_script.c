@@ -602,32 +602,18 @@ VSS_HANDLER(interface_adc_config)
 VSS_HANDLER(interface_adc_get)
 {
 	uint8_t channel;
-	uint32_t voltage, max;
+	uint32_t voltage;
 	struct INTERFACES_INFO_T *ifs = NULL;
-	vsf_err_t err;
 	
 	VSS_CHECK_ARGC(2);
 	INTERFACE_ASSERT(IFS_ADC, "adc");
 	
-	max = ifs->adc.get_max_value(0);
-	if (!max)
-	{
-		return VSFERR_NONE;
-	}
 	channel = (uint8_t)strtoul(argv[1], NULL, 0);
-	if (ifs->adc.start(0, channel))
+	if (ifs->adc.sample(0, channel, &voltage) || ifs->peripheral_commit())
 	{
 		return VSFERR_FAIL;
 	}
-	do {
-		err = ifs->adc.isready(0, channel);
-	} while (err > 0);
-	if (err < 0)
-	{
-		return VSFERR_FAIL;
-	}
-	
-	LOG_INFO(INFOMSG_VOLTAGE, "ADC result", voltage * 3.3 / max);
+	LOG_INFO(INFOMSG_VOLTAGE, "ADC result", voltage * 3.3 / 0xFFF);
 	return VSFERR_NONE;
 }
 #endif

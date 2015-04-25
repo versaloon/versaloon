@@ -8,6 +8,7 @@
 # NanoRelease1
 # MiniRelease1
 # ProRelease1
+# ProRelease3
 # STBee_Mini
 # STM8S_Discovery
 # STM32VL_Discovery
@@ -54,6 +55,17 @@ else
 ifeq ($(HW_BOARD),ProRelease1)
 ########################################################################
 _HARDWARE_VER		= 0x21
+FLASH_LOAD_OFFSET	= 0x8000
+HSE_VALUE			= 12000000
+LD_FILE				= versaloonProSTM32.ld
+TARGET_CHIP			= stm32
+TARGET_STM32		= XLDensity
+USR_DEFS+=-DCORE_DEBUG=STM32_DBG_NONE
+else
+########################################################################
+ifeq ($(HW_BOARD),ProRelease3)
+########################################################################
+_HARDWARE_VER		= 0x23
 FLASH_LOAD_OFFSET	= 0x8000
 HSE_VALUE			= 12000000
 LD_FILE				= versaloonProSTM32.ld
@@ -155,6 +167,7 @@ else
 # Unknown board error
 ########################################################################
 $(error Missing or unknown HW_BOARD defined in makefile)
+endif
 endif
 endif
 endif

@@ -35,12 +35,22 @@
 #endif
 
 VSS_HANDLER(appio_set_dummy);
+VSS_HANDLER(appio_ls);
+VSS_HANDLER(appio_cat);
 
 static const struct vss_cmd_t appio_cmd[] =
 {
 	VSS_CMD(	"dummy",
 				"set dummy mode of appio, format: appio.dummy DUMMY",
 				appio_set_dummy,
+				NULL),
+	VSS_CMD(	"ls",
+				"list files in appio, format: appio.ls",
+				appio_ls,
+				NULL),
+	VSS_CMD(	"cat",
+				"display files in appio, format: appio.cat FILENAME",
+				appio_cat,
 				NULL),
 	VSS_CMD_END
 };
@@ -53,24 +63,15 @@ static bool appio_dummy = true;
 static bool appio_dummy = false;
 #endif
 
-VSS_HANDLER(appio_set_dummy)
-{
-	VSS_CHECK_ARGC(2);
-	
-	appio_dummy = (strtoul(argv[1], NULL, 0) != 0);
-	return VSFERR_NONE;
-}
-
 static uint8_t shell_buff_tx[64], shell_buff_rx[64];
 struct usart_stream_info_t shell_stream =
 {
 	IFS_DUMMY_PORT,								// usart_index
-	0,											// int_priority
 	{
-		{shell_buff_rx, sizeof(shell_buff_rx)}	// fifo
+		{{shell_buff_rx, sizeof(shell_buff_rx)}}// fifo
 	},											// struct vsf_stream_t stream_rx;
 	{
-		{shell_buff_tx, sizeof(shell_buff_tx)}	// fifo
+		{{shell_buff_tx, sizeof(shell_buff_tx)}}// fifo
 	}											// struct vsf_stream_t stream_tx;
 };
 
@@ -495,4 +496,55 @@ int PRINTF(const char *format, ...)
 
 	APPIO_OUTBUFF((uint8_t *)pbuff, (uint32_t)number);
 	return number;
+}
+
+VSS_HANDLER(appio_set_dummy)
+{
+	VSS_CHECK_ARGC(2);
+	
+	appio_dummy = (strtoul(argv[1], NULL, 0) != 0);
+	return VSFERR_NONE;
+}
+
+VSS_HANDLER(appio_ls)
+{
+	int i;
+	
+	VSS_CHECK_ARGC(1);
+	
+	for (i = 0;
+		(i < dimof(appio_filelist)) && (appio_filelist[i].filename != NULL);
+		i++)
+	{
+		LOG_INFO("%s", appio_filelist[i].filename);
+	}
+	return VSFERR_NONE;
+}
+
+VSS_HANDLER(appio_cat)
+{
+	FILE *f = NULL;
+	char line_buffer[VSS_CFG_MAX_LINE_LENGTH];
+	
+	VSS_CHECK_ARGC(2);
+	
+	f = FOPEN(argv[1], "rt");
+	if (NULL == f)
+	{
+		LOG_INFO("file %s not found", argv[1]);
+		return VSFERR_NONE;
+	}
+	
+	REWIND(f);
+	while (1)
+	{
+		if (NULL == FGETS(line_buffer, sizeof(line_buffer) - 1, f))
+		{
+			break;
+		}
+		line_buffer[sizeof(line_buffer) - 1] = '\0';
+		
+		PRINTF("%s", line_buffer);
+	}
+	return VSFERR_NONE;
 }

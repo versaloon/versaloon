@@ -140,10 +140,8 @@ int32_t comm_read_usbtocomm(uint8_t *buffer, uint32_t num_of_bytes)
 	{
 		sbuffer.size = num_of_bytes - data_read;
 		sbuffer.buffer = buffer + data_read;
-		if (usart_stream_rx(&usart_stream_p0, &sbuffer))
-		{
-			return -1;
-		}
+		usart_stream_poll(&usart_stream_p0);
+		sbuffer.size = usart_stream_rx(&usart_stream_p0, &sbuffer);
 		end = interfaces->tickclk.get_count();
 		if (sbuffer.size)
 		{
@@ -162,6 +160,7 @@ int32_t comm_read_usbtocomm(uint8_t *buffer, uint32_t num_of_bytes)
 int32_t comm_write_usbtocomm(uint8_t *buffer, uint32_t num_of_bytes)
 {
 	struct vsf_buffer_t sbuffer;
+	uint32_t start, end;
 	int32_t data_write;
 	
 	if (!usbtocomm_open)
@@ -170,20 +169,28 @@ int32_t comm_write_usbtocomm(uint8_t *buffer, uint32_t num_of_bytes)
 	}
 	
 	data_write = 0;
+	start = interfaces->tickclk.get_count();
 	while (data_write < num_of_bytes)
 	{
 		sbuffer.size = num_of_bytes - data_write;
 		sbuffer.buffer = buffer + data_write;
-		if (usart_stream_tx(&usart_stream_p0, &sbuffer))
-		{
-			return -1;
-		}
+		usart_stream_poll(&usart_stream_p0);
+		sbuffer.size = usart_stream_tx(&usart_stream_p0, &sbuffer);
+		end = interfaces->tickclk.get_count();
 		if (sbuffer.size)
 		{
 			data_write += sbuffer.size;
+			start = end;
+		}
+		else if ((end - start) > 3000)
+		{
+			break;
 		}
 	}
-	while (vsf_fifo_get_data_length(&usart_stream_p0.stream_tx.fifo) > 0);
+	while (vsf_fifo_get_data_length(&usart_stream_p0.stream_tx.fifo) > 0)
+	{
+		usart_stream_poll(&usart_stream_p0);
+	}
 	
 	return data_write;
 }
@@ -195,8 +202,15 @@ int32_t comm_flush_usbtocomm(void)
 		return -1;
 	}
 	
-	while (vsf_fifo_get_data_length(&usart_stream_p0.stream_tx.fifo) > 0);
-	while (vsf_fifo_get_data_length(&usart_stream_p0.stream_rx.fifo) > 0);
+	while (vsf_fifo_get_data_length(&usart_stream_p0.stream_tx.fifo) > 0)
+	{
+		usart_stream_poll(&usart_stream_p0);
+	}
+	while (vsf_fifo_get_data_length(&usart_stream_p0.stream_rx.fifo) > 0)
+	{
+		vsf_fifo_pop8(&usart_stream_p0.stream_rx.fifo);
+		usart_stream_poll(&usart_stream_p0);
+	}
 	return 0;
 }
 

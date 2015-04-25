@@ -318,10 +318,10 @@ VSS_HANDLER(app_ledarr_init)
 
 VSS_HANDLER(app_ledarr_set)
 {
-	uint8_t value;
+	uint32_t value;
 	
 	VSS_CHECK_ARGC(2);
-	value = (uint8_t)strtoul(argv[1], NULL, 0);
+	value = (uint32_t)strtoul(argv[1], NULL, 0);
 	LED_ARRAY_SET(value);
 	return VSFERR_NONE;
 }

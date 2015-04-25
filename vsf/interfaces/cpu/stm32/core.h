@@ -32,9 +32,6 @@ enum debug_setting_t
 };
 struct stm32_info_t
 {
-	uint8_t priority_group;
-	uint32_t vector_table;
-	
 	enum stm32_clksrc_t clksrc;
 	enum stm32_pllsrc_t pllsrc;
 	enum stm32_rtcsrc_t rtcsrc;
@@ -47,6 +44,7 @@ struct stm32_info_t
 	uint32_t apb2_freq_hz;
 	
 	uint8_t flash_latency;
+	uint32_t vector_table;
 	enum debug_setting_t debug_setting;
 	
 	// calculated internally
@@ -56,9 +54,7 @@ struct stm32_info_t
 vsf_err_t stm32_interface_init(void *p);
 vsf_err_t stm32_interface_fini(void *p);
 vsf_err_t stm32_interface_reset(void *p);
-uint32_t stm32_interface_get_stack(void);
 vsf_err_t stm32_interface_set_stack(uint32_t sp);
-void stm32_interface_sleep(uint32_t mode);
 vsf_err_t stm32_interface_get_info(struct stm32_info_t **info);
 
 uint32_t stm32_uid_get(uint8_t *buffer, uint32_t size);

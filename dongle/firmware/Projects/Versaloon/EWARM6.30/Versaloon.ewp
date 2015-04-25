@@ -347,6 +347,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\src\target\stm32l1</state>
           <state>$PROJ_DIR$\..\..\..\..\..\src\target\nuc100</state>
           <state>$PROJ_DIR$\..\..\..\..\..\src\target\kinetis</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\src\target\nuc400</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1334,6 +1335,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\src\target\stm32l1</state>
           <state>$PROJ_DIR$\..\..\..\..\..\src\target\nuc100</state>
           <state>$PROJ_DIR$\..\..\..\..\..\src\target\kinetis</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\src\target\nuc400</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2175,6 +2177,13 @@
     <file>
       <name>$PROJ_DIR$\..\..\..\usb_protocol_Versaloon.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\usb_protocol_VersaloonSuper.c</name>
+      <excluded>
+        <configuration>Debug</configuration>
+        <configuration>Release</configuration>
+      </excluded>
+    </file>
   </group>
   <group>
     <name>USB_TO_XXX</name>
@@ -2561,40 +2570,37 @@
     <group>
       <name>stack</name>
       <group>
-        <name>usb</name>
+        <name>usb_device</name>
         <group>
-          <name>device</name>
+          <name>CLASS</name>
           <group>
-            <name>CLASS</name>
-            <group>
-              <name>CDC</name>
-              <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\CDC\vsfusbd_CDC.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\CDC\vsfusbd_CDCACM.c</name>
-              </file>
-            </group>
-            <group>
-              <name>HID</name>
-              <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\HID\vsfusbd_HID.c</name>
-              </file>
-            </group>
-            <group>
-              <name>MSC</name>
-              <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\MSC\SCSI.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\class\MSC\vsfusbd_MSC_BOT.c</name>
-              </file>
-            </group>
+            <name>CDC</name>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\CDC\vsfusbd_CDC.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\CDC\vsfusbd_CDCACM.c</name>
+            </file>
           </group>
-          <file>
-            <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb\device\vsfusbd.c</name>
-          </file>
+          <group>
+            <name>HID</name>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\HID\vsfusbd_HID.c</name>
+            </file>
+          </group>
+          <group>
+            <name>MSC</name>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\MSC\SCSI.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\class\MSC\vsfusbd_MSC_BOT.c</name>
+            </file>
+          </group>
         </group>
+        <file>
+          <name>$PROJ_DIR$\..\..\..\..\..\vsf\stack\usb_device\vsf_usbd.c</name>
+        </file>
       </group>
     </group>
     <group>
@@ -2603,6 +2609,12 @@
         <name>buffer</name>
         <file>
           <name>$PROJ_DIR$\..\..\..\..\..\vsf\tool\buffer\buffer.c</name>
+        </file>
+      </group>
+      <group>
+        <name>crc</name>
+        <file>
+          <name>$PROJ_DIR$\..\..\..\..\..\vsf\tool\crc\crc.c</name>
         </file>
       </group>
       <group>
@@ -2755,6 +2767,9 @@
           <name>$PROJ_DIR$\..\..\..\..\..\src\target\cortex-m\cm_nuc100.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\..\..\..\..\..\src\target\cortex-m\cm_nuc400.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\..\..\..\src\target\cortex-m\cm_stm32_fl.c</name>
         </file>
         <file>
@@ -2846,6 +2861,12 @@
         <name>nuc100</name>
         <file>
           <name>$PROJ_DIR$\..\..\..\..\..\src\target\nuc100\nuc100.c</name>
+        </file>
+      </group>
+      <group>
+        <name>nuc400</name>
+        <file>
+          <name>$PROJ_DIR$\..\..\..\..\..\src\target\nuc400\nuc400.c</name>
         </file>
       </group>
       <group>

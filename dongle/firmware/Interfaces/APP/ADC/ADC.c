@@ -113,4 +113,19 @@ uint32_t adc_get(uint8_t index, uint8_t channel)
 	}
 }
 
+vsf_err_t adc_sample(uint8_t index, uint8_t channel, uint32_t *voltage)
+{
+	switch (index)
+	{
+	case 0:
+		if (voltage != NULL)
+		{
+			*voltage = 0;
+		}
+		return VSFERR_NONE;
+	default:
+		return VSFERR_NOT_SUPPORT;
+	}
+}
+
 #endif

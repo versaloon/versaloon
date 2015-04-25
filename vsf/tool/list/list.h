@@ -25,12 +25,12 @@ struct sllist
 	struct sllist *next;
 };
 
-#define sllist_init_node(node)			((node).next = NULL)
-#define sllist_insert(node, new)		((node).next = &(new))
-#define sllist_get_container(p, t, m)	container_of(p, t, m)
-
-int sllist_is_in(struct sllist *head, struct sllist *node);
-int sllist_remove(struct sllist **head, struct sllist *node);
+#define sllist_init_node(node)		((node).next = NULL)
+#define sllist_insert(node, new)	((node).next = &(new))
+#define sllist_get_container(pnode, type, member)	\
+	(pnode ? \
+		((type *)((char *)(pnode)-(unsigned long)&(((type *)0)->member))) \
+		: NULL)
 
 #endif // __LIST_H_INCLUDED__
 

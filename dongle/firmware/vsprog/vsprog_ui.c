@@ -6,6 +6,7 @@
 #define VSPUI_CONSOLE_EN						1
 #define VSPUI_CONSOLE_CFG_LINE_WRAP				1
 
+#if DAL_S6B0724_EN
 static struct s6b0724_drv_interface_t s6b0724_ifs =
 {
 	0,						// uint8_t ebi_port;
@@ -200,9 +201,11 @@ static vsf_err_t vsprog_ui_set_string(uint8_t block, char *str)
 	return mal.writeblock(&s6b0724_dal, block * s6b0724_mal.capacity.block_size,
 							s6b0724_line_buffer, 1);
 }
+#endif		// #if DAL_S6B0724_EN
 
 vsf_err_t vsprog_ui_init(void)
 {
+#if DAL_S6B0724_EN
 	uint64_t i;
 	
 #if VSPUI_CONSOLE_EN
@@ -217,22 +220,31 @@ vsf_err_t vsprog_ui_init(void)
 		mal.writeblock(&s6b0724_dal, i * s6b0724_mal.capacity.block_size,
 						s6b0724_line_buffer, 1);
 	}
+#endif
 	return VSFERR_NONE;
 }
 
 vsf_err_t vsprog_ui_fini(void)
 {
+#if DAL_S6B0724_EN
 	return mal.fini(&s6b0724_dal);
+#else
+	return VSFERR_NONE;
+#endif
 }
 
 vsf_err_t vsprog_ui_set_title(char *title)
 {
+#if DAL_S6B0724_EN
 	return vsprog_ui_set_string(0, title);
+#else
+	return VSFERR_NONE;
+#endif
 }
 
 vsf_err_t vsprog_ui_print(char *str)
 {
-#if VSPUI_CONSOLE_EN
+#if DAL_S6B0724_EN && VSPUI_CONSOLE_EN
 	uint64_t i, bs = s6b0724_mal.capacity.block_size;
 	uint8_t *base = &s6b0724_console_buffer[(CONSOLE_LINE_NUM - 1) * bs];
 	uint8_t *cur_ptr;
@@ -304,11 +316,16 @@ vsf_err_t vsprog_ui_print(char *str)
 
 vsf_err_t vsprog_ui_set_task(char *task)
 {
+#if DAL_S6B0724_EN
 	return vsprog_ui_set_string(6, task);
+#else
+	return VSFERR_NONE;
+#endif
 }
 
 vsf_err_t vsprog_ui_set_progress(uint8_t percentage)
 {
+#if DAL_S6B0724_EN
 	uint64_t bs = s6b0724_mal.capacity.block_size;
 	uint64_t bytes = min(percentage * bs / 100, bs), i = 0;
 	
@@ -321,4 +338,7 @@ vsf_err_t vsprog_ui_set_progress(uint8_t percentage)
 		s6b0724_line_buffer[i] = 0x00;
 	}
 	return mal.writeblock(&s6b0724_dal, 7 * bs, s6b0724_line_buffer, 1);
+#else
+	return VSFERR_NONE;
+#endif
 }

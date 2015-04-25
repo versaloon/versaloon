@@ -5,7 +5,6 @@
 
 #include "interfaces_cfg.h"
 #include "interfaces_const.h"
-#include "interfaces.h"
 #include "core.h"
 
 #define STM32_RCC_CR_HSEON				(1 << 16)
@@ -39,9 +38,9 @@
 
 static struct stm32_info_t stm32_info = 
 {
-	0, CORE_VECTOR_TABLE, CORE_CLKSRC, CORE_PLLSRC, CORE_RTCSRC, CORE_HSE_TYPE,
-	OSC0_FREQ_HZ, CORE_PLL_FREQ_HZ, CORE_AHB_FREQ_HZ, CORE_APB1_FREQ_HZ,
-	CORE_APB2_FREQ_HZ, CORE_FLASH_LATENCY, CORE_DEBUG
+	CORE_CLKSRC, CORE_PLLSRC, CORE_RTCSRC, CORE_HSE_TYPE, OSC0_FREQ_HZ, 
+	CORE_PLL_FREQ_HZ, CORE_AHB_FREQ_HZ, CORE_APB1_FREQ_HZ, CORE_APB2_FREQ_HZ, 
+	CORE_FLASH_LATENCY, CORE_VECTOR_TABLE, CORE_DEBUG
 };
 
 vsf_err_t stm32_interface_get_info(struct stm32_info_t **info)
@@ -61,24 +60,10 @@ vsf_err_t stm32_interface_reset(void *p)
 	return VSFERR_NONE;
 }
 
-uint32_t stm32_interface_get_stack(void)
-{
-	return __get_MSP();
-}
-
 vsf_err_t stm32_interface_set_stack(uint32_t sp)
 {
 	__set_MSP(sp);
 	return VSFERR_NONE;
-}
-
-// sleep will enable interrupt
-// for cortex processor, if an interrupt occur between enable the interrupt
-// 		and __WFI, wfi will not make the core sleep
-void stm32_interface_sleep(uint32_t mode)
-{
-	vsf_leave_critical();
-	__WFI();
 }
 
 static uint32_t __log2__(uint32_t n)
@@ -118,27 +103,7 @@ vsf_err_t stm32_interface_init(void *p)
 		break;
 	}
 	
-	// RCC Reset
-	RCC->CR |= (uint32_t)0x00000001;
-#ifndef STM32F10X_CL
-	RCC->CFGR &= (uint32_t)0xF8FF0000;
-#else
-	RCC->CFGR &= (uint32_t)0xF0FF0000;
-#endif
-	RCC->CR &= (uint32_t)0xFEF6FFFF;
-	RCC->CR &= (uint32_t)0xFFFBFFFF;
-	RCC->CFGR &= (uint32_t)0xFF80FFFF;
-#ifdef STM32F10X_CL
-	RCC->CR &= (uint32_t)0xEBFFFFFF;
-	RCC->CIR = 0x00FF0000;
-	RCC->CFGR2 = 0x00000000;
-#elif defined (STM32F10X_LD_VL) || defined (STM32F10X_MD_VL) 
-	RCC->CIR = 0x009F0000;
-	RCC->CFGR2 = 0x00000000;      
-#else
-	RCC->CIR = 0x009F0000;
-#endif
-	
+	RCC_DeInit();
 	if ((STM32_CLKSRC_HSE == stm32_info.clksrc) || 
 		(STM32_PLLSRC_HSE == stm32_info.pllsrc) || 
 		(STM32_PLLSRC_HSEd2 == stm32_info.pllsrc) || 
@@ -221,7 +186,6 @@ vsf_err_t stm32_interface_init(void *p)
 	AFIO->MAPR |= stm32_info.debug_setting << STM32_AFIO_MAPR_SWJCFG_SFT;
 	
 	SCB->VTOR = stm32_info.vector_table;
-	SCB->AIRCR = 0x05FA0000 | stm32_info.priority_group;
 	return VSFERR_NONE;
 }
 
@@ -281,27 +245,24 @@ vsf_err_t stm32_delay_delayms(uint16_t ms)
 	return VSFERR_NONE;
 }
 
-// tickclk
-#define TICKCLK_TIM							TIM5
-
-static void (*stm32_tickclk_callback)(void *param) = NULL;
-static void *stm32_tickclk_param = NULL;
-static uint32_t stm32_tickcnt = 0;
 vsf_err_t stm32_tickclk_start(void)
 {
-	TICKCLK_TIM->CR1 |= TIM_CR1_CEN;
+	TIM_Cmd(TIM1, ENABLE);
 	return VSFERR_NONE;
 }
 
 vsf_err_t stm32_tickclk_stop(void)
 {
-	TICKCLK_TIM->CR1 &= ~TIM_CR1_CEN;
+	TIM_Cmd(TIM1, DISABLE);
 	return VSFERR_NONE;
 }
 
 static uint32_t stm32_tickclk_get_count_local(void)
 {
-	return stm32_tickcnt;
+	uint32_t count;
+	count = TIM2->CNT;
+	count |= (uint32_t)TIM5->CNT << 16;
+	return count;
 }
 
 uint32_t stm32_tickclk_get_count(void)
@@ -315,47 +276,61 @@ uint32_t stm32_tickclk_get_count(void)
 	return count1;
 }
 
-ROOTFUNC void TIM5_IRQHandler(void)
-{
-	stm32_tickcnt++;
-	if (stm32_tickclk_callback != NULL)
-	{
-		stm32_tickclk_callback(stm32_tickclk_param);
-	}
-	TICKCLK_TIM->SR = ~TIM_SR_UIF;
-}
-
-vsf_err_t stm32_tickclk_set_callback(void (*callback)(void*), void *param)
-{
-	TICKCLK_TIM->DIER &= ~TIM_DIER_UIE;
-	stm32_tickclk_callback = callback;
-	stm32_tickclk_param = param;
-	TICKCLK_TIM->DIER |= TIM_DIER_UIE;
-	return VSFERR_NONE;
-}
-
 vsf_err_t stm32_tickclk_init(void)
 {
-	stm32_tickcnt = 0;
-	RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;
-	RCC->APB1RSTR |= RCC_APB1RSTR_TIM5RST;
-	RCC->APB1RSTR &= ~RCC_APB1RSTR_TIM5RST;
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	
-	// TIM5 generate 1ms event
-	TICKCLK_TIM->CR1 &= 0x03FF;
-	TICKCLK_TIM->ARR = stm32_info.apb1_freq_hz / 2 / 1000;
-	TICKCLK_TIM->PSC = 1;
-	TICKCLK_TIM->RCR = 0;
-	TICKCLK_TIM->EGR |= TIM_EGR_UG;
-	TICKCLK_TIM->DIER |= TIM_DIER_UIE;
-	NVIC->IP[TIM5_IRQn] = 0xFF;
-	NVIC->ISER[TIM5_IRQn >> 0x05] = 1UL << (TIM5_IRQn & 0x1F);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
+	TIM_DeInit(TIM1);
+	TIM_DeInit(TIM2);
+	TIM_DeInit(TIM5);
+	
+	// TIM1 generate 1ms event
+	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
+	TIM_TimeBaseStructure.TIM_Prescaler = 1;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_Period = stm32_info.apb2_freq_hz / 2 / 1000;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
+	TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure);
+	TIM_SelectOutputTrigger(TIM1, TIM_TRGOSource_Update);
+	TIM_SelectMasterSlaveMode(TIM1, TIM_MasterSlaveMode_Enable);
+	
+	// TIM2 accept 1ms clock from TIM1
+	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
+	TIM_TimeBaseStructure.TIM_Prescaler = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_Period = 0xFFFF;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
+	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+	TIM_SelectSlaveMode(TIM2, TIM_SlaveMode_External1);
+	TIM_ITRxExternalClockConfig(TIM2, TIM_TS_ITR0);
+	TIM_SelectOutputTrigger(TIM2, TIM_TRGOSource_Update);
+	TIM_SelectMasterSlaveMode(TIM2, TIM_MasterSlaveMode_Enable);
+	TIM_Cmd(TIM2, ENABLE);
+	
+	// TIM5 accept 65536ms clock from TIM2
+	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
+	TIM_TimeBaseStructure.TIM_Prescaler = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_Period = 0xFFFF;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
+	TIM_TimeBaseInit(TIM5, &TIM_TimeBaseStructure);
+	TIM_SelectSlaveMode(TIM5, TIM_SlaveMode_External1);
+	TIM_ITRxExternalClockConfig(TIM5, TIM_TS_ITR0);
+	TIM_Cmd(TIM5, ENABLE);
 	
 	return VSFERR_NONE;
 }
 
 vsf_err_t stm32_tickclk_fini(void)
 {
-	RCC->APB1ENR &= ~RCC_APB1ENR_TIM5EN;
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, DISABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, DISABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, DISABLE);
 	return VSFERR_NONE;
 }

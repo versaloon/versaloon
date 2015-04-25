@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="vsprog" InternalType="Console">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+    </Plugin>
+  </Plugins>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="../../src/vsprog.c"/>
+    <VirtualDirectory Name="programmer">
+      <File Name="../../src/programmer/programmer.c"/>
+      <VirtualDirectory Name="interfaces">
+        <File Name="../../src/programmer/interfaces/interfaces.c"/>
+        <VirtualDirectory Name="versaloon">
+          <File Name="../../src/programmer/interfaces/versaloon/versaloon.c"/>
+          <VirtualDirectory Name="usb_to_xxx">
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtoadc.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtobdm.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtoc2.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtodusi.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtoebi.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtogpio.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtoi2c.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtoissp.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtojtaghl.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtojtagll.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtojtagraw.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtolpcicp.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtomicrowire.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtomsp430jtag.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtomsp430sbw.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtopwm.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtopwr.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtospi.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtoswd.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtoswim.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtousart.c"/>
+            <File Name="../../src/programmer/interfaces/versaloon/usbtoxxx/usbtoxxx.c"/>
+          </VirtualDirectory>
+        </VirtualDirectory>
+        <VirtualDirectory Name="virtualinterface">
+          <VirtualDirectory Name="vi_stm32">
+            <File Name="../../src/programmer/interfaces/virtualinterface/vi_stm32/vi_stm32.c"/>
+          </VirtualDirectory>
+        </VirtualDirectory>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="scripts">
+      <File Name="../../src/scripts/app_scripts.c"/>
+      <File Name="../../src/scripts/interfaces_script.c"/>
+      <File Name="../../src/scripts/scripts.c"/>
+      <VirtualDirectory Name="mic2826_script">
+        <File Name="../../src/scripts/mic2826_script/mic2826_script.c"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="driver">
+      <File Name="../../src/driver/port.c"/>
+      <VirtualDirectory Name="usb">
+        <File Name="../../src/driver/usb/usbapi.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="comport">
+        <File Name="../../src/driver/comport/comport.c"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="tools">
+      <VirtualDirectory Name="filelist">
+        <File Name="../../src/tools/filelist/filelist.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="fileparser">
+        <File Name="../../src/tools/fileparser/fileparser.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="hex">
+        <File Name="../../src/tools/hex/hex.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="memlist">
+        <File Name="../../src/tools/memlist/memlist.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="pgbar">
+        <File Name="../../src/tools/pgbar/pgbar.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="s19">
+        <File Name="../../src/tools/s19/s19.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="strparser">
+        <File Name="../../src/tools/strparser/strparser.c"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="target">
+      <File Name="../../src/target/target.c"/>
+      <VirtualDirectory Name="at89s5x">
+        <File Name="../../src/target/at89s5x/at89s5x.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="at91sam3">
+        <File Name="../../src/target/at91sam3/at91sam3.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="avr8">
+        <File Name="../../src/target/avr8/avr8.c"/>
+        <File Name="../../src/target/avr8/avr8_hvpp.c"/>
+        <File Name="../../src/target/avr8/avr8_hvsp.c"/>
+        <File Name="../../src/target/avr8/avr8_isp.c"/>
+        <File Name="../../src/target/avr8/avr8_jtag.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="avr32">
+        <File Name="../../src/target/avr32/avr32.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="avrxmega">
+        <File Name="../../src/target/avrxmega/avrxmega.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="c8051f">
+        <File Name="../../src/target/c8051f/c8051f.c"/>
+        <File Name="../../src/target/c8051f/c8051f_c2.c"/>
+        <File Name="../../src/target/c8051f/c8051f_jtag.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="cfi">
+        <File Name="../../src/target/cfi/cfi.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="comisp">
+        <File Name="../../src/target/comisp/comisp.c"/>
+        <File Name="../../src/target/comisp/lpcarmisp.c"/>
+        <File Name="../../src/target/comisp/stm32isp.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="core">
+        <VirtualDirectory Name="arm_adi">
+          <File Name="../../src/target/core/arm_adi/adi_v5p1.c"/>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="cortex-m3">
+        <File Name="../../src/target/cortex-m3/cm3.c"/>
+        <File Name="../../src/target/cortex-m3/cm3_at91sam3.c"/>
+        <File Name="../../src/target/cortex-m3/cm3_common.c"/>
+        <File Name="../../src/target/cortex-m3/cm3_lm3s.c"/>
+        <File Name="../../src/target/cortex-m3/cm3_lpc1000.c"/>
+        <File Name="../../src/target/cortex-m3/cm3_stm32_fl.c"/>
+        <File Name="../../src/target/cortex-m3/cm3_stm32f1.c"/>
+        <File Name="../../src/target/cortex-m3/cm3_stm32f2.c"/>
+        <File Name="../../src/target/cortex-m3/cm3_stm32l1.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="df25xx">
+        <File Name="../../src/target/df25xx/df25xx.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="ee24cxx">
+        <File Name="../../src/target/ee24cxx/ee24cxx.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="ee93cx6">
+        <File Name="../../src/target/ee93cx6/ee93cx6.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="hcs08">
+        <File Name="../../src/target/hcs08/hcs08.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="hcs12">
+        <File Name="../../src/target/hcs12/hcs12.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="lm3s">
+        <File Name="../../src/target/lm3s/lm3s.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="lpc900">
+        <File Name="../../src/target/lpc900/lpc900.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="lpc1000">
+        <File Name="../../src/target/lpc1000/lpc1000.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="msp430">
+        <File Name="../../src/target/msp430/JTAGfunc.c"/>
+        <File Name="../../src/target/msp430/msp430.c"/>
+        <File Name="../../src/target/msp430/msp430_bsl.c"/>
+        <File Name="../../src/target/msp430/msp430_jtagsbw.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="nand">
+        <File Name="../../src/target/nand/nand.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="psoc1">
+        <File Name="../../src/target/psoc1/psoc1.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="sd">
+        <File Name="../../src/target/sd/sd.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="stm8">
+        <File Name="../../src/target/stm8/stm8.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="stm32f1">
+        <File Name="../../src/target/stm32f1/stm32f1.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="stm32f2">
+        <File Name="../../src/target/stm32f2/stm32f2.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="stm32l1">
+        <File Name="../../src/target/stm32l1/stm32l1.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="svf_player">
+        <File Name="../../src/target/svf_player/byte_tap.c"/>
+        <File Name="../../src/target/svf_player/svf_parser.c"/>
+        <File Name="../../src/target/svf_player/svf_player.c"/>
+      </VirtualDirectory>
+      <File Name="../../src/target/target_conf.c"/>
+      <File Name="../../src/target/target_data.c"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="config">
+      <File Name="../../src/config/at89s5x.xml"/>
+      <File Name="../../src/config/at91sam3.xml"/>
+      <File Name="../../src/config/avr8.xml"/>
+      <File Name="../../src/config/avr32.xml"/>
+      <File Name="../../src/config/avrxmega.xml"/>
+      <File Name="../../src/config/c8051f.xml"/>
+      <File Name="../../src/config/cfi.xml"/>
+      <File Name="../../src/config/df25xx.xml"/>
+      <File Name="../../src/config/ee24cxx.xml"/>
+      <File Name="../../src/config/ee93cx6.xml"/>
+      <File Name="../../src/config/hcs08.xml"/>
+      <File Name="../../src/config/hcs12.xml"/>
+      <File Name="../../src/config/lm3s.xml"/>
+      <File Name="../../src/config/lpc900.xml"/>
+      <File Name="../../src/config/lpc1000.xml"/>
+      <File Name="../../src/config/msp430.xml"/>
+      <File Name="../../src/config/nand.xml"/>
+      <File Name="../../src/config/psoc1.xml"/>
+      <File Name="../../src/config/sd.xml"/>
+      <File Name="../../src/config/stm8.xml"/>
+      <File Name="../../src/config/stm32f1.xml"/>
+      <File Name="../../src/config/stm32f2.xml"/>
+      <File Name="../../src/config/stm32f4.xml"/>
+      <File Name="../../src/config/stm32l1.xml"/>
+    </VirtualDirectory>
+    <File Name="config.h"/>
+    <VirtualDirectory Name="vsf">
+      <VirtualDirectory Name="dal">
+        <File Name="../../vsf/dal/dal.c"/>
+        <VirtualDirectory Name="mal">
+          <File Name="../../vsf/dal/mal/mal.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="cfi">
+          <File Name="../../vsf/dal/cfi/cfi_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="df25xx">
+          <File Name="../../vsf/dal/df25xx/df25xx_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="df45xx">
+          <File Name="../../vsf/dal/df45xx/df45xx_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="ee24cxx">
+          <File Name="../../vsf/dal/ee24cxx/ee24cxx_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="ee93cx6">
+          <File Name="../../vsf/dal/ee93cx6/ee93cx6_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="mic2826">
+          <File Name="../../vsf/dal/mic2826/mic2826_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="nand">
+          <File Name="../../vsf/dal/nand/nand_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="sd">
+          <File Name="../../vsf/dal/sd/sd_common.c"/>
+          <File Name="../../vsf/dal/sd/sd_spi_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="nrf24l01">
+          <File Name="../../vsf/dal/nrf24l01/nrf24l01_drv.c"/>
+        </VirtualDirectory>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="vsf_cfg">
+      <File Name="../../src/vsf_cfg/dal_cfg.h"/>
+      <File Name="../../src/vsf_cfg/interfaces_cfg.h"/>
+      <File Name="../../src/vsf_cfg/vsf_usbd_cfg.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="lib">
+      <File Name="lib/libusb.lib"/>
+      <File Name="lib/libxml2.lib"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu gcc" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="overwrite" BuildLnkWithGlobalSettings="overwrite" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+        <IncludePath Value="."/>
+        <IncludePath Value="../../src/vsf_cfg"/>
+        <IncludePath Value="../../vsf"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/pc"/>
+        <IncludePath Value="../../vsf/tool/list"/>
+        <IncludePath Value="../../src"/>
+        <IncludePath Value="../../src/scripts"/>
+        <IncludePath Value="../../src/tools/pgbar"/>
+        <IncludePath Value="../../src/tools/hex"/>
+        <IncludePath Value="../../src/tools/s19"/>
+        <IncludePath Value="../../src/tools/filelist"/>
+        <IncludePath Value="../../src/tools/fileparser"/>
+        <IncludePath Value="../../src/tools/memlist"/>
+        <IncludePath Value="../../src/tools/strparser"/>
+        <IncludePath Value="../../src/driver"/>
+        <IncludePath Value="../../src/driver/usb"/>
+        <IncludePath Value="../../src/driver/comport"/>
+        <IncludePath Value="../../src/programmer"/>
+        <IncludePath Value="../../src/programmer/interfaces"/>
+        <IncludePath Value="../../src/target"/>
+        <IncludePath Value="../../src/target/cortex-m3"/>
+        <IncludePath Value="../../src/target/core/arm_adi"/>
+        <IncludePath Value="../../src/target/comisp"/>
+        <IncludePath Value="../../src/target/lpc1000"/>
+        <IncludePath Value="../../src/target/stm32f1"/>
+        <IncludePath Value="../../src/target/stm32f2"/>
+        <IncludePath Value="../../src/target/stm32l1"/>
+        <IncludePath Value="../../src/target/at91sam3"/>
+        <IncludePath Value="../../src/target/lm3s"/>
+        <Preprocessor Value="HAVE_CONFIG_H"/>
+      </Compiler>
+      <Linker Options="-lusb -lxml2 -lm" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName).exe" CommandArguments="-Vshell" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu gcc" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="overwrite" BuildLnkWithGlobalSettings="overwrite" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O2;-Wall" C_Options="-O2;-Wall" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+        <IncludePath Value="."/>
+        <IncludePath Value="../../src/vsf_cfg"/>
+        <IncludePath Value="../../vsf"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/pc"/>
+        <IncludePath Value="../../vsf/tool/list"/>
+        <IncludePath Value="../../src"/>
+        <IncludePath Value="../../src/scripts"/>
+        <IncludePath Value="../../src/tools/pgbar"/>
+        <IncludePath Value="../../src/tools/hex"/>
+        <IncludePath Value="../../src/tools/s19"/>
+        <IncludePath Value="../../src/tools/filelist"/>
+        <IncludePath Value="../../src/tools/fileparser"/>
+        <IncludePath Value="../../src/tools/memlist"/>
+        <IncludePath Value="../../src/tools/strparser"/>
+        <IncludePath Value="../../src/driver"/>
+        <IncludePath Value="../../src/driver/usb"/>
+        <IncludePath Value="../../src/driver/comport"/>
+        <IncludePath Value="../../src/programmer"/>
+        <IncludePath Value="../../src/programmer/interfaces"/>
+        <IncludePath Value="../../src/target"/>
+        <IncludePath Value="../../src/target/cortex-m3"/>
+        <IncludePath Value="../../src/target/core/arm_adi"/>
+        <IncludePath Value="../../src/target/comisp"/>
+        <IncludePath Value="../../src/target/lpc1000"/>
+        <IncludePath Value="../../src/target/stm32f1"/>
+        <IncludePath Value="../../src/target/stm32f2"/>
+        <IncludePath Value="../../src/target/stm32l1"/>
+        <IncludePath Value="../../src/target/at91sam3"/>
+        <IncludePath Value="../../src/target/lm3s"/>
+        <Preprocessor Value="HAVE_CONFIG_H"/>
+      </Compiler>
+      <Linker Options="-lusb -lxml2 -lm" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName).exe" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>

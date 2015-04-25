@@ -27,7 +27,6 @@ extern uint8_t asyn_rx_buf[ASYN_DATA_BUFF_SIZE];
 struct usart_stream_info_t usart_stream_p0 = 
 {
 	USART_PORT,							// usart_index
-	0,									// int_priority
 	{
 		{{asyn_rx_buf, 1024}},			// fifo
 	},									// struct vsf_stream_t stream_tx;
@@ -132,6 +131,17 @@ vsf_err_t usart_status(uint8_t index, struct usart_status_t *status)
 		status->rx_buff_avail = vsf_fifo_get_avail_length(fifo_rx);
 		status->rx_buff_size = vsf_fifo_get_data_length(fifo_rx);
 		return VSFERR_NONE;
+	default:
+		return VSFERR_NOT_SUPPORT;
+	}
+}
+
+vsf_err_t usart_poll(uint8_t index)
+{
+	switch (index)
+	{
+	case 0:
+		return usart_stream_poll(&usart_stream_p0);
 	default:
 		return VSFERR_NOT_SUPPORT;
 	}

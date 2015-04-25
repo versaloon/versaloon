@@ -7,7 +7,8 @@ EMBEDDED_VSPROG_EN = no
 # Available boards:
 # NanoRelease1
 # MiniRelease1
-# ProRelease1(same for ProRelease3)
+# ProRelease1
+# ProRelease3
 # STBee_Mini
 # STM8S_Discovery
 # STM8L_Discovery
@@ -78,6 +79,7 @@ USR_SRCS+= $(SRCDIR)/app_io.c \
   $(VSPROGDIR)/scripts/interfaces_script.c \
   $(SRCDIR)/app_script/app_script.c \
   $(SRCDIR)/vsprog/vsprog.c \
+  $(SRCDIR)/vsprog/vsprog_ui.c \
   $(SRCDIR)/vsprog/driver/comport/comport.c \
   $(SRCDIR)/vsprog/tools/pgbar/pgbar.c \
   $(VSPROGDIR)/tools/memlist/memlist.c \
@@ -111,6 +113,9 @@ USR_SRCS+= $(SRCDIR)/app_io.c \
   $(VSPROGDIR)/target/cortex-m/cm_stm32f1.c \
   $(VSPROGDIR)/target/cortex-m/cm_stm32f2.c \
   $(VSPROGDIR)/target/cortex-m/cm_stm32l1.c \
+  $(VSPROGDIR)/target/cortex-m/cm_nuc100.c \
+  $(VSPROGDIR)/target/cortex-m/cm_nuc400.c \
+  $(VSPROGDIR)/target/cortex-m/cm_kinetis.c \
   $(VSPROGDIR)/target/df25xx/df25xx.c \
   $(VSPROGDIR)/target/ee24cxx/ee24cxx.c \
   $(VSPROGDIR)/target/ee93cx6/ee93cx6.c \
@@ -133,10 +138,14 @@ USR_SRCS+= $(SRCDIR)/app_io.c \
   $(VSPROGDIR)/target/svf_player/byte_tap.c \
   $(VSPROGDIR)/target/svf_player/svf_parser.c \
   $(VSPROGDIR)/target/svf_player/svf_player.c \
-  $(VSPROGDIR)/target/sst32hfxx/sst32hfxx.c
+  $(VSPROGDIR)/target/sst32hfxx/sst32hfxx.c \
+  $(VSPROGDIR)/target/nuc100/nuc100.c \
+  $(VSPROGDIR)/target/nuc400/nuc400.c \
+  $(VSPROGDIR)/target/kinetis/kinetis.c
 USR_INCS+= -I $(VSPROGDIR)/scripts \
   -I $(SRCDIR)/app_script \
   -I $(SRCDIR)/vsprog \
+  -I $(SRCDIR)/vsprog/target \
   -I $(SRCDIR)/vsprog/driver/comport \
   -I $(SRCDIR)/vsprog/tools/pgbar \
   -I $(VSPROGDIR)/tools/memlist \
@@ -150,7 +159,10 @@ USR_INCS+= -I $(VSPROGDIR)/scripts \
   -I $(VSPROGDIR)/target/lpc1000 \
   -I $(VSPROGDIR)/target/stm32f1 \
   -I $(VSPROGDIR)/target/stm32f2 \
-  -I $(VSPROGDIR)/target/stm32l1
+  -I $(VSPROGDIR)/target/stm32l1 \
+  -I $(VSPROGDIR)/target/nuc100 \
+  -I $(VSPROGDIR)/target/nuc400 \
+  -I $(VSPROGDIR)/target/kinetis
 endif
 
 #APP interfaces
@@ -242,7 +254,11 @@ USR_SRCS+= $(VSFDIR)/dal/dal.c \
   $(VSFDIR)/dal/mic2826/mic2826_drv.c \
   $(VSFDIR)/dal/nrf24l01/nrf24l01_drv.c \
   $(VSFDIR)/dal/stream/stream.c \
-  $(VSFDIR)/dal/usart_stream/usart_stream.c
+  $(VSFDIR)/dal/usart_stream/usart_stream.c \
+  $(VSFDIR)/dal/s6b0724/s6b0724_drv.c \
+  $(VSFDIR)/dal/sst32hfxx/sst32hfxx_drv.c \
+  $(VSFDIR)/dal/cfi/cfi_drv.c \
+  $(VSFDIR)/dal/nand/nand_drv.c
 else
 USR_SRCS+= $(VSFDIR)/dal/usart_stream/usart_stream.c $(VSFDIR)/dal/stream/stream.c
 USR_SRCS+= $(VSFDIR)/dal/mal/mal.c
@@ -258,6 +274,7 @@ USR_SRCS+= $(VSFDIR)/stack/usb_device/vsf_usbd.c \
 
 #VSF tool
 USR_SRCS+= $(VSFDIR)/tool/buffer/buffer.c $(VSFDIR)/tool/fakefat32/fakefat32.c
+USR_SRCS+= $(VSFDIR)/tool/crc/crc.c
 USR_INCS+= -I $(VSFDIR)/tool/list
 
 # USB_TO_XXX

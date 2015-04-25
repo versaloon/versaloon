@@ -83,6 +83,7 @@ struct cm_nuc400_t
 	} bootmode;
 	uint8_t tick_tock;
 };
+static bool chip_protected = false;
 
 #define NUC400_IAP_BASE				CM_SRAM_ADDR
 #define NUC400_IAP_COMMAND_OFFSET	0x60
@@ -349,66 +350,6 @@ static vsf_err_t nuc400swj_fmc_enable(void)
 	return VSFERR_NONE;
 }
 
-static vsf_err_t nuc400swj_init_iap(void)
-{
-	uint32_t reg;
-	uint8_t verify_buff[sizeof(iap_code)];
-	
-	if (cm_dp_halt())
-	{
-		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "halt nuc400");
-		return ERRCODE_FAILURE_OPERATION;
-	}
-	
-	if (nuc400swj_unlock())
-	{
-		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "unlock NUC chip");
-		return ERRCODE_FAILURE_OPERATION;
-	}
-	
-	if (nuc400swj_fmc_enable())
-	{
-		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "enable FMC");
-		return ERRCODE_FAILURE_OPERATION;
-	}
-	
-	// write iap_code
-	if (adi_memap_write_buf32(NUC400_IAP_BASE, (uint8_t*)iap_code,
-											sizeof(iap_code)))
-	{
-		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "load iap_code to SRAM");
-		return ERRCODE_FAILURE_OPERATION;
-	}
-	// verify iap_code
-	memset(verify_buff, 0, sizeof(iap_code));
-	if (adi_memap_read_buf32(NUC400_IAP_BASE, verify_buff,
-										sizeof(iap_code)))
-	{
-		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "read flash_loader");
-		return ERRCODE_FAILURE_OPERATION;
-	}
-	if (memcmp(verify_buff, iap_code, sizeof(iap_code)))
-	{
-		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "verify flash_loader");
-		return ERRCODE_FAILURE_OPERATION;
-	}
-	
-	// write pc
-	reg = NUC400_IAP_BASE + 1;
-	if (cm_write_core_register(CM_COREREG_PC, &reg))
-	{
-		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "write PC");
-		return ERRCODE_FAILURE_OPERATION;
-	}
-	
-	if (cm_dp_resume())
-	{
-		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "run iap");
-		return ERRCODE_FAILURE_OPERATION;
-	}
-	return VSFERR_NONE;
-}
-
 static vsf_err_t nuc400swj_reset(void)
 {
 	uint32_t reg = NUC400_REG_IPRSTC1_CUP_RST;
@@ -448,7 +389,7 @@ static vsf_err_t nuc400swj_isp_run(uint8_t cmd, uint32_t addr, uint32_t *data,
 	{
 		if (!read && (data != NULL))
 		{
-			if (adi_memap_write_reg32(NUC400_REG_ISPADR, &data[i], 0))
+			if (adi_memap_write_reg32(NUC400_REG_ISPDAT, &data[i], 0))
 			{
 				err = ERRCODE_FAILURE_OPERATION;
 				break;
@@ -456,23 +397,24 @@ static vsf_err_t nuc400swj_isp_run(uint8_t cmd, uint32_t addr, uint32_t *data,
 		}
 		reg = addr;
 		addr += 4;
-		if (adi_memap_write_reg32(NUC400_REG_ISPADR, &reg, 0))
+		if (adi_memap_write_reg32(NUC400_REG_ISPADR, &reg, 1))
 		{
 			err = ERRCODE_FAILURE_OPERATION;
 			break;
 		}
 		reg = cmd;
-		if (adi_memap_write_reg32(NUC400_REG_ISPCMD, &reg, 0))
+		if (adi_memap_write_reg32(NUC400_REG_ISPCMD, &reg, 1))
 		{
 			err = ERRCODE_FAILURE_OPERATION;
 			break;
 		}
 		reg = NUC400_REG_ISPTRG_ISPGO;
-		if (adi_memap_write_reg32(NUC400_REG_ISPTRG, &reg, 0))
+		if (adi_memap_write_reg32(NUC400_REG_ISPTRG, &reg, 1))
 		{
 			err = ERRCODE_FAILURE_OPERATION;
 			break;
 		}
+		interfaces->delay.delayms(100);
 		while (1)
 		{
 			if (adi_memap_read_reg32(NUC400_REG_ISPTRG, &reg, 1))
@@ -499,6 +441,103 @@ static vsf_err_t nuc400swj_isp_run(uint8_t cmd, uint32_t addr, uint32_t *data,
 		}
 	}
 	return err;
+}
+
+static vsf_err_t nuc400swj_init_iap(void)
+{
+	uint32_t reg;
+	uint8_t verify_buff[sizeof(iap_code)];
+	uint32_t fuse_data[4];
+	
+	if (cm_dp_halt())
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "halt nuc400");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	
+	if (nuc400swj_unlock())
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "unlock NUC chip");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	
+	if (nuc400swj_fmc_enable())
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "enable FMC");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	
+	chip_protected = false;
+	if (nuc400swj_isp_run(NUC400_REG_ISPCMD_READ,
+							NUC400_REG_CFG_BA, (uint32_t *)fuse_data, 4, true))
+	{
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	if ((fuse_data[0] != 0xFFFFFFFF) || (fuse_data[1] != 0xFFFFFFFF) ||
+		(fuse_data[2] != 0xFFFFFFFF))
+	{
+		uint32_t crc32 = 0;
+		struct crc_t crc8 = {CRC_BITLEN_8, 0xFF, 0x07};
+		uint8_t *fuse_byte = (uint8_t *)fuse_data;
+		uint8_t i;
+		
+		for (i = 0; i < 4; i++)
+		{
+			crc8.result = 0xFF;
+			crc_calc(&crc8, &fuse_byte[i + 0], 1);
+			crc_calc(&crc8, &fuse_byte[i + 4], 1);
+				crc_calc(&crc8, &fuse_byte[i + 8], 1);
+			crc32 |= crc8.result << (i * 8);
+		}
+		if (crc32 == fuse_data[3])
+		{
+			// checksum ok, option bytes valid
+			// check if read protected
+			if (!(fuse_data[0] & 0x00000002))
+			{
+				// read protected
+				chip_protected = true;
+				LOG_INFO("chip protected");
+				return VSFERR_NONE;
+			}
+		}
+	}
+	
+	// write iap_code
+	if (adi_memap_write_buf32(NUC400_IAP_BASE, (uint8_t*)iap_code,
+											sizeof(iap_code)))
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "load iap_code to SRAM");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	// verify iap_code
+	memset(verify_buff, 0, sizeof(iap_code));
+	if (adi_memap_read_buf32(NUC400_IAP_BASE, verify_buff,
+										sizeof(iap_code)))
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "read flash_loader");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	if (memcmp(verify_buff, iap_code, sizeof(iap_code)))
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "verify flash_loader");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	
+	// write pc
+	reg = NUC400_IAP_BASE + 1;
+	if (cm_write_core_register(CM_COREREG_PC, &reg))
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "write PC");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	
+	if (cm_dp_resume())
+	{
+		LOG_ERROR(ERRMSG_FAILURE_OPERATION, "run iap");
+		return ERRCODE_FAILURE_OPERATION;
+	}
+	return VSFERR_NONE;
 }
 
 ENTER_PROGRAM_MODE_HANDLER(nuc400swj)
@@ -531,7 +570,7 @@ LEAVE_PROGRAM_MODE_HANDLER(nuc400swj)
 	
 	REFERENCE_PARAMETER(success);
 	
-	return nuc400swj_iap_wait_finish(fl);
+	return chip_protected ? VSFERR_NONE: nuc400swj_iap_wait_finish(fl);
 }
 
 ERASE_TARGET_HANDLER(nuc400swj)
@@ -543,6 +582,12 @@ ERASE_TARGET_HANDLER(nuc400swj)
 	
 	REFERENCE_PARAMETER(size);
 	REFERENCE_PARAMETER(addr);
+	
+	if (chip_protected)
+	{
+		// issue erase all sequence
+		// you need NDA from nuvoton to have these code
+	}
 	
 	cmd.command = NUC400_REG_ISPCMD_PAGE_ERASE;
 	cmd.src_addr = 0;
@@ -559,13 +604,7 @@ ERASE_TARGET_HANDLER(nuc400swj)
 			nuc400->bootmode = NUC400_BOOTMODE_AP;
 		}
 		
-		cmd.tgt_addr = addr;
-		if (nuc400swj_iap_run(fl, &cmd) || interfaces->delay.delayms(20) ||
-			nuc400swj_iap_wait_finish(fl))
-		{
-			err = VSFERR_FAIL;
-		}
-		break;
+		goto do_erase_flash;
 	case APPLICATION_CHAR:
 		if (nuc400->bootmode != NUC400_BOOTMODE_LD)
 		{
@@ -576,6 +615,7 @@ ERASE_TARGET_HANDLER(nuc400swj)
 			nuc400->bootmode = NUC400_BOOTMODE_LD;
 		}
 		
+do_erase_flash:
 		cmd.tgt_addr = addr;
 		if (nuc400swj_iap_run(fl, &cmd) || interfaces->delay.delayms(20) ||
 			nuc400swj_iap_wait_finish(fl))
@@ -585,7 +625,7 @@ ERASE_TARGET_HANDLER(nuc400swj)
 		break;
 	case FUSE_CHAR:
 		// wait previous flashloader operation finish first
-		if (nuc400swj_iap_wait_finish(&nuc400->fl))
+		if (!chip_protected && nuc400swj_iap_wait_finish(&nuc400->fl))
 		{
 			err = ERRCODE_FAILURE_OPERATION;
 			break;
@@ -760,7 +800,8 @@ READ_TARGET_HANDLER(nuc400swj)
 		{
 			uint32_t fuse_data[4];
 			
-			if (adi_memap_read_buf32(NUC400_REG_CFG_BA, (uint8_t*)fuse_data, 16))
+			if (nuc400swj_isp_run(NUC400_REG_ISPCMD_READ,
+							NUC400_REG_CFG_BA, (uint32_t *)fuse_data, 4, true))
 			{
 				err = ERRCODE_FAILURE_OPERATION;
 				break;
@@ -786,7 +827,9 @@ READ_TARGET_HANDLER(nuc400swj)
 				{
 					// checksum fails
 					err =  VSFERR_FAIL;
+					break;
 				}
+				memcpy(buff, fuse_data, 12);
 			}
 			break;
 		}

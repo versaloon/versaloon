@@ -24,10 +24,10 @@
 
 #define DAL_MAL_EN							1
 #define DAL_EE93CX6_EN						INTERFACE_MICROWIRE_EN
-#define DAL_EE24CXX_EN						1
-#define DAL_DF25XX_EN						1
-#define DAL_DF45XX_EN						1
-#define DAL_SD_SPI_EN						1
+#define DAL_EE24CXX_EN						INTERFACE_IIC_EN
+#define DAL_DF25XX_EN						INTERFACE_SPI_EN
+#define DAL_DF45XX_EN						INTERFACE_SPI_EN
+#define DAL_SD_SPI_EN						INTERFACE_SPI_EN
 #define DAL_SD_SDIO_EN						INTERFACE_SDIO_EN
 #define DAL_CFI_EN							INTERFACE_EBI_EN
 #define DAL_NAND_EN							INTERFACE_EBI_EN

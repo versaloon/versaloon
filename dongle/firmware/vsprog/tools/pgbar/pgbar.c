@@ -77,7 +77,9 @@ void pgbar_update(int32_t step)
 {
 	int32_t noc;
 	uint32_t pos_pre;
-	uint8_t led_mask;
+#if HW_HAS_LEDARRAY
+	uint32_t led_mask;
+#endif
 	
 	pos_pre = position;
 	noc = pgbar_get_char_num(position);
@@ -137,9 +139,9 @@ void pgbar_update(int32_t step)
 #if HW_HAS_LCM
 		vsprog_ui_set_progress(percentage);
 #endif
-		led_mask = pgbar_get_char_num(position) * 8 / max_num_of_chars;
-		led_mask = (1 << led_mask) - 1;
 #if HW_HAS_LEDARRAY
+		led_mask = pgbar_get_char_num(position) * LED_ARRAY_LEN / max_num_of_chars;
+		led_mask = (1 << led_mask) - 1;
 		LED_ARRAY_SET(led_mask);
 #endif
 		

@@ -135,6 +135,7 @@
 #	define TARGET_SD_EN					1
 #	define TARGET_CFI_EN				0
 #	define TARGET_NAND_EN				0
+#	define TARGET_NUC400_EN				1
 #else
 #	define TARGET_COMISP_EN				0
 #	define TARGET_ARM_ADI_EN			0
@@ -165,6 +166,7 @@
 #	define TARGET_SD_EN					0
 #	define TARGET_CFI_EN				0
 #	define TARGET_NAND_EN				0
+#	define TARGET_NUC400_EN				0
 #endif
 
 #define STLINK_EN						0

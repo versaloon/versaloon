@@ -1,0 +1,31 @@
+Cmp-Mod V01 Created by CvPcb (2012-01-19 BZR 3256)-stable date = 20/09/2012 17:09:09
+
+BeginCmp
+TimeStamp = /4FE86DBA;
+Reference = P0;
+ValeurCmp = CONN_10X2;
+IdModule  = PIN_ARRAY_10x2_SMT;
+EndCmp
+
+BeginCmp
+TimeStamp = /4FE86DC1;
+Reference = P1;
+ValeurCmp = CONN_10X2;
+IdModule  = PIN_ARRAY_10x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /4FE86DC8;
+Reference = P2;
+ValeurCmp = CONN_10X2;
+IdModule  = PIN_ARRAY_10x2_SMT;
+EndCmp
+
+BeginCmp
+TimeStamp = /505ADD09;
+Reference = P3;
+ValeurCmp = CONN_10X2;
+IdModule  = PIN_ARRAY_10x2;
+EndCmp
+
+EndListe

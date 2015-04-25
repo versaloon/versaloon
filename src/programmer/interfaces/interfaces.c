@@ -34,6 +34,26 @@
 #include "scripts.h"
 #include "target.h"
 
+#include <time.h>
+static uint32_t default_tickclk_get_count(void)
+{
+	return (uint32_t)(clock() / (CLOCKS_PER_SEC / 1000));
+}
+// default interfaces supports tickclk only, which will call clock in time.h
+// so tickclk will be working without any hardware interface is initialized
+static struct interfaces_info_t default_interfaces =
+{
+	"default", NULL, NULL, false, NULL, 0,
+	
+	// core
+	{NULL},
+	// clko
+	{NULL},
+	// tickclk
+	{NULL,  NULL, NULL, NULL, default_tickclk_get_count},
+};
+
+#define INTERFACE_DEFAULT				0
 struct interfaces_info_t *interfaces_info[] =
 {
 	// real interfaces
@@ -43,10 +63,12 @@ struct interfaces_info_t *interfaces_info[] =
 #if TARGET_ARM_ADI_EN
 	&vi_stm32_interfaces,
 #endif
+	// default interfaces
+	&default_interfaces,
 	NULL
 };
 
-struct interfaces_info_t *cur_interface = NULL;
+struct interfaces_info_t *cur_interface = &default_interfaces;
 struct interfaces_info_t *cur_real_interface = NULL;
 
 char* get_interface_name(uint64_t i)
@@ -83,8 +105,6 @@ char* get_interface_name(uint64_t i)
 		return NULL;
 	}
 }
-
-#define INTERFACE_DEFAULT				0
 
 static struct interfaces_info_t *find_interface_by_name(const char *ifs)
 {
@@ -181,11 +201,13 @@ vsf_err_t interface_init(const char *ifs)
 	
 	if ((interface_tmp != NULL) && (!interface_tmp->is_virtual))
 	{
-		if ((cur_interface != NULL) && (!cur_interface->is_virtual))
+		if ((cur_interface != NULL) && (!cur_interface->is_virtual) &&
+			(cur_interface->core.fini != NULL))
 		{
 			cur_interface->core.fini(cur_interface);
 		}
-		if ((cur_real_interface != NULL) && (!cur_real_interface->is_virtual))
+		if ((cur_real_interface != NULL) && (!cur_real_interface->is_virtual) &&
+			(cur_real_interface->core.fini != NULL))
 		{
 			cur_real_interface->core.fini(cur_real_interface);
 		}
@@ -216,7 +238,7 @@ vsf_err_t interface_init(const char *ifs)
 
 vsf_err_t interface_assert(struct interfaces_info_t **ifs)
 {
-	if (NULL == cur_interface)
+	if ((NULL == cur_interface) || (cur_interface == &default_interfaces))
 	{
 		if (interface_init(NULL) || (NULL == cur_interface))
 		{

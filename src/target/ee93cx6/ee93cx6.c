@@ -238,6 +238,9 @@ READ_TARGET_HANDLER(ee93cx6)
 	
 	switch (area)
 	{
+	case CHIPID_CHAR:
+		return VSFERR_NONE;
+		break;
 	case EEPROM_CHAR:
 		eeprom_info = target_get_chip_area(context->param, EEPROM_IDX);
 		if ((NULL == eeprom_info) || (size % eeprom_info->page_size))

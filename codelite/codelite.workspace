@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="codelite" Database="./codelite.tags">
+  <Project Name="vsprog" Path="vsprog/vsprog.project" Active="No"/>
+  <Project Name="versaloon" Path="versaloon/versaloon.project" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="no">
+      <Project Name="vsprog" ConfigName="Debug"/>
+      <Project Name="versaloon" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Project Name="vsprog" ConfigName="Release"/>
+      <Project Name="versaloon" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>

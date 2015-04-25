@@ -1229,7 +1229,7 @@ static vsf_err_t vss_run_file(FILE *f, char *head, uint8_t quiet)
 		}
 		
 		// get a line
-		if (NULL == FGETS(cmd_line, sizeof(cmd_line), f))
+		if (NULL == FGETS(cmd_line, sizeof(cmd_line) - 1, f))
 		{
 			if (!FEOF(f))
 			{
@@ -1240,6 +1240,7 @@ static vsf_err_t vss_run_file(FILE *f, char *head, uint8_t quiet)
 				return VSFERR_NONE;
 			}
 		}
+		cmd_line[sizeof(cmd_line) - 1] = '\0';
 		
 		cur_cmd_quiet = 0;
 		if (VSS_HIDE_CHAR == vss_get_first_non_space_char(cmd_line, &i))

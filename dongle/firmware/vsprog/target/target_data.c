@@ -41,6 +41,7 @@
 uint8_t target_slotnum = 0;
 struct target_slot_t target_slot[8];
 
+#if DAL_SST32HFXX_EN
 static struct sst32hfxx_drv_info_t sst32hfxx_drv_info;
 static struct sst32hfxx_drv_param_t sst32hfxx_drv_param;
 static struct sst32hfxx_drv_interface_t sst32hfxx_drv_ifs =
@@ -59,6 +60,7 @@ static struct dal_info_t sst32hfxx_dal_info =
 	&sst32hfxx_drv_info,
 	&sst32hfxx_mal_info,
 };
+#endif
 
 vsf_err_t target_init_slots(void)
 {
@@ -76,6 +78,7 @@ vsf_err_t target_init_slots(void)
 		target_slot[target_slotnum].script_size = EVSPROG_SCRIPT_SIZE;
 		target_slotnum++;
 	}
+#if DAL_SST32HFXX_EN
 	sst32hfxx_mal_info.capacity.block_size = 4096;
 	sst32hfxx_mal_info.capacity.block_number = 512;
 	sst32hfxx_drv_param.nor_info.common_info.data_width = 16;
@@ -104,6 +107,7 @@ vsf_err_t target_init_slots(void)
 		target_slot[target_slotnum].script_size = EVSPROG_SCRIPT_SIZE;
 		target_slotnum++;
 	}
+#endif
 	return VSFERR_NONE;
 }
 

@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="versaloon" InternalType="STM32 Target Image">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+    </Plugin>
+  </Plugins>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="inc">
+    <VirtualDirectory Name="hw_cfg">
+      <File Name="../../dongle/firmware/Projects/hw_cfg_MiniRelease1.h"/>
+      <File Name="../../dongle/firmware/Projects/hw_cfg_NanoRelease1.h"/>
+      <File Name="../../dongle/firmware/Projects/hw_cfg_ProRelease1.h"/>
+      <File Name="../../dongle/firmware/Projects/hw_cfg_st_link.h"/>
+      <File Name="../../dongle/firmware/Projects/hw_cfg_STBee_Mini.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="vsf_cfg">
+      <File Name="../../dongle/firmware/Projects/Versaloon/vsf_cfg/dal_cfg.h"/>
+      <File Name="../../dongle/firmware/Projects/Versaloon/vsf_cfg/interfaces_cfg.h"/>
+      <File Name="../../dongle/firmware/Projects/Versaloon/vsf_cfg/vsf_usbd_cfg.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="vsprog">
+      <File Name="../../dongle/firmware/vsprog/config.h"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="src">
+    <VirtualDirectory Name="Interfaces">
+      <VirtualDirectory Name="APP">
+        <VirtualDirectory Name="BDM">
+          <File Name="../../dongle/firmware/Interfaces/APP/BDM/BDM.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="C2">
+          <File Name="../../dongle/firmware/Interfaces/APP/C2/C2.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="DUSI">
+          <File Name="../../dongle/firmware/Interfaces/APP/DUSI/DUSI.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="EBI">
+          <File Name="../../dongle/firmware/Interfaces/APP/EBI/EBI.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="GPIO">
+          <File Name="../../dongle/firmware/Interfaces/APP/GPIO/GPIO.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="IIC">
+          <File Name="../../dongle/firmware/Interfaces/APP/IIC/IIC.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="ISSP">
+          <File Name="../../dongle/firmware/Interfaces/APP/ISSP/ISSP.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="JTAG">
+          <File Name="../../dongle/firmware/Interfaces/APP/JTAG/JTAG_TAP.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="LPC_ICP">
+          <File Name="../../dongle/firmware/Interfaces/APP/LPC_ICP/LPC_ICP.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="MicroWire">
+          <File Name="../../dongle/firmware/Interfaces/APP/MicroWire/MicroWire.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="MSP430_JTAG">
+          <File Name="../../dongle/firmware/Interfaces/APP/MSP430_JTAG/MSP430_JTAG.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="PowerExt">
+          <File Name="../../dongle/firmware/Interfaces/APP/PowerExt/PowerExt.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="PWM">
+          <File Name="../../dongle/firmware/Interfaces/APP/PWM/PWM.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="SDIO">
+          <File Name="../../dongle/firmware/Interfaces/APP/SDIO/SDIO.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="SPI">
+          <File Name="../../dongle/firmware/Interfaces/APP/SPI/SPI.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="SWD">
+          <File Name="../../dongle/firmware/Interfaces/APP/SWD/SWD.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="SWIM">
+          <File Name="../../dongle/firmware/Interfaces/APP/SWIM/SWIM.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="USART">
+          <File Name="../../dongle/firmware/Interfaces/APP/USART/USART.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="ADC">
+          <File Name="../../dongle/firmware/Interfaces/APP/ADC/ADC.c"/>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <File Name="../../dongle/firmware/Interfaces/app_interfaces.c"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="scripts">
+      <VirtualDirectory Name="app_script">
+        <File Name="../../dongle/firmware/app_script/app_script.c"/>
+      </VirtualDirectory>
+      <File Name="../../src/scripts/interfaces_script.c"/>
+      <File Name="../../src/scripts/scripts.c"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="usb_protocol">
+      <File Name="../../dongle/firmware/usb_protocol_Versaloon.c"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="USB_TO_XXX">
+      <File Name="../../dongle/firmware/USB_TO_XXX/CommandProcessor.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_ADC.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_BDM.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_C2.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_DAC.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_DUSI.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_EBI.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_GPIO.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_IIC.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_ISSP.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_JTAG_HL.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_JTAG_LL.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_JTAG_RAW.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_LPCICP.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_MICROWIRE.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_MSP430_JTAG.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_POWER.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_PWM.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_SPI.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_SWD.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_SWIM.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_USART.c"/>
+      <File Name="../../dongle/firmware/USB_TO_XXX/USB_TO_XXX.c"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="vsf">
+      <VirtualDirectory Name="dal">
+        <VirtualDirectory Name="cfi">
+          <File Name="../../vsf/dal/cfi/cfi_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="df25xx">
+          <File Name="../../vsf/dal/df25xx/df25xx_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="df45xx">
+          <File Name="../../vsf/dal/df45xx/df45xx_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="ee24cxx">
+          <File Name="../../vsf/dal/ee24cxx/ee24cxx_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="ee93cx6">
+          <File Name="../../vsf/dal/ee93cx6/ee93cx6_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="mal">
+          <File Name="../../vsf/dal/mal/mal.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="mic2826">
+          <File Name="../../vsf/dal/mic2826/mic2826_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="nand">
+          <File Name="../../vsf/dal/nand/nand_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="nrf24l01">
+          <File Name="../../vsf/dal/nrf24l01/nrf24l01_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="sd">
+          <File Name="../../vsf/dal/sd/sd_common.c"/>
+          <File Name="../../vsf/dal/sd/sd_sdio_drv.c"/>
+          <File Name="../../vsf/dal/sd/sd_spi_drv.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="usart_stream">
+          <File Name="../../vsf/dal/usart_stream/usart_stream.c"/>
+        </VirtualDirectory>
+        <File Name="../../vsf/dal/dal.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="interfaces">
+        <VirtualDirectory Name="cpu">
+          <VirtualDirectory Name="stm32">
+            <VirtualDirectory Name="adc">
+              <File Name="../../vsf/interfaces/cpu/stm32/adc/STM32_ADC.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="ebi">
+              <File Name="../../vsf/interfaces/cpu/stm32/ebi/STM32_EBI.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="eint">
+              <File Name="../../vsf/interfaces/cpu/stm32/eint/STM32_EINT.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="flash">
+              <File Name="../../vsf/interfaces/cpu/stm32/flash/STM32_FLASH.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="gpio">
+              <File Name="../../vsf/interfaces/cpu/stm32/gpio/STM32_GPIO.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="hw">
+              <VirtualDirectory Name="STM32F10x_Lib">
+                <VirtualDirectory Name="Libraries">
+                  <VirtualDirectory Name="STM32_USB-FS-Device_Driver">
+                    <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32_USB-FS-Device_Driver/src/usb_mem.c"/>
+                    <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32_USB-FS-Device_Driver/src/usb_regs.c"/>
+                  </VirtualDirectory>
+                  <VirtualDirectory Name="STM32F10x_StdPeriph_Driver">
+                    <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32F10x_StdPeriph_Driver/src/misc.c"/>
+                    <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c"/>
+                    <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c"/>
+                    <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c"/>
+                    <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c"/>
+                    <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.c"/>
+                    <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_tim.c"/>
+                  </VirtualDirectory>
+                </VirtualDirectory>
+              </VirtualDirectory>
+              <VirtualDirectory Name="startup">
+                <File Name="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_md.s"/>
+              </VirtualDirectory>
+            </VirtualDirectory>
+            <VirtualDirectory Name="sdio">
+              <File Name="../../vsf/interfaces/cpu/stm32/sdio/STM32_SDIO.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="spi">
+              <File Name="../../vsf/interfaces/cpu/stm32/spi/STM32_SPI.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="timer">
+              <File Name="../../vsf/interfaces/cpu/stm32/timer/STM32_TIM.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="usart">
+              <File Name="../../vsf/interfaces/cpu/stm32/usart/STM32_USART.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="usbd">
+              <File Name="../../vsf/interfaces/cpu/stm32/usbd/STM32_USBD.c"/>
+            </VirtualDirectory>
+            <File Name="../../vsf/interfaces/cpu/stm32/core.c"/>
+          </VirtualDirectory>
+        </VirtualDirectory>
+        <File Name="../../vsf/interfaces/interfaces.c"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="stack">
+        <VirtualDirectory Name="usb_device">
+          <VirtualDirectory Name="CLASS">
+            <VirtualDirectory Name="CDC">
+              <File Name="../../vsf/stack/usb_device/class/CDC/vsfusbd_CDC.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="HID">
+              <File Name="../../vsf/stack/usb_device/class/HID/vsfusbd_HID.c"/>
+            </VirtualDirectory>
+            <VirtualDirectory Name="MSC">
+              <File Name="../../vsf/stack/usb_device/class/MSC/SCSI.c"/>
+              <File Name="../../vsf/stack/usb_device/class/MSC/vsfusbd_MSC_BOT.c"/>
+            </VirtualDirectory>
+          </VirtualDirectory>
+          <File Name="../../vsf/stack/usb_device/vsf_usbd.c"/>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="tool">
+        <VirtualDirectory Name="buffer">
+          <File Name="../../vsf/tool/buffer/buffer.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="list">
+          <File Name="../../vsf/tool/list/list.h"/>
+        </VirtualDirectory>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="vsprog">
+      <VirtualDirectory Name="driver">
+        <VirtualDirectory Name="comport">
+          <File Name="../../dongle/firmware/vsprog/driver/comport/comport.c"/>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="target">
+        <File Name="../../dongle/firmware/vsprog/target/target_data.c"/>
+        <File Name="../../dongle/firmware/vsprog/target/target_readconf.c"/>
+        <File Name="../../src/target/target.c"/>
+        <VirtualDirectory Name="at89s5x">
+          <File Name="../../src/target/at89s5x/at89s5x.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="at91sam3">
+          <File Name="../../src/target/at91sam3/at91sam3.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="avr32">
+          <File Name="../../src/target/avr32/avr32.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="avr8">
+          <File Name="../../src/target/avr8/avr8.c"/>
+          <File Name="../../src/target/avr8/avr8_hvpp.c"/>
+          <File Name="../../src/target/avr8/avr8_hvsp.c"/>
+          <File Name="../../src/target/avr8/avr8_isp.c"/>
+          <File Name="../../src/target/avr8/avr8_jtag.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="avrxmega">
+          <File Name="../../src/target/avrxmega/avrxmega.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="c8051f">
+          <File Name="../../src/target/c8051f/c8051f.c"/>
+          <File Name="../../src/target/c8051f/c8051f_c2.c"/>
+          <File Name="../../src/target/c8051f/c8051f_jtag.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="cfi">
+          <File Name="../../src/target/cfi/cfi.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="comisp">
+          <File Name="../../src/target/comisp/comisp.c"/>
+          <File Name="../../src/target/comisp/lpcarmisp.c"/>
+          <File Name="../../src/target/comisp/stm32isp.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="core">
+          <VirtualDirectory Name="arm_adi">
+            <File Name="../../src/target/core/arm_adi/adi_v5p1.c"/>
+          </VirtualDirectory>
+        </VirtualDirectory>
+        <VirtualDirectory Name="cortex-m">
+          <File Name="../../src/target/cortex-m/cm.c"/>
+          <File Name="../../src/target/cortex-m/cm_at91sam3.c"/>
+          <File Name="../../src/target/cortex-m/cm_common.c"/>
+          <File Name="../../src/target/cortex-m/cm_lm3s.c"/>
+          <File Name="../../src/target/cortex-m/cm_lpc1000.c"/>
+          <File Name="../../src/target/cortex-m/cm_stm32_fl.c"/>
+          <File Name="../../src/target/cortex-m/cm_stm32f1.c"/>
+          <File Name="../../src/target/cortex-m/cm_stm32f2.c"/>
+          <File Name="../../src/target/cortex-m/cm_stm32l1.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="df25xx">
+          <File Name="../../src/target/df25xx/df25xx.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="ee24cxx">
+          <File Name="../../src/target/ee24cxx/ee24cxx.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="ee93cx6">
+          <File Name="../../src/target/ee93cx6/ee93cx6.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="hcs08">
+          <File Name="../../src/target/hcs08/hcs08.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="hcs12">
+          <File Name="../../src/target/hcs12/hcs12.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="lm3s">
+          <File Name="../../src/target/lm3s/lm3s.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="lpc1000">
+          <File Name="../../src/target/lpc1000/lpc1000.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="lpc900">
+          <File Name="../../src/target/lpc900/lpc900.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="msp430">
+          <File Name="../../src/target/msp430/JTAGfunc.c"/>
+          <File Name="../../src/target/msp430/msp430.c"/>
+          <File Name="../../src/target/msp430/msp430_bsl.c"/>
+          <File Name="../../src/target/msp430/msp430_jtagsbw.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="nand">
+          <File Name="../../src/target/nand/nand.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="psoc1">
+          <File Name="../../src/target/psoc1/psoc1.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="sd">
+          <File Name="../../src/target/sd/sd.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="stm32f1">
+          <File Name="../../src/target/stm32f1/stm32f1.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="stm32f2">
+          <File Name="../../src/target/stm32f2/stm32f2.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="stm32l1">
+          <File Name="../../src/target/stm32l1/stm32l1.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="stm8">
+          <File Name="../../src/target/stm8/stm8.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="svf_player">
+          <File Name="../../src/target/svf_player/byte_tap.c"/>
+          <File Name="../../src/target/svf_player/svf_parser.c"/>
+          <File Name="../../src/target/svf_player/svf_player.c"/>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="tools">
+        <VirtualDirectory Name="memlist">
+          <File Name="../../src/tools/memlist/memlist.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="pgbar">
+          <File Name="../../dongle/firmware/vsprog/tools/pgbar/pgbar.c"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="strparser">
+          <File Name="../../src/tools/strparser/strparser.c"/>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <File Name="../../dongle/firmware/vsprog/vsprog.c"/>
+    </VirtualDirectory>
+    <File Name="../../dongle/firmware/Projects/Versaloon/GCC/compiler_string.c"/>
+    <File Name="../../dongle/firmware/Projects/Versaloon/GCC/syscall.c"/>
+    <File Name="../../dongle/firmware/Projects/Versaloon/port.c"/>
+    <File Name="../../dongle/firmware/app_io.c"/>
+    <File Name="../../dongle/firmware/main.c"/>
+  </VirtualDirectory>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="arm-none-eabi-gcc" DebuggerType="ARM gdb CM3" Type="Executable" BuildCmpWithGlobalSettings="overwrite" BuildLnkWithGlobalSettings="overwrite" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;-Wall;-mcpu=cortex-m3;-mthumb;-ffunction-sections;-fsigned-char;-mlittle-endian" C_Options="-g;-Wall;-mcpu=cortex-m3;-mthumb;-ffunction-sections;-fsigned-char;-mlittle-endian" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+        <IncludePath Value="."/>
+        <IncludePath Value="../../dongle/firmware/Projects/Versaloon/GCC"/>
+        <IncludePath Value="../../dongle/firmware/Projects/Versaloon"/>
+        <IncludePath Value="../../dongle/firmware/Projects/Versaloon/vsf_cfg"/>
+        <IncludePath Value="../../dongle/firmware/Projects"/>
+        <IncludePath Value="../../dongle/firmware"/>
+        <IncludePath Value="../../dongle/firmware/Interfaces"/>
+        <IncludePath Value="../../dongle/firmware/Interfaces/APP"/>
+        <IncludePath Value="../../dongle/firmware/USB_TO_XXX"/>
+        <IncludePath Value="../../vsf/"/>
+        <IncludePath Value="../../vsf/tool/list"/>
+        <IncludePath Value="../../vsf/interfaces"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32_USB-FS-Device_Driver/inc"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32F10x_StdPeriph_Driver/inc"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/CMSIS/CM3/CoreSupport"/>
+        <IncludePath Value="../../src/scripts"/>
+        <IncludePath Value="../../src/target"/>
+        <IncludePath Value="../../src/tools/memlist"/>
+        <IncludePath Value="../../src/tools/strparser"/>
+        <IncludePath Value="../../dongle/firmware/app_script"/>
+        <IncludePath Value="../../dongle/firmware/vsprog"/>
+        <IncludePath Value="../../dongle/firmware/vsprog/tools/pgbar"/>
+        <IncludePath Value="../../dongle/firmware/vsprog/driver/comport"/>
+        <IncludePath Value="../../src/target/core/arm_adi"/>
+        <IncludePath Value="../../src/target/comisp"/>
+        <IncludePath Value="../../src/target/cortex-m3"/>
+        <IncludePath Value="../../src/target/at91sam3"/>
+        <IncludePath Value="../../src/target/lm3s"/>
+        <IncludePath Value="../../src/target/lpc1000"/>
+        <IncludePath Value="../../src/target/stm32f1"/>
+        <IncludePath Value="../../src/target/stm32f2"/>
+        <IncludePath Value="../../src/target/stm32l1"/>
+        <Preprocessor Value="USE_STDPERIPH_DRIVER"/>
+        <Preprocessor Value="STM32F10X_MD"/>
+        <Preprocessor Value="_HARDWARE_VER=0x21"/>
+        <Preprocessor Value="__TARGET_CHIP__=stm32"/>
+        <Preprocessor Value="FLASH_LOAD_OFFSET=0x0000"/>
+        <Preprocessor Value="CORE_DEBUG=STM32_DBG_SWD"/>
+      </Compiler>
+      <Linker Options="-g;-ggdb;-mcpu=cortex-m3;-nostartfiles;-mthumb;-static;-Wl,-cref,-u,Reset_Handler;-Wl,-Map=./$(IntermediateDirectory)/$(ProjectName).map;-Wl,--gc-sections,-T../../dongle/firmware/Projects/versaloonProSTM32_debug.ld" Required="yes">
+        <LibraryPath Value="../../dongle/firmware/Projects"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName).elf" IntermediateDirectory="./Debug" Command="./$(ProjectName).elf" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="yes" RemoteHostName="localhost" RemoteHostPort="3333" DebuggerPath="arm-none-eabi-gdb.exe">
+        <PostConnectCommands/>
+        <StartupCommands>break main</StartupCommands>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild>
+        <Command Enabled="yes">arm-none-eabi-objcopy -O ihex $(IntermediateDirectory)/$(ProjectName).elf $(IntermediateDirectory)/$(ProjectName).hex</Command>
+        <Command Enabled="yes">arm-none-eabi-objcopy -O ihex $(IntermediateDirectory)/$(ProjectName).elf $(IntermediateDirectory)/$(ProjectName).bin</Command>
+        <Command Enabled="yes">size -A $(IntermediateDirectory)/$(ProjectName).elf</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="arm-none-eabi-gcc" DebuggerType="ARM gdb CM3" Type="Executable" BuildCmpWithGlobalSettings="overwrite" BuildLnkWithGlobalSettings="overwrite" BuildResWithGlobalSettings="append">
+      <Compiler Options="-Os;-Wall;-mcpu=cortex-m3;-mthumb;-ffunction-sections;-fsigned-char;-mlittle-endian" C_Options="-Os;-Wall;-mcpu=cortex-m3;-mthumb;-ffunction-sections;-fsigned-char;-mlittle-endian" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+        <IncludePath Value="."/>
+        <IncludePath Value="../../dongle/firmware/Projects/Versaloon/GCC"/>
+        <IncludePath Value="../../dongle/firmware/Projects/Versaloon"/>
+        <IncludePath Value="../../dongle/firmware/Projects/Versaloon/vsf_cfg"/>
+        <IncludePath Value="../../dongle/firmware/Projects"/>
+        <IncludePath Value="../../dongle/firmware"/>
+        <IncludePath Value="../../dongle/firmware/Interfaces"/>
+        <IncludePath Value="../../dongle/firmware/Interfaces/APP"/>
+        <IncludePath Value="../../dongle/firmware/USB_TO_XXX"/>
+        <IncludePath Value="../../vsf"/>
+        <IncludePath Value="../../vsf/tool/list"/>
+        <IncludePath Value="../../vsf/interfaces"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32_USB-FS-Device_Driver/inc"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/STM32F10x_StdPeriph_Driver/inc"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x"/>
+        <IncludePath Value="../../vsf/interfaces/cpu/stm32/hw/STM32F10x_Lib/Libraries/CMSIS/CM3/CoreSupport"/>
+        <IncludePath Value="../../src/scripts"/>
+        <IncludePath Value="../../src/target"/>
+        <IncludePath Value="../../src/tools/memlist"/>
+        <IncludePath Value="../../src/tools/strparser"/>
+        <IncludePath Value="../../dongle/firmware/app_script"/>
+        <IncludePath Value="../../dongle/firmware/vsprog"/>
+        <IncludePath Value="../../dongle/firmware/vsprog/tools/pgbar"/>
+        <IncludePath Value="../../dongle/firmware/vsprog/driver/comport"/>
+        <IncludePath Value="../../src/target/core/arm_adi"/>
+        <IncludePath Value="../../src/target/comisp"/>
+        <IncludePath Value="../../src/target/cortex-m"/>
+        <IncludePath Value="../../src/target/at91sam3"/>
+        <IncludePath Value="../../src/target/lm3s"/>
+        <IncludePath Value="../../src/target/lpc1000"/>
+        <IncludePath Value="../../src/target/stm32f1"/>
+        <IncludePath Value="../../src/target/stm32f2"/>
+        <IncludePath Value="../../src/target/stm32l1"/>
+        <Preprocessor Value="USE_STDPERIPH_DRIVER"/>
+        <Preprocessor Value="STM32F10X_MD"/>
+        <Preprocessor Value="_HARDWARE_VER=0x21"/>
+        <Preprocessor Value="__TARGET_CHIP__=stm32"/>
+        <Preprocessor Value="FLASH_LOAD_OFFSET=0x2000"/>
+        <Preprocessor Value="CORE_DEBUG=STM32_DBG_NONE"/>
+      </Compiler>
+      <Linker Options="-s;-O3;-mcpu=cortex-m3;-nostartfiles;-mthumb;-static;-Wl,-cref,-u,Reset_Handler;-Wl,-Map=./$(IntermediateDirectory)/$(ProjectName).map;-Wl,--gc-sections,-T../../dongle/firmware/Projects/versaloonProSTM32.ld" Required="yes">
+        <LibraryPath Value="../../dongle/firmware/Projects"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName).elf" IntermediateDirectory="./Release" Command="./$(ProjectName).elf" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="yes" RemoteHostName="localhost" RemoteHostPort="3333" DebuggerPath="arm-none-eabi-gdb.exe">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild>
+        <Command Enabled="yes">arm-none-eabi-objcopy -O ihex $(IntermediateDirectory)/$(ProjectName).elf $(IntermediateDirectory)/$(ProjectName).hex</Command>
+        <Command Enabled="yes">arm-none-eabi-objcopy -O binary $(IntermediateDirectory)/$(ProjectName).elf $(IntermediateDirectory)/$(ProjectName).bin</Command>
+        <Command Enabled="yes">size -A $(IntermediateDirectory)/$(ProjectName).elf</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>

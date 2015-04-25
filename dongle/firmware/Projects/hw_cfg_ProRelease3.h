@@ -27,7 +27,7 @@
 #define HW_HAS_USART					1
 #define HW_HAS_SPI						1
 #define HW_HAS_SDIO						1
-#define HW_HAS_EBI						1
+#define HW_HAS_EBI						0
 #define HW_HAS_IIC						1
 #define HW_HAS_GPIO						1
 #define HW_HAS_CAN						0
@@ -49,9 +49,13 @@
 #define HW_HAS_CLKO						1
 
 #define HW_HAS_BEEPER					1
-#define HW_HAS_LEDARRAY					0
+#define HW_HAS_LEDARRAY					1
 #define HW_HAS_7COLOR_LED				0
-#define HW_HAS_LCM						1
+#define HW_HAS_LCM						0
+
+#if HW_HAS_LEDARRAY && (HW_HAS_EBI || HW_HAS_LCM)
+#error LEDARRAY and EBI share the same GPIOs, cannot used at the same time
+#endif
 
 /****************************** Power ******************************/
 #define PWREXT_EN_PORT					0
@@ -799,6 +803,48 @@
 #define LED_GREEN_PIN					0
 #define LED_USB_PORT					0
 #define LED_USB_PIN						2
+
+#define LED_ARRAY_LEN					24
+#define LED_ARRAY_INIT()				do{\
+											core_interfaces.gpio.init(5);\
+											core_interfaces.gpio.init(3);\
+											core_interfaces.gpio.init(4);\
+											core_interfaces.gpio.init(6);\
+											core_interfaces.gpio.clear(5, 0x0000F03F);\
+											core_interfaces.gpio.clear(3, 0x0000FF7B);\
+											core_interfaces.gpio.clear(4, 0x0000FFFF);\
+											core_interfaces.gpio.clear(6, 0x0000603F);\
+											core_interfaces.gpio.config(5, 0x0000F03F, 0xFFFFFFFF, 0x00000000, 0x00000000);\
+											core_interfaces.gpio.config(3, 0x0000FF7B, 0xFFFFFFFF, 0x00000000, 0x00000000);\
+											core_interfaces.gpio.config(4, 0x0000FFFF, 0xFFFFFFFF, 0x00000000, 0x00000000);\
+											core_interfaces.gpio.config(6, 0x0000603F, 0xFFFFFFFF, 0x00000000, 0x00000000);\
+										} while (0)
+#define LED_ARRAY_SET(val32)			do{\
+											core_interfaces.gpio.out(5, 1 << 0, (((val32) & (1 << 0)) >> 0) << 0);\
+											core_interfaces.gpio.out(5, 1 << 2, (((val32) & (1 << 1)) >> 1) << 2);\
+											core_interfaces.gpio.out(5, 1 << 4, (((val32) & (1 << 2)) >> 2) << 4);\
+											core_interfaces.gpio.out(5, 1 << 12, (((val32) & (1 << 3)) >> 3) << 12);\
+											core_interfaces.gpio.out(5, 1 << 14, (((val32) & (1 << 4)) >> 4) << 14);\
+											core_interfaces.gpio.out(6, 1 << 0, (((val32) & (1 << 5)) >> 5) << 0);\
+											core_interfaces.gpio.out(6, 1 << 2, (((val32) & (1 << 6)) >> 6) << 2);\
+											core_interfaces.gpio.out(6, 1 << 4, (((val32) & (1 << 7)) >> 7) << 4);\
+											core_interfaces.gpio.out(3, 1 << 11, (((val32) & (1 << 8)) >> 8) << 11);\
+											core_interfaces.gpio.out(3, 1 << 13, (((val32) & (1 << 9)) >> 9) << 13);\
+											core_interfaces.gpio.out(4, 1 << 4, (((val32) & (1 << 10)) >> 10) << 4);\
+											core_interfaces.gpio.out(4, 1 << 6, (((val32) & (1 << 11)) >> 11) << 6);\
+											core_interfaces.gpio.out(6, 1 << 13, (((val32) & (1 << 12)) >> 12) << 13);\
+											core_interfaces.gpio.out(3, 1 << 14, (((val32) & (1 << 13)) >> 13) << 14);\
+											core_interfaces.gpio.out(3, 1 << 0, (((val32) & (1 << 14)) >> 14) << 0);\
+											core_interfaces.gpio.out(4, 1 << 7, (((val32) & (1 << 15)) >> 15) << 7);\
+											core_interfaces.gpio.out(4, 1 << 9, (((val32) & (1 << 16)) >> 16) << 9);\
+											core_interfaces.gpio.out(4, 1 << 11, (((val32) & (1 << 17)) >> 17) << 11);\
+											core_interfaces.gpio.out(4, 1 << 13, (((val32) & (1 << 18)) >> 18) << 13);\
+											core_interfaces.gpio.out(4, 1 << 15, (((val32) & (1 << 19)) >> 19) << 15);\
+											core_interfaces.gpio.out(3, 1 << 9, (((val32) & (1 << 20)) >> 20) << 9);\
+											core_interfaces.gpio.out(3, 1 << 5, (((val32) & (1 << 21)) >> 21) << 5);\
+											core_interfaces.gpio.out(4, 1 << 1, (((val32) & (1 << 22)) >> 22) << 1);\
+											core_interfaces.gpio.out(3, 1 << 4, (((val32) & (1 << 23)) >> 23) << 4);\
+										} while (0)
 
 #define LED_POWER_INIT()				do {\
 											LED_POWER_OFF();\

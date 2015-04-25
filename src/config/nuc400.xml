@@ -25,4 +25,15 @@
     <uid init="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" bytesize="12" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x"></uid>
     <usrsig init="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></usrsig>
   </chip>
+  <chip name="nuc442ri8ae">
+    <chip_id>0x00044210</chip_id>
+    <program_mode>s</program_mode>
+    <app_page_size>2048</app_page_size>
+    <app_page_num>256</app_page_num>
+    <usrsig_size>16</usrsig_size>
+    <usrsig_default>0xFF</usrsig_default>
+    <fuse init="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" bytesize="12" format="%4x%4x%4x" />
+    <uid init="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" bytesize="12" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x"></uid>
+    <usrsig init="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" bytesize="16" mask="0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF:0xFFFFFFFF" format="%4x%4x%4x%4x"></usrsig>
+  </chip>
 </series>

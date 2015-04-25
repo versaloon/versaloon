@@ -32,20 +32,9 @@ struct usart_info_t
 struct usart_stream_info_t
 {
 	uint8_t usart_index;
-	uint32_t int_priority;
 	struct vsf_stream_t stream_tx;
 	struct vsf_stream_t stream_rx;
-	struct
-	{
-		void *param;
-		void (*ontx_empty_int)(void *param);
-		void (*ontx_int)(void *param);
-		void (*onrx_int)(void *param);
-	} callback;
 	struct usart_info_t usart_info;
-	
-	// private
-	bool txing;
 };
 
 vsf_err_t usart_stream_init(struct usart_stream_info_t *usart_stream);
@@ -55,5 +44,6 @@ uint32_t usart_stream_rx(struct usart_stream_info_t *usart_stream,
 							struct vsf_buffer_t *buffer);
 uint32_t usart_stream_tx(struct usart_stream_info_t *usart_stream, 
 							struct vsf_buffer_t *buffer);
+vsf_err_t usart_stream_poll(struct usart_stream_info_t *usart_stream);
 
 #endif	// __USART_STREAM_H_INCLUDED__
