@@ -123,7 +123,7 @@ ENTER_PROGRAM_MODE_HANDLER(cfi)
 	else
 	{
 		cfi_drv_ifs.ebi_port = 0;
-		cfi_drv_ifs.nor_index = 1;
+		cfi_drv_ifs.nor_index = 0;
 	}
 	
 	cfi_drv_param.nor_info.common_info.data_width = 16;

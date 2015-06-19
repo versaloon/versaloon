@@ -28,6 +28,7 @@ struct cfi_drv_param_t
 
 struct cfi_drv_info_t
 {
+	uint8_t die_num;
 	uint8_t manufacturer_id;
 	uint16_t device_id[3];
 };
