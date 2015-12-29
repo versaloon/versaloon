@@ -29,15 +29,16 @@
 #include "df25xx_drv_cfg.h"
 #include "df25xx_drv.h"
 
-#define DF25XX_CMD_WRSR						0x01	//write status register 
-#define DF25XX_CMD_PGWR						0x02	//page program
-#define DF25XX_CMD_PGRD						0x03	//read data
-#define DF25XX_CMD_WRDI						0x04	//write disable
-#define DF25XX_CMD_RDSR						0x05	//read status register 1(7 to 0)
-#define DF25XX_CMD_WREN						0x06	//write enable
-#define DF25XX_CMD_ER4K						0x20	//sector erase
-#define DF25XX_CMD_CHER						0x60	//chip erase
-#define DF25XX_CMD_RDID						0x9F	//jedec id
+#define DF25XX_CMD_WRSR						0x01	// write status register 
+#define DF25XX_CMD_PGWR						0x02	// page program
+#define DF25XX_CMD_PGRD						0x03	// read data
+#define DF25XX_CMD_WRDI						0x04	// write disable
+#define DF25XX_CMD_RDSR						0x05	// read status register 1(7 to 0)
+#define DF25XX_CMD_WREN						0x06	// write enable
+#define DF25XX_CMD_ER4K						0x20	// sector erase
+#define DF25XX_CMD_CHER						0x60	// chip erase
+#define DF25XX_CMD_RDID						0x9F	// jedec id
+#define DF25XX_CMD_EN4B						0xB7	// enable 4-byte address
 
 #define DF25XX_STATE_BUSY					(1 << 0)
 #define DF25XX_STATE_WEL					(1 << 1)
@@ -95,6 +96,9 @@ static vsf_err_t df25xx_drv_getinfo(struct dal_info_t *info)
 	struct df25xx_drv_interface_t *ifs = 
 								(struct df25xx_drv_interface_t *)info->ifs;
 	struct df25xx_drv_info_t *pinfo = (struct df25xx_drv_info_t *)info->info;
+	struct mal_info_t *mal_info = (struct mal_info_t *)info->extra;
+	uint64_t capacity =
+				mal_info->capacity.block_number * mal_info->capacity.block_size;
 	uint8_t cmd[4];
 	
 	df25xx_drv_cs_assert(ifs);
@@ -104,6 +108,19 @@ static vsf_err_t df25xx_drv_getinfo(struct dal_info_t *info)
 	if (interfaces->peripheral_commit())
 	{
 		return VSFERR_FAIL;
+	}
+	
+	if (capacity >= 0x1000000)
+	{
+		// enable 4-byte address mode
+		df25xx_drv_cs_assert(ifs);
+		cmd[0] = DF25XX_CMD_EN4B;
+		interfaces->spi.io(ifs->spi_port, cmd, NULL, 1);
+		df25xx_drv_cs_deassert(ifs);
+		if (interfaces->peripheral_commit())
+		{
+			return VSFERR_FAIL;
+		}
 	}
 	
 	pinfo->manufacturer_id = cmd[1];
@@ -193,14 +210,21 @@ static vsf_err_t df25xx_drv_eraseblock_nb(struct dal_info_t *info,
 {
 	struct df25xx_drv_interface_t *ifs = 
 								(struct df25xx_drv_interface_t *)info->ifs;
-	uint8_t cmd[4];
+	struct mal_info_t *mal_info = (struct mal_info_t *)info->extra;
+	uint64_t capacity =
+		mal_info->capacity.block_number * mal_info->capacity.block_size;
+	uint8_t cmd[5], n = 0;
 	
 	df25xx_drv_cs_assert(ifs);
-	cmd[0] = DF25XX_CMD_ER4K;
-	cmd[1] = (address >> 16) & 0xFF;
-	cmd[2] = (address >> 8 ) & 0xFF;
-	cmd[3] = (address >> 0 ) & 0xFF;
-	interfaces->spi.io(ifs->spi_port, cmd, NULL, 4);
+	cmd[n++] = DF25XX_CMD_ER4K;
+	if (capacity >= 0x1000000)
+	{
+		cmd[n++] = (address >> 24) & 0xFF;
+	}
+	cmd[n++] = (address >> 16) & 0xFF;
+	cmd[n++] = (address >> 8) & 0xFF;
+	cmd[n++] = (address >> 0) & 0xFF;
+	interfaces->spi.io(ifs->spi_port, cmd, NULL, n);
 	return df25xx_drv_cs_deassert(ifs);
 }
 
@@ -243,17 +267,24 @@ static vsf_err_t df25xx_drv_readblock_nb_start(struct dal_info_t *info,
 {
 	struct df25xx_drv_interface_t *ifs = 
 								(struct df25xx_drv_interface_t *)info->ifs;
-	uint8_t cmd[4];
+	struct mal_info_t *mal_info = (struct mal_info_t *)info->extra;
+	uint64_t capacity =
+		mal_info->capacity.block_number * mal_info->capacity.block_size;
+	uint8_t cmd[5], n = 0;
 	
 	REFERENCE_PARAMETER(count);
 	REFERENCE_PARAMETER(buff);
 	
 	df25xx_drv_cs_assert(ifs);
-	cmd[0] = DF25XX_CMD_PGRD;
-	cmd[1] = (address >> 16) & 0xFF;
-	cmd[2] = (address >> 8 ) & 0xFF;
-	cmd[3] = (address >> 0 ) & 0xFF;
-	return interfaces->spi.io(ifs->spi_port, cmd, NULL, 4);
+	cmd[n++] = DF25XX_CMD_PGRD;
+	if (capacity >= 0x1000000)
+	{
+		cmd[n++] = (address >> 24) & 0xFF;
+	}
+	cmd[n++] = (address >> 16) & 0xFF;
+	cmd[n++] = (address >> 8 ) & 0xFF;
+	cmd[n++] = (address >> 0 ) & 0xFF;
+	return interfaces->spi.io(ifs->spi_port, cmd, NULL, n);
 }
 
 static vsf_err_t df25xx_drv_readblock_nb(struct dal_info_t *info, 
@@ -308,14 +339,20 @@ static vsf_err_t df25xx_drv_writeblock_nb(struct dal_info_t *info,
 	struct df25xx_drv_interface_t *ifs = 
 								(struct df25xx_drv_interface_t *)info->ifs;
 	struct mal_info_t *mal_info = (struct mal_info_t *)info->extra;
-	uint8_t cmd[4];
+	uint64_t capacity =
+		mal_info->capacity.block_number * mal_info->capacity.block_size;
+	uint8_t cmd[5], n = 0;
 	
 	df25xx_drv_cs_assert(ifs);
-	cmd[0] = DF25XX_CMD_PGWR;
-	cmd[1] = (address >> 16) & 0xFF;
-	cmd[2] = (address >> 8 ) & 0xFF;
-	cmd[3] = (address >> 0 ) & 0xFF;
-	interfaces->spi.io(ifs->spi_port, cmd, NULL, 4);
+	cmd[n++] = DF25XX_CMD_PGWR;
+	if (capacity >= 0x1000000)
+	{
+		cmd[n++] = (address >> 24) & 0xFF;
+	}
+	cmd[n++] = (address >> 16) & 0xFF;
+	cmd[n++] = (address >> 8) & 0xFF;
+	cmd[n++] = (address >> 0) & 0xFF;
+	interfaces->spi.io(ifs->spi_port, cmd, NULL, n);
 	interfaces->spi.io(ifs->spi_port, buff, NULL, 
 						(uint16_t)mal_info->write_page_size);
 	return df25xx_drv_cs_deassert(ifs);
