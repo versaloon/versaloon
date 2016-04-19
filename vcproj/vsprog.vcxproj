@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7AF4B502-D8A5-4580-971C-AE7CBEA618DF}</ProjectGuid>
+    <RootNamespace>psocprog</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</EmbedManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</EmbedManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <BuildLog>
+      <Path>
+      </Path>
+    </BuildLog>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(SolutionDir)/;$(SolutionDir)/include;$(SolutionDir)../src/vsf_cfg;$(SolutionDir)../vsf/compiler/VC;$(SolutionDir)../vsf/interfaces/cpu/pc;$(SolutionDir)../vsf;$(SolutionDir)../vsf/tool/list;$(SolutionDir)../src/;$(SolutionDir)../src/driver;$(SolutionDir)../src/driver/usb;$(SolutionDir)../src/driver/comport;$(SolutionDir)../src/driver/timer;$(SolutionDir)../src/programmer;$(SolutionDir)../src/programmer/interfaces;$(SolutionDir)../src/programmer/interfaces/versaloon;$(SolutionDir)../src/programmer/interfaces/virtualinterface/vi_stm32;$(SolutionDir)../src/scripts;$(SolutionDir)../src/target;$(SolutionDir)../src/tools/pgbar;$(SolutionDir)../src/tools/hex;$(SolutionDir)../src/tools/memlist;$(SolutionDir)../src/tools/filelist;$(SolutionDir)../src/tools/fileparser;$(SolutionDir)../src/tools/strparser;$(SolutionDir)../src/tools/s19;$(SolutionDir)../src/target/core/arm_adi;$(SolutionDir)../src/target/comisp;$(SolutionDir)../src/target/cortex-m;$(SolutionDir)../src/target/stm32f1;$(SolutionDir)../src/target/lpc1000;$(SolutionDir)../src/target/at91sam3;$(SolutionDir)../src/target/lm3s;$(SolutionDir)../src/target/stm32f2;$(SolutionDir)../src/target/stm32l1;$(SolutionDir)../src/target/nuc100;$(SolutionDir)../src/target/nuc400;$(SolutionDir)../src/target/kinetis;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <Link>
+      <Version>
+      </Version>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreEmbeddedIDL>true</IgnoreEmbeddedIDL>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Xdcmake>
+      <OutputFile>
+      </OutputFile>
+    </Xdcmake>
+    <Bscmake>
+      <OutputFile>
+      </OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MinSpace</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)/;$(SolutionDir)../src/;$(SolutionDir)../src/driver;$(SolutionDir)../src/driver/usb;$(SolutionDir)../src/driver/comport;$(SolutionDir)../src/driver/timer;$(SolutionDir)../src/programmer;$(SolutionDir)../src/programmer/versaloon;$(SolutionDir)../src/programmer/versaloon/vsllink;$(SolutionDir)../src/programmer/versaloon/usbtoxxx;$(SolutionDir)../src/scripts;$(SolutionDir)../src/target;$(SolutionDir)../src/tools/pgbar;$(SolutionDir)../src/tools/hex;$(SolutionDir)../src/tools/s19;$(SolutionDir)../src/tools/memlist;$(SolutionDir)../src/tools/list;$(SolutionDir)../src/tools/filelist;$(SolutionDir)../src/tools/fileparser;$(SolutionDir)../src/tools/strparser;$(SolutionDir)../src/target/core/arm_adi;$(SolutionDir)/include;$(SolutionDir)../src/target/stm32;$(SolutionDir)../src/target/lm3s;$(SolutionDir)../src/target/comisp;$(SolutionDir)../src/target/cortex-m3;$(SolutionDir)../src/target/lpc1000;$(SolutionDir)../src/target/at91sam3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <Link>
+      <Version>1.0BETA</Version>
+      <IgnoreEmbeddedIDL>true</IgnoreEmbeddedIDL>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Xdcmake>
+      <OutputFile>
+      </OutputFile>
+    </Xdcmake>
+    <Bscmake>
+      <OutputFile>
+      </OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\app_log.c" />
+    <ClCompile Include="..\src\driver\usb\usbapi_scripts.c" />
+    <ClCompile Include="..\src\programmer\interfaces\interfaces.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtobdm.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtoc2.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtodusi.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtoissp.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtojtaghl.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtojtagll.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtojtagraw.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtolpcicp.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtomsp430jtag.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtomsp430sbw.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtopwr.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtoswd.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtoswim.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtousart.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\versaloon.c" />
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\versaloon_libusb.c" />
+    <ClCompile Include="..\src\programmer\interfaces\virtualinterface\vi_stm32\vi_stm32.c" />
+    <ClCompile Include="..\src\scripts\app_scripts.c" />
+    <ClCompile Include="..\src\scripts\interfaces_script.c" />
+    <ClCompile Include="..\src\scripts\mic2826_script\mic2826_script.c" />
+    <ClCompile Include="..\src\scripts\scripts.c" />
+    <ClCompile Include="..\src\target\avrxmega\avrxmega.c" />
+    <ClCompile Include="..\src\target\cfi\cfi.c" />
+    <ClCompile Include="..\src\target\comisp\stm32isp.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_at91sam3.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_common.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_kinetis.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_lm3s.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_lpc1000.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_nuc100.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_nuc400.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_stm32f1.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_stm32f2.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_stm32l1.c" />
+    <ClCompile Include="..\src\target\cortex-m\cm_stm32_fl.c" />
+    <ClCompile Include="..\src\target\df25xx\df25xx.c" />
+    <ClCompile Include="..\src\target\ee24cxx\ee24cxx.c" />
+    <ClCompile Include="..\src\target\ee93cx6\ee93cx6.c" />
+    <ClCompile Include="..\src\target\hcs08\hcs08.c" />
+    <ClCompile Include="..\src\target\hcs12\hcs12.c" />
+    <ClCompile Include="..\src\target\kinetis\kinetis.c" />
+    <ClCompile Include="..\src\target\lm3s\lm3s.c" />
+    <ClCompile Include="..\src\target\nand\nand.c" />
+    <ClCompile Include="..\src\target\nuc100\nuc100.c" />
+    <ClCompile Include="..\src\target\nuc400\nuc400.c" />
+    <ClCompile Include="..\src\target\sd\sd.c" />
+    <ClCompile Include="..\src\target\sst32hfxx\sst32hfxx.c" />
+    <ClCompile Include="..\src\target\stm32f1\stm32f1.c" />
+    <ClCompile Include="..\src\target\stm32f2\stm32f2.c" />
+    <ClCompile Include="..\src\target\stm32l1\stm32l1.c" />
+    <ClCompile Include="..\src\target\target_conf.c" />
+    <ClCompile Include="..\src\target\target_data.c" />
+    <ClCompile Include="..\src\tools\fileparser\fileparser.c" />
+    <ClCompile Include="..\src\tools\s19\s19.c" />
+    <ClCompile Include="..\src\tools\strparser\strparser.c" />
+    <ClCompile Include="..\vsf\dal\cfi\cfi_drv.c" />
+    <ClCompile Include="..\vsf\dal\dal.c" />
+    <ClCompile Include="..\vsf\dal\df25xx\df25xx_drv.c" />
+    <ClCompile Include="..\vsf\dal\df45xx\df45xx_drv.c" />
+    <ClCompile Include="..\vsf\dal\ee24cxx\ee24cxx_drv.c" />
+    <ClCompile Include="..\vsf\dal\ee93cx6\ee93cx6_drv.c" />
+    <ClCompile Include="..\vsf\dal\mal\mal.c" />
+    <ClCompile Include="..\vsf\dal\mic2826\mic2826_drv.c" />
+    <ClCompile Include="..\vsf\dal\nand\nand_drv.c" />
+    <ClCompile Include="..\vsf\dal\nrf24l01\nrf24l01_drv.c" />
+    <ClCompile Include="..\vsf\dal\s6b0724\s6b0724_drv.c" />
+    <ClCompile Include="..\vsf\dal\sd\sd_common.c" />
+    <ClCompile Include="..\vsf\dal\sd\sd_spi_drv.c" />
+    <ClCompile Include="..\vsf\dal\sst32hfxx\sst32hfxx_drv.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoadc.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoclko.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoebi.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtogpio.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoi2c.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtomicrowire.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtonand.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtopwm.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtospi.c" />
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoxxx.c" />
+    <ClCompile Include="..\vsf\tool\buffer\buffer.c" />
+    <ClCompile Include="..\vsf\tool\crc\crc.c" />
+    <ClCompile Include="..\vsf\tool\vsfui_fb\vsfui_fb.c" />
+    <ClCompile Include="getopt.c" />
+    <ClCompile Include="getopt_long.c" />
+    <ClCompile Include="..\src\vsprog.c" />
+    <ClCompile Include="..\src\target\target.c" />
+    <ClCompile Include="..\src\target\psoc1\psoc1.c" />
+    <ClCompile Include="..\src\target\at89s5x\at89s5x.c" />
+    <ClCompile Include="..\src\target\msp430\JTAGfunc.c" />
+    <ClCompile Include="..\src\target\msp430\msp430.c" />
+    <ClCompile Include="..\src\target\msp430\msp430_bsl.c" />
+    <ClCompile Include="..\src\target\msp430\msp430_jtagsbw.c" />
+    <ClCompile Include="..\src\target\c8051f\c8051f.c" />
+    <ClCompile Include="..\src\target\c8051f\c8051f_c2.c" />
+    <ClCompile Include="..\src\target\c8051f\c8051f_jtag.c" />
+    <ClCompile Include="..\src\target\stm8\stm8.c" />
+    <ClCompile Include="..\src\target\avr8\avr8.c" />
+    <ClCompile Include="..\src\target\avr8\avr8_hvpp.c" />
+    <ClCompile Include="..\src\target\avr8\avr8_hvsp.c" />
+    <ClCompile Include="..\src\target\avr8\avr8_isp.c" />
+    <ClCompile Include="..\src\target\avr8\avr8_jtag.c" />
+    <ClCompile Include="..\src\target\core\arm_adi\adi_v5p1.c" />
+    <ClCompile Include="..\src\target\comisp\comisp.c" />
+    <ClCompile Include="..\src\target\comisp\lpcarmisp.c" />
+    <ClCompile Include="..\src\target\svf_player\byte_tap.c" />
+    <ClCompile Include="..\src\target\svf_player\svf_parser.c" />
+    <ClCompile Include="..\src\target\svf_player\svf_player.c" />
+    <ClCompile Include="..\src\target\lpc900\lpc900.c" />
+    <ClCompile Include="..\src\target\lpc1000\lpc1000.c" />
+    <ClCompile Include="..\src\target\at91sam3\at91sam3.c" />
+    <ClCompile Include="..\src\target\avr32\avr32.c" />
+    <ClCompile Include="..\src\tools\hex\hex.c" />
+    <ClCompile Include="..\src\tools\memlist\memlist.c" />
+    <ClCompile Include="..\src\tools\pgbar\pgbar.c" />
+    <ClCompile Include="..\src\tools\filelist\filelist.c" />
+    <ClCompile Include="..\src\programmer\programmer.c" />
+    <ClCompile Include="..\src\driver\port.c" />
+    <ClCompile Include="..\src\driver\usb\usbapi.c" />
+    <ClCompile Include="..\src\driver\comport\comport.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\libusb-1.0.lib" />
+    <Library Include="lib\libxml2.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\config\at89s5x.xml" />
+    <None Include="..\src\config\at91sam3.xml" />
+    <None Include="..\src\config\avr32.xml" />
+    <None Include="..\src\config\avr8.xml" />
+    <None Include="..\src\config\avrxmega.xml" />
+    <None Include="..\src\config\c8051f.xml" />
+    <None Include="..\src\config\cfi.xml" />
+    <None Include="..\src\config\df25xx.xml" />
+    <None Include="..\src\config\ee24cxx.xml" />
+    <None Include="..\src\config\ee93cx6.xml" />
+    <None Include="..\src\config\hcs08.xml" />
+    <None Include="..\src\config\hcs12.xml" />
+    <None Include="..\src\config\lm3s.xml" />
+    <None Include="..\src\config\lpc1000.xml" />
+    <None Include="..\src\config\lpc900.xml" />
+    <None Include="..\src\config\msp430.xml" />
+    <None Include="..\src\config\nand.xml" />
+    <None Include="..\src\config\psoc1.xml" />
+    <None Include="..\src\config\sd.xml" />
+    <None Include="..\src\config\stm32f1.xml" />
+    <None Include="..\src\config\stm32f2.xml" />
+    <None Include="..\src\config\stm32f4.xml" />
+    <None Include="..\src\config\stm32l1.xml" />
+    <None Include="..\src\config\stm8.xml" />
+    <None Include="..\src\scripts\mic2826_script\mic2826.vts" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

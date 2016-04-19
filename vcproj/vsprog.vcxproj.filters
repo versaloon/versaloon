@@ -1,0 +1,689 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\target">
+      <UniqueIdentifier>{32d89db0-48e3-4963-9c8e-b326e3089b34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\psoc1">
+      <UniqueIdentifier>{f022c697-cc8e-425c-806c-893a1dd6097f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\at89s5x">
+      <UniqueIdentifier>{1bfb6e9d-6cb3-424d-8b63-a51fc11655fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\msp430">
+      <UniqueIdentifier>{6e9dc837-5c0e-4097-abaf-ed8cafce29bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\c8051f">
+      <UniqueIdentifier>{bcc71098-f12e-460b-be61-da022ed93ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\stm8">
+      <UniqueIdentifier>{2a2fc982-3ab4-4719-aa9e-e270bcf784b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\avr8">
+      <UniqueIdentifier>{04345a35-a73d-4e52-b697-448bd7e295f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\core">
+      <UniqueIdentifier>{cb76c508-f7cc-436d-b3a6-050b41dc7b7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\core\arm_adi">
+      <UniqueIdentifier>{e4404f02-f97d-409e-9ef0-6b3852bdfbbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\comisp">
+      <UniqueIdentifier>{6a35ba7f-5377-4919-99ea-5f8e4888e7f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\svf_player">
+      <UniqueIdentifier>{b9d54f3e-0ead-4c16-aa07-1a13388762c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\lpc900">
+      <UniqueIdentifier>{174ddb3f-3f36-48b2-afcc-342dfd0b3e4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\lpc1000">
+      <UniqueIdentifier>{6f7e2467-25c7-4d60-b2af-250cf99e7311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\at91sam3">
+      <UniqueIdentifier>{290af5cf-bdb1-4a6c-b2e7-01601c436c88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\avr32">
+      <UniqueIdentifier>{be6210c4-ab33-40ff-992a-1934b79f4794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools">
+      <UniqueIdentifier>{94c2681d-0d57-48ff-89d2-b9a8482f9818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\hex">
+      <UniqueIdentifier>{f852f1d8-e755-41e6-82d8-a04ab8d1ae25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\libxml">
+      <UniqueIdentifier>{d466928c-1a1b-40e7-820a-c4ed72e360f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\memlist">
+      <UniqueIdentifier>{9c88149d-6c29-4616-a775-7891a035ab84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\pgbar">
+      <UniqueIdentifier>{a2c1ccf8-4baf-418e-9179-55396c0a7f9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\filelist">
+      <UniqueIdentifier>{db985ee5-4b1c-4bea-a798-cd8fd1531b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\programmers">
+      <UniqueIdentifier>{b372ecd3-ac3a-4e38-93a7-e7cd2b639bd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\driver">
+      <UniqueIdentifier>{2e12e03d-6419-49c6-ad7f-47d86a38f59a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\driver\usb">
+      <UniqueIdentifier>{8e45ed43-2342-4d04-9c91-25d71ec687d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\driver\comport">
+      <UniqueIdentifier>{23f73b8f-00f6-44a0-9cfa-d5db793f22cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Source Files\tools\fileparser">
+      <UniqueIdentifier>{ebc92c44-cbe1-42b2-ac4d-0702c5fb9fdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\strparser">
+      <UniqueIdentifier>{1ea044a6-bb6a-4a16-b403-96c86edbf68e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\lm3s">
+      <UniqueIdentifier>{11450b96-d3fb-421d-8063-0f39aaa2c5f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts">
+      <UniqueIdentifier>{bc99f395-3e4f-4314-929e-4df9712fc47c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\hcs08">
+      <UniqueIdentifier>{a011fb0f-c3fa-4a4a-a2c2-30607cf229ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\s19">
+      <UniqueIdentifier>{ecc996f6-42ff-48d4-9ccc-25a7732ca7f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\hcs12">
+      <UniqueIdentifier>{b22b18d2-9617-41ad-932b-401a866340ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xml">
+      <UniqueIdentifier>{3ac4514f-e127-46a2-bca7-40f8f69f7b7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\ee24cxx">
+      <UniqueIdentifier>{668c08c5-fc1c-4cad-82a3-0f09277ed024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\ee93cx6">
+      <UniqueIdentifier>{cc51b74e-2487-4bcd-9acb-a5f36f57dc30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\df25xx">
+      <UniqueIdentifier>{9ec9bfad-6f7e-4f90-b06b-e64406798d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\programmers\interfaces">
+      <UniqueIdentifier>{943521ad-9e9f-43fc-9ef5-bb68926b2bf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\programmers\interfaces\versaloon">
+      <UniqueIdentifier>{7837ebbc-5eb7-46fa-8619-6b69de244abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\programmers\interfaces\versaloon\usbtoxxx">
+      <UniqueIdentifier>{faf34815-307e-4374-b0df-c9de0b420d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\programmers\interfaces\virtualinterface">
+      <UniqueIdentifier>{74c3eefd-e46f-4e04-b4e7-cee667a65a31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\programmers\interfaces\virtualinterface\vi_stm32">
+      <UniqueIdentifier>{8cf28d14-ef50-45d3-ac47-7fa86ffd9c07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf">
+      <UniqueIdentifier>{f75922e2-f7ea-41ec-97c7-7bbc43504ee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal">
+      <UniqueIdentifier>{b6653968-1358-4cac-925d-1a4b792ac897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\mic2826">
+      <UniqueIdentifier>{dc782f9e-6d4d-4e10-a229-f7c29a651a2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\mal">
+      <UniqueIdentifier>{32b18a80-7ba0-4af1-ba01-a1f6e5e72288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\ee24cxx">
+      <UniqueIdentifier>{c56c731c-9983-42ac-89f9-baaf226e59d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\ee93cx6">
+      <UniqueIdentifier>{f124eed8-a807-4ecd-8e5f-79edb04949ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\df25xx">
+      <UniqueIdentifier>{8a7946e1-3087-41ca-9239-1e874fb378a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\df45xx">
+      <UniqueIdentifier>{97f2e46b-7ba7-49af-9fc7-c096e40cbb08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\sd">
+      <UniqueIdentifier>{e0e66866-a831-4682-b903-41760ad32b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\avrxmega">
+      <UniqueIdentifier>{87b7cdbf-0cf0-450b-bb38-f9f3421db4de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\tool">
+      <UniqueIdentifier>{bcbc29c3-eb00-4f40-9efb-35e0b33c488f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\stm32f2">
+      <UniqueIdentifier>{2ffdee54-a2c6-4d5c-9138-0245707436d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\sd">
+      <UniqueIdentifier>{9b7e01ec-53a1-493b-9ea9-25d47af296cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\nrf24l01">
+      <UniqueIdentifier>{6098916d-7bdf-4218-b3fa-d6f344e0cef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts\mic2826">
+      <UniqueIdentifier>{331280ba-463f-429b-84b3-8ffde4a72ea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\cfi">
+      <UniqueIdentifier>{1b7ec9bc-eec2-4b52-ac0a-471f7852f442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\cfi">
+      <UniqueIdentifier>{426445a9-9f1e-4146-b9e0-0e6fb290db5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\nand">
+      <UniqueIdentifier>{84b7ea2f-cbb0-4e1d-aa5d-ea9c0ebd9907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\nand">
+      <UniqueIdentifier>{3fb67a72-5a2f-4566-9aee-d82259b13822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\stm32f1">
+      <UniqueIdentifier>{203f6ba1-9875-4c5b-94f1-32767d2da61e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\stm32l1">
+      <UniqueIdentifier>{e1f3aad3-9787-4e28-83b3-17d0e29a8ac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\cortex-m">
+      <UniqueIdentifier>{5ccc1ff7-21e7-447a-90b5-8b2effd0e019}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\nuc100">
+      <UniqueIdentifier>{e59e44d7-3cdd-456e-8e0f-31ac09cd9add}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\kinetis">
+      <UniqueIdentifier>{db22c2ec-bc2f-4ebb-b4eb-17d4310bde4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\s6b0724">
+      <UniqueIdentifier>{02a92c5b-b075-4b95-b23e-61fdb95670be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\dal\sst32hfxx">
+      <UniqueIdentifier>{7995381d-bedd-4092-bf45-35f488924366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\sst32hfxx">
+      <UniqueIdentifier>{af79339e-790c-4ad2-9753-6269c8fe3ef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\vsfui_fb">
+      <UniqueIdentifier>{ef12d5b4-bec6-4dff-9585-fd9bee594f13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\buffer">
+      <UniqueIdentifier>{210e1a2d-ce9a-4d38-95c3-f6f5725c32d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\nuc400">
+      <UniqueIdentifier>{c6022710-d359-4f13-b9ec-3f893bcd5d17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vsf\tool\crc">
+      <UniqueIdentifier>{a99e9761-65f1-4609-9d71-751f9d5b7f44}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="getopt_long.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vsprog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\target.c">
+      <Filter>Source Files\target</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\psoc1\psoc1.c">
+      <Filter>Source Files\target\psoc1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\at89s5x\at89s5x.c">
+      <Filter>Source Files\target\at89s5x</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\msp430\JTAGfunc.c">
+      <Filter>Source Files\target\msp430</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\msp430\msp430.c">
+      <Filter>Source Files\target\msp430</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\msp430\msp430_bsl.c">
+      <Filter>Source Files\target\msp430</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\msp430\msp430_jtagsbw.c">
+      <Filter>Source Files\target\msp430</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\c8051f\c8051f.c">
+      <Filter>Source Files\target\c8051f</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\c8051f\c8051f_c2.c">
+      <Filter>Source Files\target\c8051f</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\c8051f\c8051f_jtag.c">
+      <Filter>Source Files\target\c8051f</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\stm8\stm8.c">
+      <Filter>Source Files\target\stm8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\avr8\avr8.c">
+      <Filter>Source Files\target\avr8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\avr8\avr8_hvpp.c">
+      <Filter>Source Files\target\avr8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\avr8\avr8_hvsp.c">
+      <Filter>Source Files\target\avr8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\avr8\avr8_isp.c">
+      <Filter>Source Files\target\avr8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\avr8\avr8_jtag.c">
+      <Filter>Source Files\target\avr8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\comisp\comisp.c">
+      <Filter>Source Files\target\comisp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\comisp\lpcarmisp.c">
+      <Filter>Source Files\target\comisp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\svf_player\byte_tap.c">
+      <Filter>Source Files\target\svf_player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\svf_player\svf_parser.c">
+      <Filter>Source Files\target\svf_player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\svf_player\svf_player.c">
+      <Filter>Source Files\target\svf_player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\lpc900\lpc900.c">
+      <Filter>Source Files\target\lpc900</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\lpc1000\lpc1000.c">
+      <Filter>Source Files\target\lpc1000</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\at91sam3\at91sam3.c">
+      <Filter>Source Files\target\at91sam3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\avr32\avr32.c">
+      <Filter>Source Files\target\avr32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools\hex\hex.c">
+      <Filter>Source Files\tools\hex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools\memlist\memlist.c">
+      <Filter>Source Files\tools\memlist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools\pgbar\pgbar.c">
+      <Filter>Source Files\tools\pgbar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools\filelist\filelist.c">
+      <Filter>Source Files\tools\filelist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\programmer.c">
+      <Filter>Source Files\programmers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\driver\port.c">
+      <Filter>Source Files\driver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\driver\usb\usbapi.c">
+      <Filter>Source Files\driver\usb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\driver\comport\comport.c">
+      <Filter>Source Files\driver\comport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\avrxmega\avrxmega.c">
+      <Filter>Source Files\target\avrxmega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools\fileparser\fileparser.c">
+      <Filter>Source Files\tools\fileparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools\strparser\strparser.c">
+      <Filter>Source Files\tools\strparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\lm3s\lm3s.c">
+      <Filter>Source Files\target\lm3s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\core\arm_adi\adi_v5p1.c">
+      <Filter>Source Files\target\core\arm_adi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scripts\scripts.c">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="getopt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\hcs08\hcs08.c">
+      <Filter>Source Files\target\hcs08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools\s19\s19.c">
+      <Filter>Source Files\tools\s19</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\hcs12\hcs12.c">
+      <Filter>Source Files\target\hcs12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\ee24cxx\ee24cxx.c">
+      <Filter>Source Files\target\ee24cxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\ee93cx6\ee93cx6.c">
+      <Filter>Source Files\target\ee93cx6</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\df25xx\df25xx.c">
+      <Filter>Source Files\target\df25xx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\interfaces.c">
+      <Filter>Source Files\programmers\interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\versaloon.c">
+      <Filter>Source Files\programmers\interfaces\versaloon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\stm32f2\stm32f2.c">
+      <Filter>Source Files\target\stm32f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\virtualinterface\vi_stm32\vi_stm32.c">
+      <Filter>Source Files\programmers\interfaces\virtualinterface\vi_stm32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\sd\sd.c">
+      <Filter>Source Files\target\sd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scripts\app_scripts.c">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scripts\mic2826_script\mic2826_script.c">
+      <Filter>Source Files\scripts\mic2826</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\dal.c">
+      <Filter>Source Files\vsf\dal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\df25xx\df25xx_drv.c">
+      <Filter>Source Files\vsf\dal\df25xx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\df45xx\df45xx_drv.c">
+      <Filter>Source Files\vsf\dal\df45xx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\ee24cxx\ee24cxx_drv.c">
+      <Filter>Source Files\vsf\dal\ee24cxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\ee93cx6\ee93cx6_drv.c">
+      <Filter>Source Files\vsf\dal\ee93cx6</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\mal\mal.c">
+      <Filter>Source Files\vsf\dal\mal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\mic2826\mic2826_drv.c">
+      <Filter>Source Files\vsf\dal\mic2826</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\nrf24l01\nrf24l01_drv.c">
+      <Filter>Source Files\vsf\dal\nrf24l01</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\sd\sd_spi_drv.c">
+      <Filter>Source Files\vsf\dal\sd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\sd\sd_common.c">
+      <Filter>Source Files\vsf\dal\sd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cfi\cfi.c">
+      <Filter>Source Files\target\cfi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\cfi\cfi_drv.c">
+      <Filter>Source Files\vsf\dal\cfi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\nand\nand_drv.c">
+      <Filter>Source Files\vsf\dal\nand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\nand\nand.c">
+      <Filter>Source Files\target\nand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\stm32f1\stm32f1.c">
+      <Filter>Source Files\target\stm32f1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\comisp\stm32isp.c">
+      <Filter>Source Files\target\comisp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\stm32l1\stm32l1.c">
+      <Filter>Source Files\target\stm32l1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scripts\interfaces_script.c">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\target_conf.c">
+      <Filter>Source Files\target</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\target_data.c">
+      <Filter>Source Files\target</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_at91sam3.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_common.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_lm3s.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_lpc1000.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_stm32_fl.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_stm32f1.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_stm32f2.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_stm32l1.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\nuc100\nuc100.c">
+      <Filter>Source Files\target\nuc100</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_nuc100.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\driver\usb\usbapi_scripts.c">
+      <Filter>Source Files\driver\usb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\app_log.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtobdm.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtoc2.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtodusi.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtoissp.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtojtaghl.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtojtagll.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtojtagraw.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtolpcicp.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtomsp430jtag.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtomsp430sbw.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtopwr.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtoswd.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtoswim.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\usbtoxxx\usbtousart.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoadc.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoebi.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtogpio.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoi2c.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtomicrowire.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtopwm.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtospi.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoxxx.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_kinetis.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\kinetis\kinetis.c">
+      <Filter>Source Files\target\kinetis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\programmer\interfaces\versaloon\versaloon_libusb.c">
+      <Filter>Source Files\programmers\interfaces\versaloon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtoclko.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\interfaces\cpu\pc\usbtoxxx\usbtonand.c">
+      <Filter>Source Files\programmers\interfaces\versaloon\usbtoxxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\s6b0724\s6b0724_drv.c">
+      <Filter>Source Files\vsf\dal\s6b0724</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\dal\sst32hfxx\sst32hfxx_drv.c">
+      <Filter>Source Files\vsf\dal\sst32hfxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\sst32hfxx\sst32hfxx.c">
+      <Filter>Source Files\target\sst32hfxx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\tool\vsfui_fb\vsfui_fb.c">
+      <Filter>Source Files\tools\vsfui_fb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\tool\buffer\buffer.c">
+      <Filter>Source Files\tools\buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\cortex-m\cm_nuc400.c">
+      <Filter>Source Files\target\cortex-m</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\target\nuc400\nuc400.c">
+      <Filter>Source Files\target\nuc400</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vsf\tool\crc\crc.c">
+      <Filter>Source Files\vsf\tool\crc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\libxml2.lib">
+      <Filter>Source Files\tools\libxml</Filter>
+    </Library>
+    <Library Include="lib\libusb-1.0.lib">
+      <Filter>Source Files\driver\usb</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\scripts\mic2826_script\mic2826.vts">
+      <Filter>Source Files\scripts\mic2826</Filter>
+    </None>
+    <None Include="..\src\config\at89s5x.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\at91sam3.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\avr8.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\avr32.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\avrxmega.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\c8051f.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\cfi.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\df25xx.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\ee24cxx.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\ee93cx6.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\hcs08.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\hcs12.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\lm3s.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\lpc900.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\lpc1000.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\msp430.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\nand.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\psoc1.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\sd.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\stm8.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\stm32f1.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\stm32f2.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\stm32f4.xml">
+      <Filter>xml</Filter>
+    </None>
+    <None Include="..\src\config\stm32l1.xml">
+      <Filter>xml</Filter>
+    </None>
+  </ItemGroup>
+</Project>
