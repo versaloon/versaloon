@@ -25,7 +25,7 @@
 
 #include "mal_driver.h"
 
-#define MAL_RETRY_CNT					0xFFFF
+#define MAL_RETRY_CNT					0xFFFFFF
 
 static vsf_err_t mal_init_nb(struct dal_info_t *info)
 {

@@ -36,7 +36,7 @@
 #define DF25XX_CMD_RDSR						0x05	// read status register 1(7 to 0)
 #define DF25XX_CMD_WREN						0x06	// write enable
 #define DF25XX_CMD_ER4K						0x20	// sector erase
-#define DF25XX_CMD_CHER						0x60	// chip erase
+#define DF25XX_CMD_CHER						0xC7	// chip erase
 #define DF25XX_CMD_RDID						0x9F	// jedec id
 #define DF25XX_CMD_EN4B						0xB7	// enable 4-byte address
 

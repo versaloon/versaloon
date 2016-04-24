@@ -36,4 +36,14 @@
     <app_page_size>256</app_page_size>
     <app_page_num>32768</app_page_num>
   </chip>
+  <chip name="mx25l25635f">
+    <chip_id>0xC22019</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>131072</app_page_num>
+  </chip>
+  <chip name="n25q064a">
+    <chip_id>0x20BA17</chip_id>
+    <app_page_size>256</app_page_size>
+    <app_page_num>32768</app_page_num>
+  </chip>
 </series>
